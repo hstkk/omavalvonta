@@ -51,4 +51,8 @@ public class Field {
 	public double hardMin;
 	
 	public double hardMax;
+
+	public static Field findById(int id) {
+		return JPA.em().find(Field.class, id);
+	}
 }

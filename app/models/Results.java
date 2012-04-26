@@ -38,4 +38,8 @@ public class Results {
 	@Required
 	@OneToOne
 	public Batch batch;
+	
+	public static Results findById(int id) {
+		return JPA.em().find(Results.class, id);
+	}
 }
