@@ -9,31 +9,26 @@ import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
-public class Field {
+public class Product {
 	@Id
 	@GeneratedValue
 	public int id;
 	
-	//TODO enum
-	@Required
-	public int type;
-	
 	@Required
 	public String name;
 	
-	public String help;
+	@Lob
+	public String descrition;
 	
 	@Required
-	public Boolean isRequired;
+	@OneToOne
+	public Form washProgram;
 	
 	@Required
-	public Boolean isSigned;
+	@OneToOne
+	public Form productCard;
 	
-	public double softMin;
-	
-	public double softMax;
-	
-	public double hardMin;
-	
-	public double hardMax;
+	@Required
+	@OneToOne
+	public Form purityMonitoring;
 }

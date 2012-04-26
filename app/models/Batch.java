@@ -1,7 +1,6 @@
 package models;
 
 import java.util.*;
-
 import javax.persistence.*;
 
 import play.db.ebean.*;
@@ -9,26 +8,18 @@ import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
+//TODO
 @Entity
-public class Results {
+public class Batch {
+	//TODO generate
 	@Id
-	@GeneratedValue
-	public int id;
-
+	public String id;
+	
 	@Required
 	public Date created;
 	
-	//TODO enum type
-	@Required
-	public int type;
-	
-	@Required
-	public Boolean isReady;
-	
-	@Required
-	public List<Result> results;
-	
+	//TODO validate
 	@Required
 	@OneToOne
-	public Batch batch;
+	public Product product;
 }

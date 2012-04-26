@@ -13,13 +13,17 @@ public class Result {
 	@Id
 	@GeneratedValue
 	public int id;
-
-	@Required
-	public Date created;
 	
 	//TODO USER
 	//@Required
 	//public User user;
+	
+	//TODO pdf
+	@Required
+	public Field field;
+	
+	@Lob
+	public String comment;
 	
 	public int valueInt;
 	
@@ -28,7 +32,4 @@ public class Result {
 	public Date valueDate;
 	
 	//TODO jne
-	
-	@Lob
-	public String comment;
 }

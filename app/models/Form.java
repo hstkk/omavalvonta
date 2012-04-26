@@ -15,6 +15,7 @@ public class Form {
 	public int id;
 	
 	//TODO
+	@Required
 	//@Validate
 	@OneToOne
 	public Content content;
