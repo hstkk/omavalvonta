@@ -30,5 +30,7 @@ public class Result {
 	
 	public Date valueDate;
 	
+	public String valueString;
+	
 	//TODO jne
 }
