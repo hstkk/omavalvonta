@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.avaje.ebean.annotation.EnumValue;
+
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
@@ -18,9 +20,14 @@ public class Results {
 	@Required
 	public Date created;
 	
-	//TODO enum type
-	@Required
-	public int type;
+	public enum type {
+		@EnumValue("A")
+		WASHPROGRAM,
+		@EnumValue("B")
+		PRODUCTCARD,
+		@EnumValue("C")
+		PURITYMONITORING,
+	}
 	
 	@Required
 	public Boolean isReady;

@@ -3,6 +3,8 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 
+import com.avaje.ebean.annotation.EnumValue;
+
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
@@ -14,9 +16,22 @@ public class Field {
 	@GeneratedValue
 	public int id;
 	
-	//TODO enum
-	@Required
-	public int type;
+	public enum type {
+		@EnumValue("A")
+		TEXT,
+		@EnumValue("B")
+		INT,
+		@EnumValue("C")
+		DOUBLE,
+		@EnumValue("D")
+		DATE,
+		@EnumValue("E")
+		CHECKBOX,
+		@EnumValue("F")
+		DATETIME,
+		@EnumValue("G")
+		TEXTAREA,
+	}
 	
 	@Required
 	public String name;
