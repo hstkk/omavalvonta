@@ -14,9 +14,8 @@ public class Result {
 	@GeneratedValue
 	public int id;
 	
-	//TODO USER
-	//@Required
-	//public User user;
+	@Required
+	public User user;
 	
 	//TODO pdf
 	@Required
