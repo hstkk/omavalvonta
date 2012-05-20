@@ -1,0 +1,30 @@
+@(field: models.Field)
+@if(field != null){
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label" for="input01"><strong>@field.name</strong></label>
+			<div class="controls">
+				<input type="text" class="input-xlarge" id="input01">
+				@if(field.help != ""){
+					<span class="help-inline">@field.help</span>
+				}
+			</div>
+		</div>
+		@if(field.isSigned){
+			<div class="control-group">
+	            <div class="controls">
+	              <label class="checkbox">
+	                <input id="optionsCheckbox2" type="checkbox">
+	                Kuittaa
+	              </label>
+	            </div>
+			</div>
+		}
+		<div class="control-group">
+			<div class="controls">
+				<textarea class="input-xlarge" id="textarea" rows="3"></textarea>
+				<label class="help-inline">Huomautuksia</label>
+			</div>
+		</div>
+	</fieldset>
+}

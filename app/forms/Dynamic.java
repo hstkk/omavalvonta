@@ -4,6 +4,7 @@ import java.util.List;
 
 import models.Field;
 import play.data.validation.Constraints.*;
+import play.db.jpa.Transactional;
 import utils.Validation;
 
 /**
@@ -23,6 +24,7 @@ public class Dynamic {
 	 * 
 	 * @return null if no errors else errors.
 	 */
+	@Transactional(readOnly=true)
 	public String validate() {
 		StringBuilder result = new StringBuilder();
 		for (Fieldset fieldset : values) {

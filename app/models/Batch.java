@@ -9,7 +9,7 @@ import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 //TODO
-@Entity
+//@Entity
 public class Batch {
 	//TODO generate
 	@Id

@@ -8,7 +8,7 @@ import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
-@Entity
+//@Entity
 public class Content {
 	@Id
 	@GeneratedValue

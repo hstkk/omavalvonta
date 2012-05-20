@@ -9,7 +9,7 @@ import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 //TODO pdf
-@Entity
+//@Entity
 public class User {
 	@Required
 	public String username;

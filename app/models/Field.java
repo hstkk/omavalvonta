@@ -9,7 +9,7 @@ import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
-public class Field {
+public class Field{
 	@Id
 	@GeneratedValue
 	public int id;
@@ -24,10 +24,10 @@ public class Field {
 	public String help;
 
 	@Required
-	public Boolean isRequired;
+	public boolean isRequired;
 
 	@Required
-	public Boolean isSigned;
+	public boolean isSigned;
 
 	public Double softMin = null;
 
@@ -36,6 +36,21 @@ public class Field {
 	public Double hardMin = null;
 
 	public Double hardMax = null;
+
+	public Field(String name, String help, FieldType type, boolean isRequired,
+			boolean isSigned, Double softMin, Double softMax, Double hardMin,
+			Double hardMax) {
+		this.name = name;
+		this.help = help;
+		this.type = type;
+		this.isRequired = isRequired;
+		this.isSigned = isSigned;
+		this.softMin = softMin;
+		this.softMax = softMax;
+		this.hardMin = hardMin;
+		this.hardMax = hardMax;
+		//this.save();
+	}
 
 	/**
 	 * Finds field by field id.
