@@ -2,12 +2,16 @@ package forms;
 
 import models.Field;
 import javax.persistence.Lob;
+import javax.validation.Valid;
+
 import play.data.validation.Constraints.*;
+import play.data.validation.*;
 
 public class Fieldset {
 	@Required
 	int fieldId;
 
+	@Valid
 	public String value;
 
 	public Boolean ack;
@@ -17,7 +21,12 @@ public class Fieldset {
 
 	//TODO Localize
 	//TODO isrequired
-	public String validate() {
+	
+	/* https://groups.google.com/forum/?fromgroups#!topic/play-framework/kHGQxu44Irs
+	public Map<String,List<ValidationError>> validate(){
+	}*/
+	
+	/*public String validate() {
 		String result = null;
 		Field field = Field.findById(fieldId);
 		if (field != null)
@@ -51,5 +60,5 @@ public class Fieldset {
 				}
 		}
 		return result;
-	}
+	}*/
 }
