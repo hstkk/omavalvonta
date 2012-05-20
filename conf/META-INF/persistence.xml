@@ -7,7 +7,10 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<non-jta-data-source>DefaultDS</non-jta-data-source>
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+			<!--Remove when in production-->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+			<!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>-->
 			<property name="hibernate.ejb.event.post-insert"
 				value="org.hibernate.ejb.event.EJB3PostInsertEventListener,org.hibernate.envers.event.AuditEventListener" />
 			<property name="hibernate.ejb.event.post-update"
