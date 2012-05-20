@@ -2,31 +2,36 @@ package models;
 
 import java.util.*;
 import javax.persistence.*;
-import javax.persistence.EnumType;
+import javax.validation.constraints.*;
+
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
-public class Field{
+public class Field extends Model {
 	@Id
 	@GeneratedValue
 	public int id;
 
 	@Required
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	public FieldType type;
 
 	@Required
+	@NotNull
 	public String name;
 
-	public String help;
+	public String help = "";
 
 	@Required
+	@NotNull
 	public boolean isRequired;
 
 	@Required
+	@NotNull
 	public boolean isSigned;
 
 	public Double softMin = null;
@@ -36,6 +41,9 @@ public class Field{
 	public Double hardMin = null;
 
 	public Double hardMax = null;
+
+	public Field() {
+	}
 
 	public Field(String name, String help, FieldType type, boolean isRequired,
 			boolean isSigned, Double softMin, Double softMax, Double hardMin,
@@ -49,7 +57,7 @@ public class Field{
 		this.softMax = softMax;
 		this.hardMin = hardMin;
 		this.hardMax = hardMax;
-		//this.save();
+		this.save();
 	}
 
 	/**

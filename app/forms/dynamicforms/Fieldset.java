@@ -1,4 +1,4 @@
-package forms;
+package forms.dynamicforms;
 
 import javax.persistence.Lob;
 import play.data.validation.Constraints.*;
