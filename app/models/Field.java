@@ -11,8 +11,6 @@ import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
-
-
 @Entity
 public class Field {
 	@Id
@@ -34,15 +32,19 @@ public class Field {
 	@Required
 	public Boolean isSigned;
 
-	public double softMin;
+	public Double softMin = null;
 
-	public double softMax;
+	public Double softMax = null;
 
-	public double hardMin;
+	public Double hardMin = null;
 
-	public double hardMax;
+	public Double hardMax = null;
 
 	public static Field findById(int id) {
-		return JPA.em().find(Field.class, id);
+		try {
+			return JPA.em().find(Field.class, id);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
