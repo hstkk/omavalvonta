@@ -1,10 +1,11 @@
 @(field: models.Field)
 @if(field != null){
 	<fieldset>
+		<input type="hidden" value="@field.id" name="values[].fieldId"/>
 		<div class="control-group">
-			<label class="control-label" for="input01"><strong>@field.name</strong></label>
+			<label class="control-label"><strong>@field.name</strong></label>
 			<div class="controls">
-				<input type="text" class="input-xlarge" id="input01">
+				<input type="text" class="input-xlarge" name="values[].value"/>
 				@if(field.help != ""){
 					<span class="help-inline">@field.help</span>
 				}
@@ -14,7 +15,7 @@
 			<div class="control-group">
 	            <div class="controls">
 	              <label class="checkbox">
-	                <input id="optionsCheckbox2" type="checkbox">
+	                <input type="checkbox" name="values[].ack"/>
 	                Kuittaa
 	              </label>
 	            </div>
@@ -22,7 +23,7 @@
 		}
 		<div class="control-group">
 			<div class="controls">
-				<textarea class="input-xlarge" id="textarea" rows="3"></textarea>
+				<textarea class="input-xlarge" name="values[].comment" rows="3"></textarea>
 				<label class="help-inline">Huomautuksia</label>
 			</div>
 		</div>
