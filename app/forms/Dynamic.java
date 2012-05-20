@@ -6,6 +6,11 @@ import models.Field;
 import play.data.validation.Constraints.*;
 import utils.Validation;
 
+/**
+ * 
+ * @author Sami Hostikka <dev@01.fi>
+ * 
+ */
 public class Dynamic {
 	@Required
 	public String batch;

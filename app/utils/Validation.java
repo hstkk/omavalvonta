@@ -3,6 +3,12 @@ package utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Handy value validations.
+ * 
+ * @author Sami Hostikka <dev@01.fi>
+ * 
+ */
 public class Validation {
 
 	/**

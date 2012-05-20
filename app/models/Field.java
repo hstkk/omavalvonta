@@ -2,10 +2,7 @@ package models;
 
 import java.util.*;
 import javax.persistence.*;
-
-//import org.hibernate.type.EnumType;
 import javax.persistence.EnumType;
-
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
@@ -40,6 +37,13 @@ public class Field {
 
 	public Double hardMax = null;
 
+	/**
+	 * Finds field by field id.
+	 * 
+	 * @param Fields
+	 *            id.
+	 * @return Field object if find is successful else null.
+	 */
 	public static Field findById(int id) {
 		try {
 			return JPA.em().find(Field.class, id);
