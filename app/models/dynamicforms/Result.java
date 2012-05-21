@@ -19,7 +19,7 @@ import play.db.jpa.*;
 //@Entity
 //@Audited
 public class Result extends JpaModel {
-	
+
 	@Required
 	@OneToOne
 	@Valid
@@ -31,17 +31,20 @@ public class Result extends JpaModel {
 	@Valid
 	@NotNull
 	public Field field;
-	
+
 	@Lob
 	public String comment;
-	
+
 	public int valueInt;
-	
+
 	public Double valueDouble;
-	
+
 	public Boolean valueBoolean;
-	
+
 	public Date valueDate;
-	
+
 	public String valueString;
+
+	public Result() {
+	}
 }

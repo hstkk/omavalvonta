@@ -42,6 +42,9 @@ public class Results extends JpaModel {
 	@NotNull
 	public Batch batch;
 
+	public Results() {
+	}
+
 	public static Results findById(int id) {
 		return JPA.em().find(Results.class, id);
 	}

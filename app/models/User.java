@@ -32,4 +32,7 @@ public class User extends JpaModel {
 	public Boolean isTeacher;
 
 	public String schoolClass;
+
+	public User() {
+	}
 }

@@ -31,4 +31,7 @@ public class Product extends JpaModel {
 	@Required
 	@OneToOne
 	public Form purityMonitoring;
+
+	public Product() {
+	}
 }

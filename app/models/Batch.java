@@ -20,4 +20,7 @@ public class Batch extends JpaModel {
 	@Valid
 	@OneToOne
 	public Product product;
+
+	public Batch() {
+	}
 }

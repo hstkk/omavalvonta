@@ -25,4 +25,7 @@ public class Content extends JpaModel {
 		this.name = name;
 		this.text = text;
 	}
+
+	public Content() {
+	}
 }
