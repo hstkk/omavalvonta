@@ -7,24 +7,24 @@ import javax.persistence.Lob;
 
 import play.data.validation.Constraints.Required;
 
-public class ManageForm {
+public class Manage {
 	@Required
 	public String name;
 
 	@Lob
-	public String text;
+	public String description;
 
 	public List<Integer> fields;
 
 	@Required
 	public Boolean isActive;
 
-	public ManageForm() {
+	public Manage() {
 	}
 
-	public ManageForm(models.dynamicforms.Form form) {
-		this.name = form.content.name;
-		this.text = form.content.text;
+	public Manage(models.dynamicforms.Form form) {
+		this.name = form.name;
+		this.description = form.description;
 		this.isActive = form.isActive;
 		fields = new ArrayList<Integer>();
 		for (models.dynamicforms.Field field : form.fields)

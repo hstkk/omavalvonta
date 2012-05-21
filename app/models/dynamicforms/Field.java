@@ -25,7 +25,7 @@ public class Field extends JpaModel {
 	public String name;
 
 	@Lob
-	public String help = "";
+	public String help;
 	
 	@Required
 	@NotNull
@@ -35,14 +35,14 @@ public class Field extends JpaModel {
 	@NotNull
 	public boolean isSigned;
 
-	public Double min = null;
+	public Double min;
 
-	public Double max = null;
+	public Double max;
 
 	public Field() {
 	}
 	
-	public Field(forms.dynamicforms.Field field/*, Form form*/){
+	public Field(forms.dynamicforms.Field field){
 		this.name = field.name;
 		this.help = field.help;
 		this.type = field.type;

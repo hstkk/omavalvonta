@@ -2,6 +2,8 @@ package models;
 
 import javax.persistence.*;
 
+import models.dynamicforms.Field;
+
 import play.db.jpa.*;
 
 @MappedSuperclass
