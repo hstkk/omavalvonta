@@ -40,6 +40,9 @@ public class Form extends JpaModel {
 	@Required
 	public Boolean isActive;
 
+	public Form() {
+	}
+
 	public Form(forms.dynamicforms.Manage manage) {
 		set(manage);
 		this.save();
@@ -62,6 +65,7 @@ public class Form extends JpaModel {
 		try {
 			return JPA.em().find(Form.class, id);
 		} catch (Exception e) {
+			System.out.println("\n\n" + e.toString());
 			return null;
 		}
 	}
@@ -108,7 +112,7 @@ public class Form extends JpaModel {
 				inheritedFields = JPA
 						.em()
 						.createQuery(
-								"select * from Field inner join FormField ON Field.id = FormField.field_id where FormField.form_id = ?")
+								"select Field.id, Field.help, Field.isRequired, Field.isSigned, Field.max, Field.min, Field.name, Field.type from Field join FormField ON Field.id = FormField.field_id where FormField.form_id = ?")
 						.setParameter(1, this.id).getResultList();
 			} catch (Exception e) {
 			}

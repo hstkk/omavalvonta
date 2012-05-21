@@ -1,11 +1,7 @@
 package models;
 
 import javax.persistence.*;
-
-import models.dynamicforms.Field;
-
 import play.db.jpa.*;
-
 
 /**
  * 
@@ -23,7 +19,6 @@ public class JpaModel {
 			this.id = id;
 			JPA.em().persist(this);
 		} catch (Exception e) {
-			System.out.println("\n\n"+e.toString());
 		}
 	}
 

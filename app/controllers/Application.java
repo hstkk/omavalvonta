@@ -11,7 +11,7 @@ public class Application extends Controller {
 
 	@Transactional
 	public static Result index() {
-		forms.dynamicforms.Field field = new forms.dynamicforms.Field();
+		/*forms.dynamicforms.Field field = new forms.dynamicforms.Field();
 		field.help = "help";
 		field.name = "test";
 		field.type = models.dynamicforms.FieldType.TEXT;
@@ -22,9 +22,10 @@ public class Application extends Controller {
 		man.description = "desc";
 		man.isActive = false;
 		man.name = "test";
-		models.dynamicforms.Form form = new models.dynamicforms.Form(man);
-		form.add(f);
-		form.save();
+		models.dynamicforms.Form form = new models.dynamicforms.Form(man);*/
+		//models.dynamicforms.Form form = models.dynamicforms.Form.findById(Long.parseLong("1"));
+		/*form.add(f);
+		form.save();*/
 		return ok(index.render("Your new application is ready."));
 	}
 
