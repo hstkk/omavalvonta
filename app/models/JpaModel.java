@@ -6,12 +6,18 @@ import models.dynamicforms.Field;
 
 import play.db.jpa.*;
 
+
+/**
+ * 
+ * @author Sami Hostikka <dev@01.fi>
+ * 
+ */
 @MappedSuperclass
 public class JpaModel {
 	@Id
 	@GeneratedValue
 	public int id;
-	
+
 	public void save() {
 		try {
 			JPA.em().persist(this);
