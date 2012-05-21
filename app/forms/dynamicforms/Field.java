@@ -1,10 +1,6 @@
 package forms.dynamicforms;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Type;
-
 import models.dynamicforms.FieldType;
 import play.data.validation.Constraints.Required;
 

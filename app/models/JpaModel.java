@@ -16,12 +16,14 @@ import play.db.jpa.*;
 public class JpaModel {
 	@Id
 	@GeneratedValue
-	public int id;
+	public Long id;
 
 	public void save() {
 		try {
+			this.id = id;
 			JPA.em().persist(this);
 		} catch (Exception e) {
+			System.out.println("\n\n"+e.toString());
 		}
 	}
 
@@ -34,6 +36,7 @@ public class JpaModel {
 
 	public void update() {
 		try {
+			this.id = id;
 			JPA.em().merge(this);
 		} catch (Exception e) {
 		}

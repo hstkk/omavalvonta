@@ -60,7 +60,7 @@ public class Field extends JpaModel {
 	 *            id.
 	 * @return Field object if find is successful else null.
 	 */
-	public static Field findById(int id) {
+	public static Field findById(Long id) {
 		try {
 			return JPA.em().find(Field.class, id);
 		} catch (Exception e) {

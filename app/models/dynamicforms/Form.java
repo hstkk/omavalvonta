@@ -21,7 +21,7 @@ import play.db.jpa.*;
 // TODO field order
 public class Form extends JpaModel {
 	@OneToOne
-	@Valid
+	// @Valid
 	public Form basedOn;
 
 	@Required
@@ -31,23 +31,34 @@ public class Form extends JpaModel {
 	@Lob
 	public String description;
 
-	@Required
-	@Valid
+	// @Required
+	// @Valid
 	@OneToMany
 	@JoinTable(name = "FormField", joinColumns = { @JoinColumn(name = "form_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "field_id", referencedColumnName = "id", unique = true) })
-	public List<Field> fields;
+	public List<Field> fields = new ArrayList<Field>();
 
 	@Required
 	public Boolean isActive;
 
-	public Form(forms.dynamicforms.Manage manage){
+	public Form(forms.dynamicforms.Manage manage) {
+		set(manage);
+		this.save();
+	}
+
+	public void set(forms.dynamicforms.Manage manage) {
 		this.name = manage.name;
 		this.description = manage.description;
 		this.isActive = manage.isActive;
-		this.save();
+		if (manage.basedOn != null)
+			this.basedOn = Form.findById(manage.basedOn);
 	}
-	
-	public static Form findById(int id) {
+
+	public void add(Field field) {
+		if (field.id != null)
+			fields.add(field);
+	}
+
+	public static Form findById(Long id) {
 		try {
 			return JPA.em().find(Form.class, id);
 		} catch (Exception e) {
