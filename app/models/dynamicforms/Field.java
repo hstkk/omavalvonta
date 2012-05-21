@@ -6,7 +6,7 @@ import javax.validation.constraints.*;
 
 import org.hibernate.envers.Audited;
 
-import models.Model;
+import models.JpaModel;
 
 import play.db.ebean.*;
 import play.data.format.*;
@@ -14,12 +14,7 @@ import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
-@Audited
-public class Field extends Model {
-	@Id
-	@GeneratedValue
-	public int id;
-
+public class Field extends JpaModel {
 	@Required
 	@Enumerated(EnumType.STRING)
 	@NotNull
@@ -29,11 +24,8 @@ public class Field extends Model {
 	@NotNull
 	public String name;
 
+	@Lob
 	public String help = "";
-
-	//TODO
-	/*@ManyToOne
-	public Form form;*/
 	
 	@Required
 	@NotNull
@@ -49,21 +41,6 @@ public class Field extends Model {
 
 	public Field() {
 	}
-
-	/*public Field(String name, String help, FieldType type, boolean isRequired,
-			boolean isSigned, Double softMin, Double softMax, Double hardMin,
-			Double hardMax) {
-		this.name = name;
-		this.help = help;
-		this.type = type;
-		this.isRequired = isRequired;
-		this.isSigned = isSigned;
-		this.softMin = softMin;
-		this.softMax = softMax;
-		this.hardMin = hardMin;
-		this.hardMax = hardMax;
-		this.save();
-	}*/
 	
 	public Field(forms.dynamicforms.Field field/*, Form form*/){
 		this.name = field.name;
@@ -73,7 +50,6 @@ public class Field extends Model {
 		this.isSigned = field.isSigned;
 		this.min = field.min;
 		this.max = field.max;
-		/*this.form = form;*/
 		this.save();
 	}
 

@@ -2,24 +2,22 @@ package models;
 
 import java.util.*;
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
-//TODO
 //@Entity
-public class Batch {
-	//TODO generate
-	@Id
-	public String id;
-	
+public class Batch extends JpaModel {
 	@Required
+	@NotNull
 	public Date created;
-	
-	//TODO validate
+
 	@Required
+	@Valid
 	@OneToOne
 	public Product product;
 }

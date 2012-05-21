@@ -23,8 +23,8 @@ public class ManageForm {
 	}
 
 	public ManageForm(models.dynamicforms.Form form) {
-		this.name = form.name;
-		this.text = form.text;
+		this.name = form.content.name;
+		this.text = form.content.text;
 		this.isActive = form.isActive;
 		fields = new ArrayList<Integer>();
 		for (models.dynamicforms.Field field : form.fields)

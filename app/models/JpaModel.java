@@ -1,10 +1,15 @@
 package models;
 
 import javax.persistence.*;
+
 import play.db.jpa.*;
 
-//@Entity
-public class Model {
+@MappedSuperclass
+public class JpaModel {
+	@Id
+	@GeneratedValue
+	public int id;
+	
 	public void save() {
 		try {
 			JPA.em().persist(this);
