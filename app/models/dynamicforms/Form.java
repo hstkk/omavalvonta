@@ -56,9 +56,12 @@ public class Form extends JpaModel {
 			this.basedOn = Form.findById(manage.basedOn);
 	}
 
-	public void add(Field field) {
-		if (field.id != null)
+	public void addField(forms.dynamicforms.Field fieldForm) {
+		Field field = new Field(fieldForm);
+		if (field.id != null) {
 			fields.add(field);
+			this.save();
+		}
 	}
 
 	public static Form findById(Long id) {
@@ -70,7 +73,7 @@ public class Form extends JpaModel {
 		}
 	}
 
-	public static Form findActiveById(int id) {
+	public static Form findActiveById(Long id) {
 		try {
 			return (Form) JPA
 					.em()

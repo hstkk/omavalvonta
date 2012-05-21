@@ -31,7 +31,7 @@ public class Field {
 	}
 
 	public Field(models.dynamicforms.Field field) {
-		if (field != null) {
+		if (field.id != null) {
 			this.name = field.name;
 			this.help = field.help;
 			this.type = field.type;
