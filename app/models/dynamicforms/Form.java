@@ -2,6 +2,7 @@ package models.dynamicforms;
 
 import java.util.*;
 import javax.persistence.*;
+import javax.validation.Valid;
 
 import models.Content;
 
@@ -20,14 +21,13 @@ public class Form {
 	public Form basedOn = null;
 	
 	@Required
-	public String name;
-	
-	@Lob
-	public String text;
+	@Valid
+	public Content content;
 	
 	//TODO
 	@Required
-	@OneToMany(mappedBy="form")
+	@OneToMany
+	/*(mappedBy="form")*/
 	@JoinTable
 	(
 		name="FormField",

@@ -18,9 +18,9 @@ public class Field {
 	@Required
 	public boolean isSigned;
 
-	public Double softMin = null;
+	public Double min = null;
 
-	public Double softMax = null;
+	public Double max = null;
 
 	public Field() {
 	}
@@ -32,8 +32,8 @@ public class Field {
 			this.type = field.type;
 			this.isRequired = field.isRequired;
 			this.isSigned = field.isSigned;
-			this.softMin = field.softMin;
-			this.softMax = field.softMax;
+			this.min = field.min;
+			this.max = field.max;
 		}
 	}
 }

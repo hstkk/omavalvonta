@@ -3,12 +3,15 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 
+import org.hibernate.envers.Audited;
+
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
-//@Entity
+@Entity
+@Audited
 public class Content {
 	@Id
 	@GeneratedValue

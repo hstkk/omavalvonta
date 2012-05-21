@@ -4,6 +4,8 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import org.hibernate.envers.Audited;
+
 import models.Model;
 
 import play.db.ebean.*;
@@ -12,6 +14,7 @@ import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
+@Audited
 public class Field extends Model {
 	@Id
 	@GeneratedValue
@@ -29,8 +32,8 @@ public class Field extends Model {
 	public String help = "";
 
 	//TODO
-	@ManyToOne
-	public Form form;
+	/*@ManyToOne
+	public Form form;*/
 	
 	@Required
 	@NotNull
@@ -40,13 +43,9 @@ public class Field extends Model {
 	@NotNull
 	public boolean isSigned;
 
-	public Double softMin = null;
+	public Double min = null;
 
-	public Double softMax = null;
-
-	public Double hardMin = null;
-
-	public Double hardMax = null;
+	public Double max = null;
 
 	public Field() {
 	}
@@ -66,15 +65,15 @@ public class Field extends Model {
 		this.save();
 	}*/
 	
-	public Field(forms.dynamicforms.Field field, Form form){
+	public Field(forms.dynamicforms.Field field/*, Form form*/){
 		this.name = field.name;
 		this.help = field.help;
 		this.type = field.type;
 		this.isRequired = field.isRequired;
 		this.isSigned = field.isSigned;
-		this.softMin = field.softMin;
-		this.softMax = field.softMax;
-		this.form = form;
+		this.min = field.min;
+		this.max = field.max;
+		/*this.form = form;*/
 		this.save();
 	}
 

@@ -49,32 +49,32 @@ public class Dynamic {
 						if (doubleTest == null)
 							result.append("Kentän " + field.name
 									+ " arvon kuuluu olla numero. ");
-						else if (field.hardMin != null
-								&& !Validation.min(doubleTest, field.hardMin))
+						/*else if (field.min != null
+								&& !Validation.min(doubleTest, field.min))
 							result.append("Kentän " + field.name
 									+ " arvo voi olla pienimmillään "
-									+ field.hardMin + ". ");
-						else if (field.hardMax != null
-								&& !Validation.min(doubleTest, field.hardMax))
+									+ field.min + ". ");
+						else if (field.max != null
+								&& !Validation.min(doubleTest, field.max))
 							result.append("Kentän " + field.name
 									+ " arvo voi olla suurimmillaan "
-									+ field.hardMax + ". ");
+									+ field.max + ". ");*/
 						break;
 					case INT:
 						Integer intTest = Validation.isInt(fieldset.value);
 						if (intTest == null)
 							result.append("Kentän " + field.name
 									+ " arvon kuuluu olla numero. ");
-						else if (field.hardMin != null
-								&& !Validation.min(intTest, field.hardMin))
+						/*else if (field.min != null
+								&& !Validation.min(intTest, field.min))
 							result.append("Kentän " + field.name
 									+ " arvo voi olla pienimmillään "
-									+ field.hardMin + ". ");
-						else if (field.hardMax != null
-								&& !Validation.min(intTest, field.hardMax))
+									+ field.min + ". ");
+						else if (field.max != null
+								&& !Validation.min(intTest, field.max))
 							result.append("Kentän " + field.name
 									+ " arvo voi olla suurimmillaan "
-									+ field.hardMax + ". ");
+									+ field.max + ". ");*/
 						break;
 					case TEXT:
 					case TEXTAREA:
