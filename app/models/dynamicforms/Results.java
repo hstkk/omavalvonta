@@ -1,8 +1,11 @@
-package models;
+package models.dynamicforms;
 
 import java.util.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import models.Batch;
 
 import com.avaje.ebean.annotation.EnumValue;
 
@@ -20,14 +23,10 @@ public class Results {
 	@Required
 	public Date created;
 	
-	public enum type {
-		@EnumValue("A")
-		WASHPROGRAM,
-		@EnumValue("B")
-		PRODUCTCARD,
-		@EnumValue("C")
-		PURITYMONITORING,
-	}
+	@Required
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	public FormType type;
 	
 	@Required
 	public Boolean isReady;

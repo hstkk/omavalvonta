@@ -10,7 +10,7 @@ public class Application extends Controller {
   
   @Transactional
   public static Result index() {
-	  models.Field.findById(1);
+	  models.dynamicforms.Field.findById(1);
     return ok(index.render("Your new application is ready."));
   }
   

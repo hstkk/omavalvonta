@@ -1,7 +1,10 @@
-package models;
+package models.dynamicforms;
 
 import java.util.*;
 import javax.persistence.*;
+
+import models.User;
+import models.dynamicforms.Field;
 
 import play.db.ebean.*;
 import play.data.format.*;
@@ -15,10 +18,12 @@ public class Result {
 	public int id;
 	
 	@Required
+	@OneToOne
 	public User user;
 	
 	//TODO pdf
 	@Required
+	@OneToOne
 	public Field field;
 	
 	@Lob

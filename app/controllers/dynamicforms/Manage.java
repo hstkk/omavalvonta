@@ -1,4 +1,4 @@
-package dynamicforms;
+package controllers.dynamicforms;
 
 import play.*;
 import play.db.jpa.Transactional;

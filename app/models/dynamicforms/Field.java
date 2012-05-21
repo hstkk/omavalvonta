@@ -1,8 +1,10 @@
-package models;
+package models.dynamicforms;
 
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import models.Model;
 
 import play.db.ebean.*;
 import play.data.format.*;
@@ -26,6 +28,10 @@ public class Field extends Model {
 
 	public String help = "";
 
+	//TODO
+	@ManyToOne
+	public Form form;
+	
 	@Required
 	@NotNull
 	public boolean isRequired;
@@ -45,7 +51,7 @@ public class Field extends Model {
 	public Field() {
 	}
 
-	public Field(String name, String help, FieldType type, boolean isRequired,
+	/*public Field(String name, String help, FieldType type, boolean isRequired,
 			boolean isSigned, Double softMin, Double softMax, Double hardMin,
 			Double hardMax) {
 		this.name = name;
@@ -57,6 +63,18 @@ public class Field extends Model {
 		this.softMax = softMax;
 		this.hardMin = hardMin;
 		this.hardMax = hardMax;
+		this.save();
+	}*/
+	
+	public Field(forms.dynamicforms.Field field, Form form){
+		this.name = field.name;
+		this.help = field.help;
+		this.type = field.type;
+		this.isRequired = field.isRequired;
+		this.isSigned = field.isSigned;
+		this.softMin = field.softMin;
+		this.softMax = field.softMax;
+		this.form = form;
 		this.save();
 	}
 

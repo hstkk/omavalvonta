@@ -3,7 +3,7 @@ package forms.dynamicforms;
 import java.util.List;
 
 
-import models.Field;
+import models.dynamicforms.Field;
 import play.data.validation.Constraints.*;
 import play.db.jpa.Transactional;
 import utils.Validation;
