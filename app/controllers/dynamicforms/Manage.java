@@ -21,8 +21,8 @@ public class Manage extends Controller {
 	}
 
 	public static Result createForm() {
-		return ok(views.html.dynamicforms.manage.render(manageForm, null, null,
-				null));
+		return ok(views.html.dynamicforms.manage.render(manageForm, null,
+				fieldForm, null));
 	}
 
 	@Transactional
@@ -33,7 +33,8 @@ public class Manage extends Controller {
 					manageForm.get());
 			if (form.save()) {
 				flash("status", "Lomake on luotu onnistuneesti!");
-				return redirect(controllers.dynamicforms.routes.Manage.editForm(form.id));
+				return redirect(controllers.dynamicforms.routes.Manage
+						.editForm(form.id));
 			}
 		}
 		flash("status", "Lomakkeen luonti ei onnistunut!");
