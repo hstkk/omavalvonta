@@ -1,7 +1,9 @@
 package forms.dynamicforms;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import models.dynamicforms.FieldType;
+import models.dynamicforms.Form;
 import play.data.validation.Constraints.Required;
 
 public class Field {

@@ -35,6 +35,11 @@ public class Field extends JpaModel {
 	@NotNull
 	public boolean isSigned;
 
+	@ManyToOne
+	@Required
+	@NotNull
+	public Form form;
+	
 	public Double min;
 
 	public Double max;

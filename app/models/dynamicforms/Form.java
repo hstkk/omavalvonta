@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.ListUtils;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+//import org.hibernate.annotations.CascadeType;
 import org.hibernate.envers.Audited;
 
 import models.Content;
@@ -34,9 +34,10 @@ public class Form extends JpaModel {
 	public String description;
 
 	// @Valid
-	@OneToMany(orphanRemoval = true)
-	@Cascade(CascadeType.DELETE)
-	@JoinTable(name = "FormField", joinColumns = { @JoinColumn(name = "form_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "field_id", referencedColumnName = "id", unique = true) })
+	//@OneToMany(orphanRemoval = true)
+	//@Cascade(CascadeType.DELETE)
+	//@JoinTable(name = "FormField", joinColumns = { @JoinColumn(name = "form_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "field_id", referencedColumnName = "id", unique = true) })
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "form")
 	public List<Field> fields = new ArrayList<Field>();
 
 	@Required
