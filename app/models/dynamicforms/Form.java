@@ -53,7 +53,7 @@ public class Form extends JpaModel {
 	}
 
 	public void addField(forms.dynamicforms.Field fieldForm) {
-		Field field = new Field(this, fieldForm);
+		new Field(this, fieldForm);
 	}
 
 	public static Form findById(Long id) {
@@ -87,35 +87,5 @@ public class Form extends JpaModel {
 		} catch (Exception e) {
 			return null;
 		}
-	}
-
-	//TODO or basedon.id group by form_id in one query
-	@SuppressWarnings("unchecked")
-	public List<Field> findFields() {
-		List<Field> fields = null;
-		try {
-			fields = JPA
-					.em()
-					.createQuery(
-							"select * from Field f where f.form = ?")
-					.setParameter(1, this.id).getResultList();
-		} catch (Exception e) {
-		}
-		if (this.basedOn.id != null) {
-			List<Field> inheritedFields = null;
-			try {
-				inheritedFields = JPA
-						.em()
-						.createQuery(
-								"select * from Field f where f.form = ?")
-						.setParameter(1, this.basedOn.id).getResultList();
-			} catch (Exception e) {
-			}
-			if (fields == null)
-				return inheritedFields;
-			else if (inheritedFields != null)
-				return ListUtils.union(inheritedFields, fields);
-		}
-		return fields;
 	}
 }
