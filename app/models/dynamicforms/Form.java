@@ -33,13 +33,6 @@ public class Form extends JpaModel {
 	@Lob
 	public String description;
 
-	// @Valid
-	//@OneToMany(orphanRemoval = true)
-	//@Cascade(CascadeType.DELETE)
-	//@JoinTable(name = "FormField", joinColumns = { @JoinColumn(name = "form_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "field_id", referencedColumnName = "id", unique = true) })
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "form")
-	public List<Field> fields = new ArrayList<Field>();
-
 	@Required
 	public Boolean isActive;
 
@@ -60,18 +53,13 @@ public class Form extends JpaModel {
 	}
 
 	public void addField(forms.dynamicforms.Field fieldForm) {
-		Field field = new Field(fieldForm);
-		if (field.id != null) {
-			fields.add(field);
-			this.save();
-		}
+		Field field = new Field(this, fieldForm);
 	}
 
 	public static Form findById(Long id) {
 		try {
 			return JPA.em().find(Form.class, id);
 		} catch (Exception e) {
-			System.out.println("\n\n" + e.toString());
 			return null;
 		}
 	}
@@ -101,6 +89,7 @@ public class Form extends JpaModel {
 		}
 	}
 
+	//TODO or basedon.id group by form_id in one query
 	@SuppressWarnings("unchecked")
 	public List<Field> findFields() {
 		List<Field> fields = null;
@@ -108,18 +97,18 @@ public class Form extends JpaModel {
 			fields = JPA
 					.em()
 					.createQuery(
-							"select f.id, f.name from Field f where f.id = ?")
+							"select * from Field f where f.form = ?")
 					.setParameter(1, this.id).getResultList();
 		} catch (Exception e) {
 		}
-		if (this.basedOn != null) {
+		if (this.basedOn.id != null) {
 			List<Field> inheritedFields = null;
 			try {
 				inheritedFields = JPA
 						.em()
 						.createQuery(
-								"select Field.id, Field.help, Field.isRequired, Field.isSigned, Field.max, Field.min, Field.name, Field.type from Field join FormField ON Field.id = FormField.field_id where FormField.form_id = ?")
-						.setParameter(1, this.id).getResultList();
+								"select * from Field f where f.form = ?")
+						.setParameter(1, this.basedOn.id).getResultList();
 			} catch (Exception e) {
 			}
 			if (fields == null)

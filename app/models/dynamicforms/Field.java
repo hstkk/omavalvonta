@@ -47,7 +47,8 @@ public class Field extends JpaModel {
 	public Field() {
 	}
 	
-	public Field(forms.dynamicforms.Field field){
+	public Field(Form form, forms.dynamicforms.Field field){
+		this.form = form;
 		this.name = field.name;
 		this.help = field.help;
 		this.type = field.type;
