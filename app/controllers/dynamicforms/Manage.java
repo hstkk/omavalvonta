@@ -8,14 +8,14 @@ import play.mvc.Result;
 
 import views.html.*;
 
-//TODO auhenticate
+//TODO authenticate
 public class Manage extends Controller {
 
 	final static Form<forms.dynamicforms.Manage> manageForm = form(forms.dynamicforms.Manage.class);
 	final static Form<forms.dynamicforms.Field> fieldForm = form(forms.dynamicforms.Field.class);
-
-	public static Result create() {
-		return ok(views.html.dynamicforms.manage.render(manageForm, fieldForm));
+/*
+	public static Result createForm() {
+		return ok(views.html.dynamicforms.manage.render(manageForm, null));
 	}
 
 	@Transactional
@@ -28,9 +28,10 @@ public class Manage extends Controller {
 				.editForm(new models.dynamicforms.Form(manageForm.get()).id));
 	}
 
-	public static Result saveField(Long id) {
+	@Transactional
+	public static Result saveField(Long formId) {
 		models.dynamicforms.Form form = models.dynamicforms.Form
-				.findActiveById(id);
+				.findActiveById(formId);
 		if (form.id == null)
 			return notFound(views.html.notFound.render());
 		fieldForm.bindFromRequest();
@@ -39,45 +40,48 @@ public class Manage extends Controller {
 					manageForm.fill(new forms.dynamicforms.Manage(form)),
 					fieldForm));
 		form.addField(fieldForm.get());
-		return redirect(routes.dynamicforms.editForm(id));
+		return redirect(routes.dynamicforms.editForm(formId));
 	}
 
-	public static Result editForm(Long id) {
-
-	}
-
-	public static Result editField(Long id) {
+	@Transactional(readOnly=true)
+	public static Result editForm(Long formId) {
 
 	}
 
-	public static Result updateForm() {
+	@Transactional(readOnly=true)
+	public static Result editField(Long formId, Long fieldId) {
 
 	}
 
-	public static Result updateField() {
+	public static Result updateForm(Long formId) {
 
 	}
 
-	public static Result all() {
+	public static Result updateField(Long formId, Long fieldId) {
+
+	}
+
+	@Transactional(readOnly=true)
+	public static Result allForms() {
 		return ok(views.html.dynamicforms.all.render(models.dynamicforms.Form
 				.findAllActive()));
 	}
 
 	// TODO deleteFields
 	@Transactional
-	public static Result deleteForm(Long id) {
-		models.dynamicforms.Form form = models.dynamicforms.Form.findById(id);
+	public static Result deleteForm(Long formId) {
+		models.dynamicforms.Form form = models.dynamicforms.Form.findById(formId);
 		if (form.id != null)
 			form.delete();
 		return redirect(routes.dynamicforms.all());
 	}
 
 	@Transactional
-	public static Result deleteField(Long id) {
+	public static Result deleteField(Long formId, Long fieldId) {
 		models.dynamicforms.Field field = models.dynamicforms.Field
-				.findById(id);
+				.findById(fieldId);
 		if (field.id != null)
 			field.delete();
-		return redirect(routes.dynamicforms.editForm(id));
-	}
+		return redirect(routes.dynamicforms.editForm(formId));
+	}*/
 }

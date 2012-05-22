@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.ListUtils;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.envers.Audited;
 
 import models.Content;
@@ -20,7 +22,7 @@ import play.db.jpa.*;
 @Entity
 // TODO field order
 public class Form extends JpaModel {
-	@OneToOne
+	@OneToOne(orphanRemoval = true)
 	// @Valid
 	public Form basedOn;
 
@@ -31,9 +33,9 @@ public class Form extends JpaModel {
 	@Lob
 	public String description;
 
-	// @Required
 	// @Valid
-	@OneToMany
+	@OneToMany(orphanRemoval = true)
+	@Cascade(CascadeType.DELETE)
 	@JoinTable(name = "FormField", joinColumns = { @JoinColumn(name = "form_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "field_id", referencedColumnName = "id", unique = true) })
 	public List<Field> fields = new ArrayList<Field>();
 

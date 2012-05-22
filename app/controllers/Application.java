@@ -26,6 +26,7 @@ public class Application extends Controller {
 		//models.dynamicforms.Form form = models.dynamicforms.Form.findById(Long.parseLong("1"));
 		/*form.add(f);
 		form.save();*/
+		models.dynamicforms.Field.findById(Long.parseLong("1")).delete();
 		return ok(index.render("Your new application is ready."));
 	}
 
