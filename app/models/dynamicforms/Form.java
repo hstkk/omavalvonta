@@ -100,15 +100,15 @@ public class Form extends JpaModel {
 	
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> map() {
+		Map<String, String> map = new HashMap<String, String>();
 		try {
 			List<Form> forms = JPA.em().createQuery("select f.id, f.name from Form f")
 					.getResultList();
-			Map<String, String> map = new HashMap<String, String>();
 			for(Form form: forms)
 				map.put(form.id.toString(), form.toString());
 			return map;
 		} catch (Exception e) {
-			return null;
+			return map;
 		}
 	}
 }
