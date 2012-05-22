@@ -43,6 +43,10 @@ public class Form extends JpaModel {
 		set(manage);
 	}
 
+	public String toString() {
+		return name;
+	}
+
 	public void set(forms.dynamicforms.Manage manage) {
 		this.name = manage.name;
 		this.description = manage.description;
@@ -79,6 +83,30 @@ public class Form extends JpaModel {
 					.createQuery(
 							"select f.id, f.name from Form f where f.isActive = true")
 					.getResultList();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Form> findAll() {
+		try {
+			return JPA.em().createQuery("select f.id, f.name from Form f")
+					.getResultList();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static Map<String, String> map() {
+		try {
+			List<Form> forms = JPA.em().createQuery("select f.id, f.name from Form f")
+					.getResultList();
+			Map<String, String> map = new HashMap<String, String>();
+			for(Form form: forms)
+				map.put(form.id.toString(), form.toString());
+			return map;
 		} catch (Exception e) {
 			return null;
 		}

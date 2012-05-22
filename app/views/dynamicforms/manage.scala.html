@@ -1,0 +1,40 @@
+@(manageF: play.data.Form[forms.dynamicforms.Manage], formId: Long, fieldForm: play.data.Form[forms.dynamicforms.Field], fieldId: Long)
+
+@import helper.twitterBootstrap._
+@import tags._
+
+@main("Welcome to Play 2.0"){
+	@if(flash.get("status")){
+		@alert(){
+			@flash.get("status")
+		}
+	}
+	@if(manageF.hasGlobalErrors){
+		@alert(){
+			@manageF.globalError.message
+		}
+	}
+	@if(fieldForm.hasGlobalErrors){
+		@alert(){
+			@fieldForm.globalError.message
+		}
+	}
+	@if(formId!= null){
+		@helper.form(action = controllers.dynamicforms.routes.Manage.updateForm(formId)){
+			@manageForm(manageF)
+		}
+		@if(fieldId!= null){
+			@helper.form(action = controllers.dynamicforms.routes.Manage.updateField(formId, fieldId)){
+				asd
+			}
+		} else{
+			@helper.form(action = controllers.dynamicforms.routes.Manage.saveField(formId)){
+				asd
+			}
+		}
+	} else{
+		@helper.form(action = controllers.dynamicforms.routes.Manage.saveForm()){
+			@manageForm(manageF)
+		}
+	}
+}

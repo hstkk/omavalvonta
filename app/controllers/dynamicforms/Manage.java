@@ -33,7 +33,7 @@ public class Manage extends Controller {
 					manageForm.get());
 			if (form.save()) {
 				flash("status", "Lomake on luotu onnistuneesti!");
-				return redirect(routes.dynamicforms.editForm(form.id));
+				return redirect(controllers.dynamicforms.routes.Manage.editForm(form.id));
 			}
 		}
 		flash("status", "Lomakkeen luonti ei onnistunut!");
@@ -83,7 +83,7 @@ public class Manage extends Controller {
 			flash("status", "Lomake on poistettu onnistuneesti!");
 		else
 			flash("status", "Lomakkeen poisto ei onnistunut!");
-		return redirect(routes.dynamicforms.allForms());
+		return redirect(controllers.dynamicforms.routes.Manage.allForms());
 	}
 
 	@Transactional
@@ -162,6 +162,6 @@ public class Manage extends Controller {
 			flash("status", "Kenttä on poistettu onnistuneesti!");
 		else
 			flash("status", "Kentän poisto ei onnistunut!");
-		return redirect(routes.dynamicforms.editForm(formId));
+		return redirect(controllers.dynamicforms.routes.Manage.editForm(formId));
 	}
 }

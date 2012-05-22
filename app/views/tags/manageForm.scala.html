@@ -1,0 +1,10 @@
+@(manageForm: play.data.Form[forms.dynamicforms.Manage])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@helper.inputText(manageForm("name"), '_label -> "nimi", '_class -> "control-group")
+@helper.textarea(manageForm("description"), '_label -> "kuvaus")
+@helper.checkbox(manageForm("isActive"), '_label -> None, '_text -> "Lomake on aktiivinen", '_showConstraints -> false)
+@helper.select(manageForm("basedOn"), options = options(models.dynamicforms.Form.map), '_default -> "", '_label -> "peruslomake", '_text -> "lomake, jonka kentät näytetään myös tässä lomakkeessa")
+<button type="submit" class="btn">Tallenna</button>

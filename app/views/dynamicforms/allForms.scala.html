@@ -1,0 +1,17 @@
+@(forms: List[models.dynamicforms.Form])
+
+@import tags._
+
+@main("Kaikki lomakkeet") {
+	@if(forms != null){
+		<ul class="nav nav-list">
+		@for(form <- forms){
+			<li><a href="@controllers.dynamicforms.routes.Manage.editForm(form.id)">@form</a></li>
+		}
+		</ul>
+	} else{
+		@alert(){
+			Lomakkeita ei löytynyt, voit kuitenkin <a href="@controllers.dynamicforms.routes.Manage.createForm()">lisätä</a> uusia lomakkeita.
+		}
+	}
+}

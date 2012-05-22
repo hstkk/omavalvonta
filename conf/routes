@@ -7,16 +7,16 @@ GET     /                           controllers.Application.index()
 #GET	/yllapito
 
 # dynamic forms
-#GET	/yllapito/lomakkeet									controllers.dynamicforms.Manage.allForms()
-#GET	/yllapito/lomakkeet/uusi							controllers.dynamicforms.Manage.createForm()
-#POST	/yllapito/lomakkeet/uusi							controllers.dynamicforms.Manage.saveForm()
-#GET	/yllapito/lomakkeet/:formId							controllers.dynamicforms.Manage.editForm(formId: Long)
-#POST	/yllapito/lomakkeet/:formId							controllers.dynamicforms.Manage.updateForm(formId: Long)
-#POST	/yllapito/lomakkeet/:formId/poista					controllers.dynamicforms.Manage.deleteForm(formId: Long)
-#POST	/yllapito/lomakkeet/:formId/kentta					controllers.dynamicforms.Manage.saveField(formId: Long)
-#GET	/yllapito/lomakkeet/:formId/kentta/:fieldId			controllers.dynamicforms.Manage.editField(formId: Long, fieldId: Long)
-#POST	/yllapito/lomakkeet/:formId/kentta/:fieldId			controllers.dynamicforms.Manage.updateField(formId: Long, fieldId: Long)
-#POST	/yllapito/lomakkeet/:formId/kentta/:fieldId/poista	controllers.dynamicforms.Manage.deleteField(formId: Long, fieldId: Long)
+GET		/yllapito/lomakkeet									controllers.dynamicforms.Manage.allForms()
+GET		/yllapito/lomakkeet/uusi							controllers.dynamicforms.Manage.createForm()
+POST	/yllapito/lomakkeet/uusi							controllers.dynamicforms.Manage.saveForm()
+GET		/yllapito/lomakkeet/:formId							controllers.dynamicforms.Manage.editForm(formId: Long)
+POST	/yllapito/lomakkeet/:formId							controllers.dynamicforms.Manage.updateForm(formId: Long)
+POST	/yllapito/lomakkeet/:formId/poista					controllers.dynamicforms.Manage.deleteForm(formId: Long)
+POST	/yllapito/lomakkeet/:formId/kentta					controllers.dynamicforms.Manage.saveField(formId: Long)
+GET		/yllapito/lomakkeet/:formId/kentta/:fieldId			controllers.dynamicforms.Manage.editField(formId: Long, fieldId: Long)
+POST	/yllapito/lomakkeet/:formId/kentta/:fieldId			controllers.dynamicforms.Manage.updateField(formId: Long, fieldId: Long)
+POST	/yllapito/lomakkeet/:formId/kentta/:fieldId/poista	controllers.dynamicforms.Manage.deleteField(formId: Long, fieldId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
