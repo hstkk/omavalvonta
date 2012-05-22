@@ -51,6 +51,10 @@ public class Field extends JpaModel {
 
 	public Field(Form form, forms.dynamicforms.Field field) {
 		this.form = form;
+		set(field);
+	}
+
+	public void set(forms.dynamicforms.Field field) {
 		this.name = field.name;
 		this.help = field.help;
 		this.type = field.type;
@@ -58,7 +62,6 @@ public class Field extends JpaModel {
 		this.isSigned = field.isSigned;
 		this.min = field.min;
 		this.max = field.max;
-		this.save();
 	}
 
 	/**
@@ -102,5 +105,20 @@ public class Field extends JpaModel {
 				return ListUtils.union(inheritedFields, fields);
 		}
 		return fields;
+	}
+
+	public static Field findByFormAndId(Form form, Long id) {
+		if (form != null && id != null) {
+			try {
+				return (Field) JPA
+						.em()
+						.createQuery(
+								"from Field f where f.form = ? and f.id = ?")
+						.setParameter(1, form).setParameter(2, id)
+						.getSingleResult();
+			} catch (Exception e) {
+			}
+		}
+		return null;
 	}
 }

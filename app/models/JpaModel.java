@@ -14,26 +14,30 @@ public class JpaModel {
 	@GeneratedValue
 	public Long id;
 
-	public void save() {
+	public boolean save() {
 		try {
-			this.id = id;
 			JPA.em().persist(this);
+			return true;
 		} catch (Exception e) {
+			return false;
 		}
 	}
 
-	public void delete() {
+	public boolean delete() {
 		try {
 			JPA.em().remove(this);
+			return true;
 		} catch (Exception e) {
+			return false;
 		}
 	}
 
-	public void update() {
+	public boolean update() {
 		try {
-			this.id = id;
 			JPA.em().merge(this);
+			return true;
 		} catch (Exception e) {
+			return false;
 		}
 	}
 }

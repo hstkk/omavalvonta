@@ -41,7 +41,6 @@ public class Form extends JpaModel {
 
 	public Form(forms.dynamicforms.Manage manage) {
 		set(manage);
-		this.save();
 	}
 
 	public void set(forms.dynamicforms.Manage manage) {
@@ -50,10 +49,6 @@ public class Form extends JpaModel {
 		this.isActive = manage.isActive;
 		if (manage.basedOn != null)
 			this.basedOn = Form.findById(manage.basedOn);
-	}
-
-	public void addField(forms.dynamicforms.Field fieldForm) {
-		new Field(this, fieldForm);
 	}
 
 	public static Form findById(Long id) {
