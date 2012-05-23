@@ -1,15 +1,18 @@
 package forms.dynamicforms;
 
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import models.dynamicforms.FieldType;
 import models.dynamicforms.Form;
 import play.data.validation.Constraints.Required;
 
 public class Field {
+	Long id;
+	
+	Form form;
+	
 	@Required
 	@NotNull
-	public FieldType type;
+	public String type;
 
 	@Required
 	@NotNull
@@ -33,10 +36,12 @@ public class Field {
 	}
 
 	public Field(models.dynamicforms.Field field) {
-		if (field.id != null) {
+		if (field != null) {
+			this.id = field.id;
+			this.form = field.form;
 			this.name = field.name;
 			this.help = field.help;
-			this.type = field.type;
+			this.type = field.type.toString();
 			this.isRequired = field.isRequired;
 			this.isSigned = field.isSigned;
 			this.min = field.min;

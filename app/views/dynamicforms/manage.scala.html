@@ -1,5 +1,6 @@
-@(manageF: play.data.Form[forms.dynamicforms.Manage], formId: Long, fieldForm: play.data.Form[forms.dynamicforms.Field], fieldId: Long)
+@(manageForm: play.data.Form[forms.dynamicforms.Manage], fieldForm: play.data.Form[forms.dynamicforms.Field], formId: Long)
 
+@import helper._
 @import helper.twitterBootstrap._
 @import tags._
 
@@ -9,9 +10,9 @@
 			@flash.get("status")
 		}
 	}
-	@if(manageF.hasGlobalErrors){
+	@if(manageForm.hasGlobalErrors){
 		@alert(){
-			@manageF.globalError.message
+			@manageForm.globalError.message
 		}
 	}
 	@if(fieldForm.hasGlobalErrors){
@@ -19,22 +20,27 @@
 			@fieldForm.globalError.message
 		}
 	}
+	@helper.form(action = controllers.dynamicforms.routes.Manage.saveForm()){
+		<input type="hidden" name="id" value="@manageForm("id").value"/>
+		@helper.inputText(manageForm("name"), '_label -> "nimi", '_class -> "control-group")
+		@helper.textarea(manageForm("description"), '_label -> "kuvaus")
+		@helper.checkbox(manageForm("isActive"), '_label -> None, '_text -> "Lomake on aktiivinen", '_showConstraints -> false)
+		@helper.select(manageForm("basedOn"), options = options(models.dynamicforms.Form.map), '_default -> "", '_label -> "peruslomake", '_text -> "lomake, jonka kentät näytetään myös tässä lomakkeessa")
+		<button type="submit" class="btn">Tallenna</button>
+	}
 	@if(formId!= null){
-		@helper.form(action = controllers.dynamicforms.routes.Manage.updateForm(formId)){
-			@manageForm(manageF)
-		}
-		@if(fieldId!= null){
-			@helper.form(action = controllers.dynamicforms.routes.Manage.updateField(formId, fieldId)){
-				asd
-			}
-		} else{
-			@helper.form(action = controllers.dynamicforms.routes.Manage.saveField(formId)){
-				asd
-			}
+		@helper.form(action = controllers.dynamicforms.routes.Manage.saveField(formId)){
+			<input type="hidden" name="id" value="@fieldForm("id").value"/>
+			<input type="hidden" name="form" value="@fieldForm("form").value"/>
+			@helper.inputText(fieldForm("name"), '_label -> "nimi", '_class -> "control-group")
+			@helper.textarea(fieldForm("help"), '_label -> "ohje")
+			@helper.select(fieldForm("type"), options = options(models.dynamicforms.FieldType.map), '_label -> "tietotyyppi")
+			@helper.inputText(fieldForm("min"), '_label -> "minimiarvo", '_class -> "control-group")
+			@helper.inputText(fieldForm("max"), '_label -> "maksimiarvo", '_class -> "control-group")
+			@helper.checkbox(fieldForm("isRequired"), '_label -> None, '_text -> "Vaadittu", '_showConstraints -> false)
+			@helper.checkbox(fieldForm("isSigned"), '_label -> None, '_text -> "kuitattava", '_showConstraints -> false)
 		}
 	} else{
-		@helper.form(action = controllers.dynamicforms.routes.Manage.saveForm()){
-			@manageForm(manageF)
-		}
+
 	}
 }

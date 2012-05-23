@@ -1,12 +1,17 @@
 package forms.dynamicforms;
 
 import javax.persistence.Lob;
+import javax.validation.Valid;
+
 import play.data.validation.Constraints.Required;
 
 public class Manage {
+	public Long id;
+	
 	public Long basedOn;
 
 	@Required
+	@Valid
 	public String name;
 
 	@Lob
@@ -19,9 +24,11 @@ public class Manage {
 	}
 
 	public Manage(models.dynamicforms.Form form) {
-		if (form.id != null) {
+		if (form != null) {
+			this.id = form.id;
 			this.name = form.name;
-			this.basedOn = form.basedOn.id;
+			if(form.basedOn != null)
+					this.basedOn = form.basedOn.id;
 			this.description = form.description;
 			this.isActive = form.isActive;
 		}

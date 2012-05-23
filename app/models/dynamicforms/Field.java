@@ -57,7 +57,8 @@ public class Field extends JpaModel {
 	public void set(forms.dynamicforms.Field field) {
 		this.name = field.name;
 		this.help = field.help;
-		this.type = field.type;
+		//TODO
+		this.type = FieldType.DOUBLE;
 		this.isRequired = field.isRequired;
 		this.isSigned = field.isSigned;
 		this.min = field.min;

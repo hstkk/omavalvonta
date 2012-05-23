@@ -21,16 +21,18 @@ public class Manage extends Controller {
 	}
 
 	public static Result createForm() {
-		return ok(views.html.dynamicforms.manage.render(manageForm, null,
-				fieldForm, null));
+		return ok(views.html.dynamicforms.manage.render(manageForm, fieldForm,
+				null));
 	}
 
 	@Transactional
 	public static Result saveForm() {
-		manageForm.bindFromRequest();
-		if (!manageForm.hasErrors()) {
+		Form<forms.dynamicforms.Manage> filledManageForm = manageForm
+				.bindFromRequest();
+		if (!filledManageForm.hasErrors()) {
+			System.out.print("\n\n" + filledManageForm.get().name + "\n\n");
 			models.dynamicforms.Form form = new models.dynamicforms.Form(
-					manageForm.get());
+					filledManageForm.get());
 			if (form.save()) {
 				flash("status", "Lomake on luotu onnistuneesti!");
 				return redirect(controllers.dynamicforms.routes.Manage
@@ -38,8 +40,8 @@ public class Manage extends Controller {
 			}
 		}
 		flash("status", "Lomakkeen luonti ei onnistunut!");
-		return badRequest(views.html.dynamicforms.manage.render(manageForm,
-				null, fieldForm, null));
+		return badRequest(views.html.dynamicforms.manage.render(
+				filledManageForm, fieldForm, null));
 	}
 
 	@Transactional(readOnly = true)
@@ -48,9 +50,9 @@ public class Manage extends Controller {
 				.findById(formId);
 		if (form == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.dynamicforms.manage.render(
-				manageForm.fill(new forms.dynamicforms.Manage(form)), formId,
-				fieldForm, null));
+		return ok(views.html.dynamicforms.manage
+				.render(manageForm.fill(new forms.dynamicforms.Manage(form)),
+						fieldForm, null));
 	}
 
 	@Transactional
@@ -65,12 +67,12 @@ public class Manage extends Controller {
 			if (form.update()) {
 				flash("status", "Lomake on päivitetty onnistuneesti!");
 				return ok(views.html.dynamicforms.manage.render(manageForm,
-						formId, fieldForm, null));
+						fieldForm, null));
 			}
 		}
 		flash("status", "Lomakkeen päivitys ei onnistunut!");
 		return badRequest(views.html.dynamicforms.manage.render(manageForm,
-				formId, fieldForm, null));
+				fieldForm, null));
 	}
 
 	// TODO deleteFields
@@ -89,24 +91,20 @@ public class Manage extends Controller {
 
 	@Transactional
 	public static Result saveField(Long formId) {
-		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
-		if (f == null)
-			return notFound(views.html.notFound.render());
-		fieldForm.bindFromRequest();
-		if (!fieldForm.hasErrors()) {
-			models.dynamicforms.Field field = new models.dynamicforms.Field(f,
-					fieldForm.get());
-			if (field.save()) {
-				flash("status", "Kenttä on luotu onnistuneesti!");
-				return ok(views.html.dynamicforms.manage.render(
-						manageForm.fill(new forms.dynamicforms.Manage(f)),
-						formId, form(forms.dynamicforms.Field.class), null));
-			}
-		}
-		flash("status", "Kentän luonti ei onnistunut!");
-		return badRequest(views.html.dynamicforms.manage.render(
-				manageForm.fill(new forms.dynamicforms.Manage(f)), formId,
-				fieldForm, null));
+		/*
+		 * models.dynamicforms.Form f =
+		 * models.dynamicforms.Form.findById(formId); if (f == null) return
+		 * notFound(views.html.notFound.render()); fieldForm.bindFromRequest();
+		 * if (!fieldForm.hasErrors()) { models.dynamicforms.Field field = new
+		 * models.dynamicforms.Field(f, fieldForm.get()); if (field.save()) {
+		 * flash("status", "Kenttä on luotu onnistuneesti!"); return
+		 * ok(views.html.dynamicforms.manage.render( manageForm.fill(new
+		 * forms.dynamicforms.Manage(f)),form(forms.dynamicforms.Field.class)));
+		 * } } flash("status", "Kentän luonti ei onnistunut!"); return
+		 * badRequest(views.html.dynamicforms.manage.render( manageForm.fill(new
+		 * forms.dynamicforms.Manage(f)), fieldForm));
+		 */
+		return notFound(views.html.notFound.render());
 	}
 
 	@Transactional(readOnly = true)
@@ -120,8 +118,8 @@ public class Manage extends Controller {
 		if (field == null)
 			return notFound(views.html.notFound.render());
 		return ok(views.html.dynamicforms.manage.render(
-				manageForm.fill(new forms.dynamicforms.Manage(form)), formId,
-				fieldForm.fill(new forms.dynamicforms.Field(field)), fieldId));
+				manageForm.fill(new forms.dynamicforms.Manage(form)),
+				fieldForm.fill(new forms.dynamicforms.Field(field)), null));
 	}
 
 	@Transactional
@@ -140,13 +138,12 @@ public class Manage extends Controller {
 				flash("status", "Kenttä on päivitetty onnistuneesti!");
 				return ok(views.html.dynamicforms.manage.render(
 						manageForm.fill(new forms.dynamicforms.Manage(f)),
-						formId, form(forms.dynamicforms.Field.class), null));
+						form(forms.dynamicforms.Field.class), null));
 			}
 		}
 		flash("status", "Kentän päivitys ei onnistunut!");
 		return badRequest(views.html.dynamicforms.manage.render(
-				manageForm.fill(new forms.dynamicforms.Manage(f)), formId,
-				fieldForm, fieldId));
+				manageForm.fill(new forms.dynamicforms.Manage(f)), fieldForm, null));
 	}
 
 	@Transactional

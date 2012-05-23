@@ -22,8 +22,9 @@ import play.db.jpa.*;
 @Entity
 // TODO field order
 public class Form extends JpaModel {
-	@OneToOne(orphanRemoval = true)
+
 	// @Valid
+	@ManyToOne
 	public Form basedOn;
 
 	@Required
@@ -51,8 +52,11 @@ public class Form extends JpaModel {
 		this.name = manage.name;
 		this.description = manage.description;
 		this.isActive = manage.isActive;
-		if (manage.basedOn != null)
-			this.basedOn = Form.findById(manage.basedOn);
+		if (manage.basedOn != null){
+			try{
+				this.basedOn = Form.findById(manage.basedOn);
+			}catch(Exception e){}
+		}
 	}
 
 	public static Form findById(Long id) {
