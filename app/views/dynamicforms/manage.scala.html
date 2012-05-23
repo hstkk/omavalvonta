@@ -26,7 +26,7 @@
 		@helper.textarea(manageForm("description"), '_label -> "kuvaus")
 		@helper.checkbox(manageForm("isActive"), '_label -> None, '_text -> "Lomake on aktiivinen", '_showConstraints -> false)
 		@helper.select(manageForm("basedOn"), options = options(models.dynamicforms.Form.map), '_default -> "", '_label -> "peruslomake", '_text -> "lomake, jonka kentät näytetään myös tässä lomakkeessa")
-		<button type="submit" class="btn">Tallenna</button>
+		<button type="submit" class="btn btn-primary">Tallenna</button>
 	}
 	@if(formId!= null){
 		@helper.form(action = controllers.dynamicforms.routes.Manage.saveField(formId)){
@@ -39,8 +39,7 @@
 			@helper.inputText(fieldForm("max"), '_label -> "maksimiarvo", '_class -> "control-group")
 			@helper.checkbox(fieldForm("isRequired"), '_label -> None, '_text -> "Vaadittu", '_showConstraints -> false)
 			@helper.checkbox(fieldForm("isSigned"), '_label -> None, '_text -> "kuitattava", '_showConstraints -> false)
+			<button type="submit" class="btn btn-primary">Tallenna</button>
 		}
-	} else{
-
 	}
 }

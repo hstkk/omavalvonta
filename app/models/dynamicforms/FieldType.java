@@ -13,12 +13,12 @@ public enum FieldType {
 	
 	public static Map<String, String> map(){
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("Teksti", "TEXT");
-		map.put("Kokonaisluku", "INT");
-		map.put("Desimaaliluku", "DOUBLE");
-		map.put("Kyllä ei", "CHECKBOX");
-		map.put("Päivämäärä", "DATE");
-		map.put("Tekstikenttä", "TEXTAREA");
+		map.put("TEXT", "Teksti");
+		map.put("INT", "Kokonaisluku");
+		map.put("DOUBLE", "Desimaaliluku");
+		map.put("DATE", "Kyllä ei");
+		map.put("CHECKBOX", "Päivämäärä");
+		map.put("TEXTAREA", "Tekstikenttä");
 		return map;
 	}
 }

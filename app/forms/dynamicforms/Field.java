@@ -12,7 +12,7 @@ public class Field {
 	
 	@Required
 	@NotNull
-	public String type;
+	public FieldType type;
 
 	@Required
 	@NotNull
@@ -41,7 +41,7 @@ public class Field {
 			this.form = field.form;
 			this.name = field.name;
 			this.help = field.help;
-			this.type = field.type.toString();
+			this.type = field.type;
 			this.isRequired = field.isRequired;
 			this.isSigned = field.isSigned;
 			this.min = field.min;
