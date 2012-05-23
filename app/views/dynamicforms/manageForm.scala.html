@@ -1,0 +1,38 @@
+@(manageForm: play.data.Form[forms.dynamicforms.Manage], fields: List[models.dynamicforms.Field])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+
+@main(
+	if(manageForm("id").value != null){
+			"Muokkaa lomaketta"
+	}
+	else{
+		"Uusi lomake"
+	}
+){
+	@if(flash.get("status")){
+		@alert(){
+			@flash.get("status")
+		}
+	}
+	@if(manageForm.hasGlobalErrors){
+		@alert(){
+			@manageForm.globalError.message
+		}
+	}
+
+	@helper.form(action = controllers.dynamicforms.routes.Manage.saveForm()){
+		<input type="hidden" name="id" value="@manageForm("id").value"/>
+		@helper.inputText(manageForm("name"), '_label -> "nimi", '_class -> "control-group")
+		@helper.textarea(manageForm("description"), '_label -> "kuvaus")
+		@helper.checkbox(manageForm("isActive"), '_label -> None, '_text -> "Lomake on aktiivinen", '_showConstraints -> false)
+		@helper.select(manageForm("basedOn"), options = options(models.dynamicforms.Form.map), '_default -> "", '_label -> "peruslomake", '_text -> "lomake, jonka kentät näytetään myös tässä lomakkeessa")
+		<button type="submit" class="btn btn-primary">Tallenna</button>
+	}
+
+	@if(manageForm("id").value != null){
+		@manageFields(fields)
+	}
+}

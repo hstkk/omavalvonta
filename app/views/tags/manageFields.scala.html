@@ -1,0 +1,20 @@
+@(fields: List[models.dynamicforms.Field])
+<h2>Lomakkeen kentät</h2>
+@if(fields != null){
+<ul class="nav nav-list">
+@for(field <- fields){
+	<div>
+		<p><strong>@field.name</strong></p>
+		<p>@field</p>
+		<a class="btn" href="@controllers.dynamicforms.routes.Manage.editField(field.form.id, field.id)" title="Muokkaa">Muokkaa</a>
+		@helper.form(action = controllers.dynamicforms.routes.Manage.deleteField(field.form.id, field.id)){
+			<button type="submit" class="btn btn-danger">Poista</button>
+		}
+	</div>
+}
+</ul>
+} else{
+	@alert(){
+		Lomakkeella ei ole vielä kenttiä.
+	}
+}

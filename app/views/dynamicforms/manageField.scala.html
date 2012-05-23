@@ -1,0 +1,38 @@
+@(manageForm: models.dynamicforms.Form, fields: List[models.dynamicforms.Field], fieldForm: play.data.Form[forms.dynamicforms.Field])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+
+@main(manageForm.name + " lomake"){
+	@if(flash.get("status")){
+		@alert(){
+			@flash.get("status")
+		}
+	}
+	@if(fieldForm.hasGlobalErrors){
+		@alert(){
+			@fieldForm.globalError.message
+		}
+	}
+	
+	@manageFields(fields)
+
+	@if(fieldForm("name").value != null){
+		<h2>Muokkaa kenttää</h2>
+	}
+	else{
+		<h2>Uusi kenttä</h2>
+	}
+	@helper.form(action = controllers.dynamicforms.routes.Manage.saveField(manageForm.id)){
+		<input type="hidden" name="id" value="@fieldForm("id").value"/>
+		@helper.inputText(fieldForm("name"), '_label -> "nimi", '_class -> "control-group")
+		@helper.textarea(fieldForm("help"), '_label -> "ohje")
+		@helper.select(fieldForm("type"), options = options(models.dynamicforms.FieldType.map), '_label -> "tietotyyppi")
+		@helper.inputText(fieldForm("min"), '_label -> "minimiarvo", '_class -> "control-group")
+		@helper.inputText(fieldForm("max"), '_label -> "maksimiarvo", '_class -> "control-group")
+		@helper.checkbox(fieldForm("isRequired"), '_label -> None, '_text -> "Vaadittu", '_showConstraints -> false)
+		@helper.checkbox(fieldForm("isSigned"), '_label -> None, '_text -> "kuitattava", '_showConstraints -> false)
+		<button type="submit" class="btn btn-primary">Tallenna</button>
+	}
+}
