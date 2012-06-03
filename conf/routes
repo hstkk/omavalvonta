@@ -8,7 +8,7 @@ GET     /                           controllers.Application.index()
 
 # dynamic forms
 GET		/yllapito/lomakkeet									controllers.dynamicforms.Manage.allForms()
-GET		/yllapito/lomakkeet/uusi							controllers.dynamicforms.Manage.createForm()
+GET		/yllapito/lomakkeet/lomake							controllers.dynamicforms.Manage.createForm()
 POST	/yllapito/lomakkeet/lomake							controllers.dynamicforms.Manage.saveForm()
 GET		/yllapito/lomakkeet/:formId							controllers.dynamicforms.Manage.editForm(formId: Long)
 POST	/yllapito/lomakkeet/:formId/poista					controllers.dynamicforms.Manage.deleteForm(formId: String)

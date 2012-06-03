@@ -27,7 +27,7 @@ public class Manage extends Controller {
 	 * Renders dynamic form creation form.
 	 */
 	public static Result createForm() {
-		return ok(views.html.dynamicforms.manageForm.render(manageForm, null));
+		return ok(views.html.dynamicforms.manageForm.render(manageForm));
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class Manage extends Controller {
 		if (form == null)
 			return notFound(views.html.notFound.render());
 		return ok(views.html.dynamicforms.manageForm.render(
-				form));
+				manageForm.fill(form)));
 	}
 
 	/*@Transactional
@@ -130,9 +130,9 @@ public class Manage extends Controller {
 				.findByFormAndId(form, fieldId);
 		if (field == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.dynamicforms.manage.render(
+		return ok(views.html.dynamicforms.manageField.render(
 				form, models.dynamicforms.Field.findByForm(form),
-				fieldForm.fill(new forms.dynamicforms.Field(field))));
+				fieldForm.fill(field)));
 	}
 
 	/*@Transactional
@@ -164,7 +164,7 @@ public class Manage extends Controller {
 	public static Result deleteField(Long formId, String fieldId) {
 		Long id;
 		try{
-			id = Long.parseFloat(fieldId);
+			id = Long.parseLong(fieldId);
 			Form deleteForm = form().bindFromRequest();
 			if(deleteForm.field("isConfirmed").valueOr("").isEmpty() || Boolean.parseBoolean(deleteForm.field("isConfirmed").value()))
 				throw new Exception();

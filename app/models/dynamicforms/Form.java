@@ -25,7 +25,7 @@ public class Form extends JpaModel {
 
 	// @Valid
 	@ManyToOne
-	public Form basedOn;
+	public Form basedOn = null;
 
 	@Required
 	@NotNull
@@ -35,7 +35,7 @@ public class Form extends JpaModel {
 	public String description;
 
 	@Required
-	public Boolean isActive;
+	public Boolean isActive = false;
 
 	public Form() {
 	}
@@ -90,6 +90,7 @@ public class Form extends JpaModel {
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> map() {
 		Map<String, String> map = new HashMap<String, String>();
+		map.put("null", "");
 		try {
 			List<Form> forms = JPA.em().createQuery("select f.id, f.name from Form f")
 					.getResultList();
