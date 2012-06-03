@@ -1,4 +1,4 @@
-@(manageForm: models.dynamicforms.Form, fields: List[models.dynamicforms.Field], fieldForm: play.data.Form[forms.dynamicforms.Field])
+@(manageForm: models.dynamicforms.Form, fields: List[models.dynamicforms.Field], fieldForm: play.data.Form[models.dynamicforms.Field])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -15,7 +15,26 @@
 			@fieldForm.globalError.message
 		}
 	}
+	<ul>
+		@if(manageForm.description != null){
+			<li>@manageForm.description</li>
+		}
+		
+		<li>Lomake 
+		@if(manageForm.isActive){
+			on aktiivinen.
+		}
+		else{
+			ei ole aktiivinen
+		}
+		</li>
+		
+		@if(manageForm.basedOn != null){
+			<li>Perustuu lomakkeeseen manageForm.basedOn</li>
+		}
+	</ul>
 	
+	<h2>Lomakkeen kentät</h2>
 	@manageFields(fields)
 
 	@if(fieldForm("name").value != null){
@@ -28,11 +47,24 @@
 		<input type="hidden" name="id" value="@fieldForm("id").value"/>
 		@helper.inputText(fieldForm("name"), '_label -> "nimi", '_class -> "control-group")
 		@helper.textarea(fieldForm("help"), '_label -> "ohje")
-		@helper.select(fieldForm("type"), options = options(models.dynamicforms.FieldType.map), '_label -> "tietotyyppi")
+		@helper.select(fieldForm("type"), options = options(models.dynamicforms.FieldType.map), '_default -> fieldForm("type").value, '_label -> "tietotyyppi")
 		@helper.inputText(fieldForm("min"), '_label -> "minimiarvo", '_class -> "control-group")
 		@helper.inputText(fieldForm("max"), '_label -> "maksimiarvo", '_class -> "control-group")
-		@helper.checkbox(fieldForm("isRequired"), '_label -> None, '_text -> "Vaadittu", '_showConstraints -> false)
+		@helper.checkbox(fieldForm("isRequired"), '_label -> None, '_text -> "vaadittu", '_showConstraints -> false)
 		@helper.checkbox(fieldForm("isSigned"), '_label -> None, '_text -> "kuitattava", '_showConstraints -> false)
-		<button type="submit" class="btn btn-primary">Tallenna</button>
+		<input type="submit" name="action" class="btn btn-primary" value="tallenna"/>
+        <input type="submit" name="action" class="btn btn-warning" value="peruuta"/>
+	}
+	
+	@if(fieldForm("name").value != null){
+		<h3>Poista lomakkeen kenttä</h3>
+		@helper.form(action = controllers.dynamicforms.routes.Manage.deleteField(manageForm.id, fieldForm("id").value)){
+			<div class="control-group">
+				<div class="controls">
+					<label class="checkbox"><input name="isConfirmed" type="checkbox">Haluan varmasti poistaa kentän ja tallennetut tulokset.</label>
+				</div>
+			</div>
+	        <input type="submit" name="action" class="btn btn-danger" value="poista"/>
+		}
 	}
 }

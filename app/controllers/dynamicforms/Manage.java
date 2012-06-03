@@ -11,8 +11,8 @@ import views.html.*;
 //TODO authenticate
 public class Manage extends Controller {
 
-	final static Form<forms.dynamicforms.Manage> manageForm = form(forms.dynamicforms.Manage.class);
-	final static Form<forms.dynamicforms.Field> fieldForm = form(forms.dynamicforms.Field.class);
+	final static Form<models.dynamicforms.Form> manageForm = form(models.dynamicforms.Form.class);
+	final static Form<models.dynamicforms.Field> fieldForm = form(models.dynamicforms.Field.class);
 
 	/**
 	 * Renders list of all forms.
@@ -48,7 +48,7 @@ public class Manage extends Controller {
 			}
 		}
 		flash("status", "Lomakkeen luonti ei onnistunut!");
-		return badRequest(views.html.dynamicforms.manage.render(
+		return badRequest(views.html.dynamicforms.manageForm.render(
 				filledManageForm, fieldForm, null));
 	}
 
@@ -58,7 +58,7 @@ public class Manage extends Controller {
 				.findById(formId);
 		if (form == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.dynamicforms.manage.render(
+		return ok(views.html.dynamicforms.manageForm.render(
 				manageForm.fill(new forms.dynamicforms.Manage(form)),
 				fieldForm, formId));
 	}
@@ -85,9 +85,15 @@ public class Manage extends Controller {
 
 	// TODO deleteFields
 	@Transactional
-	public static Result deleteForm(Long formId) {
+	public static Result deleteForm(String formId) {
+		Long id;
+		try{
+			id = Long.parseFloat(formId);
+		}catch(Exception e){
+			return notFound(views.html.notFound.render());
+		}
 		models.dynamicforms.Form form = models.dynamicforms.Form
-				.findById(formId);
+				.findById(id);
 		if (form == null)
 			return notFound(views.html.notFound.render());
 		if (form.delete())
@@ -109,13 +115,13 @@ public class Manage extends Controller {
 					filledFieldForm.get());
 			if (field.save()) {
 				flash("status", "Kenttä on luotu onnistuneesti!");
-				return ok(views.html.dynamicforms.manage.render(
+				return ok(views.html.dynamicforms.manageField.render(
 						manageForm.fill(new forms.dynamicforms.Manage(f)),
 						fieldForm, formId));
 			}
 		}
 		flash("status", "Kentän luonti ei onnistunut!");
-		return badRequest(views.html.dynamicforms.manage.render(
+		return badRequest(views.html.dynamicforms.manageField.render(
 				manageForm.fill(new forms.dynamicforms.Manage(f)), filledFieldForm,
 				formId));
 	}
@@ -161,13 +167,22 @@ public class Manage extends Controller {
 	}*/
 
 	@Transactional
-	public static Result deleteField(Long formId, Long fieldId) {
+	public static Result deleteField(Long formId, String fieldId) {
+		Long id;
+		try{
+			id = Long.parseFloat(fieldId);
+			Form deleteForm = form().bindFromRequest();
+			if(deleteForm.field("isConfirmed").valueOr("").isEmpty() || Boolean.parseBoolean(deleteForm.field("isConfirmed").value()))
+				throw new Exception();
+		}catch(Exception e){
+			return notFound(views.html.notFound.render());
+		}
 		models.dynamicforms.Form form = models.dynamicforms.Form
 				.findById(formId);
 		if (form == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Field field = models.dynamicforms.Field
-				.findByFormAndId(form, fieldId);
+				.findByFormAndId(form, id);
 		if (field == null)
 			return notFound(views.html.notFound.render());
 		if (field.delete())

@@ -40,23 +40,8 @@ public class Form extends JpaModel {
 	public Form() {
 	}
 
-	public Form(forms.dynamicforms.Manage manage) {
-		set(manage);
-	}
-
 	public String toString() {
 		return name;
-	}
-
-	public void set(forms.dynamicforms.Manage manage) {
-		this.name = manage.name;
-		this.description = manage.description;
-		this.isActive = manage.isActive;
-		if (manage.basedOn != null){
-			try{
-				this.basedOn = Form.findById(manage.basedOn);
-			}catch(Exception e){}
-		}
 	}
 
 	public static Form findById(Long id) {

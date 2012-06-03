@@ -7,9 +7,6 @@
 		<p><strong>@field.name</strong></p>
 		<p>@field</p>
 		<a class="btn" href="@controllers.dynamicforms.routes.Manage.editField(field.form.id, field.id)" title="Muokkaa">Muokkaa</a>
-		@helper.form(action = controllers.dynamicforms.routes.Manage.deleteField(field.form.id, field.id)){
-			<button type="submit" class="btn btn-danger">Poista</button>
-		}
 	</div>
 }
 </ul>

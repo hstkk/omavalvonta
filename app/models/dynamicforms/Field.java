@@ -49,22 +49,6 @@ public class Field extends JpaModel {
 	public Field() {
 	}
 
-	public Field(Form form, forms.dynamicforms.Field field) {
-		this.form = form;
-		set(field);
-	}
-
-	public void set(forms.dynamicforms.Field field) {
-		this.name = field.name;
-		this.help = field.help;
-		//TODO
-		this.type = FieldType.DOUBLE;
-		this.isRequired = field.isRequired;
-		this.isSigned = field.isSigned;
-		this.min = field.min;
-		this.max = field.max;
-	}
-
 	/**
 	 * Finds field by field id.
 	 * 
