@@ -35,12 +35,10 @@ public class Manage extends Controller {
 	 */
 	@Transactional
 	public static Result saveForm() {
-		Form<forms.dynamicforms.Manage> filledManageForm = manageForm
+		Form<models.dynamicforms.Form> filledManageForm = manageForm
 				.bindFromRequest();
 		if (!filledManageForm.hasErrors()) {
-			System.out.print("\n\n" + filledManageForm.get().name + "\n\n");
-			models.dynamicforms.Form form = new models.dynamicforms.Form(
-					filledManageForm.get());
+			models.dynamicforms.Form form = filledManageForm.get();
 			if (form.save()) {
 				flash("status", "Lomake on luotu onnistuneesti!");
 				return redirect(controllers.dynamicforms.routes.Manage
@@ -49,7 +47,7 @@ public class Manage extends Controller {
 		}
 		flash("status", "Lomakkeen luonti ei onnistunut!");
 		return badRequest(views.html.dynamicforms.manageForm.render(
-				filledManageForm, fieldForm, null));
+				filledManageForm));
 	}
 
 	@Transactional(readOnly = true)
@@ -59,8 +57,7 @@ public class Manage extends Controller {
 		if (form == null)
 			return notFound(views.html.notFound.render());
 		return ok(views.html.dynamicforms.manageForm.render(
-				manageForm.fill(new forms.dynamicforms.Manage(form)),
-				fieldForm, formId));
+				form));
 	}
 
 	/*@Transactional
@@ -88,7 +85,7 @@ public class Manage extends Controller {
 	public static Result deleteForm(String formId) {
 		Long id;
 		try{
-			id = Long.parseFloat(formId);
+			id = Long.parseLong(formId);
 		}catch(Exception e){
 			return notFound(views.html.notFound.render());
 		}
@@ -108,22 +105,19 @@ public class Manage extends Controller {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
 			return notFound(views.html.notFound.render());
-		Form<forms.dynamicforms.Field> filledFieldForm = fieldForm
+		Form<models.dynamicforms.Field> filledFieldForm = fieldForm
 				.bindFromRequest();
 		if (!filledFieldForm.hasErrors()) {
-			models.dynamicforms.Field field = new models.dynamicforms.Field(f,
-					filledFieldForm.get());
+			models.dynamicforms.Field field = filledFieldForm.get();
 			if (field.save()) {
 				flash("status", "Kenttä on luotu onnistuneesti!");
-				return ok(views.html.dynamicforms.manageField.render(
-						manageForm.fill(new forms.dynamicforms.Manage(f)),
-						fieldForm, formId));
+				return redirect(controllers.dynamicforms.routes.Manage
+						.editForm(formId));
 			}
 		}
 		flash("status", "Kentän luonti ei onnistunut!");
 		return badRequest(views.html.dynamicforms.manageField.render(
-				manageForm.fill(new forms.dynamicforms.Manage(f)), filledFieldForm,
-				formId));
+				f, models.dynamicforms.Field.findByForm(f), filledFieldForm));
 	}
 
 	@Transactional(readOnly = true)
@@ -137,8 +131,8 @@ public class Manage extends Controller {
 		if (field == null)
 			return notFound(views.html.notFound.render());
 		return ok(views.html.dynamicforms.manage.render(
-				manageForm.fill(new forms.dynamicforms.Manage(form)),
-				fieldForm.fill(new forms.dynamicforms.Field(field)), null));
+				form, models.dynamicforms.Field.findByForm(form),
+				fieldForm.fill(new forms.dynamicforms.Field(field))));
 	}
 
 	/*@Transactional
