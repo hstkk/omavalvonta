@@ -26,6 +26,7 @@ public class Manage extends Controller {
 	/**
 	 * Renders dynamic form creation form.
 	 */
+	@Transactional(readOnly = true)
 	public static Result createForm() {
 		return ok(views.html.dynamicforms.manageForm.render(manageForm));
 	}

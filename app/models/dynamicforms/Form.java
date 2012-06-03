@@ -18,6 +18,7 @@ import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
+import org.hibernate.Hibernate;
 
 @Entity
 // TODO field order
@@ -88,9 +89,8 @@ public class Form extends JpaModel {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static Map<String, String> map() {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("null", "");
+	public static HashMap<String, String> options() {
+		HashMap<String, String> map = new HashMap<String, String>();
 		try {
 			List<Form> forms = JPA.em().createQuery("select f.id, f.name from Form f")
 					.getResultList();
@@ -98,6 +98,7 @@ public class Form extends JpaModel {
 				map.put(form.id.toString(), form.toString());
 			return map;
 		} catch (Exception e) {
+			System.out.print("\n\n"+e+"\n\n");
 			return map;
 		}
 	}
