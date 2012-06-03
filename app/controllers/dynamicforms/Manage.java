@@ -14,17 +14,25 @@ public class Manage extends Controller {
 	final static Form<forms.dynamicforms.Manage> manageForm = form(forms.dynamicforms.Manage.class);
 	final static Form<forms.dynamicforms.Field> fieldForm = form(forms.dynamicforms.Field.class);
 
+	/**
+	 * Renders list of all forms.
+	 */
 	@Transactional(readOnly = true)
 	public static Result allForms() {
 		return ok(views.html.dynamicforms.allForms
 				.render(models.dynamicforms.Form.findAllActive()));
 	}
 
+	/**
+	 * Renders dynamic form creation form.
+	 */
 	public static Result createForm() {
-		return ok(views.html.dynamicforms.manage.render(manageForm, fieldForm,
-				null));
+		return ok(views.html.dynamicforms.manageForm.render(manageForm, null));
 	}
 
+	/**
+	 * Saves dynamic form to database and renders edit form page if form has not errors else renders 
+	 */
 	@Transactional
 	public static Result saveForm() {
 		Form<forms.dynamicforms.Manage> filledManageForm = manageForm
@@ -55,7 +63,7 @@ public class Manage extends Controller {
 				fieldForm, formId));
 	}
 
-	@Transactional
+	/*@Transactional
 	public static Result updateForm(Long formId) {
 		models.dynamicforms.Form form = models.dynamicforms.Form
 				.findById(formId);
@@ -73,7 +81,7 @@ public class Manage extends Controller {
 		flash("status", "Lomakkeen päivitys ei onnistunut!");
 		return badRequest(views.html.dynamicforms.manage.render(manageForm,
 				fieldForm, null));
-	}
+	}*/
 
 	// TODO deleteFields
 	@Transactional
@@ -127,7 +135,7 @@ public class Manage extends Controller {
 				fieldForm.fill(new forms.dynamicforms.Field(field)), null));
 	}
 
-	@Transactional
+	/*@Transactional
 	public static Result updateField(Long formId, Long fieldId) {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
@@ -150,7 +158,7 @@ public class Manage extends Controller {
 		return badRequest(views.html.dynamicforms.manage.render(
 				manageForm.fill(new forms.dynamicforms.Manage(f)), fieldForm,
 				null));
-	}
+	}*/
 
 	@Transactional
 	public static Result deleteField(Long formId, Long fieldId) {
