@@ -18,6 +18,7 @@ import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
+
 import org.hibernate.Hibernate;
 
 @Entity
@@ -43,6 +44,33 @@ public class Form extends JpaModel {
 
 	public String toString() {
 		return name;
+	}
+	
+	public void set(){
+		if(this.basedOn.id == null)
+			this.basedOn = null;
+		else
+			this.basedOn = Form.findById(this.basedOn.id);
+	}
+	
+	public boolean save() {
+		try {
+			set();
+			JPA.em().persist(this);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean update() {
+		try {
+			set();
+			JPA.em().merge(this);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public static Form findById(Long id) {
