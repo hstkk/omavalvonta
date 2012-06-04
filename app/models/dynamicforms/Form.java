@@ -55,17 +55,18 @@ public class Form extends JpaModel {
 
 	public static Form findActiveById(Long id) {
 		try {
+			//TODO optimize: select f.id, f.basedOn, f.name, f.description from Form f where f.isActive = true and f.id = ?
 			return (Form) JPA
 					.em()
 					.createQuery(
-							"select f.id, f.basedOn, f.name, f.description from Form f where f.isActive = true and f.id = ?")
+							"Form f where f.isActive = true and f.id = ?")
 					.setParameter(1, id).getSingleResult();
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public static List<Form> findAllActive() {
 		try {
 			return JPA
@@ -76,23 +77,26 @@ public class Form extends JpaModel {
 		} catch (Exception e) {
 			return null;
 		}
-	}
+	}*/
 
 	@SuppressWarnings("unchecked")
 	public static List<Form> findAll() {
 		try {
-			return JPA.em().createQuery("select f.id, f.name from Form f")
+			//TODO optimize: select f.id, f.name from Form f
+			List<Form> forms = JPA.em().createQuery("from Form order by name")
 					.getResultList();
+			return forms;
 		} catch (Exception e) {
 			return null;
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static HashMap<String, String> options() {
-		HashMap<String, String> map = new HashMap<String, String>();
+	public static Map<String, String> options() {
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		try {
-			List<Form> forms = JPA.em().createQuery("select f.id, f.name from Form f")
+			//TODO optimize: select f.id, f.name from Form f
+			List<Form> forms = JPA.em().createQuery("from Form order by name")
 					.getResultList();
 			for(Form form: forms)
 				map.put(form.id.toString(), form.toString());

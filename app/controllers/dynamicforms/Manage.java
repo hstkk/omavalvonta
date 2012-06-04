@@ -20,7 +20,7 @@ public class Manage extends Controller {
 	@Transactional(readOnly = true)
 	public static Result allForms() {
 		return ok(views.html.dynamicforms.allForms
-				.render(models.dynamicforms.Form.findAllActive()));
+				.render(models.dynamicforms.Form.findAll()));
 	}
 
 	/**
