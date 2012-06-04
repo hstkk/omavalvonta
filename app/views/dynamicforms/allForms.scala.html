@@ -3,10 +3,10 @@
 @import tags._
 
 @main("Kaikki lomakkeet") {
-	@if(forms != null && forms.size > 0){
+	@if(forms != null){
 		<ul class="nav nav-list">
-		@for(formz <- forms){
-			<li><a href="@controllers.dynamicforms.routes.Manage.editForm(formz.id)">@formz</a></li>
+		@for(form <- forms){
+			<li><a href="@controllers.dynamicforms.routes.Manage.editForm(form.id)">@form</a></li>
 		}
 		</ul>
 	} else{
