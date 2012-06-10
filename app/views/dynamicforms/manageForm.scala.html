@@ -1,4 +1,4 @@
-@(manageForm: play.data.Form[models.dynamicforms.Form])
+@(manageForm: play.data.Form[models.dynamicforms.Form], deleteForm: play.data.Form[forms.dynamicforms.Delete])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -22,6 +22,11 @@
 			@manageForm.globalError.message
 		}
 	}
+	@if(deleteForm.hasGlobalErrors){
+		@alert(){
+			@deleteForm.globalError.message
+		}
+	}
 
 	@helper.form(action = controllers.dynamicforms.routes.Manage.saveForm()){
 		<input type="hidden" name="id" value="@manageForm("id").value"/>
@@ -36,11 +41,7 @@
 	@if(!manageForm("id").valueOr("").equals("")){
 		<h2>Poista lomake</h2>
 		@helper.form(action = controllers.dynamicforms.routes.Manage.deleteForm(manageForm("id").value)){
-			<div class="control-group">
-				<div class="controls">
-					<label class="checkbox"><input name="isConfirmed" type="checkbox">Haluan varmasti poistaa lomakkeen, sen kentät ja tallennetut tulokset.</label>
-				</div>
-			</div>
+			@helper.checkbox(deleteForm("isConfirmed"), '_label -> None, '_text -> "Haluan varmasti poistaa lomakkeen, sen kentät ja tallennetut tulokset.", '_showConstraints -> false)
 	        <input type="submit" name="action" class="btn btn-danger" value="poista"/>
 		}
 	}

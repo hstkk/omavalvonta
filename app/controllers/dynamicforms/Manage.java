@@ -8,6 +8,8 @@ import play.mvc.Result;
 
 import views.html.*;
 
+import utils.Converter;
+
 /**
  * @author Sami Hostikka
  */
@@ -16,6 +18,7 @@ public class Manage extends Controller {
 
 	final static Form<models.dynamicforms.Form> manageForm = form(models.dynamicforms.Form.class);
 	final static Form<models.dynamicforms.Field> fieldForm = form(models.dynamicforms.Field.class);
+	final static Form<forms.dynamicforms.Delete> deleteForm = form(forms.dynamicforms.Delete.class);
 
 	/**
 	 * Renders list of all forms.
@@ -31,7 +34,7 @@ public class Manage extends Controller {
 	 */
 	@Transactional(readOnly = true)
 	public static Result createForm() {
-		return ok(views.html.dynamicforms.manageForm.render(manageForm));
+		return ok(views.html.dynamicforms.manageForm.render(manageForm, deleteForm));
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class Manage extends Controller {
 			return redirect(controllers.dynamicforms.routes.Manage.allForms());
 		} else if (!filledManageForm.hasErrors()) {
 			models.dynamicforms.Form form = filledManageForm.get();
-			if ((form.id != null && form.update()) || form.save()){
+			if ((form.id != null && form.update()) || form.save()) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
 				return redirect(controllers.dynamicforms.routes.Manage
 						.createField(form.id));
@@ -55,7 +58,7 @@ public class Manage extends Controller {
 		}
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
 		return badRequest(views.html.dynamicforms.manageForm
-				.render(filledManageForm));
+				.render(filledManageForm, deleteForm));
 	}
 
 	/**
@@ -71,7 +74,7 @@ public class Manage extends Controller {
 		if (form == null)
 			return notFound(views.html.notFound.render());
 		return ok(views.html.dynamicforms.manageForm.render(manageForm
-				.fill(form)));
+				.fill(form), deleteForm));
 	}
 
 	@Transactional(readOnly = true)
@@ -100,20 +103,21 @@ public class Manage extends Controller {
 	// TODO deleteFields
 	@Transactional
 	public static Result deleteForm(String formId) {
-		Long id;
-		try {
-			id = Long.parseLong(formId);
-		} catch (Exception e) {
-			return notFound(views.html.notFound.render());
-		}
+		Long id = Converter.stringToLong(formId);
 		models.dynamicforms.Form form = models.dynamicforms.Form.findById(id);
 		if (form == null)
 			return notFound(views.html.notFound.render());
-		if (form.delete())
+		Form<forms.dynamicforms.Delete> filledDeleteForm =deleteForm.bindFromRequest();
+		if(filledDeleteForm.hasErrors())
+			return ok(views.html.dynamicforms.manageForm.render(manageForm
+					.fill(form), filledDeleteForm));
+		else if(form.delete()) {
 			flash("status", "Lomake on poistettu onnistuneesti!");
-		else
-			flash("status", "Lomakkeen poisto ei onnistunut!");
-		return redirect(controllers.dynamicforms.routes.Manage.allForms());
+			return redirect(controllers.dynamicforms.routes.Manage.allForms());
+		}
+		flash("status", "Lomakkeen poisto ei onnistunut!");
+		return redirect(controllers.dynamicforms.routes.Manage.editForm(id));
+
 	}
 
 	@Transactional
