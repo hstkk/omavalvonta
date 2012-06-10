@@ -6,7 +6,7 @@
 
 @main(manageForm.name + " lomake"){
 	@if(flash.get("status")){
-		@alert(){
+		@info(){
 			@flash.get("status")
 		}
 	}
@@ -23,24 +23,23 @@
 		<li>Lomake 
 		@if(manageForm.isActive){
 			on aktiivinen.
-		}
-		else{
+		} else{
 			ei ole aktiivinen
 		}
 		</li>
 		
 		@if(manageForm.basedOn != null){
-			<li>Perustuu lomakkeeseen manageForm.basedOn</li>
+			<li>Perustuu lomakkeeseen <a href="@controllers.dynamicforms.routes.Manage.createField(manageForm.basedOn.id)">@manageForm.basedOn</a></li>
 		}
 	</ul>
-	
-	<h2>Lomakkeen kentät</h2>
+	<a class="btn btn-primary" href="#" title="Esikatsele">Esikatsele</a>
+	<a class="btn" href="@controllers.dynamicforms.routes.Manage.editForm(manageForm.id)" title="Muokkaa">Muokkaa</a>
+
 	@manageFields(fields)
 
 	@if(fieldForm("name").value != null){
 		<h2>Muokkaa kenttää</h2>
-	}
-	else{
+	} else{
 		<h2>Uusi kenttä</h2>
 	}
 	@helper.form(action = controllers.dynamicforms.routes.Manage.saveField(manageForm.id)){

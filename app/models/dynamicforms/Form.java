@@ -13,6 +13,7 @@ import org.hibernate.envers.Audited;
 
 import models.Content;
 import models.JpaModel;
+import utils.Converter;
 
 import play.db.ebean.*;
 import play.data.format.*;
@@ -45,14 +46,14 @@ public class Form extends JpaModel {
 	public String toString() {
 		return name;
 	}
-	
-	public void set(){
-		if(this.basedOn.id == null)
+
+	public void set() {
+		if (this.basedOn.id == null)
 			this.basedOn = null;
 		else
 			this.basedOn = Form.findById(this.basedOn.id);
 	}
-	
+
 	public boolean save() {
 		try {
 			set();
@@ -83,11 +84,10 @@ public class Form extends JpaModel {
 
 	public static Form findActiveById(Long id) {
 		try {
-			//TODO optimize: select f.id, f.basedOn, f.name, f.description from Form f where f.isActive = true and f.id = ?
-			return (Form) JPA
-					.em()
-					.createQuery(
-							"Form f where f.isActive = true and f.id = ?")
+			// TODO optimize: select f.id, f.basedOn, f.name, f.description from
+			// Form f where f.isActive = true and f.id = ?
+			return (Form) JPA.em()
+					.createQuery("Form f where f.isActive = true and f.id = ?")
 					.setParameter(1, id).getSingleResult();
 		} catch (Exception e) {
 			return null;
@@ -97,7 +97,7 @@ public class Form extends JpaModel {
 	@SuppressWarnings("unchecked")
 	public static List<Form> findAll() {
 		try {
-			//TODO optimize: select f.id, f.name from Form f
+			// TODO optimize: select f.id, f.name from Form f
 			List<Form> forms = JPA.em().createQuery("from Form order by name")
 					.getResultList();
 			return forms;
@@ -105,19 +105,23 @@ public class Form extends JpaModel {
 			return null;
 		}
 	}
-	
+
+	// TODO optimize: select f.id, f.name from Form f
 	@SuppressWarnings("unchecked")
-	public static Map<String, String> options() {
+	public static Map<String, String> options(String formId) {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		try {
-			//TODO optimize: select f.id, f.name from Form f
-			List<Form> forms = JPA.em().createQuery("from Form order by name")
-					.getResultList();
+			Long id = Converter.stringToLong(formId);
+			/*if(id2!=null)
+				List<Form> forms = JPA.em().createQuery("from Form order by name")
+						.getResultList();
+			else*/
+			List<Form> forms = JPA.em().createQuery("from Form f where f.id != ? order by name").setParameter(1, id)
+						.getResultList();
 			for(Form form: forms)
 				map.put(form.id.toString(), form.toString());
 			return map;
 		} catch (Exception e) {
-			System.out.print("\n\n"+e+"\n\n");
 			return map;
 		}
 	}

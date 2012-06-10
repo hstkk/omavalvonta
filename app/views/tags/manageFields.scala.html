@@ -1,17 +1,14 @@
 @(fields: List[models.dynamicforms.Field])
-<h2>Lomakkeen kentät</h2>
-@if(fields != null){
-<ul class="nav nav-list">
-@for(field <- fields){
-	<div>
-		<p><strong>@field.name</strong></p>
-		<p>@field</p>
-		<a class="btn" href="@controllers.dynamicforms.routes.Manage.editField(field.form.id, field.id)" title="Muokkaa">Muokkaa</a>
-	</div>
-}
-</ul>
-} else{
-	@alert(){
-		Lomakkeella ei ole vielä kenttiä.
+@if(fields != null && !fields.isEmpty()){
+	<h2>Lomakkeen kentät</h2>
+	@for(field <- fields){
+		<div>
+			<h3>@field.name</h3>
+			<ul>
+			<li>@field.help</li>
+			<li>@field</li>
+			</ul>
+			<a class="btn" href="@controllers.dynamicforms.routes.Manage.editField(field.form.id, field.id)" title="Muokkaa">Muokkaa</a>
+		</div>
 	}
 }

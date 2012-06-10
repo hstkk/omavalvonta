@@ -49,6 +49,22 @@ public class Field extends JpaModel {
 	public Field() {
 	}
 
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder("Tietotyypiltä ");
+		stringBuilder.append(type.toString());
+		if (isRequired)
+			stringBuilder.append(", vaadittu");
+		if (isSigned)
+			stringBuilder.append(", kuitattava");
+		if (type == FieldType.INT || type == FieldType.DOUBLE) {
+			if (min != null)
+				stringBuilder.append(", minimi " + min);
+			if (max != null)
+				stringBuilder.append(", maksimi " + max);
+		}
+		return stringBuilder.toString();
+	}
+
 	/**
 	 * Finds field by field id.
 	 * 
@@ -66,15 +82,12 @@ public class Field extends JpaModel {
 
 	// TODO or basedon group by form in one query
 	@SuppressWarnings("unchecked")
-	public static List<Field> findByForm(Form form) {
-		if (form == null)
-			return null;
+	public static List<Field> findByFormAndBasedOn(Form form) {
 		List<Field> fields = null;
 		try {
 			fields = JPA.em().createQuery("from Field f where f.form = ?")
 					.setParameter(1, form).getResultList();
 		} catch (Exception e) {
-			System.out.print(e.toString());
 		}
 		if (form.basedOn != null) {
 			List<Field> inheritedFields = null;
@@ -90,6 +103,18 @@ public class Field extends JpaModel {
 				return ListUtils.union(inheritedFields, fields);
 		}
 		return fields;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Field> findByForm(Form form) {
+		try {
+			List<Field> fields = JPA.em()
+					.createQuery("from Field f where f.form = ?")
+					.setParameter(1, form).getResultList();
+			return fields;
+		} catch (Exception e) {
+		}
+		return null;
 	}
 
 	public static Field findByFormAndId(Form form, Long id) {

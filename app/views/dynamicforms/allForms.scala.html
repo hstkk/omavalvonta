@@ -3,6 +3,11 @@
 @import tags._
 
 @main("Kaikki lomakkeet") {
+	@if(flash.get("status")){
+		@info(){
+			@flash.get("status")
+		}
+	}
 	@if(forms != null){
 		<ul class="nav nav-list">
 		@for(form <- forms){
