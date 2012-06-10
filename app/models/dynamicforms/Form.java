@@ -94,19 +94,6 @@ public class Form extends JpaModel {
 		}
 	}
 
-	/*@SuppressWarnings("unchecked")
-	public static List<Form> findAllActive() {
-		try {
-			return JPA
-					.em()
-					.createQuery(
-							"select f.id, f.name from Form f where f.isActive = true")
-					.getResultList();
-		} catch (Exception e) {
-			return null;
-		}
-	}*/
-
 	@SuppressWarnings("unchecked")
 	public static List<Form> findAll() {
 		try {
