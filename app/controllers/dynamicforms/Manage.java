@@ -43,7 +43,7 @@ public class Manage extends Controller {
 		Form<models.dynamicforms.Form> filledManageForm = manageForm
 				.bindFromRequest();
 		if (filledManageForm.field("action").value().equals("peruuta")) {
-			flash("status", "Toiminto peruutettu!");
+			flash("status", "Lomakkeen tallennus peruutettu!");
 			return redirect(controllers.dynamicforms.routes.Manage.allForms());
 		} else if (!filledManageForm.hasErrors()) {
 			models.dynamicforms.Form form = filledManageForm.get();

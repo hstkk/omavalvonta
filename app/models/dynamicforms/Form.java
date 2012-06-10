@@ -112,13 +112,17 @@ public class Form extends JpaModel {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		try {
 			Long id = Converter.stringToLong(formId);
-			/*if(id2!=null)
-				List<Form> forms = JPA.em().createQuery("from Form order by name")
+			List<Form> forms;
+			if (id == null)
+				forms = JPA.em().createQuery("from Form order by name")
 						.getResultList();
-			else*/
-			List<Form> forms = JPA.em().createQuery("from Form f where f.id != ? order by name").setParameter(1, id)
-						.getResultList();
-			for(Form form: forms)
+			else
+				forms = JPA
+						.em()
+						.createQuery(
+								"from Form f where f.id != ? order by name")
+						.setParameter(1, id).getResultList();
+			for (Form form : forms)
 				map.put(form.id.toString(), form.toString());
 			return map;
 		} catch (Exception e) {
