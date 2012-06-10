@@ -37,7 +37,7 @@ public class Manage extends Controller {
 	/**
 	 * If form has no errors saves dynamic form to database.
 	 */
-	//TODO renderöi oikea url
+	// TODO renderöi oikea url
 	@Transactional
 	public static Result saveForm() {
 		Form<models.dynamicforms.Form> filledManageForm = manageForm
@@ -47,14 +47,11 @@ public class Manage extends Controller {
 			return redirect(controllers.dynamicforms.routes.Manage.allForms());
 		} else if (!filledManageForm.hasErrors()) {
 			models.dynamicforms.Form form = filledManageForm.get();
-			flash("status", "Lomake on tallennettu onnistuneesti!");
-			if (form.id != null)
-				if (form.update())
-					;
-				else if (form.save()) {
-					return redirect(controllers.dynamicforms.routes.Manage
-							.editForm(form.id));
-				}
+			if ((form.id != null && form.update()) || form.save()){
+				flash("status", "Lomake on tallennettu onnistuneesti!");
+				return redirect(controllers.dynamicforms.routes.Manage
+						.createField(form.id));
+			}
 		}
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
 		return badRequest(views.html.dynamicforms.manageForm
