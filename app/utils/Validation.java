@@ -49,11 +49,7 @@ public class Validation {
 	 * @return int if valid else null.
 	 */
 	public static Integer isInt(String value) {
-		try {
-			return Integer.parseInt(value);
-		} catch (Exception e) {
-			return null;
-		}
+		return Converter.stringToInt(value);
 	}
 
 	/**
@@ -64,11 +60,7 @@ public class Validation {
 	 * @return double if valid else null.
 	 */
 	public static Double isDouble(String value) {
-		try {
-			return Double.parseDouble(value);
-		} catch (Exception e) {
-			return null;
-		}
+		return Converter.stringToDouble(value);
 	}
 
 	/**
@@ -92,11 +84,7 @@ public class Validation {
 	 * @return boolean if valid else null.
 	 */
 	public static Boolean isBoolean(String value) {
-		try {
-			return Boolean.parseBoolean(value);
-		} catch (Exception e) {
-			return null;
-		}
+		return Converter.stringToBool(value);
 	}
 
 	/**
@@ -107,11 +95,6 @@ public class Validation {
 	 * @return Date if valid else null.
 	 */
 	public static Date isDate(String value) {
-		try {
-			// TODO use locale
-			return new SimpleDateFormat("dd.mm.yyyy").parse(value);
-		} catch (Exception e) {
-			return null;
-		}
+		return Converter.stringToDate(value);
 	}
 }
