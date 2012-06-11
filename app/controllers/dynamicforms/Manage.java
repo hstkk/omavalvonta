@@ -76,6 +76,10 @@ public class Manage extends Controller {
 				.fill(form), deleteForm));
 	}
 
+	/**
+	 * Deletes form if deletion has been confirmed.
+	 * @param forms id
+	 */
 	// TODO deleteFields and results
 	@Transactional
 	public static Result deleteForm(String formId) {
@@ -95,6 +99,10 @@ public class Manage extends Controller {
 		return redirect(controllers.dynamicforms.routes.Manage.editForm(id));
 	}
 
+	/**
+	 * Renders create field page.
+	 * @param forms id.
+	 */
 	@Transactional(readOnly = true)
 	public static Result createField(Long formId) {
 		models.dynamicforms.Form form = models.dynamicforms.Form

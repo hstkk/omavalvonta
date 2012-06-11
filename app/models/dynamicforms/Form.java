@@ -75,6 +75,8 @@ public class Form extends JpaModel {
 	}
 
 	public static Form findById(Long id) {
+		if (id == null)
+			return null;
 		try {
 			return JPA.em().find(Form.class, id);
 		} catch (Exception e) {
@@ -83,6 +85,8 @@ public class Form extends JpaModel {
 	}
 
 	public static Form findActiveById(Long id) {
+		if (id == null)
+			return null;
 		try {
 			// TODO optimize: select f.id, f.basedOn, f.name, f.description from
 			// Form f where f.isActive = true and f.id = ?

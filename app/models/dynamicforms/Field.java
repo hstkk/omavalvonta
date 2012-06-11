@@ -73,6 +73,8 @@ public class Field extends JpaModel {
 	 * @return Field object if find is successful else null.
 	 */
 	public static Field findById(Long id) {
+		if (id == null)
+			return null;
 		try {
 			return JPA.em().find(Field.class, id);
 		} catch (Exception e) {
@@ -83,6 +85,8 @@ public class Field extends JpaModel {
 	// TODO or basedon group by form in one query
 	@SuppressWarnings("unchecked")
 	public static List<Field> findByFormAndBasedOn(Form form) {
+		if (form == null)
+			return null;
 		List<Field> fields = null;
 		try {
 			fields = JPA.em().createQuery("from Field f where f.form = ?")
@@ -107,6 +111,8 @@ public class Field extends JpaModel {
 
 	@SuppressWarnings("unchecked")
 	public static List<Field> findByForm(Form form) {
+		if (form == null)
+			return null;
 		try {
 			List<Field> fields = JPA.em()
 					.createQuery("from Field f where f.form = ?")
