@@ -22,11 +22,6 @@
 			@manageForm.globalError.message
 		}
 	}
-	@if(deleteForm.hasGlobalErrors){
-		@alert(){
-			@deleteForm.globalError.message
-		}
-	}
 
 	@helper.form(action = controllers.dynamicforms.routes.Manage.saveForm()){
 		<input type="hidden" name="id" value="@manageForm("id").value"/>
@@ -40,6 +35,11 @@
 
 	@if(!manageForm("id").valueOr("").equals("")){
 		<h2>Poista lomake</h2>
+		@if(deleteForm.hasGlobalErrors){
+			@alert(){
+				@deleteForm.globalError.message
+			}
+		}
 		@helper.form(action = controllers.dynamicforms.routes.Manage.deleteForm(manageForm("id").value)){
 			@helper.checkbox(deleteForm("isConfirmed"), '_label -> None, '_text -> "Haluan varmasti poistaa lomakkeen, sen kentät ja tallennetut tulokset.", '_showConstraints -> false)
 	        <input type="submit" name="action" class="btn btn-danger" value="poista"/>
