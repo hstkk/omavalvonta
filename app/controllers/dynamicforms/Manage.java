@@ -40,7 +40,6 @@ public class Manage extends Controller {
 	/**
 	 * If form has no errors saves dynamic form to database.
 	 */
-	// TODO renderöi oikea url
 	@Transactional
 	public static Result saveForm() {
 		Form<models.dynamicforms.Form> filledManageForm = manageForm
@@ -77,30 +76,7 @@ public class Manage extends Controller {
 				.fill(form), deleteForm));
 	}
 
-	@Transactional(readOnly = true)
-	public static Result createField(Long formId) {
-		models.dynamicforms.Form form = models.dynamicforms.Form
-				.findById(formId);
-		if (form == null)
-			return notFound(views.html.notFound.render());
-		return ok(views.html.dynamicforms.manageField.render(form,
-				models.dynamicforms.Field.findByForm(form), fieldForm));
-	}
-
-	/*
-	 * @Transactional public static Result updateForm(Long formId) {
-	 * models.dynamicforms.Form form = models.dynamicforms.Form
-	 * .findById(formId); if (form == null) return
-	 * notFound(views.html.notFound.render()); manageForm.bindFromRequest(); if
-	 * (!manageForm.hasErrors()) { form.set(manageForm.get()); if
-	 * (form.update()) { flash("status", "Lomake on päivitetty onnistuneesti!");
-	 * return ok(views.html.dynamicforms.manage.render(manageForm, fieldForm,
-	 * null)); } } flash("status", "Lomakkeen päivitys ei onnistunut!"); return
-	 * badRequest(views.html.dynamicforms.manage.render(manageForm, fieldForm,
-	 * null)); }
-	 */
-
-	// TODO deleteFields
+	// TODO deleteFields and results
 	@Transactional
 	public static Result deleteForm(String formId) {
 		Long id = Converter.stringToLong(formId);
@@ -117,9 +93,18 @@ public class Manage extends Controller {
 		}
 		flash("status", "Lomakkeen poisto ei onnistunut!");
 		return redirect(controllers.dynamicforms.routes.Manage.editForm(id));
-
 	}
 
+	@Transactional(readOnly = true)
+	public static Result createField(Long formId) {
+		models.dynamicforms.Form form = models.dynamicforms.Form
+				.findById(formId);
+		if (form == null)
+			return notFound(views.html.notFound.render());
+		return ok(views.html.dynamicforms.manageField.render(form,
+				models.dynamicforms.Field.findByForm(form), fieldForm));
+	}
+	
 	@Transactional
 	public static Result saveField(Long formId) {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
@@ -154,23 +139,6 @@ public class Manage extends Controller {
 				models.dynamicforms.Field.findByForm(form),
 				fieldForm.fill(field)));
 	}
-
-	/*
-	 * @Transactional public static Result updateField(Long formId, Long
-	 * fieldId) { models.dynamicforms.Form f =
-	 * models.dynamicforms.Form.findById(formId); if (f == null) return
-	 * notFound(views.html.notFound.render()); models.dynamicforms.Field field =
-	 * models.dynamicforms.Field .findByFormAndId(f, fieldId); if (field ==
-	 * null) return notFound(views.html.notFound.render());
-	 * fieldForm.bindFromRequest(); if (!fieldForm.hasErrors()) {
-	 * field.set(fieldForm.get()); if (field.update()) { flash("status",
-	 * "Kenttä on päivitetty onnistuneesti!"); return
-	 * ok(views.html.dynamicforms.manage.render( manageForm.fill(new
-	 * forms.dynamicforms.Manage(f)), form(forms.dynamicforms.Field.class),
-	 * null)); } } flash("status", "Kentän päivitys ei onnistunut!"); return
-	 * badRequest(views.html.dynamicforms.manage.render( manageForm.fill(new
-	 * forms.dynamicforms.Manage(f)), fieldForm, null)); }
-	 */
 
 	@Transactional
 	public static Result deleteField(Long formId, String fieldId) {
