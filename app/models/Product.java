@@ -4,6 +4,8 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.envers.Audited;
+
 import models.dynamicforms.Form;
 
 import play.db.ebean.*;
@@ -11,7 +13,8 @@ import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
-//@Entity
+@Entity
+@Audited
 public class Product extends JpaModel {
 	@Required
 	@NotNull

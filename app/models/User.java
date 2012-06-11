@@ -3,13 +3,12 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
-//@Entity
+@Entity
 public class User extends JpaModel {
 	@Required
 	@NotNull

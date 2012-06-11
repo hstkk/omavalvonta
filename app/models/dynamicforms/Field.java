@@ -7,6 +7,7 @@ import javax.validation.constraints.*;
 
 import org.apache.commons.collections.ListUtils;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import models.JpaModel;
 
@@ -16,6 +17,7 @@ import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
+@Audited
 public class Field extends JpaModel {
 	@Required
 	@Enumerated(EnumType.STRING)

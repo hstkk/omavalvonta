@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import models.JpaModel;
 import models.User;
@@ -16,14 +17,15 @@ import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
-//@Entity
-//@Audited
+@Entity
+@Audited
 public class Result extends JpaModel {
 
 	@Required
 	@OneToOne
 	@Valid
 	@NotNull
+	@NotAudited
 	public User user;
 
 	@Required
@@ -33,7 +35,7 @@ public class Result extends JpaModel {
 	public Field field;
 
 	@Lob
-	public String comment;
+	public String valueString;
 
 	public int valueInt;
 
@@ -42,8 +44,6 @@ public class Result extends JpaModel {
 	public Boolean valueBoolean;
 
 	public Date valueDate;
-
-	public String valueString;
 
 	public Result() {
 	}

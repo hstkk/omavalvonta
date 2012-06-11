@@ -11,7 +11,6 @@ import org.hibernate.annotations.Cascade;
 //import org.hibernate.annotations.CascadeType;
 import org.hibernate.envers.Audited;
 
-import models.Content;
 import models.JpaModel;
 import utils.Converter;
 
@@ -23,6 +22,7 @@ import play.db.jpa.*;
 import org.hibernate.Hibernate;
 
 @Entity
+@Audited
 // TODO field order
 public class Form extends JpaModel {
 
