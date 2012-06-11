@@ -3,6 +3,7 @@ package forms.dynamicforms;
 import java.util.List;
 
 
+import models.Batch;
 import models.dynamicforms.Field;
 import play.data.validation.Constraints.*;
 import play.db.jpa.Transactional;
@@ -15,7 +16,7 @@ import utils.Validation;
  */
 public class Dynamic {
 	@Required
-	public String batch;
+	public Batch batch;
 
 	@Required
 	List<Fieldset> values;
