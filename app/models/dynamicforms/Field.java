@@ -78,6 +78,7 @@ public class Field extends JpaModel {
 			JPA.em().persist(this);
 			return true;
 		} catch (Exception e) {
+			System.out.print(e);
 			return false;
 		}
 	}
@@ -88,8 +89,22 @@ public class Field extends JpaModel {
 			JPA.em().merge(this);
 			return true;
 		} catch (Exception e) {
+			System.out.print(e);
 			return false;
 		}
+	}
+
+	public String validate() {
+		StringBuilder result = new StringBuilder();
+		if (type != FieldType.INT || type != FieldType.DOUBLE) {
+			if(min !=null)
+				result.append("Vain numeraalisilla arvoilla voi olla minimi. ");
+			if(max !=null)
+				result.append("Vain numeraalisilla arvoilla voi olla maksimi. ");
+		}
+		else if(min >= max)
+			result.append("Minimi ei voi olla maksimia suurempi.");
+		return result.length() > 0 ? result.toString() : null;
 	}
 
 	/**

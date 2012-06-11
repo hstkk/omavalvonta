@@ -143,12 +143,12 @@ public class Manage extends Controller {
 			models.dynamicforms.Field field = filledFieldForm.get();
 			if ((field.id != null && field.update())
 					|| (field.id == null && field.save())) {
-				flash("status", "Kenttä on luotu onnistuneesti!");
+				flash("status", "Kenttä on tallennettu onnistuneesti!");
 				return redirect(controllers.dynamicforms.routes.Manage
 						.createField(formId));
 			}
 		}
-		flash("status", "Kentän luonti ei onnistunut!");
+		flash("status", "Kentän tallennus ei onnistunut!");
 		return badRequest(views.html.dynamicforms.manageField.render(f,
 				models.dynamicforms.Field.findByForm(f), filledFieldForm,
 				deleteForm));

@@ -44,6 +44,7 @@
 	}
 	@helper.form(action = controllers.dynamicforms.routes.Manage.saveField(manageForm.id)){
 		<input type="hidden" name="id" value="@fieldForm("id").value"/>
+		<input type="hidden" name="form.id" value="@manageForm.id"/>
 		@helper.inputText(fieldForm("name"), '_label -> "nimi", '_class -> "control-group")
 		@helper.textarea(fieldForm("help"), '_label -> "ohje")
 		@helper.select(fieldForm("type"), options = options(models.dynamicforms.FieldType.map), '_default -> fieldForm("type").value, '_label -> "tietotyyppi")
