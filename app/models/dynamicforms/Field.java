@@ -65,33 +65,6 @@ public class Field extends JpaModel {
 		return stringBuilder.toString();
 	}
 
-	public void set() {
-		if (this.form.id == null)
-			this.form = null;
-		else
-			this.form = Form.findById(this.form.id);
-	}
-
-	public boolean save() {
-		try {
-			set();
-			JPA.em().persist(this);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	public boolean update() {
-		try {
-			set();
-			JPA.em().merge(this);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-	
 	/**
 	 * Finds field by field id.
 	 * 
