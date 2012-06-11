@@ -37,7 +37,7 @@
 
 	@manageFields(fields)
 
-	@if(fieldForm("name").value != null){
+	@if(!fieldForm("id").valueOr("").equals("")){
 		<h2>Muokkaa kenttää</h2>
 	} else{
 		<h2>Uusi kenttä</h2>
@@ -55,7 +55,7 @@
         <input type="submit" name="action" class="btn btn-warning" value="peruuta"/>
 	}
 	
-	@if(fieldForm("name").value != null){
+	@if(!fieldForm("id").valueOr("").equals("")){
 		<h3>Poista lomakkeen kenttä</h3>
 		@helper.form(action = controllers.dynamicforms.routes.Manage.deleteField(manageForm.id, fieldForm("id").value)){
 			<div class="control-group">
