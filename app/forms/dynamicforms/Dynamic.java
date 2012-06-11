@@ -49,7 +49,7 @@ public class Dynamic {
 						if (doubleTest == null)
 							result.append("Kentän " + field.name
 									+ " arvon kuuluu olla numero. ");
-						/*else if (field.min != null
+						else if (field.min != null
 								&& !Validation.min(doubleTest, field.min))
 							result.append("Kentän " + field.name
 									+ " arvo voi olla pienimmillään "
@@ -58,14 +58,14 @@ public class Dynamic {
 								&& !Validation.min(doubleTest, field.max))
 							result.append("Kentän " + field.name
 									+ " arvo voi olla suurimmillaan "
-									+ field.max + ". ");*/
+									+ field.max + ". ");
 						break;
 					case INT:
 						Integer intTest = Validation.isInt(fieldset.value);
 						if (intTest == null)
 							result.append("Kentän " + field.name
 									+ " arvon kuuluu olla numero. ");
-						/*else if (field.min != null
+						else if (field.min != null
 								&& !Validation.min(intTest, field.min))
 							result.append("Kentän " + field.name
 									+ " arvo voi olla pienimmillään "
@@ -74,7 +74,7 @@ public class Dynamic {
 								&& !Validation.min(intTest, field.max))
 							result.append("Kentän " + field.name
 									+ " arvo voi olla suurimmillaan "
-									+ field.max + ". ");*/
+									+ field.max + ". ");
 						break;
 					case TEXT:
 					case TEXTAREA:
