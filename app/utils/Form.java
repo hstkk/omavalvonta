@@ -8,7 +8,7 @@ import forms.dynamicforms.Fieldset;
 public class Form {
 
 	// TODO label for
-	public static <T> String formify(List<T> list, Class<T> type) {
+	public static <T> String formify(List<T> list) {
 		if (list == null || list.isEmpty())
 			return null;
 		StringBuilder html = new StringBuilder();
