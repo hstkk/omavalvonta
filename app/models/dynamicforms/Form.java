@@ -12,7 +12,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.envers.Audited;
 
 import models.JpaModel;
-import utils.Converter;
+import utils.*;
 
 import play.db.ebean.*;
 import play.data.format.*;
@@ -20,6 +20,8 @@ import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 import org.hibernate.Hibernate;
+
+import antlr.Utils;
 
 @Entity
 @Audited
@@ -37,6 +39,9 @@ public class Form extends JpaModel {
 	@Lob
 	public String description;
 
+	@Lob
+	public String form;
+
 	@Required
 	public Boolean isActive = false;
 
@@ -52,6 +57,9 @@ public class Form extends JpaModel {
 			this.basedOn = null;
 		else
 			this.basedOn = Form.findById(this.basedOn.id);
+		String html = utils.Form.formify(Field.findByForm(this));
+		if (html != null)
+			this.form = html;
 	}
 
 	public boolean save() {
