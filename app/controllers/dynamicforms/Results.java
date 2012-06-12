@@ -13,6 +13,10 @@ public class Results extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result add(Long batchId, String program) {
+		
+		//TODO
+		String tmp = program;
+		
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
@@ -44,8 +48,9 @@ public class Results extends Controller {
 			if (html == null || html.equals(""))
 				return notFound(views.html.notFound.render());
 			return ok(views.html.dynamicforms.dynamic.render(batch,
-					dynamicForm, program, html));
+					dynamicForm, tmp, html));
 		}
+		System.out.print(3);
 		html = utils.Form.formify(models.dynamicforms.Result
 				.findByResults(results));
 		if (html == null || html.equals(""))
