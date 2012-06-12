@@ -2,7 +2,7 @@
 
 @main(form.name + " esikatselu"){
 	<form>
-		@Html(form.html)
+		@Html(form.toForm())
 	</form>
 	<a class="btn btn-primary"  href="@controllers.dynamicforms.routes.Manage.createField(form.id)">Palaa takaisin</a>
 }

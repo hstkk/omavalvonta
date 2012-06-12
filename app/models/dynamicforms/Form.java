@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.ListUtils;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 //import org.hibernate.annotations.CascadeType;
 import org.hibernate.envers.Audited;
 
@@ -26,10 +28,12 @@ import antlr.Utils;
 @Entity
 @Audited
 // TODO field order
+// TODO fetch
 public class Form extends JpaModel {
 
 	// @Valid
 	@ManyToOne
+	@Fetch(FetchMode.JOIN)
 	public Form basedOn = null;
 
 	@Required
@@ -37,10 +41,10 @@ public class Form extends JpaModel {
 	public String name;
 
 	@Lob
-	public String description;
+	public String description = "";
 
 	@Lob
-	public String html;
+	public String html = "";
 
 	@Required
 	public Boolean isActive = false;
@@ -86,6 +90,15 @@ public class Form extends JpaModel {
 		if (html != null)
 			this.html = html;
 		this.save();
+	}
+
+	public String toForm() {
+		if (this.basedOn == null || this.basedOn.html.equals(""))
+			return this.html;
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(this.basedOn.toForm());
+		stringBuilder.append(this.html);
+		return (stringBuilder.length() > 0) ? stringBuilder.toString() : null;
 	}
 
 	public static Form findById(Long id) {

@@ -110,6 +110,7 @@ public class Manage extends Controller {
 				.findById(formId);
 		if (form == null || form.html == null)
 			return notFound(views.html.notFound.render());
+		form.basedOn = models.dynamicforms.Form.findById(form.basedOn.id);
 		return ok(views.html.dynamicforms.preview.render(form));
 	}
 
