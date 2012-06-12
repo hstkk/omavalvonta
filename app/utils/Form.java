@@ -44,7 +44,9 @@ public class Form {
 				html.append("<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\"><input type=\"checkbox\" name=\"values[].ack\"/>Kuittaa</label></div></div>");
 			else
 				html.append("<input type=\"hidden\" name=\"values[].ack\"/>");
-			html.append("<div class=\"control-group\"><div class=\"controls\"><textarea class=\"input-xlarge\" name=\"values[].comment\" rows=\"3\"></textarea><label class=\"help-inline\">Huomautuksia</label></div></div>");
+			html.append("<input type=\"hidden\" name=\"values[].fieldId\" value=\"");
+			html.append(field.id);
+			html.append("\"/><div class=\"control-group\"><div class=\"controls\"><textarea class=\"input-xlarge\" name=\"values[].comment\" rows=\"3\"></textarea><label class=\"help-inline\">Huomautuksia</label></div></div>");
 			html.append("</fieldset>");
 		}
 		return (html.length() > 0) ? html.toString() : null;
