@@ -4,9 +4,14 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-#GET	/yllapito
 
-# dynamic forms
+# dynamic form results
+GET		/era/:batchId/:program								controllers.dynamicforms.Results.add(batchId: Long, program: String)
+POST	/era/:batchId/:program								controllers.dynamicforms.Results.save(batchId: Long, program: String)
+GET		/era/:batchId/:program/tulokset						controllers.dynamicforms.Results.show(batchId: Long, program: String)
+GET		/era/:batchId/:program/historia						controllers.dynamicforms.Results.history(batchId: Long, program: String)
+
+# dynamic form management
 GET		/yllapito/lomakkeet									controllers.dynamicforms.Manage.allForms()
 GET		/yllapito/lomakkeet/lomake							controllers.dynamicforms.Manage.createForm()
 POST	/yllapito/lomakkeet/lomake							controllers.dynamicforms.Manage.saveForm()
