@@ -1,6 +1,7 @@
 package models;
 
 import java.util.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -38,11 +39,26 @@ public class Product extends JpaModel {
 	public Product() {
 	}
 	
+	public String toString(){
+		return name;
+	}
+	
 	public static Product findById(Long id) {
 		if (id == null)
 			return null;
 		try {
 			return JPA.em().find(Product.class, id);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Product> findAll() {
+		try {
+			List<Product> product = JPA.em().createQuery("from Product order by name")
+					.getResultList();
+			return product;
 		} catch (Exception e) {
 			return null;
 		}

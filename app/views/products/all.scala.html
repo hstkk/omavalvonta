@@ -1,0 +1,22 @@
+@(products: List[models.Product])
+
+@import tags._
+
+@main("Kaikki tuotteet") {
+	@if(flash.get("status")){
+		@info(){
+			@flash.get("status")
+		}
+	}
+	@if(products != null){
+		<ul class="nav nav-list">
+		@for(product <- products){
+			<li><a href="@routes.Products.edit(product.id)">@product</a></li>
+		}
+		</ul>
+	} else{
+		@alert(){
+			Tuotteita ei löytynyt, voit kuitenkin <a href="@routes.Products.add()">lisätä</a> uusia tuotteita.
+		}
+	}
+}

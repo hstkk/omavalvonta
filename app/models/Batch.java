@@ -1,6 +1,7 @@
 package models;
 
 import java.util.*;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -34,6 +35,17 @@ public class Batch extends JpaModel {
 			return null;
 		try {
 			return JPA.em().find(Batch.class, id);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Batch> findAll() {
+		try {
+			List<Batch> batch = JPA.em().createQuery("from Batch order by name")
+					.getResultList();
+			return batch;
 		} catch (Exception e) {
 			return null;
 		}

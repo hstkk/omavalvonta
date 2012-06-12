@@ -16,7 +16,7 @@ public class Products extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result page(int page) {
-		return TODO;
+		return ok(views.html.products.all.render(models.Product.findAll()));
 	}
 
 	public static Result add() {
@@ -24,12 +24,12 @@ public class Products extends Controller {
 	}
 
 	@Transactional(readOnly = true)
-	public static Result edit() {
+	public static Result edit(Long productId) {
 		return TODO;
 	}
 
 	@Transactional
-	public static Result delete() {
+	public static Result delete(Long productId) {
 		return TODO;
 	}
 

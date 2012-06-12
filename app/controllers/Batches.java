@@ -16,7 +16,7 @@ public class Batches extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result page(int page) {
-		return TODO;
+		return ok(views.html.batches.all.render(models.Batch.findAll()));
 	}
 	
 	public static Result add() {
@@ -25,6 +25,11 @@ public class Batches extends Controller {
 
 	@Transactional
 	public static Result save() {
+		return TODO;
+	}
+	
+	@Transactional(readOnly = true)
+	public static Result show(Long batchId) {
 		return TODO;
 	}
 }
