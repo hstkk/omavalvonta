@@ -25,18 +25,53 @@ public class Product extends JpaModel {
 	public String description;
 
 	@Required
-	@OneToOne
+	@ManyToOne
 	public Form washProgram;
 
 	@Required
-	@OneToOne
+	@ManyToOne
 	public Form productCard;
 
 	@Required
-	@OneToOne
+	@ManyToOne
 	public Form purityMonitoring;
 
 	public Product() {
+	}
+	
+	private void set() {
+		if (this.washProgram.id == null)
+			this.washProgram = null;
+		else
+			this.washProgram = Form.findById(this.washProgram.id);
+		if (this.productCard.id == null)
+			this.productCard = null;
+		else
+			this.productCard = Form.findById(this.productCard.id);
+		if (this.purityMonitoring.id == null)
+			this.purityMonitoring = null;
+		else
+			this.purityMonitoring = Form.findById(this.purityMonitoring.id);
+	}
+
+	public boolean save() {
+		try {
+			set();
+			JPA.em().persist(this);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean update() {
+		try {
+			set();
+			JPA.em().merge(this);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	public String toString(){

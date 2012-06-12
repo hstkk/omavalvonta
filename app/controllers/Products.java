@@ -36,6 +36,19 @@ public class Products extends Controller {
 
 	@Transactional
 	public static Result save() {
-		return TODO;
+		Form<models.Product> filledProductForm = productForm.bindFromRequest();
+		if (filledProductForm.field("action").value().equals("peruuta")) {
+			flash("status", "Tuotteen tallennus peruutettu!");
+			return redirect(routes.Products.index());
+		} else if (!filledProductForm.hasErrors()) {
+			Product product = filledProductForm.get();
+			if ((product.id != null && product.update())
+					|| (product.id == null && product.save())) {
+				flash("status", "Tuote on tallennettu onnistuneesti!");
+				return redirect(routes.Products.index());
+			}
+		}
+		flash("status", "Tuotteen tallennus ei onnistunut!");
+		return badRequest(views.html.products.manage.render(filledProductForm));
 	}
 }
