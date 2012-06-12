@@ -1,0 +1,42 @@
+@(unready: List[models.Batch], ready: List[models.Batch])
+
+@import tags._
+
+@main("Erät") {
+
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#">Erät</a></li>
+		<li><a href="@routes.Batches.add">Uusi erä</a></li>
+	</ul>
+
+	@if(flash.get("status")){
+		@info(){
+			@flash.get("status")
+		}
+	}
+
+	@if(unready != null){
+		<h2>Keskeneräiset erät</h2>
+		<ul class="nav nav-list">
+		@for(batch <- unready){
+			<li><a href="@routes.Batches.show(batch.id)">@batch</a></li>
+		}
+		</ul>
+	} 
+
+	@if(ready != null){
+		<h2>Valmiit erät</h2>
+		<ul class="nav nav-list">
+		@for(batch <- ready){
+			<li><a href="@routes.Batches.show(batch.id)">@batch</a></li>
+		}
+		</ul>
+	} 
+
+	
+	@if(unready == null && ready == null){
+		@alert(){
+			Eriä ei löytynyt, voit kuitenkin <a href="@routes.Batches.add">lisätä</a> uusia eriä.
+		}
+	}
+}

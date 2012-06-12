@@ -27,6 +27,9 @@ public class Batch extends JpaModel {
 	@OneToOne
 	public Product product;
 
+	@Required
+	public Boolean isReady = false;
+
 	public Batch() {
 	}
 
@@ -39,12 +42,34 @@ public class Batch extends JpaModel {
 			return null;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static List<Batch> findAll() {
 		try {
-			List<Batch> batch = JPA.em().createQuery("from Batch order by name")
-					.getResultList();
+			List<Batch> batch = JPA.em()
+					.createQuery("from Batch order by name").getResultList();
+			return batch;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Batch> findReady() {
+		try {
+			List<Batch> batch = JPA.em()
+					.createQuery("from Batch order by id where isReady = true").getResultList();
+			return batch;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Batch> findUnready() {
+		try {
+			List<Batch> batch = JPA.em()
+					.createQuery("from Batch order by id where isReady != true").getResultList();
 			return batch;
 		} catch (Exception e) {
 			return null;
