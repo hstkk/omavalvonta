@@ -1,5 +1,6 @@
 package models.dynamicforms;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -35,16 +36,31 @@ public class Result extends JpaModel {
 	public Field field;
 
 	@Lob
-	public String valueString;
+	public String valueString = null;
 
-	public int valueInt;
+	public Integer valueInt = null;
 
-	public Double valueDouble;
+	public Double valueDouble = null;
 
-	public Boolean valueBoolean;
+	public Boolean valueBoolean = null;
 
-	public Date valueDate;
+	public Date valueDate = null;
 
 	public Result() {
+	}
+
+	public String toString() {
+		if (valueString != null)
+			return valueString;
+		else if (valueInt != null)
+			return valueInt.toString();
+		else if (valueDouble != null)
+			return valueDouble.toString();
+		else if (valueBoolean != null)
+			return valueBoolean.toString();
+		else if (valueDate != null)
+			return new SimpleDateFormat("dd.MM.yyyy").format(valueDate)
+					.toString();
+		return "";
 	}
 }

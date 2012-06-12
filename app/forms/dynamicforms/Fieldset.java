@@ -10,7 +10,7 @@ import play.data.validation.Constraints.*;
  */
 public class Fieldset {
 	@Required
-	Long fieldId;
+	public Long fieldId;
 
 	public String value;
 
