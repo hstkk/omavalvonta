@@ -6,7 +6,7 @@ fieldset {
 	padding-top: 18px;
 }
 
-fieldset:nth-child(odd) {
+fieldset:nth-child(odd), .zebra:nth-of-type(odd) {
 	background-color: #f9f9f9;
 }
 
