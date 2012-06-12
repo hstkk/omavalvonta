@@ -15,13 +15,13 @@ public class Form {
 		for (Object e : list) {
 			Field field = null;
 			String value = "";
-			if (e.getClass().isAssignableFrom(Field.class))
+			if (Field.class.isAssignableFrom(e.getClass()))
 				field = (Field) e;
-			else if (e.getClass().isAssignableFrom(Result.class)) {
+			else if (Result.class.isAssignableFrom(e.getClass())) {
 				Result result = (Result) e;
 				field = Field.findById(result.field.id);
 				value = result.toString();
-			} else if (e.getClass().isAssignableFrom(Fieldset.class)) {
+			} else if (Fieldset.class.isAssignableFrom(e.getClass())) {
 				Fieldset fieldset = (Fieldset) e;
 				field = Field.findById(fieldset.fieldId);
 				value = fieldset.value;
