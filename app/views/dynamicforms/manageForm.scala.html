@@ -12,6 +12,16 @@
 		"Uusi lomake"
 	}
 ){
+
+	<ul class="nav nav-tabs">
+		<li><a href="@controllers.dynamicforms.routes.Manage.allForms">Lomakkeet</a></li>
+		@if(!manageForm("id").valueOr("").equals("")){
+			<li><a href="@controllers.dynamicforms.routes.Manage.createForm">Uusi lomake</a></li>
+		} else{
+			<li class="active"><a href="#">Uusi lomake</a></li>
+		}
+	</ul>
+
 	@if(flash.get("status")){
 		@info(){
 			@flash.get("status")
