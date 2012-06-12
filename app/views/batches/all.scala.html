@@ -17,20 +17,47 @@
 
 	@if(unready != null){
 		<h2>Keskeneräiset erät</h2>
-		<ul class="nav nav-list">
-		@for(batch <- unready){
-			<li><a href="@routes.Batches.show(batch.id)">@batch</a></li>
-		}
-		</ul>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Erä</th>
+					<th>Ajankohta</th>
+					<th>Tuote</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for(batch <- unready){
+					<tr>
+						<td>@batch.id</td>
+						<td><a href="@routes.Batches.show(batch.id)">@batch</a></td>
+						<td>@batch.product</td>
+					</tr>
+				}
+			</tbody>
+		</table>
 	} 
 
 	@if(ready != null){
 		<h2>Valmiit erät</h2>
 		<ul class="nav nav-list">
-		@for(batch <- ready){
-			<li><a href="@routes.Batches.show(batch.id)">@batch</a></li>
-		}
-		</ul>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Erä</th>
+					<th>Ajankohta</th>
+					<th>Tuote</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for(batch <- ready){
+					<tr>
+						<td>@batch.id</td>
+						<td><a href="@routes.Batches.show(batch.id)">@batch</a></td>
+						<td>@batch.product</td>
+					</tr>
+				}
+			</tbody>
+		</table>
 	} 
 
 	

@@ -1,5 +1,6 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.persistence.*;
@@ -20,17 +21,49 @@ import play.db.jpa.*;
 public class Batch extends JpaModel {
 	@Required
 	@NotNull
-	public Date created;
+	public Date created = new Date();
 
 	@Required
-	@Valid
-	@OneToOne
+	// @Valid
+	@ManyToOne
 	public Product product;
 
 	@Required
 	public Boolean isReady = false;
 
 	public Batch() {
+	}
+
+	private void set() {
+		if (this.product.id == null)
+			this.product = null;
+		else
+			this.product = Product.findById(this.product.id);
+	}
+
+	public boolean save() {
+		try {
+			set();
+			JPA.em().persist(this);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean update() {
+		try {
+			set();
+			JPA.em().merge(this);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public String toString() {
+		return new SimpleDateFormat("HH:mm dd.MM.yyyy").format(
+				this.created).toString();
 	}
 
 	public static Batch findById(Long id) {
@@ -53,23 +86,26 @@ public class Batch extends JpaModel {
 			return null;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static List<Batch> findReady() {
 		try {
 			List<Batch> batch = JPA.em()
-					.createQuery("from Batch order by id where isReady = true").getResultList();
+					.createQuery("from Batch where isReady = true order by created desc")
+					.getResultList();
 			return batch;
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static List<Batch> findUnready() {
 		try {
-			List<Batch> batch = JPA.em()
-					.createQuery("from Batch order by id where isReady != true").getResultList();
+			List<Batch> batch = JPA
+					.em()
+					.createQuery("from Batch where isReady != true order by created desc")
+					.getResultList();
 			return batch;
 		} catch (Exception e) {
 			return null;

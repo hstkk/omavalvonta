@@ -13,6 +13,7 @@ import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
+import utils.Converter;
 
 @Entity
 @Audited
@@ -38,7 +39,7 @@ public class Product extends JpaModel {
 
 	public Product() {
 	}
-	
+
 	private void set() {
 		if (this.washProgram.id == null)
 			this.washProgram = null;
@@ -73,11 +74,11 @@ public class Product extends JpaModel {
 			return false;
 		}
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return name;
 	}
-	
+
 	public static Product findById(Long id) {
 		if (id == null)
 			return null;
@@ -87,15 +88,29 @@ public class Product extends JpaModel {
 			return null;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static List<Product> findAll() {
 		try {
-			List<Product> product = JPA.em().createQuery("from Product order by name")
-					.getResultList();
+			List<Product> product = JPA.em()
+					.createQuery("from Product order by name").getResultList();
 			return product;
 		} catch (Exception e) {
 			return null;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static Map<String, String> options() {
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		try {
+			List<Product> products = JPA.em()
+					.createQuery("from Product order by name").getResultList();
+			for (Product product : products)
+				map.put(product.id.toString(), product.toString());
+			return map;
+		} catch (Exception e) {
+			return map;
 		}
 	}
 }
