@@ -49,7 +49,20 @@ public class Results extends JpaModel {
 		return JPA.em().find(Results.class, id);
 	}
 
-	public static Results findByIdAndType(Long id, String type) {
+	public static Results findByBatchAndType(Batch batch, String type) {
+		if (batch == null || type == null || type.equals(""))
+			return null;
+		try {
+			return (Results) JPA.em()
+					.createQuery("Results r where r.batch = ? and r.type = ?")
+					.setParameter(1, batch).setParameter(2, type)
+					.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	/*public static Results findByIdAndType(Long id, String type) {
 		if (id == null)
 			return null;
 		try {
@@ -61,5 +74,5 @@ public class Results extends JpaModel {
 		} catch (Exception e) {
 			return null;
 		}
-	}
+	}*/
 }

@@ -29,7 +29,7 @@
 				@for(batch <- unready){
 					<tr>
 						<td>@batch.id</td>
-						<td><a href="@routes.Batches.show(batch.id)">@batch</a></td>
+						<td><a href="@routes.Batches.show(batch.id)">@batch.createdToString</a></td>
 						<td>@batch.product</td>
 					</tr>
 				}
