@@ -5,10 +5,10 @@
 		<div>
 			<h3>@field.name</h3>
 			<ul>
-			<li>@field.help</li>
-			<li>@field</li>
+				<li>@field.help</li>
+				<li>@field</li>
+				<li><a class="btn" href="@controllers.dynamicforms.routes.Manage.editField(field.form.id, field.id)" title="Muokkaa">Muokkaa</a></li>
 			</ul>
-			<a class="btn" href="@controllers.dynamicforms.routes.Manage.editField(field.form.id, field.id)" title="Muokkaa">Muokkaa</a>
 		</div>
 	}
 }

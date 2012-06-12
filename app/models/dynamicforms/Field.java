@@ -67,7 +67,7 @@ public class Field extends JpaModel {
 		return stringBuilder.toString();
 	}
 
-	public void set() {
+	private void set() {
 		if (this.form.id == null)
 			this.form = null;
 		else
@@ -78,6 +78,7 @@ public class Field extends JpaModel {
 		try {
 			set();
 			JPA.em().persist(this);
+			formify();
 			return true;
 		} catch (Exception e) {
 			System.out.print(e);
@@ -89,6 +90,7 @@ public class Field extends JpaModel {
 		try {
 			set();
 			JPA.em().merge(this);
+			formify();
 			return true;
 		} catch (Exception e) {
 			System.out.print(e);
@@ -96,15 +98,19 @@ public class Field extends JpaModel {
 		}
 	}
 
+	private void formify() {
+		if (form != null)
+			form.formify();
+	}
+
 	public String validate() {
 		StringBuilder result = new StringBuilder();
 		if (type != FieldType.INT || type != FieldType.DOUBLE) {
-			if(min !=null)
+			if (min != null)
 				result.append("Vain numeraalisilla arvoilla voi olla minimi. ");
-			if(max !=null)
+			if (max != null)
 				result.append("Vain numeraalisilla arvoilla voi olla maksimi. ");
-		}
-		else if(min >= max)
+		} else if (min >= max)
 			result.append("Minimi ei voi olla maksimia suurempi.");
 		return result.length() > 0 ? result.toString() : null;
 	}
@@ -155,7 +161,7 @@ public class Field extends JpaModel {
 
 	@SuppressWarnings("unchecked")
 	public static List<Field> findByForm(Form form) {
-		if (form == null)
+		if (form == null || form.id == null)
 			return null;
 		try {
 			List<Field> fields = JPA.em()

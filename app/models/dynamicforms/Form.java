@@ -52,22 +52,21 @@ public class Form extends JpaModel {
 		return name;
 	}
 
-	public void set() {
+	private void set() {
 		if (this.basedOn.id == null)
 			this.basedOn = null;
 		else
 			this.basedOn = Form.findById(this.basedOn.id);
-		String html = utils.Form.formify(Field.findByForm(this));
-		if (html != null)
-			this.html = html;
 	}
 
 	public boolean save() {
 		try {
+			System.out.println("KK");
 			set();
 			JPA.em().persist(this);
 			return true;
 		} catch (Exception e) {
+			System.out.println(e);
 			return false;
 		}
 	}
@@ -80,6 +79,13 @@ public class Form extends JpaModel {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	public void formify() {
+		String html = utils.Form.formify(Field.findByForm(this));
+		if (html != null)
+			this.html = html;
+		this.save();
 	}
 
 	public static Form findById(Long id) {
