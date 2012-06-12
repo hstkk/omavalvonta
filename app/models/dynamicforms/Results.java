@@ -54,7 +54,6 @@ public class Results extends JpaModel {
 			return null;
 		try {
 			// TODO optimize
-			//TODO type toUPPER?
 			return (Results) JPA.em()
 					.createQuery("Results r where r.id = ? and r.type = ?")
 					.setParameter(1, id).setParameter(2, type)

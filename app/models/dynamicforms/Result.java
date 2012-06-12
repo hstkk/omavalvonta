@@ -2,6 +2,7 @@ package models.dynamicforms;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -22,10 +23,10 @@ import play.db.jpa.*;
 @Audited
 public class Result extends JpaModel {
 
-	@Required
+	// @Required
 	@OneToOne
 	@Valid
-	@NotNull
+	// @NotNull
 	@NotAudited
 	public User user;
 
@@ -62,5 +63,21 @@ public class Result extends JpaModel {
 			return new SimpleDateFormat("dd.MM.yyyy").format(valueDate)
 					.toString();
 		return "";
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Result> findByResults(Results results) {
+		if (results == null || results.id == null)
+			return null;
+		try {
+			List<Result> list = JPA
+					.em()
+					.createQuery(
+							"from Result r where ResultsResult.results_id = ? and r.id = ResultsResult.result_id")
+					.setParameter(1, results).getResultList();
+			return list;
+		} catch (Exception e) {
+		}
+		return null;
 	}
 }
