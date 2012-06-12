@@ -9,7 +9,7 @@
 		}
 	}
 
-	@helper.form(action = routes.Application.index()){
+	@helper.form(action = routes.Application.index(), 'class -> "form-horizontal"){
 		@Html(html)
 		<fieldset class="form-actions">
 			<input type="submit" name="action" class="btn btn-primary" value="tallenna"/>
