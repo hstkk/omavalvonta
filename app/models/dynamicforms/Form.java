@@ -40,7 +40,7 @@ public class Form extends JpaModel {
 	public String description;
 
 	@Lob
-	public String form;
+	public String html;
 
 	@Required
 	public Boolean isActive = false;
@@ -59,7 +59,7 @@ public class Form extends JpaModel {
 			this.basedOn = Form.findById(this.basedOn.id);
 		String html = utils.Form.formify(Field.findByForm(this));
 		if (html != null)
-			this.form = html;
+			this.html = html;
 	}
 
 	public boolean save() {
