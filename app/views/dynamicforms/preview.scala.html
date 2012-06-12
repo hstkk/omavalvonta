@@ -1,0 +1,8 @@
+@(form: models.dynamicforms.Form)
+
+@main(form.name + " esikatselu"){
+	<form>
+		@Html(form.html)
+	</form>
+	<a class="btn btn-primary"  href="@controllers.dynamicforms.routes.Manage.createField(form.id)">Palaa takaisin</a>
+}
