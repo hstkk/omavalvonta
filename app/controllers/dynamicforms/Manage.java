@@ -104,6 +104,15 @@ public class Manage extends Controller {
 		return redirect(controllers.dynamicforms.routes.Manage.editForm(id));
 	}
 
+	@Transactional(readOnly = true)
+	public static Result previewForm(Long formId) {
+		models.dynamicforms.Form form = models.dynamicforms.Form
+				.findById(formId);
+		if (form == null || form.html == null)
+			return notFound(views.html.notFound.render());
+		return ok(views.html.dynamicforms.preview.render(form));
+	}
+
 	/**
 	 * Renders create field page.
 	 * 
