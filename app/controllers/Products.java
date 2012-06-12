@@ -21,6 +21,7 @@ public class Products extends Controller {
 		return ok(views.html.products.all.render(models.Product.findAll()));
 	}
 
+	@Transactional(readOnly = true)
 	public static Result add() {
 		return ok(views.html.products.manage.render(productForm));
 	}

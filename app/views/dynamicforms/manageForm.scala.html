@@ -28,7 +28,7 @@
 		@helper.inputText(manageForm("name"), '_label -> "nimi", '_class -> "control-group")
 		@helper.textarea(manageForm("description"), '_label -> "kuvaus")
 		@helper.checkbox(manageForm("isActive"), '_label -> None, '_text -> "lomake on aktiivinen", '_showConstraints -> false)
-		@select(manageForm("basedOn.id"), options = options(models.dynamicforms.Form.options(manageForm("id").value)), '_default -> "", '_label -> "peruslomake", '_text -> "lomake, jonka kentät näytetään myös tässä lomakkeessa")
+		@select(manageForm("basedOn.id"), options = options(models.dynamicforms.Form.options(manageForm("id").value)), '_default -> "", '_label -> "peruslomake", '_help -> "lomake, jonka kentät näytetään myös tässä lomakkeessa")
 		<fieldset class="form-actions">
 			<input type="submit" name="action" class="btn btn-primary" value="tallenna"/>
         	<input type="submit" name="action" class="btn btn-warning" value="peruuta"/>
