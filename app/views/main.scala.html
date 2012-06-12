@@ -14,9 +14,12 @@
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="@controllers.routes.Application.index()">Omavalvonta</a>
+					<a class="brand" href="@controllers.routes.Application.index">Omavalvonta</a>
 					<div class="nav-collapse">
 						<ul class="nav">
+							<li><a href="@controllers.routes.Batches.index">Erät</a></li>
+							<li><a href="@controllers.dynamicforms.routes.Manage.allForms">Lomakkeet</a></li>
+							<li><a href="@controllers.routes.Products.index">Tuotteet</a></li>
 						</ul>
 					</div>
 				</div>

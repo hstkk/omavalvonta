@@ -3,11 +3,18 @@
 @import tags._
 
 @main("Kaikki tuotteet") {
+
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#">Tuotteet</a></li>
+		<li><a href="@routes.Products.add">Uusi tuote</a></li>
+	</ul>
+
 	@if(flash.get("status")){
 		@info(){
 			@flash.get("status")
 		}
 	}
+
 	@if(products != null){
 		<ul class="nav nav-list">
 		@for(product <- products){
@@ -16,7 +23,7 @@
 		</ul>
 	} else{
 		@alert(){
-			Tuotteita ei löytynyt, voit kuitenkin <a href="@routes.Products.add()">lisätä</a> uusia tuotteita.
+			Tuotteita ei löytynyt, voit kuitenkin <a href="@routes.Products.add">lisätä</a> uusia tuotteita.
 		}
 	}
 }
