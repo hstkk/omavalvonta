@@ -16,9 +16,6 @@ import utils.Validation;
  */
 public class Dynamic {
 	@Required
-	public Batch batch;
-
-	@Required
 	List<Fieldset> values;
 
 	/**

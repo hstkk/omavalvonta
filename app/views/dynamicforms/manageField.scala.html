@@ -54,8 +54,10 @@
 		@helper.inputText(fieldForm("max"), '_label -> "maksimiarvo", '_class -> "control-group")
 		@helper.checkbox(fieldForm("isRequired"), '_label -> None, '_text -> "vaadittu", '_showConstraints -> false)
 		@helper.checkbox(fieldForm("isSigned"), '_label -> None, '_text -> "kuitattava", '_showConstraints -> false)
-		<input type="submit" name="action" class="btn btn-primary" value="tallenna"/>
-        <input type="submit" name="action" class="btn btn-warning" value="peruuta"/>
+		<fieldset class="form-actions">
+			<input type="submit" name="action" class="btn btn-primary" value="tallenna"/>
+	        <input type="submit" name="action" class="btn btn-warning" value="peruuta"/>
+        </fieldset>
 	}
 	
 	@if(!fieldForm("id").valueOr("").equals("")){
@@ -67,7 +69,9 @@
 		}
 		@helper.form(action = controllers.dynamicforms.routes.Manage.deleteField(manageForm.id, fieldForm("id").value)){
 			@helper.checkbox(deleteForm("isConfirmed"), '_label -> None, '_text -> "Haluan varmasti poistaa kentän ja tallennetut tulokset.", '_showConstraints -> false)
-	        <input type="submit" name="action" class="btn btn-danger" value="poista"/>
+			<fieldset class="form-actions">
+	        	<input type="submit" name="action" class="btn btn-danger" value="poista"/>
+	        </fieldset>
 		}
 	}
 }

@@ -1,20 +1,19 @@
-@(dynamicForm: play.data.Form[forms.Dynamic], fields: List[models.Field])
+@(dynamicForm: play.data.Form[forms.Dynamic])
 
 @import tags._
 
 @main("Welcome to Play 2.0"){
-	@if(form.hasGlobalErrors){
+	@if(dynamicForm.hasGlobalErrors){
 		@alert(){
-			@form.globalError.message
+			@dynamicForm.globalError.message
 		}
 	}
 	@if(fields!= null){
 		@helper.form(action = routes.Application.index()){
-			@for(field <- fields){
-				@fieldset(field){}
-			}
+			@Html(dynamicForm.toForm())
 			<fieldset class="form-actions">
-				<button type="submit" class="btn btn-primary">Tallenna</button>
+				<input type="submit" name="action" class="btn btn-primary" value="tallenna"/>
+    		    <input type="submit" name="action" class="btn btn-warning" value="peruuta"/>
 			</fieldset>
 		}
 	}
