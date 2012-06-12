@@ -28,7 +28,7 @@ public class Form {
 			}
 
 			if (field != null) {
-				html.append("<fieldset><div class=\"control-group\"><label class=\"control-label strong\">");
+				html.append("<fieldset><div class=\"control-group\"><label class=\"control-label\">");
 				html.append(field.name);
 				html.append("</label><div class=\"controls\">");
 				switch (field.type) {
@@ -64,7 +64,7 @@ public class Form {
 					break;
 				}
 				if (field.help.length() > 0) {
-					html.append("<p class=\"help-block\">");
+					html.append("<p class=\"help-inline\">");
 					html.append(field.help);
 					html.append("</p>");
 				}
