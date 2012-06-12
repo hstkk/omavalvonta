@@ -142,33 +142,6 @@ public class Field extends JpaModel {
 		}
 	}
 
-	// TODO or basedon group by form in one query
-	@SuppressWarnings("unchecked")
-	public static List<Field> findByFormAndBasedOn(Form form) {
-		if (form == null)
-			return null;
-		List<Field> fields = null;
-		try {
-			fields = JPA.em().createQuery("from Field f where f.form = ?")
-					.setParameter(1, form).getResultList();
-		} catch (Exception e) {
-		}
-		if (form.basedOn != null) {
-			List<Field> inheritedFields = null;
-			try {
-				inheritedFields = JPA.em()
-						.createQuery("from Field f where f.form = ?")
-						.setParameter(1, form.basedOn).getResultList();
-			} catch (Exception e) {
-			}
-			if (fields == null)
-				return inheritedFields;
-			else if (inheritedFields != null)
-				return ListUtils.union(inheritedFields, fields);
-		}
-		return fields;
-	}
-
 	@SuppressWarnings("unchecked")
 	public static List<Field> findByForm(Form form) {
 		if (form == null || form.id == null)
