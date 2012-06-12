@@ -27,7 +27,9 @@
 			<li>Perustuu lomakkeeseen <a href="@controllers.dynamicforms.routes.Manage.createField(manageForm.basedOn.id)">@manageForm.basedOn</a></li>
 		}
 	</ul>
-	<a class="btn btn-primary" href="#" title="Esikatsele">Esikatsele</a>
+	@if(manageForm.html != null){
+		<a class="btn btn-primary" href="@controllers.dynamicforms.routes.Manage.previewForm(manageForm.id)" title="Esikatsele">Esikatsele</a>
+	}
 	<a class="btn" href="@controllers.dynamicforms.routes.Manage.editForm(manageForm.id)" title="Muokkaa">Muokkaa</a>
 
 	@manageFields(fields)
