@@ -5,6 +5,8 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import models.dynamicforms.Form;
+
 import org.hibernate.envers.Audited;
 
 import play.db.ebean.*;
@@ -25,5 +27,15 @@ public class Batch extends JpaModel {
 	public Product product;
 
 	public Batch() {
+	}
+
+	public static Batch findById(Long id) {
+		if (id == null)
+			return null;
+		try {
+			return JPA.em().find(Batch.class, id);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

@@ -37,4 +37,14 @@ public class Product extends JpaModel {
 
 	public Product() {
 	}
+	
+	public static Product findById(Long id) {
+		if (id == null)
+			return null;
+		try {
+			return JPA.em().find(Product.class, id);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

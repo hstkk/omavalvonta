@@ -3,6 +3,8 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import models.dynamicforms.Form;
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
@@ -33,5 +35,15 @@ public class User extends JpaModel {
 	public String schoolClass;
 
 	public User() {
+	}
+
+	public static User findById(Long id) {
+		if (id == null)
+			return null;
+		try {
+			return JPA.em().find(User.class, id);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
