@@ -48,4 +48,19 @@ public class Results extends JpaModel {
 	public static Results findById(int id) {
 		return JPA.em().find(Results.class, id);
 	}
+
+	public static Results findByIdAndType(Long id, String type) {
+		if (id == null)
+			return null;
+		try {
+			// TODO optimize
+			//TODO type toUPPER?
+			return (Form) JPA.em()
+					.createQuery("Results r where r.id = ? and r.type = ?")
+					.setParameter(1, id).setParameter(2, type)
+					.getSingleResult();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }
