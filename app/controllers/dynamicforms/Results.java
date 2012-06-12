@@ -12,6 +12,9 @@ public class Results extends Controller {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
+		models.dynamicforms.Results results = models.dynamicforms.Results.findByIdAndType(batchId, program);
+		if (results == null)
+			return TODO;
 		return TODO;
 	}
 
