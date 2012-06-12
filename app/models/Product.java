@@ -22,7 +22,7 @@ public class Product extends JpaModel {
 	public String name;
 
 	@Lob
-	public String descrition;
+	public String description;
 
 	@Required
 	@OneToOne

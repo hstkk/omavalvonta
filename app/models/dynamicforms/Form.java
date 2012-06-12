@@ -162,4 +162,8 @@ public class Form extends JpaModel {
 			return map;
 		}
 	}
+
+	public static Map<String, String> options() {
+		return options(null);
+	}
 }

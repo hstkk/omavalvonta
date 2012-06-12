@@ -1,13 +1,15 @@
 package controllers;
 
+import models.Product;
 import play.*;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
-import play.mvc.Result;
 import views.html.*;
 
 public class Products extends Controller {
+
+	final static Form<models.Product> productForm = form(models.Product.class);
 
 	@Transactional(readOnly = true)
 	public static Result index() {
@@ -20,12 +22,15 @@ public class Products extends Controller {
 	}
 
 	public static Result add() {
-		return TODO;
+		return ok(views.html.products.manage.render(productForm));
 	}
 
 	@Transactional(readOnly = true)
 	public static Result edit(Long productId) {
-		return TODO;
+		Product product = Product.findById(productId);
+		if (product == null)
+			return notFound(views.html.notFound.render());
+		return ok(views.html.products.manage.render(productForm.fill(product)));
 	}
 
 	@Transactional

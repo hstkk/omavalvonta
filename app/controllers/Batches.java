@@ -16,7 +16,8 @@ public class Batches extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result page(int page) {
-		return ok(views.html.batches.all.render(models.Batch.findAll()));
+		return TODO;
+		//return ok(views.html.batches.all.render(models.Batch.findAll()));
 	}
 	
 	public static Result add() {
