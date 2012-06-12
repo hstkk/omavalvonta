@@ -57,15 +57,17 @@ public class Form extends JpaModel {
 	}
 
 	private void set() {
-		if (this.basedOn.id == null)
-			this.basedOn = null;
-		else
-			this.basedOn = Form.findById(this.basedOn.id);
+		try {
+			if (this.basedOn.id == null)
+				this.basedOn = null;
+			else
+				this.basedOn = Form.findById(this.basedOn.id);
+		} catch (Exception e) {
+		}
 	}
 
 	public boolean save() {
 		try {
-			System.out.println("KK");
 			set();
 			JPA.em().persist(this);
 			return true;
