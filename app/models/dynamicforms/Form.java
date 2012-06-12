@@ -120,7 +120,7 @@ public class Form extends JpaModel {
 			// TODO optimize: select f.id, f.basedOn, f.name, f.description from
 			// Form f where f.isActive = true and f.id = ?
 			return (Form) JPA.em()
-					.createQuery("Form f where f.isActive = true and f.id = ?")
+					.createQuery("from Form f where f.isActive = true and f.id = ?")
 					.setParameter(1, id).getSingleResult();
 		} catch (Exception e) {
 			return null;

@@ -54,7 +54,7 @@ public class Results extends JpaModel {
 			return null;
 		try {
 			return (Results) JPA.em()
-					.createQuery("Results r where r.batch = ? and r.type = ?")
+					.createQuery("from Results r where r.batch = ? and r.type = ?")
 					.setParameter(1, batch).setParameter(2, type)
 					.getSingleResult();
 		} catch (Exception e) {

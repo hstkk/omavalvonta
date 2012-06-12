@@ -37,7 +37,7 @@ public class Results extends Controller {
 		if (form == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByIdAndType(batchId, program);
+				.findByBatchAndType(batch, program);
 		String html;
 		if (results == null) {
 			html = form.html;
@@ -68,7 +68,7 @@ public class Results extends Controller {
 		if (batch == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByIdAndType(batchId, program);
+				.findByBatchAndType(batch, program);
 		if (results == null)
 			return notFound(views.html.notFound.render());
 		return TODO;
@@ -80,7 +80,7 @@ public class Results extends Controller {
 		if (batch == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByIdAndType(batchId, program);
+				.findByBatchAndType(batch, program);
 		if (results == null)
 			return notFound(views.html.notFound.render());
 		return TODO;
