@@ -16,22 +16,22 @@ public class Form {
 			html.append("</label><div class=\"controls\">");
 			switch (field.type) {
 			case CHECKBOX:
-				html.append("<input type=\"checkbox\"/>");
+				html.append("<input type=\"checkbox\" name=\"values[].value\"/>");
 				break;
 			case DATE:
-				html.append("<input class=\"input-xlarge\" type=\"text\" placeholder=\"pp.kk.vvvv\"/>");
+				html.append("<input class=\"input-xlarge\" name=\"values[].value\" type=\"text\" placeholder=\"pp.kk.vvvv\"/>");
 				break;
 			case INT:
-				html.append("<input class=\"input-xlarge\" type=\"text\" placeholder=\"0\"/>");
+				html.append("<input class=\"input-xlarge\" name=\"values[].value\" type=\"text\" placeholder=\"0\"/>");
 				break;
 			case DOUBLE:
-				html.append("<input class=\"input-xlarge\" type=\"text\" placeholder=\"0,0\"/>");
+				html.append("<input class=\"input-xlarge\" name=\"values[].value\" type=\"text\" placeholder=\"0,0\"/>");
 				break;
 			case TEXT:
-				html.append("<input class=\"input-xlarge\" type=\"text\"/>");
+				html.append("<input class=\"input-xlarge\" name=\"values[].value\" type=\"text\"/>");
 				break;
 			case TEXTAREA:
-				html.append("<textarea class=\"input-xlarge\" rows=\"3\"></textarea>");
+				html.append("<textarea class=\"input-xlarge\" name=\"values[].value\" rows=\"3\"></textarea>");
 				break;
 			}
 			if (field.help.length() > 0) {
@@ -40,8 +40,10 @@ public class Form {
 				html.append("</p>");
 			}
 			html.append("</div></div>");
-			if(field.isSigned)
+			if (field.isSigned)
 				html.append("<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\"><input type=\"checkbox\" name=\"values[].ack\"/>Kuittaa</label></div></div>");
+			else
+				html.append("<input type=\"hidden\" name=\"values[].ack\"/>");
 			html.append("<div class=\"control-group\"><div class=\"controls\"><textarea class=\"input-xlarge\" name=\"values[].comment\" rows=\"3\"></textarea><label class=\"help-inline\">Huomautuksia</label></div></div>");
 			html.append("</fieldset>");
 		}

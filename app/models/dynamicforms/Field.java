@@ -86,6 +86,16 @@ public class Field extends JpaModel {
 		}
 	}
 
+	public boolean delete() {
+		try {
+			JPA.em().remove(this);
+			formify();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 	public boolean update() {
 		try {
 			set();
