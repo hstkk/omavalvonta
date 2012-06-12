@@ -78,6 +78,7 @@ public class Form extends JpaModel {
 	public boolean update() {
 		try {
 			set();
+			formify();
 			JPA.em().merge(this);
 			return true;
 		} catch (Exception e) {
@@ -85,11 +86,10 @@ public class Form extends JpaModel {
 		}
 	}
 
-	public void formify() {
+	private void formify() {
 		String html = utils.Form.formify(Field.findByForm(this));
 		if (html != null)
 			this.html = html;
-		this.save();
 	}
 
 	public String toForm() {

@@ -110,7 +110,7 @@ public class Field extends JpaModel {
 
 	private void formify() {
 		if (form != null)
-			form.formify();
+			form.update();
 	}
 
 	public String validate() {
