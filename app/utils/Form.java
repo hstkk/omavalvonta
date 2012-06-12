@@ -16,16 +16,22 @@ public class Form {
 			html.append("</label><div class=\"controls\">");
 			switch (field.type) {
 			case CHECKBOX:
+				html.append("<input type=\"checkbox\"/>");
 				break;
 			case DATE:
-				break;
-			case DOUBLE:
+				html.append("<input class=\"input-xlarge\" type=\"text\" placeholder=\"pp.kk.vvvv\"/>");
 				break;
 			case INT:
+				html.append("<input class=\"input-xlarge\" type=\"text\" placeholder=\"0\"/>");
+				break;
+			case DOUBLE:
+				html.append("<input class=\"input-xlarge\" type=\"text\" placeholder=\"0,0\"/>");
 				break;
 			case TEXT:
+				html.append("<input class=\"input-xlarge\" type=\"text\"/>");
 				break;
 			case TEXTAREA:
+				html.append("<textarea class=\"input-xlarge\" rows=\"3\"></textarea>");
 				break;
 			}
 			if (field.help.length() > 0) {
