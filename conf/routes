@@ -28,7 +28,6 @@ GET		/yllapito/tuotteet									controllers.Products.index()
 GET		/yllapito/tuotteet/tuote							controllers.Products.add()
 POST	/yllapito/tuotteet/tuote							controllers.Products.save()
 GET		/yllapito/tuotteet/:productId						controllers.Products.edit(productId: Long)
-POST	/yllapito/tuotteet/:productId						controllers.Products.delete(productId: Long)
 
 # batch management
 GET		/erat												controllers.Batches.index()

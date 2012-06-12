@@ -29,11 +29,6 @@ public class Products extends Controller {
 	}
 
 	@Transactional
-	public static Result delete(Long productId) {
-		return TODO;
-	}
-
-	@Transactional
 	public static Result save() {
 		return TODO;
 	}
