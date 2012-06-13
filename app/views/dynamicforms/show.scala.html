@@ -1,0 +1,38 @@
+@(batch: models.Batch, program: String, results: List[models.dynamicforms.Result])
+
+@import tags._
+
+@main(batch.toString) {
+
+	<ul class="nav nav-tabs">
+		<li><a href="@routes.Batches.index">Erät</a></li>
+		<li><a href="@routes.Batches.add">Uusi erä</a></li>
+	</ul>
+
+	@if(flash.get("status")){
+		@info(){
+			@flash.get("status")
+		}
+	}
+
+	<p>@batch.product.description</p>
+
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Toiminto</th>
+				<th>Ohje</th>
+				<th>Tulos</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for(result <- results){
+				<tr>
+					<td>@result.field.name</td>
+					<td>@result.field.help</td>
+					<td>@result</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

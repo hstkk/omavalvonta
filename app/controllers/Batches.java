@@ -54,17 +54,17 @@ public class Batches extends Controller {
 			return notFound(views.html.notFound.render());
 		boolean washprogram = false, puritymonitoring = false, productcard = false;
 		Results results = Results.findByBatchAndType(batch,
-				FormType.WASHPROGRAM.toString());
+				FormType.WASHPROGRAM);
 		if (results != null && results.isReady)
 			washprogram = true;
 
 		results = Results.findByBatchAndType(batch,
-				FormType.PURITYMONITORING.toString());
+				FormType.PURITYMONITORING);
 		if (results != null && results.isReady)
 			puritymonitoring = true;
 
 		results = Results.findByBatchAndType(batch,
-				FormType.PRODUCTCARD.toString());
+				FormType.PRODUCTCARD);
 		if (results != null && results.isReady)
 			productcard = true;
 

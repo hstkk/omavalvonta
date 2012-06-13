@@ -45,15 +45,17 @@ public class Results extends Controller {
 		if (form == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndType(batch, program);
+				.findByBatchAndType(batch, utils.Form.programToType(program));
 		String html;
 		if (results == null) {
+			System.out.println(1);
 			html = form.html;
 			if (html == null || html.equals(""))
 				return notFound(views.html.notFound.render());
 			return ok(views.html.dynamicforms.dynamic.render(batch,
 					dynamicForm, tmp, html));
 		}
+		System.out.println(2);
 		html = utils.Form.formify(models.dynamicforms.Result
 				.findByResults(results));
 		if (html == null || html.equals(""))
@@ -62,7 +64,7 @@ public class Results extends Controller {
 				program, html));
 	}
 
-	//TODO
+	// TODO
 	@Transactional
 	public static Result save(Long batchId, String program) {
 		Batch batch = Batch.findById(batchId);
@@ -77,7 +79,7 @@ public class Results extends Controller {
 		}
 
 		Dynamic dynamic = filleddynamicForm.get();
-		//List<Fieldset> values = filleddynamicForm.get().values;
+		// List<Fieldset> values = filleddynamicForm.get().values;
 
 		if (!filleddynamicForm.hasErrors()) {
 			models.dynamicforms.Results results = new models.dynamicforms.Results(
@@ -94,29 +96,29 @@ public class Results extends Controller {
 				filleddynamicForm, program, utils.Form.formify(dynamic.values)));
 	}
 
-	//TODO
+	// TODO
 	@Transactional(readOnly = true)
 	public static Result show(Long batchId, String program) {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndType(batch, program);
+				.findByBatchAndType(batch, utils.Form.programToType(program));
 		if (results == null)
 			return notFound(views.html.notFound.render());
-		List<models.dynamicforms.Result> r = models.dynamicforms.Result.findByResults(results);
-		return TODO;
-		//return ok(views.html.dynamicforms.show.render(batch, program, results, r));
+		List<models.dynamicforms.Result> r = models.dynamicforms.Result
+				.findByResults(results);
+		return ok(views.html.dynamicforms.show.render(batch, program, r));
 	}
 
-	//TODO
+	// TODO
 	@Transactional(readOnly = true)
 	public static Result history(Long batchId, String program) {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndType(batch, program);
+				.findByBatchAndType(batch, utils.Form.programToType(program));
 		if (results == null)
 			return notFound(views.html.notFound.render());
 		return TODO;
