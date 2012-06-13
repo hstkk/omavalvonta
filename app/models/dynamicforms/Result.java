@@ -57,6 +57,7 @@ public class Result extends JpaModel {
 	}
 
 	public Result(Fieldset fieldset) {
+		System.out.println(fieldset.fieldId);
 		this.field = Field.findById(fieldset.fieldId);
 		this.comment = fieldset.comment;
 		switch (field.type) {

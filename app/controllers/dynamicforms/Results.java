@@ -104,7 +104,9 @@ public class Results extends Controller {
 				.findByBatchAndType(batch, program);
 		if (results == null)
 			return notFound(views.html.notFound.render());
+		List<models.dynamicforms.Result> r = models.dynamicforms.Result.findByResults(results);
 		return TODO;
+		//return ok(views.html.dynamicforms.show.render(batch, program, results, r));
 	}
 
 	//TODO

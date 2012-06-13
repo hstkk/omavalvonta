@@ -13,7 +13,7 @@ public class Form {
 		if (list == null || list.isEmpty())
 			return null;
 
-		int i = 1;
+		int i = 0;
 
 		StringBuilder html = new StringBuilder();
 		for (Object e : list) {
