@@ -16,7 +16,7 @@ import utils.Validation;
  */
 public class Dynamic {
 	@Required
-	List<Fieldset> values;
+	public List<Fieldset> values;
 
 	/**
 	 * Validates the form data.

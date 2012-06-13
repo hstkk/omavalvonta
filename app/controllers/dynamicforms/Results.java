@@ -1,5 +1,8 @@
 package controllers.dynamicforms;
 
+import java.util.List;
+
+import forms.dynamicforms.Fieldset;
 import models.*;
 import models.dynamicforms.FormType;
 import play.data.Form;
@@ -13,10 +16,10 @@ public class Results extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result add(Long batchId, String program) {
-		
-		//TODO
+
+		// TODO
 		String tmp = program;
-		
+
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
@@ -50,7 +53,6 @@ public class Results extends Controller {
 			return ok(views.html.dynamicforms.dynamic.render(batch,
 					dynamicForm, tmp, html));
 		}
-		System.out.print(3);
 		html = utils.Form.formify(models.dynamicforms.Result
 				.findByResults(results));
 		if (html == null || html.equals(""))
@@ -64,7 +66,29 @@ public class Results extends Controller {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
-		return TODO;
+
+		Form<forms.dynamicforms.Dynamic> filleddynamicForm = dynamicForm
+				.bindFromRequest();
+		if (filleddynamicForm.field("action").value().equals("peruuta")) {
+			flash("status", "Lomakkeen tallennus peruutettu!");
+			return redirect(routes.Batches.show(batchId));
+		}
+
+		List<Fieldset> values = filleddynamicForm.get().values;
+
+		if (!filleddynamicForm.hasErrors()) {
+			models.dynamicforms.Results results = new models.dynamicforms.Results(
+					batch, values, utils.Form.programToType(program));
+			if (results.save()) {
+				flash("status", "Lomake on tallennettu onnistuneesti!");
+				// TODO
+				return redirect(routes.Batches.show(batchId));
+			}
+		}
+
+		flash("status", "Lomakkeen tallennus ei onnistunut!");
+		return badRequest(views.html.dynamicforms.dynamic.render(batch,
+				filleddynamicForm, program, utils.Form.formify(values)));
 	}
 
 	@Transactional(readOnly = true)

@@ -11,6 +11,8 @@ import models.JpaModel;
 
 import com.avaje.ebean.annotation.EnumValue;
 
+import forms.dynamicforms.Fieldset;
+
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
@@ -45,6 +47,14 @@ public class Results extends JpaModel {
 	public Results() {
 	}
 
+	public Results(Batch batch, List<Fieldset> values, FormType type) {
+		this.batch = batch;
+		this.updated = new Date();
+		this.type = type;
+		for (Fieldset value : values)
+			results.add(new Result(value));
+	}
+
 	public static Results findById(int id) {
 		return JPA.em().find(Results.class, id);
 	}
@@ -53,26 +63,22 @@ public class Results extends JpaModel {
 		if (batch == null || type == null || type.equals(""))
 			return null;
 		try {
-			return (Results) JPA.em()
-					.createQuery("from Results r where r.batch = ? and r.type = ?")
+			return (Results) JPA
+					.em()
+					.createQuery(
+							"from Results r where r.batch = ? and r.type = ?")
 					.setParameter(1, batch).setParameter(2, type)
 					.getSingleResult();
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
-	/*public static Results findByIdAndType(Long id, String type) {
-		if (id == null)
-			return null;
-		try {
-			// TODO optimize
-			return (Results) JPA.em()
-					.createQuery("Results r where r.id = ? and r.type = ?")
-					.setParameter(1, id).setParameter(2, type)
-					.getSingleResult();
-		} catch (Exception e) {
-			return null;
-		}
-	}*/
+
+	/*
+	 * public static Results findByIdAndType(Long id, String type) { if (id ==
+	 * null) return null; try { // TODO optimize return (Results) JPA.em()
+	 * .createQuery("Results r where r.id = ? and r.type = ?") .setParameter(1,
+	 * id).setParameter(2, type) .getSingleResult(); } catch (Exception e) {
+	 * return null; } }
+	 */
 }

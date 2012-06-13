@@ -10,6 +10,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
+import forms.dynamicforms.Fieldset;
+import utils.Converter;
+
 import models.JpaModel;
 import models.User;
 import models.dynamicforms.Field;
@@ -47,7 +50,33 @@ public class Result extends JpaModel {
 
 	public Date valueDate = null;
 
+	@Lob
+	public String comment;
+
 	public Result() {
+	}
+
+	public Result(Fieldset fieldset) {
+		this.field = Field.findById(fieldset.fieldId);
+		this.comment = fieldset.comment;
+		switch (field.type) {
+		case CHECKBOX:
+			this.valueBoolean = Converter.stringToBool(fieldset.value);
+			break;
+		case DATE:
+			this.valueDate = Converter.stringToDate(fieldset.value);
+			break;
+		case INT:
+			this.valueInt = Converter.stringToInt(fieldset.value);
+			break;
+		case DOUBLE:
+			this.valueDouble = Converter.stringToDouble(fieldset.value);
+			break;
+		case TEXT:
+		case TEXTAREA:
+			this.valueString = fieldset.value;
+			break;
+		}
 	}
 
 	public String toString() {

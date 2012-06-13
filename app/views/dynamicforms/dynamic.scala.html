@@ -3,6 +3,12 @@
 @import tags._
 
 @main(batch.product + " " + program + ", erä " + batch.id){
+
+	<ul class="nav nav-tabs">
+		<li><a href="@routes.Batches.index">Erät</a></li>
+		<li><a href="@routes.Batches.add">Uusi erä</a></li>
+	</ul>
+
 	@if(dynamicForm.hasGlobalErrors){
 		@alert(){
 			@dynamicForm.globalError.message
