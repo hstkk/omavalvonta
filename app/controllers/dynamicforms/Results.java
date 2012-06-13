@@ -2,6 +2,7 @@ package controllers.dynamicforms;
 
 import java.util.List;
 
+import forms.dynamicforms.Dynamic;
 import forms.dynamicforms.Fieldset;
 import models.*;
 import models.dynamicforms.FormType;
@@ -75,11 +76,12 @@ public class Results extends Controller {
 			return redirect(controllers.routes.Batches.show(batchId));
 		}
 
-		List<Fieldset> values = filleddynamicForm.get().values;
+		Dynamic dynamic = filleddynamicForm.get();
+		//List<Fieldset> values = filleddynamicForm.get().values;
 
 		if (!filleddynamicForm.hasErrors()) {
 			models.dynamicforms.Results results = new models.dynamicforms.Results(
-					batch, values, utils.Form.programToType(program));
+					batch, dynamic.values, utils.Form.programToType(program));
 			if (results.save()) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
 				return redirect(controllers.dynamicforms.routes.Results.show(
@@ -89,7 +91,7 @@ public class Results extends Controller {
 
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
 		return badRequest(views.html.dynamicforms.dynamic.render(batch,
-				filleddynamicForm, program, utils.Form.formify(values)));
+				filleddynamicForm, program, utils.Form.formify(dynamic.values)));
 	}
 
 	//TODO

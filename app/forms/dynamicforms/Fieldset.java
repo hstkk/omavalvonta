@@ -21,4 +21,10 @@ public class Fieldset {
 
 	public Fieldset() {
 	}
+
+	public Fieldset(Long fieldId, String value, Boolean ack, String comment) {
+		this.fieldId = fieldId;
+		this.value = value;
+		this.ack = ack;
+	}
 }
