@@ -30,17 +30,17 @@ public class Results extends JpaModel {
 	public FormType type;
 
 	@Required
-	public Boolean isReady;
+	public Boolean isReady = false;
 
 	@Required
-	@Valid
+	// @Valid
 	@OneToMany
 	@JoinTable(name = "ResultsResult", joinColumns = { @JoinColumn(name = "results_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "result_id", referencedColumnName = "id", unique = true) })
 	public List<Result> results;
 
 	@Required
-	@Valid
-	@OneToOne
+	// @Valid
+	@ManyToOne
 	@NotNull
 	public Batch batch;
 
@@ -51,6 +51,8 @@ public class Results extends JpaModel {
 		this.batch = batch;
 		this.updated = new Date();
 		this.type = type;
+		this.results = new ArrayList<Result>();
+		System.out.println(values.size());
 		for (Fieldset value : values)
 			results.add(new Result(value));
 	}

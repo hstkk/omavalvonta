@@ -77,6 +77,7 @@ public class Result extends JpaModel {
 			this.valueString = fieldset.value;
 			break;
 		}
+		this.save();
 	}
 
 	public String toString() {

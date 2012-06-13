@@ -19,6 +19,8 @@ public class JpaModel {
 			JPA.em().persist(this);
 			return true;
 		} catch (Exception e) {
+			System.out.println(e);
+			e.printStackTrace();
 			return false;
 		}
 	}
