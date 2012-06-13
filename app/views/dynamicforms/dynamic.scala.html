@@ -15,7 +15,7 @@
 		}
 	}
 
-	@helper.form(action = routes.Application.index(), 'class -> "form-horizontal"){
+	@helper.form(action = controllers.dynamicforms.routes.Results.save(batch.id, program), 'class -> "form-horizontal"){
 		@Html(html)
 		<fieldset class="form-actions">
 			<input type="submit" name="action" class="btn btn-primary" value="tallenna"/>
