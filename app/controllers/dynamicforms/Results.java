@@ -71,7 +71,7 @@ public class Results extends Controller {
 				.bindFromRequest();
 		if (filleddynamicForm.field("action").value().equals("peruuta")) {
 			flash("status", "Lomakkeen tallennus peruutettu!");
-			return redirect(routes.Batches.show(batchId));
+			return redirect(controllers.routes.Batches.show(batchId));
 		}
 
 		List<Fieldset> values = filleddynamicForm.get().values;
@@ -81,8 +81,8 @@ public class Results extends Controller {
 					batch, values, utils.Form.programToType(program));
 			if (results.save()) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
-				// TODO
-				return redirect(routes.Batches.show(batchId));
+				return redirect(controllers.dynamicforms.routes.Results.show(
+						batchId, program));
 			}
 		}
 
