@@ -2,6 +2,7 @@ package forms.dynamicforms;
 
 import java.util.List;
 
+import javax.persistence.OneToMany;
 
 import models.Batch;
 import models.dynamicforms.Field;
@@ -16,6 +17,7 @@ import utils.Validation;
  */
 public class Dynamic {
 	@Required
+	@OneToMany
 	public List<Fieldset> values;
 
 	/**
@@ -23,7 +25,7 @@ public class Dynamic {
 	 * 
 	 * @return null if no errors else errors.
 	 */
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String validate() {
 		StringBuilder result = new StringBuilder();
 		for (Fieldset fieldset : values) {
@@ -85,6 +87,9 @@ public class Dynamic {
 					result.append("Virhe, lomakkeen kenttää ei löytynyt. ");
 			}
 		}
-		return (result.length() == 0) ? null : result.toString();
+		return (result.length() == 0) ? "" : result.toString();
+	}
+
+	public Dynamic() {
 	}
 }

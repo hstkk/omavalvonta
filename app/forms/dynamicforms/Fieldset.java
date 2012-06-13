@@ -18,4 +18,7 @@ public class Fieldset {
 
 	@Lob
 	public String comment;
+
+	public Fieldset() {
+	}
 }
