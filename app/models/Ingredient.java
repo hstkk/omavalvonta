@@ -3,6 +3,8 @@ package models;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import models.helper.JpaModel;
+
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import play.db.jpa.JPA;
