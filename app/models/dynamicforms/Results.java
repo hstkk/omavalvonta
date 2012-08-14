@@ -62,13 +62,13 @@ public class Results extends JpaModel {
 	}
 
 	public static Results findByBatchAndType(Batch batch, FormType type) {
-		if (batch == null || type == null || type.equals(""))
+		if (batch == null || type == null)
 			return null;
 		try {
 			return (Results) JPA
 					.em()
 					.createQuery(
-							"from Results r where r.batch = ? and r.type.toString like ?")
+							"from Results r where r.batch = ? and r.type like ?")
 					.setParameter(1, batch).setParameter(2, type.toString())
 					.getSingleResult();
 		} catch (Exception e) {
