@@ -1,10 +1,10 @@
 @()(content: Html)
 <tr>
-	@for(td <- content.toString.trim.lines) {
+	@for(td <- content.toString.lines) {
 		@if(!td.trim.isEmpty) {
 			<td>@Html(td)</td>
 		} else {
-			<td><em>&mdash;</em></td>
+			<td>&mdash;</td>
 		}
 	}
 </tr>
