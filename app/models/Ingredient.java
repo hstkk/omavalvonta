@@ -48,7 +48,7 @@ public class Ingredient extends JpaModel {
 					.createQuery("select count(*) from Ingredient")
 					.getSingleResult();
 			List<Ingredient> list = JPA.em()
-					.createQuery("from Ingredient i order by i.id " + order)
+					.createQuery("from Ingredient i order by i.id asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
 			if (rows != null || list != null)
