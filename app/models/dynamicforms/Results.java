@@ -25,7 +25,7 @@ public class Results extends JpaModel {
 	public Date updated;
 
 	@Required
-	@Enumerated(EnumType.STRING)
+	@ManyToOne
 	@NotNull
 	public FormType type;
 
