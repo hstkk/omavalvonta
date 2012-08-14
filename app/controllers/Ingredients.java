@@ -71,14 +71,14 @@ public class Ingredients extends Controller {
 		Form<Ingredient> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Raaka-aineen tallennus peruutettu!");
-			return redirect(routes.FormTypes.index());
+			return redirect(routes.Ingredients.index());
 		} else if (!filledForm.hasErrors()) {
 			Ingredient ingredient = filledForm.get();
 			// TODO smarter save/update
 			if ((ingredient.id != null && ingredient.update())
 					|| (ingredient.id == null && ingredient.save())) {
-				flash("success", "Tuote on tallennettu onnistuneesti!");
-				return redirect(routes.FormTypes.index());
+				flash("success", "Raaka-aine on tallennettu onnistuneesti!");
+				return redirect(routes.Ingredients.index());
 			}
 		}
 		flash("error", "Raaka-aineen tallennus ei onnistunut!");
