@@ -8,8 +8,11 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 
 import models.dynamicforms.Form;
+import models.dynamicforms.FormType;
 import models.helpers.JpaModel;
+import models.helpers.Page;
 
+import play.Play;
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
@@ -21,59 +24,29 @@ import utils.Converter;
 public class Product extends JpaModel {
 	@Required
 	@NotNull
+	@Column(unique = true)
 	public String name;
+
+	@Required
+	@NotNull
+	@Column(unique = true)
+	public String slug;
 
 	@Lob
 	public String description;
 
-	@Required
-	@ManyToOne
-	public Form washProgram;
+	// TODO cascade?
+	@NotNull
+	@OneToMany(cascade = CascadeType.ALL)
+	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-	@Required
-	@ManyToOne
-	public Form productCard;
-
-	@Required
-	@ManyToOne
-	public Form purityMonitoring;
+	// TODO cascade?
+	@NotNull
+	@OneToMany(cascade = CascadeType.ALL)
+	@MapKey
+	public Map<FormType, Form> forms = new HashMap<FormType, Form>();
 
 	public Product() {
-	}
-
-	private void set() {
-		if (this.washProgram.id == null)
-			this.washProgram = null;
-		else
-			this.washProgram = Form.findById(this.washProgram.id);
-		if (this.productCard.id == null)
-			this.productCard = null;
-		else
-			this.productCard = Form.findById(this.productCard.id);
-		if (this.purityMonitoring.id == null)
-			this.purityMonitoring = null;
-		else
-			this.purityMonitoring = Form.findById(this.purityMonitoring.id);
-	}
-
-	public boolean save() {
-		try {
-			set();
-			JPA.em().persist(this);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	public boolean update() {
-		try {
-			set();
-			JPA.em().merge(this);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 	public String toString() {
@@ -81,24 +54,31 @@ public class Product extends JpaModel {
 	}
 
 	public static Product findById(Long id) {
-		if (id == null)
-			return null;
 		try {
-			return JPA.em().find(Product.class, id);
+			if (id != null)
+				return JPA.em().find(Product.class, id);
 		} catch (Exception e) {
-			return null;
 		}
+		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static List<Product> findAll() {
+	public static Page page(int index) {
 		try {
-			List<Product> product = JPA.em()
-					.createQuery("from Product order by name").getResultList();
-			return product;
+			int size = Play.application().configuration().getInt("page.size");
+			if (index < 1)
+				index = 1;
+			Integer rows = (Integer) JPA.em()
+					.createQuery("select count(*) from Product")
+					.getSingleResult();
+			List<Product> list = JPA.em()
+					.createQuery("from Product p order by p.name asc")
+					.setFirstResult((index - 1) * size).setMaxResults(size)
+					.getResultList();
+			if (rows != null || list != null)
+				return new Page(index, size, rows, list);
 		} catch (Exception e) {
-			return null;
 		}
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
