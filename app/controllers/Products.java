@@ -9,46 +9,45 @@ import views.html.*;
 
 public class Products extends Controller {
 
-	final static Form<models.Product> productForm = form(models.Product.class);
+	final static Form<Product> FORM = form(Product.class);
 
-	@Transactional(readOnly = true)
+	public static Result create() {
+		return views.html.products.manage.render(FORM);
+	}
+
 	public static Result index() {
 		return page(1);
 	}
 
 	@Transactional(readOnly = true)
-	public static Result page(int page) {
-		return ok(views.html.products.all.render(models.Product.findAll()));
+	public static Result page(int index) {
+		return views.html.products.page.render(Product.page(index));
 	}
 
 	@Transactional(readOnly = true)
-	public static Result add() {
-		return ok(views.html.products.manage.render(productForm));
-	}
-
-	@Transactional(readOnly = true)
-	public static Result edit(Long productId) {
+	public static Result update(Long productId) {
 		Product product = Product.findById(productId);
 		if (product == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.products.manage.render(productForm.fill(product)));
+		return views.html.products.manage.render(FORM.fill(product));
 	}
 
 	@Transactional
 	public static Result save() {
-		Form<models.Product> filledProductForm = productForm.bindFromRequest();
-		if (filledProductForm.field("action").value().equals("peruuta")) {
-			flash("status", "Tuotteen tallennus peruutettu!");
+		Form<Product> filledForm = FORM.bindFromRequest();
+		if (filledForm.field("action").value().equals("peruuta")) {
+			flash("warning", "Tuotteen tallennus peruutettu!");
 			return redirect(routes.Products.index());
-		} else if (!filledProductForm.hasErrors()) {
-			Product product = filledProductForm.get();
+		} else if (!filledForm.hasErrors()) {
+			Product product = filledForm.get();
+			// TODO smarter save/update
 			if ((product.id != null && product.update())
 					|| (product.id == null && product.save())) {
-				flash("status", "Tuote on tallennettu onnistuneesti!");
+				flash("success", "Tuote on tallennettu onnistuneesti!");
 				return redirect(routes.Products.index());
 			}
 		}
-		flash("status", "Tuotteen tallennus ei onnistunut!");
-		return badRequest(views.html.products.manage.render(filledProductForm));
+		flash("error", "Tuotteen tallennus ei onnistunut!");
+		return badRequest(views.html.products.manage.render(filledForm));
 	}
 }
