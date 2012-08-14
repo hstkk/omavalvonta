@@ -24,7 +24,7 @@ public class Ingredients extends Controller {
 	}
 
 	@Transactional(readOnly = true)
-	public static Result read() {
+	public static Result update() {
 		return TODO;
 	}
 
