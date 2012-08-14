@@ -74,7 +74,7 @@ public class FormType extends JpaModel {
 					.createQuery("select count(*) from FormType")
 					.getSingleResult();
 			List<FormType> list = JPA.em()
-					.createQuery("from FormType i order by i.name asc")
+					.createQuery("from FormType f order by f.name asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
 			if (rows != null || list != null)
