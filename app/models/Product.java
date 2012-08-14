@@ -13,46 +13,70 @@ import models.helpers.JpaModel;
 import models.helpers.Page;
 
 import play.Play;
-import play.db.ebean.*;
-import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
-import utils.Converter;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Product.
+ * 
+ * @author Sami Hostikka <dev@01.fi>
+ */
 @Entity
 @Audited
 public class Product extends JpaModel {
+
+	/** The name. */
 	@Required
 	@NotNull
 	@Column(unique = true)
 	public String name;
 
+	/** The slug. */
 	@Required
 	@NotNull
 	@Column(unique = true)
 	public String slug;
 
+	/** The description. */
 	@Lob
 	public String description;
 
 	// TODO cascade?
+	/** The ingredients. */
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
 	// TODO cascade?
+	/** The forms. */
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	@MapKey
 	public Map<FormType, Form> forms = new HashMap<FormType, Form>();
 
+	/**
+	 * Instantiates a new product.
+	 */
 	public Product() {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return name;
 	}
 
+	/**
+	 * Find by id.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the product
+	 */
 	public static Product findById(Long id) {
 		try {
 			if (id != null)
@@ -62,6 +86,13 @@ public class Product extends JpaModel {
 		return null;
 	}
 
+	/**
+	 * Page.
+	 * 
+	 * @param index
+	 *            the index
+	 * @return the page
+	 */
 	public static Page page(int index) {
 		try {
 			int size = Play.application().configuration().getInt("page.size");
@@ -81,6 +112,11 @@ public class Product extends JpaModel {
 		return null;
 	}
 
+	/**
+	 * Options.
+	 * 
+	 * @return the map
+	 */
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> options() {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
