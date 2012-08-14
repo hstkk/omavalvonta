@@ -39,7 +39,7 @@ public class Ingredient extends JpaModel {
 		return null;
 	}
 
-	public static Page page(int index, String order) {
+	public static Page page(int index) {
 		try {
 			int size = Play.application().configuration().getInt("page.size");
 			if (index < 1)
