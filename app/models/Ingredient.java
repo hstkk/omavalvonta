@@ -22,13 +22,13 @@ import play.db.jpa.JPA;
 public class Ingredient extends JpaModel {
 	@Required
 	@NotNull
-	String name;
+	public String name;
 
-	String description;
+	public String description;
 
 	// Days
 	@Min(1)
-	Integer bestBefore;
+	public Integer bestBefore;
 
 	public static Ingredient findById(Long id) {
 		try {
