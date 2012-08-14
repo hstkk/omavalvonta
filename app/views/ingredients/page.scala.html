@@ -18,7 +18,7 @@
 				Säilyvyys (päivää)
 			}
 			<tbody>
-				@for(ingredient <- page){
+				@for(ingredient <- page.getList){
 					tr() { <a href="@routes.Ingredients.update(ingredient.id)">@ingredient</a>
 						@ingredient.description
 						@ingredient.bestBefore
