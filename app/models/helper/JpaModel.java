@@ -1,10 +1,6 @@
 package models.helper;
 
-import java.util.List;
-
 import javax.persistence.*;
-
-import play.Play;
 import play.db.jpa.*;
 
 /**
