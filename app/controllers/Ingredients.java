@@ -23,7 +23,10 @@ public class Ingredients extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result update(Long ingredientId) {
-		return TODO;
+		Ingredient ingredient = Ingredient.findById(ingredientId);
+		if (ingredient == null)
+			return notFound(views.html.notFound.render());
+		return views.html.ingredients.manage.render(FORM.fill(ingredient));
 	}
 
 	@Transactional
