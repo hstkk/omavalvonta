@@ -6,22 +6,54 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Ingredients.
+ * 
+ * @author Sami Hostikka <dev@01.fi>
+ */
 public class Ingredients extends Controller {
+
+	/** The Constant FORM. */
 	final static Form<Ingredient> FORM = form(Ingredient.class);
 
+	/**
+	 * Creates the.
+	 * 
+	 * @return the result
+	 */
 	public static Result create() {
 		return views.html.ingredients.manage.render(FORM);
 	}
 
+	/**
+	 * Index.
+	 * 
+	 * @return the result
+	 */
 	public static Result index() {
 		return page(1);
 	}
 
+	/**
+	 * Page.
+	 * 
+	 * @param index
+	 *            the index
+	 * @return the result
+	 */
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
 		return views.html.ingredients.page.render(Ingredient.page(index));
 	}
 
+	/**
+	 * Update.
+	 * 
+	 * @param ingredientId
+	 *            the ingredient id
+	 * @return the result
+	 */
 	@Transactional(readOnly = true)
 	public static Result update(Long ingredientId) {
 		Ingredient ingredient = Ingredient.findById(ingredientId);
@@ -30,6 +62,11 @@ public class Ingredients extends Controller {
 		return views.html.ingredients.manage.render(FORM.fill(ingredient));
 	}
 
+	/**
+	 * Save.
+	 * 
+	 * @return the result
+	 */
 	@Transactional
 	public static Result save() {
 		Form<Ingredient> filledForm = FORM.bindFromRequest();
