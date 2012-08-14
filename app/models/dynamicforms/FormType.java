@@ -1,5 +1,7 @@
 package models.dynamicforms;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
@@ -10,23 +12,34 @@ import play.db.jpa.JPA;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class FormType.
  * 
  * @author Sami Hostikka <dev@01.fi>
- * 
  */
 @Entity
 public class FormType extends JpaModel {
+
+	/** The name. */
 	@Required
 	@NotNull
 	@Column(unique = true)
 	public String name;
 
+	/** The slug. */
 	@Required
 	@NotNull
 	@Column(unique = true)
 	public String slug;
 
+	/**
+	 * Find by id.
+	 * 
+	 * @param id
+	 *            the id
+	 * @return the form type
+	 */
 	public static FormType findById(Long id) {
 		try {
 			if (id != null)
@@ -36,10 +49,22 @@ public class FormType extends JpaModel {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		return name;
 	}
 
+	/**
+	 * Page.
+	 * 
+	 * @param index
+	 *            the index
+	 * @return the page
+	 */
 	public static Page page(int index) {
 		try {
 			int size = Play.application().configuration().getInt("page.size");
