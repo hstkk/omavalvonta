@@ -31,13 +31,12 @@ public class Ingredient extends JpaModel {
 	Integer bestBefore;
 
 	public static Ingredient findById(Long id) {
-		if (id == null)
-			return null;
 		try {
-			return JPA.em().find(Ingredient.class, id);
+			if (id != null)
+				return JPA.em().find(Ingredient.class, id);
 		} catch (Exception e) {
-			return null;
 		}
+		return null;
 	}
 
 	public static Page page(int index, String order) {
