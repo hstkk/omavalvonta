@@ -3,6 +3,7 @@ package models;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import play.db.jpa.JPA;
 
@@ -19,6 +20,8 @@ public class Ingredient extends JpaModel {
 
 	String description;
 
+	// Days
+	@Min(1)
 	Integer bestBefore;
 
 	public static Ingredient findById(Long id) {
