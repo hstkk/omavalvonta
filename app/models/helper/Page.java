@@ -1,17 +1,23 @@
 package models.helper;
 
 import java.util.List;
-import play.Play;
 
+/**
+ * 
+ * @author Sami Hostikka <dev@01.fi>
+ * 
+ */
 public class Page<T> {
 	private final int size;
 	private final int index;
+	private final int rows;
 	private final List<T> list;
 
-	public Page(List<T> list, int index) {
-		this.size = Play.application().configuration().getInt("page.size");
-		this.list = list;
+	public Page(int index, int size, int rows, List<T> list) {
 		this.index = index;
+		this.size = size;
+		this.rows = rows;
+		this.list = list;
 	}
 
 	public boolean hasPrevoius() {
@@ -19,7 +25,7 @@ public class Page<T> {
 	}
 
 	public boolean hasNext() {
-		return (list.size() / size) >= index;
+		return (rows / size) >= index;
 	}
 
 	public boolean isEmpty() {
