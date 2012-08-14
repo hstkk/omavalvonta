@@ -1,9 +1,13 @@
 package controllers;
 
+import models.Ingredient;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 
 public class Ingredients extends Controller {
+	final static Form<Ingredient> FORM = form(Ingredient.class);
+
 	@Transactional(readOnly = true)
 	public static Result create() {
 		return TODO;
@@ -11,12 +15,12 @@ public class Ingredients extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result index() {
-		return TODO;
+		return page(1);
 	}
 
 	@Transactional(readOnly = true)
-	public static Result page() {
-		return TODO;
+	public static Result page(int index) {
+		return views.html.ingredients.page.render(Ingredient.page(index));
 	}
 
 	@Transactional(readOnly = true)
