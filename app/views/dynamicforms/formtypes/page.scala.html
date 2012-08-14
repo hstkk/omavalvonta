@@ -1,0 +1,30 @@
+@(page: models.helpers.Page[FormType])
+
+@import tags._
+@import tags.tables._
+@import tags.alerts._
+
+@main("Lomaketyypit") {
+	@tabs() {
+		<li class="active"><a href="#">Raaka-aineet</a></li>
+		<li><a href="@routes.dynamicforms.FormType.create">Uusi</a></li>
+	}
+	@if(page != null){
+		@table() {
+			@thead() {
+				Nimi
+			}
+			<tbody>
+				@for(formType <- page.getList) {
+					tr() { <a href="@routes.dynamicforms.FormType.update(formType.id)">@formType</a>
+					}
+				}
+			</tbody>
+		}
+		@pagination(page.hasPrevious, routes.dynamicforms.FormType.page(page.getIndex - 1), page.hasNext, routes.dynamicforms.FormType.page(page.getIndex + 1)) {}
+	} else {
+		@warning() {
+			Lomaketyyppejä ei löytynyt, voit kuitenkin <a href="@routes.dynamicforms.FormType.create">lisätä</a> uusia.
+		}
+	}
+}
