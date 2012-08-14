@@ -1,0 +1,39 @@
+@(FORM: play.data.Form[models.Ingredient])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.tables._
+@import tags.alerts._
+@import tags.forms._
+
+@main(
+	if(!FORM("id").valueOr("").equals("")) {
+		"Muokkaa raaka-ainetta"
+	} else{
+		"Uusi raaka-aine"
+	}
+){
+	@tabs() {
+		<li><a href=routes.Ingredients.index">Raaka-aineet</a></li>
+		@if(!FORM("id").valueOr("").equals("")) {
+			<li><a href="routes.Ingredients.add">Uusi</a></li>
+		} else {
+			<li class="active"><a href="#">Uusi</a></li>
+		}
+	}
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	
+	@helper.form(action = routes.Ingredients.save()){
+		@hidden() {
+			@FORM("id").value
+		}
+		@helper.inputText(productForm("name"), '_label -> "nimi", '_class -> "control-group")
+		@helper.textarea(productForm("description"), '_label -> "kuvaus")
+		@actions() {}
+	}
+}

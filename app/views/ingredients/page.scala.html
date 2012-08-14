@@ -9,7 +9,6 @@
 		<li class="active"><a href="#">Raaka-aineet</a></li>
 		<li><a href="routes.Ingredients.add">Uusi</a></li>
 	}
-
 	@if(page != null){
 		@table() {
 			@thead() {
@@ -18,7 +17,7 @@
 				Säilyvyys (päivää)
 			}
 			<tbody>
-				@for(ingredient <- page.getList){
+				@for(ingredient <- page.getList) {
 					tr() { <a href="routes.Ingredients.update(ingredient.id)">@ingredient</a>
 						@ingredient.description
 						@ingredient.bestBefore
@@ -27,8 +26,8 @@
 			</tbody>
 		}
 		</ul>
-	} else{
-		@warning(){
+	} else {
+		@warning() {
 			Raaka-aineita ei löytynyt, voit kuitenkin <a href="routes.Ingredients.add">lisätä</a> uusia.
 		}
 	}
