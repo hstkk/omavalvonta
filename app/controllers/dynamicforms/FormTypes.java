@@ -22,7 +22,7 @@ public class FormTypes extends Controller {
 	 * @return the result
 	 */
 	public static Result create() {
-		return views.html.formtypes.manage.render(FORM);
+		return views.html.dynamicform.formtypes.manage.render(FORM);
 	}
 
 	/**
@@ -43,7 +43,8 @@ public class FormTypes extends Controller {
 	 */
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return views.html.formtypes.page.render(FormType.page(index));
+		return views.html.dynamicform.formtypes.page.render(FormType
+				.page(index));
 	}
 
 	/**
@@ -58,7 +59,8 @@ public class FormTypes extends Controller {
 		FormType formType = FormType.findById(formTypeId);
 		if (formType == null)
 			return notFound(views.html.notFound.render());
-		return views.html.formtypes.manage.render(FORM.fill(formType));
+		return views.html.dynamicform.formtypes.manage.render(FORM
+				.fill(formType));
 	}
 
 	/**
@@ -82,6 +84,7 @@ public class FormTypes extends Controller {
 			}
 		}
 		flash("error", "Lomaketyypin tallennus ei onnistunut!");
-		return badRequest(views.html.formtypes.manage.render(filledForm));
+		return badRequest(views.html.dynamicform.formtypes.manage
+				.render(filledForm));
 	}
 }
