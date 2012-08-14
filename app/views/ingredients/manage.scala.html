@@ -15,9 +15,9 @@
 	}
 ){
 	@tabs() {
-		<li><a href=routes.Ingredients.index">Raaka-aineet</a></li>
+		<li><a href=@routes.Ingredients.index">Raaka-aineet</a></li>
 		@if(!FORM("id").valueOr("").equals("")) {
-			<li><a href="routes.Ingredients.add">Uusi</a></li>
+			<li><a href="@routes.Ingredients.create">Uusi</a></li>
 		} else {
 			<li class="active"><a href="#">Uusi</a></li>
 		}
