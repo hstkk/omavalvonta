@@ -15,7 +15,7 @@ import utils.Converter;
 
 import models.User;
 import models.dynamicforms.Field;
-import models.helper.JpaModel;
+import models.helpers.JpaModel;
 
 import play.db.ebean.*;
 import play.data.format.*;
