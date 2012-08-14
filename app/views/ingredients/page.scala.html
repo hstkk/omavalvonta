@@ -5,21 +5,21 @@
 @import tags.alerts._
 
 @main("Raaka-aineet") {
-	@tabs {
+	@tabs() {
 		<li class="active"><a href="#">Raaka-aineet</a></li>
-		<li><a href="@routes.Ingredients.add">Uusi</a></li>
+		<li><a href="routes.Ingredients.add">Uusi</a></li>
 	}
 
 	@if(page != null){
-		@table {
-			@thead {
+		@table() {
+			@thead() {
 				Nimi
 				Kuvaus
 				Säilyvyys (päivää)
 			}
 			<tbody>
 				@for(ingredient <- page){
-					tr { <a href="@routes.Ingredients.update(ingredient.id)">@ingredient</a>
+					tr() { <a href="@routes.Ingredients.update(ingredient.id)">@ingredient</a>
 						@ingredient.description
 						@ingredient.bestBefore
 					}
