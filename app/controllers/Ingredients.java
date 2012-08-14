@@ -22,7 +22,7 @@ public class Ingredients extends Controller {
 	}
 
 	@Transactional(readOnly = true)
-	public static Result update() {
+	public static Result update(Long ingredientId) {
 		return TODO;
 	}
 

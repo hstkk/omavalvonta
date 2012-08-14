@@ -11,6 +11,13 @@ POST	/era/:batchId/:program								controllers.dynamicforms.Results.save(batchId
 GET		/era/:batchId/:program/tulokset						controllers.dynamicforms.Results.show(batchId: Long, program: String)
 GET		/era/:batchId/:program/historia						controllers.dynamicforms.Results.history(batchId: Long, program: String)
 
+# ingredient management
+GET		/yllapito/raaka-aine								controllers.Ingredients.index
+POST	/yllapito/raaka-aine								controllers.Ingredients.save
+GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.create
+GET		/yllapito/raaka-aine/sivu/:index					controllers.Ingredients.page(index: Int)
+GET		/yllapito/raaka-aine/:ingredientId					controllers.Ingredients.update(ingredientId: Long)
+
 # dynamic form management
 GET		/yllapito/lomakkeet									controllers.dynamicforms.Manage.allForms()
 GET		/yllapito/lomakkeet/lomake							controllers.dynamicforms.Manage.createForm()
