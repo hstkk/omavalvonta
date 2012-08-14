@@ -1,10 +1,14 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 import models.helper.JpaModel;
+import models.helper.Page;
 
+import play.Play;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import play.db.jpa.JPA;
@@ -12,7 +16,7 @@ import play.db.jpa.JPA;
 /**
  * 
  * @author Sami Hostikka <dev@01.fi>
- *
+ * 
  */
 @Entity
 public class Ingredient extends JpaModel {
@@ -34,5 +38,24 @@ public class Ingredient extends JpaModel {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public static Page page(int index, String order) {
+		try {
+			int size = Play.application().configuration().getInt("page.size");
+			if (index < 1)
+				index = 1;
+			Integer rows = (Integer) JPA.em()
+					.createQuery("select count(*) from Ingredient")
+					.getSingleResult();
+			List<Ingredient> list = JPA.em()
+					.createQuery("from Ingredient i order by i.id " + order)
+					.setFirstResult((index - 1) * size).setMaxResults(size)
+					.getResultList();
+			if (rows != null || list != null)
+				return new Page(index, size, rows, list);
+		} catch (Exception e) {
+		}
+		return null;
 	}
 }
