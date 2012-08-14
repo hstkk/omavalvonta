@@ -32,8 +32,9 @@
 		@hidden() {
 			@FORM("id").value
 		}
-		@helper.inputText(productForm("name"), '_label -> "nimi", '_class -> "control-group")
-		@helper.textarea(productForm("description"), '_label -> "kuvaus")
+		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+		@helper.inputText(FORM("bestBefore"), '_label -> "säilyvyys (päivää)", '_class -> "control-group")
+		@helper.textarea(FORM("description"), '_label -> "kuvaus")
 		@actions() {}
 	}
 }
