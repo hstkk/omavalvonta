@@ -20,7 +20,7 @@ public class Page<T> {
 		this.list = list;
 	}
 
-	public boolean hasPrevoius() {
+	public boolean hasPrevious() {
 		return index > 1;
 	}
 
