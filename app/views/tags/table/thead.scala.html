@@ -1,0 +1,8 @@
+@()(content: Html)
+<thead>
+	<tr>
+		@for(th <- content.toString.trim.lines) {
+			<th>@th</th>
+		}
+	</tr>
+</thead>
