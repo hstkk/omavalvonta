@@ -2,6 +2,7 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
@@ -25,6 +26,7 @@ public class Ingredient extends JpaModel {
 	/** The name. */
 	@Required
 	@NotNull
+	@Column(unique = true)
 	public String name;
 
 	/** The description. */
