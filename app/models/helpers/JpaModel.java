@@ -3,17 +3,25 @@ package models.helpers;
 import javax.persistence.*;
 import play.db.jpa.*;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class JpaModel.
  * 
  * @author Sami Hostikka <dev@01.fi>
- * 
  */
 @MappedSuperclass
 public class JpaModel {
+
+	/** The id. */
 	@Id
 	@GeneratedValue
 	public Long id;
 
+	/**
+	 * Save.
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean save() {
 		try {
 			JPA.em().persist(this);
@@ -25,6 +33,11 @@ public class JpaModel {
 		}
 	}
 
+	/**
+	 * Delete.
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean delete() {
 		try {
 			JPA.em().remove(this);
@@ -34,6 +47,11 @@ public class JpaModel {
 		}
 	}
 
+	/**
+	 * Update.
+	 * 
+	 * @return true, if successful
+	 */
 	public boolean update() {
 		try {
 			JPA.em().merge(this);
