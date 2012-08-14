@@ -22,7 +22,7 @@ public class FormTypes extends Controller {
 	 * @return the result
 	 */
 	public static Result create() {
-		return views.html.dynamicform.formtypes.manage.render(FORM);
+		return views.html.dynamicforms.formtypes.manage.render(FORM);
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class FormTypes extends Controller {
 	 */
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return views.html.dynamicform.formtypes.page.render(FormType
+		return views.html.dynamicforms.formtypes.page.render(FormType
 				.page(index));
 	}
 
@@ -59,7 +59,7 @@ public class FormTypes extends Controller {
 		FormType formType = FormType.findById(formTypeId);
 		if (formType == null)
 			return notFound(views.html.notFound.render());
-		return views.html.dynamicform.formtypes.manage.render(FORM
+		return views.html.dynamicforms.formtypes.manage.render(FORM
 				.fill(formType));
 	}
 
@@ -73,18 +73,18 @@ public class FormTypes extends Controller {
 		Form<FormType> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Lomaketyypin tallennus peruutettu!");
-			return redirect(routes.FormTypes.index());
+			return redirect(routes.dynamicforms.FormTypes.index());
 		} else if (!filledForm.hasErrors()) {
 			FormType formType = filledForm.get();
 			// TODO smarter save/update
 			if ((formType.id != null && formType.update())
 					|| (formType.id == null && formType.save())) {
 				flash("success", "Lomaketyyppi on tallennettu onnistuneesti!");
-				return redirect(routes.FormTypes.index());
+				return redirect(routes.dynamicforms.FormTypes.index());
 			}
 		}
 		flash("error", "Lomaketyypin tallennus ei onnistunut!");
-		return badRequest(views.html.dynamicform.formtypes.manage
+		return badRequest(views.html.dynamicforms.formtypes.manage
 				.render(filledForm));
 	}
 }
