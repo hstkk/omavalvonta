@@ -1,0 +1,37 @@
+@(FORM: play.data.Form[models.dynamicforms.FormType])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.alerts._
+@import tags.forms._
+
+@main(
+	if(!FORM("id").valueOr("").equals("")) {
+		"Muokkaa lomaketyyppiä"
+	} else{
+		"Uusi lomaketyyppi"
+	}
+){
+	@tabs() {
+		<li><a href=@routes.FormType.index">Lomaketyypit</a></li>
+		@if(!FORM("id").valueOr("").equals("")) {
+			<li><a href="@routes.dynamicforms.FormType.create">Uusi</a></li>
+		} else {
+			<li class="active"><a href="#">Uusi</a></li>
+		}
+	}
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	
+	@helper.form(action = routes.dynamicforms.FormType.save()){
+		@hidden() {
+			@FORM("id").value
+		}
+		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+		@actions() {}
+	}
+}
