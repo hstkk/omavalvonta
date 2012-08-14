@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import models.Batch;
-import models.JpaModel;
+import models.helper.JpaModel;
 
 import com.avaje.ebean.annotation.EnumValue;
 

@@ -13,9 +13,9 @@ import org.hibernate.envers.NotAudited;
 import forms.dynamicforms.Fieldset;
 import utils.Converter;
 
-import models.JpaModel;
 import models.User;
 import models.dynamicforms.Field;
+import models.helper.JpaModel;
 
 import play.db.ebean.*;
 import play.data.format.*;

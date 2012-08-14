@@ -9,7 +9,7 @@ import org.apache.commons.collections.ListUtils;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
-import models.JpaModel;
+import models.helper.JpaModel;
 
 import play.db.ebean.*;
 import play.data.format.*;

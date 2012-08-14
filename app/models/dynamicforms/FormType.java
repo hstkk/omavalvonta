@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 import play.data.validation.Constraints.Required;
-import models.JpaModel;
+import models.helper.JpaModel;
 
 /**
  * 

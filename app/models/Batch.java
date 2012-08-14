@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
+import models.helper.JpaModel;
 
 import org.hibernate.envers.Audited;
 
