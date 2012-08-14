@@ -1,4 +1,4 @@
-package models.helper;
+package models.helpers;
 
 import java.util.List;
 

@@ -13,7 +13,7 @@ import org.hibernate.annotations.FetchMode;
 //import org.hibernate.annotations.CascadeType;
 import org.hibernate.envers.Audited;
 
-import models.helper.JpaModel;
+import models.helpers.JpaModel;
 import utils.*;
 
 import play.db.ebean.*;

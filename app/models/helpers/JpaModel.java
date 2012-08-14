@@ -1,4 +1,4 @@
-package models.helper;
+package models.helpers;
 
 import javax.persistence.*;
 import play.db.jpa.*;

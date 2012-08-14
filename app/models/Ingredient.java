@@ -5,8 +5,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
-import models.helper.JpaModel;
-import models.helper.Page;
+import models.helpers.JpaModel;
+import models.helpers.Page;
 
 import play.Play;
 import play.data.validation.Constraints.Min;
