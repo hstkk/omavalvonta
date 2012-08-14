@@ -8,12 +8,10 @@ import play.mvc.*;
 public class Ingredients extends Controller {
 	final static Form<Ingredient> FORM = form(Ingredient.class);
 
-	@Transactional(readOnly = true)
 	public static Result create() {
-		return TODO;
+		return views.html.ingredients.manage.render(FORM);
 	}
 
-	@Transactional(readOnly = true)
 	public static Result index() {
 		return page(1);
 	}
