@@ -1,74 +1,59 @@
 package controllers;
 
+import java.util.List;
+
 import models.Batch;
-import models.Product;
 import play.*;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
-import models.dynamicforms.FormType;
-import models.dynamicforms.Results;
 
 public class Batches extends Controller {
 
-	final static Form<models.Batch> batchForm = form(models.Batch.class);
+	final static Form<Batch> FORM = form(Batch.class);
 
-	@Transactional(readOnly = true)
+	public static Result create() {
+		return views.html.batches.manage.render(FORM);
+	}
+
 	public static Result index() {
 		return page(1);
 	}
 
 	@Transactional(readOnly = true)
-	public static Result page(int page) {
-		return ok(views.html.batches.all.render(models.Batch.findUnready(),
-				models.Batch.findReady()));
-	}
-
-	@Transactional(readOnly = true)
-	public static Result add() {
-		return ok(views.html.batches.add.render(batchForm));
+	public static Result page(int index) {
+		return views.html.batches.page.render(Batch
+				.page(index));
 	}
 
 	@Transactional
 	public static Result save() {
-		Form<models.Batch> filledbatchForm = batchForm.bindFromRequest();
-		if (filledbatchForm.field("action").value().equals("peruuta")) {
-			flash("status", "Erän luonti peruutettu!");
-			return redirect(routes.Batches.index());
-		} else if (!filledbatchForm.hasErrors()) {
-			Batch batch = filledbatchForm.get();
+		Form<Batch> filledForm = FORM.bindFromRequest();
+		if (filledForm.field("action").value().equals("peruuta")) {
+			flash("warning", "Erän tallennus peruutettu!");
+			return redirect(routes.IngredientSupplies.index());
+		} else if (!filledForm.hasErrors()) {
+			Batch batch = filledForm.get();
+			// TODO smarter save/update
 			if (batch.save()) {
-				flash("status", "Erä on luotu onnistuneesti!");
-				return redirect(routes.Batches.show(batch.id));
+				flash("success", "Erä on tallennettu onnistuneesti!");
+				return redirect(routes.IngredientSupplies.index());
 			}
 		}
-		flash("status", "Erän luonti ei onnistunut!");
-		return badRequest(views.html.batches.add.render(filledbatchForm));
+		flash("error", "Erän tallennus ei onnistunut!");
+		return badRequest(views.html.batches.manage
+				.render(filledForm));
 	}
 
 	@Transactional(readOnly = true)
-	public static Result show(Long batchId) {
-		Batch batch = Batch.findById(batchId);
+	public static Result read(Long ingredientId) {
+		Batch batch = Batch
+				.findById(ingredientId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
-		boolean washprogram = false, puritymonitoring = false, productcard = false;
-		Results results = Results.findByBatchAndType(batch,
-				FormType.WASHPROGRAM);
-		if (results != null && results.isReady)
-			washprogram = true;
-
-		results = Results.findByBatchAndType(batch,
-				FormType.PURITYMONITORING);
-		if (results != null && results.isReady)
-			puritymonitoring = true;
-
-		results = Results.findByBatchAndType(batch,
-				FormType.PRODUCTCARD);
-		if (results != null && results.isReady)
-			productcard = true;
-
-		return ok(views.html.batches.show.render(batch, washprogram,
-				puritymonitoring, productcard));
+		List<Batch> batches = null;
+		return views.html.batches.read.render(batch,
+				batches);
 	}
 }
