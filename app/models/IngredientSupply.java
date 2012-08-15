@@ -3,7 +3,9 @@ package models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import models.helpers.JpaModel;
@@ -20,6 +22,7 @@ public class IngredientSupply extends JpaModel {
 
 	@Required
 	@NotNull
+	@ManyToOne(cascade = CascadeType.ALL)
 	public Ingredient ingredient;
 
 	@Required
