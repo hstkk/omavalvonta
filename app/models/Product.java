@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 
 import models.dynamicforms.Form;
-import models.dynamicforms.FormType;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 
@@ -49,11 +48,11 @@ public class Product extends JpaModel {
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
 	// TODO cascade?
+	// TODO necessary? hard code?
 	/** The forms. */
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
-	@MapKey
-	public Map<FormType, Form> forms = new HashMap<FormType, Form>();
+	public List<Form> forms = new ArrayList<Form>();
 
 	/**
 	 * Instantiates a new product.
