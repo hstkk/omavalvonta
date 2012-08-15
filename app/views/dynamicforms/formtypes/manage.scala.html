@@ -14,9 +14,9 @@
 	}
 ){
 	@tabs() {
-		<li><a href=@routes.FormType.index">Lomaketyypit</a></li>
+		<li><a href=@controllers.dynamicforms.routes.FormTypes.index">Lomaketyypit</a></li>
 		@if(!FORM("id").valueOr("").equals("")) {
-			<li><a href="@routes.dynamicforms.FormType.create">Uusi</a></li>
+			<li><a href="@controllers.dynamicforms.routes.FormTypes.create">Uusi</a></li>
 		} else {
 			<li class="active"><a href="#">Uusi</a></li>
 		}
@@ -27,7 +27,7 @@
 		}
 	}
 	
-	@helper.form(action = routes.dynamicforms.FormType.save()){
+	@helper.form(action = controllers.dynamicforms.routes.FormTypes.save()){
 		@hidden() {
 			@FORM("id").value
 		}

@@ -7,7 +7,7 @@
 @main("Lomaketyypit") {
 	@tabs() {
 		<li class="active"><a href="#">Raaka-aineet</a></li>
-		<li><a href="@routes.dynamicforms.FormType.create">Uusi</a></li>
+		<li><a href="@controllers.dynamicforms.routes.FormTypes.create">Uusi</a></li>
 	}
 	@if(page != null){
 		@table() {
@@ -16,14 +16,14 @@
 			}
 			<tbody>
 				@for(formType <- page.getList) {
-					tr() { <a href="@routes.dynamicforms.FormType.update(formType.id)">@formType</a> }
+					tr() { <a href="@controllers.dynamicforms.routes.FormTypes.update(formType.id)">@formType</a> }
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, routes.dynamicforms.FormType.page(page.getIndex - 1), page.hasNext, routes.dynamicforms.FormType.page(page.getIndex + 1)) {}
+		@pagination(page.hasPrevious, controllers.dynamicforms.routes.FormTypes.page(page.getIndex - 1), page.hasNext, controllers.dynamicforms.routes.FormTypes.page(page.getIndex + 1)) {}
 	} else {
 		@warning() {
-			Lomaketyyppejä ei löytynyt, voit kuitenkin <a href="@routes.dynamicforms.FormType.create">lisätä</a> uusia.
+			Lomaketyyppejä ei löytynyt, voit kuitenkin <a href="@controllers.dynamicforms.routes.FormTypes.create">lisätä</a> uusia.
 		}
 	}
 }
