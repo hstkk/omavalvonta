@@ -1,0 +1,31 @@
+@(page: models.helpers.Page[Form])
+
+@import tags._
+@import tags.tables._
+@import tags.alerts._
+
+@main("Lomakkeet") {
+	@tabs() {
+		<li class="active"><a href="#">Lomakkeet</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Form.create">Uusi</a></li>
+	}
+	@if(page != null){
+		@table() {
+			@thead() {
+				Nimi
+				Kuvaus
+			}
+			<tbody>
+				@for(form <- page.getList) {
+					tr() { <a href="@controllers.dynamicforms.routes.Form.update(form.id)">@form</a>
+						@form.description }
+				}
+			</tbody>
+		}
+		@pagination(page.hasPrevious, controllers.dynamicforms.routes.Form.page(page.getIndex - 1), page.hasNext, controllers.dynamicforms.routes.Form.page(page.getIndex + 1)) {}
+	} else {
+		@warning() {
+			Lomakkeita ei löytynyt, voit kuitenkin <a href="@controllers.dynamicforms.routes.Form.create">lisätä</a> uusia.
+		}
+	}
+}
