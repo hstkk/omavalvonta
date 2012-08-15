@@ -1,0 +1,33 @@
+@(page: models.helpers.Page[Batch])
+
+@import tags._
+@import tags.tables._
+@import tags.alerts._
+
+@main("Erät") {
+	@tabs() {
+		<li class="active"><a href="#">Erät</a></li>
+		<li><a href="@routes.Batches.create">Uusi</a></li>
+	}
+	@if(page != null){
+		@table() {
+			@thead() {
+				Erä
+				Ajankohta
+				Tuote
+			}
+			<tbody>
+				@for(ingredient <- page.getList) {
+					tr() { @batch.id
+						<a href="@routes.Batches.read(batch.id)">@batch.format("HH:mm dd.M.yyyy")</a>
+						@batch.product }
+				}
+			</tbody>
+		}
+		@pagination(page.hasPrevious, routes.Batches.page(page.getIndex - 1), page.hasNext, routes.Batches.page(page.getIndex + 1)) {}
+	} else {
+		@warning() {
+			Eriä ei löytynyt, voit kuitenkin <a href="@routes.Batches.create">lisätä</a> uusia.
+		}
+	}
+}
