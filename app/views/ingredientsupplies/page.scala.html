@@ -1,0 +1,37 @@
+@(page: models.helpers.Page[IngredientSupply])
+
+@import tags._
+@import tags.tables._
+@import tags.alerts._
+
+@main("Vastaanotetut raaka-aineet") {
+	@tabs() {
+		<li class="active"><a href="#">Vastaanotetut raaka-aineet</a></li>
+		<li><a href="@routes.Ingredients.create">Vastaanota</a></li>
+	}
+	@if(page != null){
+		@table() {
+			@thead() {
+				Raaka-aine
+				Valmistuspäivä
+				Vastaanottopäivä
+				Määrä
+				Jäljellä
+			}
+			<tbody>
+				@for(ingredient <- page.getList) {
+					tr() { <a href="@routes.IngredientSupplies.read(ingredient.id)">@ingredient.ingredient.name</a>
+						@ingredient.produced
+						@ingredient.received
+						@ingredient.amount
+						@ingredient.amountAvailable }
+				}
+			</tbody>
+		}
+		@pagination(page.hasPrevious, routes.IngredientSupplies.page(page.getIndex - 1), page.hasNext, routes.IngredientSupplies.page(page.getIndex + 1)) {}
+	} else {
+		@warning() {
+			Vastaanotettuja raaka-aineita ei löytynyt, voit kuitenkin <a href="@routes.IngredientSupplies.create">lisätä</a> uusia.
+		}
+	}
+}
