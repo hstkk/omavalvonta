@@ -4,16 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import models.dynamicforms.Form;
 import models.helpers.JpaModel;
+import models.helpers.Page;
 
 import org.hibernate.envers.Audited;
 
-import play.db.ebean.*;
-import play.data.format.*;
+import play.Play;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
@@ -26,11 +24,17 @@ public class Batch extends JpaModel {
 
 	@Required
 	// @Valid
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	public Product product;
 
 	@Required
 	public Boolean isReady = false;
+
+	@Required
+	@NotNull
+	@OneToMany(cascade = CascadeType.ALL)
+	@MapKey
+	public Map<IngredientSupply, Double> ingredients = new HashMap<IngredientSupply, Double>();
 
 	public Batch() {
 	}
@@ -73,10 +77,10 @@ public class Batch extends JpaModel {
 		stringBuilder.append(product.name);
 		return stringBuilder.toString();
 	}
-	
+
 	public String createdToString() {
-		return new SimpleDateFormat("HH:mm dd.MM.yyyy").format(
-				this.created).toString();
+		return new SimpleDateFormat("HH:mm dd.MM.yyyy").format(this.created)
+				.toString();
 	}
 
 	public static Batch findById(Long id) {
@@ -89,39 +93,36 @@ public class Batch extends JpaModel {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public static List<Batch> findAll() {
+	public static List<Batch> findByIngredientSupply(Long id) {
 		try {
-			List<Batch> batch = JPA.em()
-					.createQuery("from Batch order by name").getResultList();
-			return batch;
+			/*if (id != null)
+				return JPA
+						.em()
+						.createQuery(
+								"from Batch b where b.IngredientSupply.id = ? order by b.created asc")
+						.setParameter(1, id).getResultList();*/
 		} catch (Exception e) {
-			return null;
 		}
+		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static List<Batch> findReady() {
+	public static Page page(int index) {
 		try {
-			List<Batch> batch = JPA.em()
-					.createQuery("from Batch where isReady = true order by created desc")
+			int size = Play.application().configuration().getInt("page.size");
+			if (index < 1)
+				index = 1;
+			Integer rows = (Integer) JPA.em()
+					.createQuery("select count(*) from Batch")
+					.getSingleResult();
+			List<Batch> list = JPA.em()
+					.createQuery("from Batch b order by b.created asc")
+					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
-			return batch;
+			if (rows != null || list != null)
+				return new Page(index, size, rows, list);
 		} catch (Exception e) {
-			return null;
 		}
+		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static List<Batch> findUnready() {
-		try {
-			List<Batch> batch = JPA
-					.em()
-					.createQuery("from Batch where isReady != true order by created desc")
-					.getResultList();
-			return batch;
-		} catch (Exception e) {
-			return null;
-		}
-	}
 }
