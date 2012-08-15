@@ -18,13 +18,6 @@ GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.create
 GET		/yllapito/raaka-aine/sivu/:index					controllers.Ingredients.page(index: Int)
 GET		/yllapito/raaka-aine/:ingredientId					controllers.Ingredients.update(ingredientId: Long)
 
-# form type management
-GET		/yllapito/lomaketyyppi								controllers.dynamicforms.FormTypes.index
-POST	/yllapito/lomaketyyppi								controllers.dynamicforms.FormTypes.save
-GET		/yllapito/lomaketyyppi/uusi							controllers.dynamicforms.FormTypes.create
-GET		/yllapito/lomaketyyppi/sivu/:index					controllers.dynamicforms.FormTypes.page(index: Int)
-GET		/yllapito/lomaketyyppi/:formTypeId					controllers.dynamicforms.FormTypes.update(formTypeId: Long)
-
 # product management
 GET		/yllapito/tuote										controllers.Products.index
 POST	/yllapito/tuote										controllers.Products.save
