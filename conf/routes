@@ -32,6 +32,14 @@ GET		/yllapito/tuote/uusi								controllers.Products.create
 GET		/yllapito/tuote/sivu/:index							controllers.Products.page(index: Int)
 GET		/yllapito/tuote/:productId							controllers.Products.update(productId: Long)
 
+# form management
+GET		/yllapito/lomake									controllers.dynamicforms.Forms.index
+POST	/yllapito/lomake									controllers.dynamicforms.Forms.save
+GET		/yllapito/lomake/uusi								controllers.dynamicforms.Forms.create
+GET		/yllapito/lomake/sivu/:index						controllers.dynamicforms.Forms.page(index: Int)
+GET		/yllapito/lomake/:formId							controllers.dynamicforms.Forms.update(formId: Long)
+GET		/yllapito/lomake/:formId/esikatselu					controllers.dynamicforms.Forms.preview(formId: Long)
+
 # dynamic form management
 GET		/yllapito/lomakkeet									controllers.dynamicforms.Manage.allForms()
 GET		/yllapito/lomakkeet/lomake							controllers.dynamicforms.Manage.createForm()
