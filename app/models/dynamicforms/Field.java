@@ -129,13 +129,12 @@ public class Field extends JpaModel {
 	 * @return Field object if find is successful else null.
 	 */
 	public static Field findById(Long id) {
-		if (id == null)
-			return null;
 		try {
-			return JPA.em().find(Field.class, id);
+			if (id != null)
+				return JPA.em().find(Field.class, id);
 		} catch (Exception e) {
-			return null;
 		}
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
