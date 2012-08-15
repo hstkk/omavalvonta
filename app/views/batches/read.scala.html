@@ -1,0 +1,24 @@
+@(batch: Batch)
+
+@import tags._
+@import tags.tables._
+@import tags.alerts._
+
+@main(batch.toString) {
+	@tabs() {
+		<li><a href="@routes.Batches.index">Erät</a></li>
+		<li><a href="@routes.Batches.add">Uusi</a></li>
+	}
+	@table() {
+		@thead() {
+			Lomake
+			Tila
+		}
+		<tbody>
+			@for(form <- batch.product.forms) {
+				tr() { <a href="controllers.dynamicforms.Results.read(batch.id, form.id)">@form</a>
+					@if(models.dynamicforms.Results.isDone(batch.id, form.id)) { @labels.success() { Valmis } } else {  @labels.important() { Kesken } } }
+			}
+		</tbody>
+	}
+}
