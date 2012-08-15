@@ -1,6 +1,8 @@
 package models;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -86,5 +88,19 @@ public class Ingredient extends JpaModel {
 		} catch (Exception e) {
 		}
 		return null;
+	}
+
+	public static Map<String, String> options() {
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		try {
+			List<Ingredient> ingredients = JPA.em()
+					.createQuery("from Ingredient order by name")
+					.getResultList();
+			for (Ingredient ingredient : ingredients)
+				map.put(ingredient.id.toString(), ingredient.toString());
+			return map;
+		} catch (Exception e) {
+			return map;
+		}
 	}
 }
