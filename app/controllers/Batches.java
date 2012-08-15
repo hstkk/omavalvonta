@@ -23,8 +23,7 @@ public class Batches extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return views.html.batches.page.render(Batch
-				.page(index));
+		return views.html.batches.page.render(Batch.page(index));
 	}
 
 	@Transactional
@@ -42,18 +41,14 @@ public class Batches extends Controller {
 			}
 		}
 		flash("error", "Erän tallennus ei onnistunut!");
-		return badRequest(views.html.batches.manage
-				.render(filledForm));
+		return badRequest(views.html.batches.manage.render(filledForm));
 	}
 
 	@Transactional(readOnly = true)
-	public static Result read(Long ingredientId) {
-		Batch batch = Batch
-				.findById(ingredientId);
+	public static Result read(Long batchId) {
+		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
-		List<Batch> batches = null;
-		return views.html.batches.read.render(batch,
-				batches);
+		return views.html.batches.read.render(batch);
 	}
 }
