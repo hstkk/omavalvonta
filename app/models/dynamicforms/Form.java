@@ -13,9 +13,12 @@ import org.hibernate.annotations.FetchMode;
 //import org.hibernate.annotations.CascadeType;
 import org.hibernate.envers.Audited;
 
+import models.Product;
 import models.helpers.JpaModel;
+import models.helpers.Page;
 import utils.*;
 
+import play.Play;
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
@@ -105,6 +108,24 @@ public class Form extends JpaModel {
 		try {
 			if (id != null)
 				return JPA.em().find(Form.class, id);
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	public static Page page(int index) {
+		try {
+			int size = Play.application().configuration().getInt("page.size");
+			if (index < 1)
+				index = 1;
+			Integer rows = (Integer) JPA.em()
+					.createQuery("select count(*) from Form").getSingleResult();
+			List<Form> list = JPA.em()
+					.createQuery("from Form f order by f.name asc")
+					.setFirstResult((index - 1) * size).setMaxResults(size)
+					.getResultList();
+			if (rows != null || list != null)
+				return new Page(index, size, rows, list);
 		} catch (Exception e) {
 		}
 		return null;
