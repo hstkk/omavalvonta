@@ -1,0 +1,46 @@
+@(ingredientSupply: IngredientSupply, batches: List[Batch])
+
+@import tags._
+@import tags.tables._
+@import tags.alerts._
+
+@main("Vastaanotettu raaka-aine") {
+	@tabs() {
+		<li><a href="@routes.IngredientSupplies.index">Vastaanotetut raaka-aineet</a></li>
+		<li><a href="@routes.IngredientSupplies.create">Vastaanota</a></li>
+	}
+	@table() {
+		@thead() {
+			Raaka-aine
+			Valmistuspäivä
+			Vastaanottopäivä
+			Määrä
+			Jäljellä
+		}
+		<tbody>
+			tr() { @ingredient.ingredient.name
+				@ingredient.produced
+				@ingredient.received
+				@ingredient.amount @ingredient.unit
+				@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.unit }
+		</tbody>
+	}
+	@if(batches != null) {
+		<h2>Vastaanotettua raaka-ainetta käyttävät erät</h2>
+		@table() {
+			@thead() {
+				Tuote
+				Valmistuspäivä
+			}
+			<tbody>
+				@for(batch <- batches) {
+
+				}
+			</tbody>
+		}
+	} else {
+		@info() {
+			Vastaanotettua raaka-aine-erää ei käytä yksikään tuote-erä.
+		}
+	}
+}
