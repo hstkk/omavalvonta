@@ -25,6 +25,13 @@ GET		/yllapito/lomaketyyppi/uusi							controllers.dynamicforms.FormTypes.create
 GET		/yllapito/lomaketyyppi/sivu/:index					controllers.dynamicforms.FormTypes.page(index: Int)
 GET		/yllapito/lomaketyyppi/:formTypeId					controllers.dynamicforms.FormTypes.update(formTypeId: Long)
 
+# product management
+GET		/yllapito/tuote										controllers.Products.index
+POST	/yllapito/tuote										controllers.Products.save
+GET		/yllapito/tuote/uusi								controllers.Products.create
+GET		/yllapito/tuote/sivu/:index							controllers.Products.page(index: Int)
+GET		/yllapito/tuote/:productId							controllers.Products.update(productId: Long)
+
 # dynamic form management
 GET		/yllapito/lomakkeet									controllers.dynamicforms.Manage.allForms()
 GET		/yllapito/lomakkeet/lomake							controllers.dynamicforms.Manage.createForm()
@@ -36,12 +43,6 @@ POST	/yllapito/lomakkeet/:formId/poista					controllers.dynamicforms.Manage.dele
 POST	/yllapito/lomakkeet/:formId							controllers.dynamicforms.Manage.saveField(formId: Long)
 GET		/yllapito/lomakkeet/:formId/kentta/:fieldId			controllers.dynamicforms.Manage.editField(formId: Long, fieldId: Long)
 POST	/yllapito/lomakkeet/:formId/kentta/:fieldId/poista	controllers.dynamicforms.Manage.deleteField(formId: Long, fieldId: String)
-
-# product management
-GET		/yllapito/tuotteet									controllers.Products.index()
-GET		/yllapito/tuotteet/tuote							controllers.Products.add()
-POST	/yllapito/tuotteet/tuote							controllers.Products.save()
-GET		/yllapito/tuotteet/:productId						controllers.Products.edit(productId: Long)
 
 # batch management
 GET		/erat												controllers.Batches.index()
