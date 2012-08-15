@@ -6,11 +6,11 @@
 GET     /                           						controllers.Application.index()
 
 # batch management
-GET		/era												controllers.dynamicforms.Batches.index
-POST	/era												controllers.dynamicforms.Batches.save
-GET		/era/uusi											controllers.dynamicforms.Batches.create
-GET		/era/sivu/:index									controllers.dynamicforms.Batches.page(index: Int)
-GET		/era/:batchId										controllers.dynamicforms.Batches.read(batchId: Long)
+GET		/era												controllers.Batches.index
+POST	/era												controllers.Batches.save
+GET		/era/uusi											controllers.Batches.create
+GET		/era/sivu/:index									controllers.Batches.page(index: Int)
+GET		/era/:batchId										controllers.Batches.read(batchId: Long)
 
 # batch results
 #GET		/era/:batchId/:formId								controllers.dynamicforms.Results.create(batchId: Long, formId: Long)
