@@ -19,7 +19,7 @@ GET		/raaka-aine/sivu/:index								controllers.IngredientSupplies.page(index: I
 GET		/raaka-aine/:ingredientId							controllers.IngredientSupplies.read(ingredientId: Long)
 
 # ingredient management
-GET		/yllapito/raaka-aine								controllers.Ingredient.index
+GET		/yllapito/raaka-aine								controllers.Ingredients.index
 POST	/yllapito/raaka-aine								controllers.Ingredients.save
 GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.create
 GET		/yllapito/raaka-aine/sivu/:index					controllers.Ingredients.page(index: Int)
