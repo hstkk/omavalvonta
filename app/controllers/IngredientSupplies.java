@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.List;
+
+import models.Batch;
 import models.IngredientSupply;
 import play.*;
 import play.data.Form;
@@ -21,24 +24,37 @@ public class IngredientSupplies extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return views.html.ingredientsupplies.page.render(Product.page(index));
+		return views.html.ingredientsupplies.page.render(IngredientSupply
+				.page(index));
 	}
 
 	@Transactional
 	public static Result save() {
-		Form<Product> filledForm = FORM.bindFromRequest();
+		Form<IngredientSupply> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
-			flash("warning", "Tuotteen tallennus peruutettu!");
+			flash("warning", "Raaka-aineen vastaanoton tallennus peruutettu!");
 			return redirect(routes.IngredientSupplies.index());
 		} else if (!filledForm.hasErrors()) {
-			Product product = filledForm.get();
+			IngredientSupply ingredientSupply = filledForm.get();
 			// TODO smarter save/update
-			if (product.save()) {
-				flash("success", "Tuote on tallennettu onnistuneesti!");
+			if (ingredientSupply.save()) {
+				flash("success", "Raaka-aineen vastaanotto on tallennettu onnistuneesti!");
 				return redirect(routes.IngredientSupplies.index());
 			}
 		}
-		flash("error", "Tuotteen tallennus ei onnistunut!");
-		return badRequest(views.html.ingredientsupplies.manage.render(filledForm));
+		flash("error", "Raaka-aineen vastaanoton tallennus ei onnistunut!");
+		return badRequest(views.html.ingredientsupplies.manage
+				.render(filledForm));
+	}
+
+	@Transactional(readOnly = true)
+	public static Result read(Long ingredientId) {
+		IngredientSupply ingredientSupply = IngredientSupply
+				.findById(ingredientId);
+		if (ingredientSupply == null)
+			return notFound(views.html.notFound.render());
+		List<Batch> batches = null;
+		return views.html.ingredientsupplies.read.render(ingredientSupply,
+				batches);
 	}
 }
