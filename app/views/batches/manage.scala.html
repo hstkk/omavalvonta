@@ -1,0 +1,27 @@
+@(FORM: play.data.Form[models.Ingredient])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.alerts._
+@import tags.forms._
+
+@main("Uusi erä"){
+	@tabs() {
+		<li><a href="@routes.Batches.index">Erät</a></li>
+		<li class="active"><a href="#">Uusi</a></li>
+	}
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	
+	@helper.form(action = routes.Batches.save()){
+		@hidden() {
+			@FORM("id").value
+		}
+		@select(batchForm("product.id"), options = options(models.Product.options), '_default -> "", '_label -> "tuote")
+		@actions() {}
+	}
+}
