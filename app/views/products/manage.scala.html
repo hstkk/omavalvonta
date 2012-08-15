@@ -1,48 +1,38 @@
-@(productForm: play.data.Form[models.Product])
+@(FORM: play.data.Form[models.Product])
 
 @import helper._
 @import helper.twitterBootstrap._
 @import tags._
+@import tags.alerts._
+@import tags.forms._
 
 @main(
-	if(!productForm("id").valueOr("").equals("")){
+	if(!FORM("id").valueOr("").equals("")) {
 		"Muokkaa tuotetta"
-	}
-	else{
+	} else{
 		"Uusi tuote"
 	}
 ){
-
-	<ul class="nav nav-tabs">
-		<li><a href="@routes.Products.index">Tuotteet</a></li>
-		@if(!productForm("id").valueOr("").equals("")){
-			<li><a href="@routes.Products.add">Uusi tuote</a></li>
-		} else{
-			<li class="active"><a href="#">Uusi tuote</a></li>
-		}
-	</ul>
-
-	@if(flash.get("status")){
-		@info(){
-			@flash.get("status")
+	@tabs() {
+		<li><a href=@routes.Products.index">Tuotteet</a></li>
+		@if(!FORM("id").valueOr("").equals("")) {
+			<li><a href="@routes.Products.create">Uusi</a></li>
+		} else {
+			<li class="active"><a href="#">Uusi</a></li>
 		}
 	}
-	@if(productForm.hasGlobalErrors){
-		@alert(){
-			@productForm.globalError.message
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
 		}
-	}
-	
+	}	
 	@helper.form(action = routes.Products.save()){
-		<input type="hidden" name="id" value="@productForm("id").value"/>
-		@helper.inputText(productForm("name"), '_label -> "nimi", '_class -> "control-group")
-		@helper.textarea(productForm("description"), '_label -> "kuvaus")
-		@select(productForm("washProgram.id"), options = options(models.dynamicforms.Form.options), '_default -> "", '_label -> "pesuohjelma lomake", '_help -> "valitse käytettävä lomake")
-		@select(productForm("productCard.id"), options = options(models.dynamicforms.Form.options), '_default -> "", '_label -> "tuotekortti lomake", '_help -> "valitse käytettävä lomake")
-		@select(productForm("purityMonitoring.id"), options = options(models.dynamicforms.Form.options), '_default -> "", '_label -> "puhtaustarkkailu lomake", '_help -> "valitse käytettävä lomake")
-		<fieldset class="form-actions">
-			<input type="submit" name="action" class="btn btn-primary" value="tallenna"/>
-        	<input type="submit" name="action" class="btn btn-warning" value="peruuta"/>
-        </fieldset>
+		@hidden() {
+			@FORM("id").value
+		}
+		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+		@helper.inputText(FORM("bestBefore"), '_label -> "säilyvyys (päivää)", '_class -> "control-group")
+		@helper.textarea(FORM("description"), '_label -> "kuvaus")
+		@actions() {}
 	}
 }
