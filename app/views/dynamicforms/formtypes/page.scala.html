@@ -16,8 +16,7 @@
 			}
 			<tbody>
 				@for(formType <- page.getList) {
-					tr() { <a href="@routes.dynamicforms.FormType.update(formType.id)">@formType</a>
-					}
+					tr() { <a href="@routes.dynamicforms.FormType.update(formType.id)">@formType</a> }
 				}
 			</tbody>
 		}
