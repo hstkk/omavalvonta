@@ -4,14 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
 import models.helpers.JpaModel;
 import models.helpers.Page;
 
 import play.Play;
+import play.data.format.*;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import play.db.jpa.JPA;
@@ -36,6 +35,7 @@ public class IngredientSupply extends JpaModel {
 
 	@Required
 	@NotNull
+	@Formats.DateTime(pattern="dd.MM.yyyy")
 	public Date produced;
 
 	public static IngredientSupply findById(Long id) {
