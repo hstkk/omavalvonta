@@ -5,14 +5,10 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.apache.commons.collections.ListUtils;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import models.helpers.JpaModel;
 
-import play.db.ebean.*;
-import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
@@ -39,7 +35,7 @@ public class Field extends JpaModel {
 	@NotNull
 	public boolean isSigned;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@Required
 	@NotNull
 	public Form form;
