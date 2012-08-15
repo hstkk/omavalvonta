@@ -1,0 +1,31 @@
+@(page: models.helpers.Page[Product])
+
+@import tags._
+@import tags.tables._
+@import tags.alerts._
+
+@main("Tuotteet") {
+	@tabs() {
+		<li class="active"><a href="#"tuotteet</a></li>
+		<li><a href="@routes.Products.create">Uusi</a></li>
+	}
+	@if(page != null){
+		@table() {
+			@thead() {
+				Nimi
+				Kuvaus
+			}
+			<tbody>
+				@for(ingredient <- page.getList) {
+					tr() { <a href="@routes.Products.update(ingredient.id)">@product</a>
+						@product.description }
+				}
+			</tbody>
+		}
+		@pagination(page.hasPrevious, routes.Products.page(page.getIndex - 1), page.hasNext, routes.Products.page(page.getIndex + 1)) {}
+	} else {
+		@warning() {
+			Tuotteita ei löytynyt, voit kuitenkin <a href="@routes.Products.create">lisätä</a> uusia.
+		}
+	}
+}
