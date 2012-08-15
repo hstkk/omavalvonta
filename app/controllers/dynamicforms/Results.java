@@ -75,7 +75,7 @@ public class Results extends Controller {
 				.bindFromRequest();
 		if (filleddynamicForm.field("action").value().equals("peruuta")) {
 			flash("status", "Lomakkeen tallennus peruutettu!");
-			return redirect(controllers.routes.Batches.show(batchId));
+			return redirect(controllers.routes.Batches2.show(batchId));
 		}
 
 		Dynamic dynamic = filleddynamicForm.get();
