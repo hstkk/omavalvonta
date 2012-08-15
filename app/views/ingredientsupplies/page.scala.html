@@ -23,8 +23,8 @@
 					tr() { <a href="@routes.IngredientSupplies.read(ingredient.id)">@ingredient.ingredient.name</a>
 						@ingredient.produced
 						@ingredient.received
-						@ingredient.amount
-						@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } }
+						@ingredient.amount @ingredient.unit
+						@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.unit }
 				}
 			</tbody>
 		}
