@@ -3,13 +3,21 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                           						controllers.Application.index()
 
-# dynamic form results
-GET		/era/:batchId/:program								controllers.dynamicforms.Results.add(batchId: Long, program: String)
-POST	/era/:batchId/:program								controllers.dynamicforms.Results.save(batchId: Long, program: String)
-GET		/era/:batchId/:program/tulokset						controllers.dynamicforms.Results.show(batchId: Long, program: String)
-GET		/era/:batchId/:program/historia						controllers.dynamicforms.Results.history(batchId: Long, program: String)
+# batch management
+GET		/era												controllers.dynamicforms.Batches.index
+POST	/era												controllers.dynamicforms.Batches.save
+GET		/era/uusi											controllers.dynamicforms.Batches.create
+GET		/era/sivu/:index									controllers.dynamicforms.Batches.page(index: Int)
+GET		/era/:batchId										controllers.dynamicforms.Batches.read(batchId: Long)
+
+# batch results
+GET		/era/:batchId/:formId								controllers.dynamicforms.Results.create(batchId: Long, formId: Long)
+POST	/era/:batchId/:formId								controllers.dynamicforms.Results.save(batchId: Long, formId: Long)
+GET		/era/:batchId/:formId/tulokset						controllers.dynamicforms.Results.read(batchId: Long, formId: Long)
+GET		/era/:batchId/:formId/historia						controllers.dynamicforms.Results.history(batchId: Long, formId: Long)
+GET		/era/:batchId/:formId/pdf							controllers.dynamicforms.Results.pdfify(batchId: Long, formId: Long)
 
 # ingredient supply
 GET		/raaka-aine											controllers.IngredientSupplies.index
@@ -44,12 +52,6 @@ GET		/yllapito/lomake/:formId/esikatselu					controllers.dynamicforms.Forms.prev
 POST	/yllapito/lomake/:formId							controllers.dynamicforms.Fields.save(formId: Long)
 GET		/yllapito/lomake/:formId/kentat						controllers.dynamicforms.Fields.create(formId: Long)
 GET		/yllapito/lomake/:formId/kentta/:fieldId			controllers.dynamicforms.Fields.update(formId: Long, fieldId: Long)
-
-# batch management
-GET		/erat												controllers.Batches.index()
-GET		/erat/era											controllers.Batches.add()
-POST	/erat/era											controllers.Batches.save()
-GET		/era/:batchId										controllers.Batches.show(batchId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
