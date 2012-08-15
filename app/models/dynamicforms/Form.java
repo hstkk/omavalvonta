@@ -3,35 +3,22 @@ package models.dynamicforms;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.apache.commons.collections.ListUtils;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-//import org.hibernate.annotations.CascadeType;
 import org.hibernate.envers.Audited;
 
-import models.Product;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 import utils.*;
 
 import play.Play;
-import play.db.ebean.*;
-import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
-import org.hibernate.Hibernate;
-
-import antlr.Utils;
-
 @Entity
 @Audited
-// TODO field order
-// TODO fetch
 public class Form extends JpaModel {
 
 	// @Valid
