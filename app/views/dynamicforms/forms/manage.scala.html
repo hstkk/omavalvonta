@@ -1,0 +1,39 @@
+@(FORM: play.data.Form[models.dynamicforms.Form])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.alerts._
+@import tags.forms._
+
+@main(
+	if(!FORM("id").valueOr("").equals("")) {
+		"Muokkaa lomaketta"
+	} else{
+		"Uusi lomake"
+	}
+){
+	@tabs() {
+		<li><a href=@controllers.dynamicforms.routes.Forms.index">Lomakkeet</a></li>
+		@if(!FORM("id").valueOr("").equals("")) {
+			<li><a href="@controllers.dynamicforms.routes.Forms.create">Uusi</a></li>
+		} else {
+			<li class="active"><a href="#">Uusi</a></li>
+		}
+	}
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	
+	@helper.form(action = controllers.dynamicforms.routes.Forms.save()){
+		@hidden() {
+			@FORM("id").value
+		}
+		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+		@helper.textarea(FORM("description"), '_label -> "kuvaus")
+		@select(FORM("basedOn.id"), options = options(models.dynamicforms.Form.options(FORM("id").value)), '_default -> "", '_label -> "peruslomake", '_help -> "lomake, johon tämä lomake perustuu")
+		@actions() {}
+	}
+}
