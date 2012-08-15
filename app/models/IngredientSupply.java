@@ -12,9 +12,9 @@ import models.helpers.JpaModel;
 import models.helpers.Page;
 
 import play.Play;
+import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import play.db.jpa.JPA;
-
 
 @Entity
 public class IngredientSupply extends JpaModel {
@@ -25,20 +25,19 @@ public class IngredientSupply extends JpaModel {
 
 	@Required
 	@NotNull
+	@Min(0)
 	public Double amount;
+
+	@Min(0)
+	public Double amountAvailable = amount;
 
 	@NotNull
 	public Date received = new Date();
-	
+
 	@Required
 	@NotNull
 	public Date produced;
 
-	@Required
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	public Unit unit;
-	
 	public static IngredientSupply findById(Long id) {
 		try {
 			if (id != null)
@@ -64,7 +63,7 @@ public class IngredientSupply extends JpaModel {
 					.createQuery("select count(*) from IngredientSupply")
 					.getSingleResult();
 			List<IngredientSupply> list = JPA.em()
-					.createQuery("from IngredientSupply i order by i.name asc")
+					.createQuery("from IngredientSupply i order by i.produced asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
 			if (rows != null || list != null)
