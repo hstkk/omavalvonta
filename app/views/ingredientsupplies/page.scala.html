@@ -24,7 +24,7 @@
 						@ingredient.produced
 						@ingredient.received
 						@ingredient.amount
-						@ingredient.amountAvailable }
+						@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } }
 				}
 			</tbody>
 		}
