@@ -32,7 +32,7 @@ import antlr.Utils;
 public class Form extends JpaModel {
 
 	// @Valid
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@Fetch(FetchMode.JOIN)
 	public Form basedOn = null;
 
@@ -44,10 +44,8 @@ public class Form extends JpaModel {
 	public String description = "";
 
 	@Lob
+	@NotNull
 	public String html = "";
-
-	@Required
-	public Boolean isActive = false;
 
 	public Form() {
 	}
@@ -98,48 +96,20 @@ public class Form extends JpaModel {
 		if (this.basedOn == null || this.basedOn.html.equals(""))
 			return this.html;
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(this.basedOn.toForm());
+		stringBuilder.append(this.basedOn.html);
 		stringBuilder.append(this.html);
 		return (stringBuilder.length() > 0) ? stringBuilder.toString() : null;
 	}
 
 	public static Form findById(Long id) {
-		if (id == null)
-			return null;
 		try {
-			return JPA.em().find(Form.class, id);
+			if (id != null)
+				return JPA.em().find(Form.class, id);
 		} catch (Exception e) {
-			return null;
 		}
+		return null;
 	}
 
-	public static Form findActiveById(Long id) {
-		if (id == null)
-			return null;
-		try {
-			// TODO optimize: select f.id, f.basedOn, f.name, f.description from
-			// Form f where f.isActive = true and f.id = ?
-			return (Form) JPA.em()
-					.createQuery("from Form f where f.isActive = true and f.id = ?")
-					.setParameter(1, id).getSingleResult();
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public static List<Form> findAll() {
-		try {
-			// TODO optimize: select f.id, f.name from Form f
-			List<Form> forms = JPA.em().createQuery("from Form order by name")
-					.getResultList();
-			return forms;
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	// TODO optimize: select f.id, f.name from Form f
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> options(String formId) {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
