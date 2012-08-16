@@ -55,6 +55,20 @@ public class Results extends JpaModel {
 		return JPA.em().find(Results.class, id);
 	}
 
+	public static Results findByBatchAndForm(Long batchId, Long formId) {
+		try {
+			if (batchId != null && formId != null)
+				return (Results) JPA
+						.em()
+						.createQuery(
+								"from Results r where r.batch.id = ? and r.form.id = ?")
+						.setParameter(1, batchId).setParameter(2, formId)
+						.getSingleResult();
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
 	public static boolean getIsDone(Long batchId, Long formId) {
 		try {
 			if (batchId != null && formId != null)
