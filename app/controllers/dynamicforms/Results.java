@@ -45,6 +45,10 @@ public class Results extends Controller {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
 			return notFound(views.html.notFound.render());
+		models.dynamicforms.Results results = models.dynamicforms.Results
+				.findByBatchAndForm(batchId, formId);
+		if(results == null)
+			return notFound(views.html.notFound.render());
 		return TODO;
 	}
 
@@ -56,6 +60,9 @@ public class Results extends Controller {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
 			return notFound(views.html.notFound.render());
+		models.dynamicforms.Results results = models.dynamicforms.Results.findByBatchAndForm(batchId, formId);
+		if(results == null)
+			return notFound(views.html.notFound.render());
 		return TODO;
 	}
 
@@ -66,6 +73,9 @@ public class Results extends Controller {
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
+			return notFound(views.html.notFound.render());
+		models.dynamicforms.Results results = models.dynamicforms.Results.findByBatchAndForm(batchId, formId);
+		if(results == null)
 			return notFound(views.html.notFound.render());
 		return TODO;
 	}
