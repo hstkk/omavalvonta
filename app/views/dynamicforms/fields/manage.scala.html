@@ -40,7 +40,7 @@
 		}
 	}
 	
-	@helper.form(action = controllers.dynamicforms.routes.Fields.save()){
+	@helper.form(action = controllers.dynamicforms.routes.Fields.save(), 'class -> "form-horizontal"){
 		@hidden() {
 			@FORM("id").value
 		}

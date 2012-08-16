@@ -17,7 +17,7 @@
 		}
 	}
 	
-	@helper.form(action = routes.IngredientSupplies.save()){
+	@helper.form(action = routes.IngredientSupplies.save(), 'class -> "form-horizontal"){
 		@helper.select(FORM("ingredient"), options = options(models.Ingredient.options), '_label -> "raaka-aine")
 		@helper.inputText(FORM("amount"), '_label -> "määrä", '_class -> "control-group")
 		@helper.inputText(FORM("produced"), '_label -> "valmistettu", '_class -> "control-group")

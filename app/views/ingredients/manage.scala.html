@@ -27,7 +27,7 @@
 		}
 	}
 	
-	@helper.form(action = routes.Ingredients.save()){
+	@helper.form(action = routes.Ingredients.save(), 'class -> "form-horizontal"){
 		@hidden() {
 			@FORM("id").value
 		}
