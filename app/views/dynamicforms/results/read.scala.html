@@ -1,0 +1,25 @@
+@(batch: Batch, f: models.dynamicforms.Form, results: List[models.dynamicforms.Result])
+
+@import tags._
+
+@main(batch.toString) {
+	@tabs() {
+		<li><a href="@routes.Batches.index">Erät</a></li>
+		<li><a href="@routes.Batches.add">Uusi erä</a></li>
+	}
+	<p>@batch.product.description</p>
+	@table() {
+		@thead() {
+			Toiminto
+			Ohje
+			Tulos
+		}
+		<tbody>
+			@for(result <- results) {
+				tr() { @result.field.name
+					@result.field.help
+					@result }
+			}
+		</tbody>
+	}
+}
