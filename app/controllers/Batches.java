@@ -31,13 +31,13 @@ public class Batches extends Controller {
 		Form<Batch> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Erän tallennus peruutettu!");
-			return redirect(routes.IngredientSupplies.index());
+			return redirect(routes.Batches.index());
 		} else if (!filledForm.hasErrors()) {
 			Batch batch = filledForm.get();
 			// TODO smarter save/update
 			if (batch.save()) {
 				flash("success", "Erä on tallennettu onnistuneesti!");
-				return redirect(routes.IngredientSupplies.index());
+				return redirect(routes.Batches.index());
 			}
 		}
 		flash("error", "Erän tallennus ei onnistunut!");
