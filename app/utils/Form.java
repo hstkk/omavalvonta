@@ -103,12 +103,4 @@ public class Form {
 		}
 		return (html.length() > 0) ? html.toString() : null;
 	}
-
-	public static FormType programToType(String program) {
-		if (program.equals("pesuohjelma"))
-			return FormType.WASHPROGRAM;
-		else if (program.equals("tuotekortti"))
-			return FormType.PRODUCTCARD;
-		return FormType.PURITYMONITORING;
-	}
 }

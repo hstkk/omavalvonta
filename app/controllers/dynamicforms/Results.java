@@ -5,6 +5,7 @@ import java.util.List;
 import forms.dynamicforms.Dynamic;
 
 import models.Batch;
+import models.Product;
 import play.*;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -23,7 +24,22 @@ public class Results extends Controller {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
 			return notFound(views.html.notFound.render());
-		return TODO;
+		models.dynamicforms.Results results = models.dynamicforms.Results
+				.findByBatchAndForm(batch.id, f.id);
+		String html;
+		if (results == null) {
+			html = f.html;
+			if (html == null || html.equals(""))
+				return notFound(views.html.notFound.render());
+			return ok(views.html.dynamicforms.results.manage.render(FORM,
+					batch, f, html));
+		}
+		html = utils.Form.formify(models.dynamicforms.Result
+				.findByResults(results.id));
+		if (html == null || html.equals(""))
+			return notFound(views.html.notFound.render());
+		return ok(views.html.dynamicforms.results.manage.render(FORM, batch, f,
+				html));
 	}
 
 	@Transactional
@@ -34,7 +50,24 @@ public class Results extends Controller {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
 			return notFound(views.html.notFound.render());
-		return TODO;
+		Form<Dynamic> filledForm = FORM.bindFromRequest();
+		if (filledForm.field("action").value().equals("peruuta")) {
+			flash("warning", "Tuloksen tallennus peruutettu!");
+			return redirect(routes.Batches.read(batchId));
+		}
+		Dynamic dynamic = filledForm.get();
+		if (!filledForm.hasErrors()) {
+			models.dynamicforms.Results results = new models.dynamicforms.Results(
+					batch, dynamic.values, f);
+			if (results.save()) {
+				flash("status", "Lomake on tallennettu onnistuneesti!");
+				return redirect(controllers.dynamicforms.routes.Results.read(
+						batchId, formId));
+			}
+		}
+		flash("status", "Lomakkeen tallennus ei onnistunut!");
+		return badRequest(views.html.dynamicforms.results.manage.render(
+				filledForm, batch, f, utils.Form.formify(dynamic.values)));
 	}
 
 	@Transactional(readOnly = true)
@@ -51,7 +84,8 @@ public class Results extends Controller {
 			return notFound(views.html.notFound.render());
 		List<models.dynamicforms.Result> r = models.dynamicforms.Result
 				.findByResults(results.id);
-		return TODO;
+		return ok(views.html.dynamicforsms.results.read.render(batch, f,
+				results, r));
 	}
 
 	@Transactional(readOnly = true)
