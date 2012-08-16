@@ -3,18 +3,13 @@ package models.dynamicforms;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import models.Batch;
 import models.helpers.JpaModel;
 
-import com.avaje.ebean.annotation.EnumValue;
-
 import forms.dynamicforms.Fieldset;
 
-import play.db.ebean.*;
-import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
@@ -25,32 +20,31 @@ public class Results extends JpaModel {
 	public Date updated;
 
 	@Required
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@NotNull
-	public FormType type;
+	public Form form;
 
 	@Required
-	public Boolean isReady = false;
+	public Boolean isDone = false;
 
 	@Required
 	// @Valid
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "ResultsResult", joinColumns = { @JoinColumn(name = "results_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "result_id", referencedColumnName = "id", unique = true) })
 	public List<Result> results;
 
 	@Required
-	// @Valid
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@NotNull
 	public Batch batch;
 
 	public Results() {
 	}
 
-	public Results(Batch batch, List<Fieldset> values, FormType type) {
+	public Results(Batch batch, List<Fieldset> values, Form form) {
 		this.batch = batch;
 		this.updated = new Date();
-		this.type = type;
+		this.form = form;
 		this.results = new ArrayList<Result>();
 		System.out.println(values.size());
 		for (Fieldset value : values)
@@ -61,28 +55,17 @@ public class Results extends JpaModel {
 		return JPA.em().find(Results.class, id);
 	}
 
-	public static Results findByBatchAndType(Batch batch, FormType type) {
-		if (batch == null || type == null)
-			return null;
+	public static boolean getIsDone(Long batchId, Long formId) {
 		try {
-			return (Results) JPA
-					.em()
-					.createQuery(
-							"from Results r where r.batch = ? and r.type like ?")
-					.setParameter(1, batch).setParameter(2, type.toString())
-					.getSingleResult();
+			if (batchId != null && formId != null)
+				return ((Results) JPA
+						.em()
+						.createQuery(
+								"from Results r where r.batch.id = ? and r.form.id = ?")
+						.setParameter(1, batchId).setParameter(2, formId)
+						.getSingleResult()).isDone;
 		} catch (Exception e) {
-			System.out.println("\n\n"+e+"\n\n");
-			e.printStackTrace();
-			return null;
 		}
+		return false;
 	}
-
-	/*
-	 * public static Results findByIdAndType(Long id, String type) { if (id ==
-	 * null) return null; try { // TODO optimize return (Results) JPA.em()
-	 * .createQuery("Results r where r.id = ? and r.type = ?") .setParameter(1,
-	 * id).setParameter(2, type) .getSingleResult(); } catch (Exception e) {
-	 * return null; } }
-	 */
 }
