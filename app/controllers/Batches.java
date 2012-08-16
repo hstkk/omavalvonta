@@ -14,7 +14,7 @@ public class Batches extends Controller {
 	final static Form<Batch> FORM = form(Batch.class);
 
 	public static Result create() {
-		return views.html.batches.manage.render(FORM);
+		return ok(views.html.batches.manage.render(FORM));
 	}
 
 	public static Result index() {
@@ -23,7 +23,7 @@ public class Batches extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return views.html.batches.page.render(Batch.page(index));
+		return ok(views.html.batches.page.render(Batch.page(index)));
 	}
 
 	@Transactional
@@ -49,6 +49,6 @@ public class Batches extends Controller {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
-		return views.html.batches.read.render(batch);
+		return ok(views.html.batches.read.render(batch));
 	}
 }

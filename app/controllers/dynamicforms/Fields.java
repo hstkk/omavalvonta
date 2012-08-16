@@ -18,52 +18,55 @@ public class Fields extends Controller {
 	/** The Constant FORM. */
 	final static Form<Field> FORM = form(Field.class);
 
+	@Transactional(readOnly = true)
 	public static Result create(Long formId) {
-		models.dynamicforms.Form form = models.dynamicforms.Form
+		models.dynamicforms.Form f = models.dynamicforms.Form
 				.findById(formId);
-		if (form == null)
+		if (f == null)
 			return notFound(views.html.notFound.render());
-		List<Field> fields = Field.findByForm(form);
-		return ok(views.html.dynamicforms.fields.manage.render(FORM, form,
+		List<models.dynamicforms.Field> fields = Field.findByForm(f);
+		return ok(views.html.dynamicforms.fields.manage.render(FORM, f,
 				fields));
 	}
 
 	@Transactional(readOnly = true)
 	public static Result update(Long formId, Long fieldId) {
-		models.dynamicforms.Form form = models.dynamicforms.Form
+		models.dynamicforms.Form f = models.dynamicforms.Form
 				.findById(formId);
-		if (form == null)
+		if (f == null)
 			return notFound(views.html.notFound.render());
-		Field field = Field.findByFormAndId(form, fieldId);
+		Field field = Field.findByFormAndId(f, fieldId);
 		if (field == null)
 			return notFound(views.html.notFound.render());
-		List<Field> fields = Field.findByForm(form);
+		List<models.dynamicforms.Field> fields = Field.findByForm(f);
 		return ok(views.html.dynamicforms.fields.manage.render(
-				FORM.fill(field), form, fields));
+				FORM.fill(field), f, fields));
 	}
 
 	@Transactional
 	public static Result save(Long formId) {
-		models.dynamicforms.Form form = models.dynamicforms.Form
+		models.dynamicforms.Form f = models.dynamicforms.Form
 				.findById(formId);
-		if (form == null)
+		if (f == null)
 			return notFound(views.html.notFound.render());
 		Form<Field> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Kentän tallennus peruutettu!");
-			return redirect(routes.dynamicforms.Fields.create());
+			//return redirect(dynamicforms.routes.Fields.create());
+			return create(formId);
 		} else if (!filledForm.hasErrors()) {
 			Field field = filledForm.get();
 			// TODO smarter save/update
 			if ((field.id != null && field.update())
 					|| (field.id == null && field.save())) {
 				flash("success", "Kenttä on tallennettu onnistuneesti!");
-				return redirect(routes.dynamicforms.Fields.create());
+				//return redirect(routes.dynamicforms.Fields.create());
+				return create(formId);
 			}
 		}
 		flash("error", "Kentän tallennus ei onnistunut!");
-		List<Field> fields = Field.findByForm(form);
+		List<models.dynamicforms.Field> fields = Field.findByForm(f);
 		return badRequest(views.html.dynamicforms.fields.manage.render(
-				filledForm, form, fields));
+				filledForm, f, fields));
 	}
 }

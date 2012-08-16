@@ -22,7 +22,7 @@ public class Ingredients extends Controller {
 	 * @return the result
 	 */
 	public static Result create() {
-		return views.html.ingredients.manage.render(FORM);
+		return ok(views.html.ingredients.manage.render(FORM));
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class Ingredients extends Controller {
 	 */
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return views.html.ingredients.page.render(Ingredient.page(index));
+		return ok(views.html.ingredients.page.render(Ingredient.page(index)));
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Ingredients extends Controller {
 		Ingredient ingredient = Ingredient.findById(ingredientId);
 		if (ingredient == null)
 			return notFound(views.html.notFound.render());
-		return views.html.ingredients.manage.render(FORM.fill(ingredient));
+		return ok(views.html.ingredients.manage.render(FORM.fill(ingredient)));
 	}
 
 	/**

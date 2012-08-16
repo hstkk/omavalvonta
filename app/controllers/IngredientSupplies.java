@@ -15,7 +15,7 @@ public class IngredientSupplies extends Controller {
 	final static Form<IngredientSupply> FORM = form(IngredientSupply.class);
 
 	public static Result create() {
-		return views.html.ingredientsupplies.manage.render(FORM);
+		return ok(views.html.ingredientsupplies.manage.render(FORM));
 	}
 
 	public static Result index() {
@@ -24,8 +24,8 @@ public class IngredientSupplies extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return views.html.ingredientsupplies.page.render(IngredientSupply
-				.page(index));
+		return ok(views.html.ingredientsupplies.page.render(IngredientSupply
+				.page(index)));
 	}
 
 	@Transactional
@@ -54,7 +54,7 @@ public class IngredientSupplies extends Controller {
 		if (ingredientSupply == null)
 			return notFound(views.html.notFound.render());
 		List<Batch> batches = null;
-		return views.html.ingredientsupplies.read.render(ingredientSupply,
-				batches);
+		return ok(views.html.ingredientsupplies.read.render(ingredientSupply,
+				batches));
 	}
 }

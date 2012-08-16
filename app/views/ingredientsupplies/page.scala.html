@@ -23,12 +23,12 @@
 					tr() { <a href="@routes.IngredientSupplies.read(ingredient.id)">@ingredient.ingredient.name</a>
 						@ingredient.produced
 						@ingredient.received
-						@ingredient.amount @ingredient.unit
-						@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.unit }
+						@ingredient.amount @ingredient.ingredient.unit
+						@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.ingredient.unit }
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, routes.IngredientSupplies.page(page.getIndex - 1), page.hasNext, routes.IngredientSupplies.page(page.getIndex + 1)) {}
+		@pagination(page.hasPrevious, routes.IngredientSupplies.page(page.getIndex - 1), page.hasNext, routes.IngredientSupplies.page(page.getIndex + 1))
 	} else {
 		@warning() {
 			Vastaanotettuja raaka-aineita ei löytynyt, voit kuitenkin <a href="@routes.IngredientSupplies.create">lisätä</a> uusia.

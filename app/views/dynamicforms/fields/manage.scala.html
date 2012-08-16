@@ -1,4 +1,4 @@
-@(FORM: play.data.Form[Field], f: models.dynamicforms.Form, fields: List[Field])
+@(FORM: play.data.Form[models.dynamicforms.Field], f: models.dynamicforms.Form, fields: List[models.dynamicforms.Field])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -8,9 +8,9 @@
 
 @main(f.toString + " lomake"){
 	@tabs() {
-		<li><a href=@controllers.dynamicforms.routes.Fields.index">Lomakkeet</a></li>
+		<li><a href=@controllers.dynamicforms.routes.Forms.index">Lomakkeet</a></li>
 		@if(!FORM("id").valueOr("").equals("")) {
-			<li><a href="@controllers.dynamicforms.routes.Fields.create">Uusi</a></li>
+			<li><a href="@controllers.dynamicforms.routes.Forms.create">Uusi</a></li>
 		} else {
 			<li class="active"><a href="#">Uusi</a></li>
 		}
@@ -23,7 +23,7 @@
 			<li>Perustuu lomakkeeseen <a href="@controllers.dynamicforms.routes.Forms.update(f.basedOn.id)">@f.basedOn</a></li>
 		}
 	</ul>
-	@if(manageForm.html != null){
+	@if(f.html != null){
 		<a class="btn btn-primary" href="@controllers.dynamicforms.routes.Forms.preview(f.id)" title="Esikatsele">Esikatsele</a>
 	}
 	<a class="btn" href="@controllers.dynamicforms.routes.Forms.update(f.id)" title="Muokkaa">Muokkaa</a>
@@ -40,17 +40,17 @@
 		}
 	}
 	
-	@helper.form(action = controllers.dynamicforms.routes.Fields.save(), 'class -> "form-horizontal"){
+	@helper.form(action = controllers.dynamicforms.routes.Fields.save(f.id), 'class -> "form-horizontal"){
 		@hidden() {
 			@FORM("id").value
 		}
 		<input type="hidden" name="form.id" value="@f.id"/>
 		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
 		@helper.textarea(FORM("help"), '_label -> "ohje")
-		@helper.select(FORM("type"), options = options(models.dynamicforms.FieldType.map), '_default -> fieldForm("type").value, '_label -> "tietotyyppi")
+		@helper.select(FORM("type"), options = options(models.dynamicforms.FieldType.map), '_default -> FORM("type").value, '_label -> "tietotyyppi")
 		@helper.inputText(FORM("min"), '_label -> "minimiarvo", '_class -> "control-group")
 		@helper.inputText(FORM("max"), '_label -> "maksimiarvo", '_class -> "control-group")
 		@helper.checkbox(FORM("isRequired"), '_label -> None, '_text -> "vaadittu", '_showConstraints -> false)
-		@actions() {}
+		@actions
 	}
 }

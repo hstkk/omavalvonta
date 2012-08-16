@@ -1,11 +1,12 @@
-@(batch: Batch, f: models.dynamicforms.Form, results: List[models.dynamicforms.Result])
+@(batch: Batch, f: models.dynamicforms.Form, results: models.dynamicforms.Results, r: List[models.dynamicforms.Result])
 
 @import tags._
+@import tags.tables._
 
 @main(batch.toString) {
 	@tabs() {
 		<li><a href="@routes.Batches.index">Erät</a></li>
-		<li><a href="@routes.Batches.add">Uusi erä</a></li>
+		<li><a href="@routes.Batches.create">Uusi erä</a></li>
 	}
 	<p>@batch.product.description</p>
 	@table() {
@@ -15,7 +16,7 @@
 			Tulos
 		}
 		<tbody>
-			@for(result <- results) {
+			@for(result <- r) {
 				tr() { @result.field.name
 					@result.field.help
 					@result }

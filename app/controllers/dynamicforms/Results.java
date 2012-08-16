@@ -2,6 +2,8 @@ package controllers.dynamicforms;
 
 import java.util.List;
 
+import controllers.Batches;
+
 import forms.dynamicforms.Dynamic;
 
 import models.Batch;
@@ -53,7 +55,8 @@ public class Results extends Controller {
 		Form<Dynamic> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tuloksen tallennus peruutettu!");
-			return redirect(routes.Batches.read(batchId));
+			//return redirect(routes.Batches.read(batchId));
+			return Batches.read(batchId);
 		}
 		Dynamic dynamic = filledForm.get();
 		if (!filledForm.hasErrors()) {
@@ -61,8 +64,9 @@ public class Results extends Controller {
 					batch, dynamic.values, f);
 			if (results.save()) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
-				return redirect(controllers.dynamicforms.routes.Results.read(
-						batchId, formId));
+				//return redirect(controllers.dynamicforms.routes.Results.read(
+				//		batchId, formId));
+				return read(batchId, formId);
 			}
 		}
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
@@ -84,7 +88,7 @@ public class Results extends Controller {
 			return notFound(views.html.notFound.render());
 		List<models.dynamicforms.Result> r = models.dynamicforms.Result
 				.findByResults(results.id);
-		return ok(views.html.dynamicforsms.results.read.render(batch, f,
+		return ok(views.html.dynamicforms.results.read.render(batch, f,
 				results, r));
 	}
 

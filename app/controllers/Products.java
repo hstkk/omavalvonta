@@ -12,7 +12,7 @@ public class Products extends Controller {
 	final static Form<Product> FORM = form(Product.class);
 
 	public static Result create() {
-		return views.html.products.manage.render(FORM);
+		return ok(views.html.products.manage.render(FORM));
 	}
 
 	public static Result index() {
@@ -21,7 +21,7 @@ public class Products extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return views.html.products.page.render(Product.page(index));
+		return ok(views.html.products.page.render(Product.page(index)));
 	}
 
 	@Transactional(readOnly = true)
@@ -29,7 +29,7 @@ public class Products extends Controller {
 		Product product = Product.findById(productId);
 		if (product == null)
 			return notFound(views.html.notFound.render());
-		return views.html.products.manage.render(FORM.fill(product));
+		return ok(views.html.products.manage.render(FORM.fill(product)));
 	}
 
 	@Transactional
