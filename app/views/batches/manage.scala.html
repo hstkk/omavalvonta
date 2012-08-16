@@ -18,9 +18,6 @@
 	}
 	
 	@helper.form(action = routes.Batches.save()){
-		@hidden() {
-			@FORM("id").value
-		}
 		@select(batchForm("product.id"), options = options(models.Product.options), '_default -> "", '_label -> "tuote")
 		@actions() {}
 	}
