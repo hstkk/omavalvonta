@@ -3,123 +3,69 @@ package controllers.dynamicforms;
 import java.util.List;
 
 import forms.dynamicforms.Dynamic;
-import forms.dynamicforms.Fieldset;
-import models.*;
-import models.dynamicforms.FormType;
+
+import models.Batch;
+import play.*;
 import play.data.Form;
 import play.db.jpa.Transactional;
-import play.mvc.Controller;
-import play.mvc.Result;
+import play.mvc.*;
+import views.html.*;
 
 public class Results extends Controller {
 
-	final static Form<forms.dynamicforms.Dynamic> dynamicForm = form(forms.dynamicforms.Dynamic.class);
+	final static Form<Dynamic> FORM = form(Dynamic.class);
 
 	@Transactional(readOnly = true)
-	public static Result add(Long batchId, String program) {
-
-		// TODO
-		String tmp = program;
-
+	public static Result create(Long batchId, Long formId) {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
-		Product product = Product.findById(batch.product.id);
-		if (product == null)
+		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
+		if (f == null)
 			return notFound(views.html.notFound.render());
-		models.dynamicforms.Form form = null;
-		if (program.equals("pesuohjelma")) {
-			program = FormType.WASHPROGRAM.toString();
-			form = models.dynamicforms.Form
-					.findActiveById(product.washProgram.id);
-		} else if (program.equals("tuotekortti")) {
-			program = FormType.PRODUCTCARD.toString();
-			form = models.dynamicforms.Form
-					.findActiveById(product.productCard.id);
-		} else if (program.equals("puhtaustarkkailu")) {
-			program = FormType.PURITYMONITORING.toString();
-			form = models.dynamicforms.Form
-					.findActiveById(product.purityMonitoring.id);
-		} else
-			return notFound(views.html.notFound.render());
-		if (form == null)
-			return notFound(views.html.notFound.render());
-		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndType(batch, utils.Form.programToType(program));
-		String html;
-		if (results == null) {
-			System.out.println(1);
-			html = form.html;
-			if (html == null || html.equals(""))
-				return notFound(views.html.notFound.render());
-			return ok(views.html.dynamicforms.dynamic.render(batch,
-					dynamicForm, tmp, html));
-		}
-		System.out.println(2);
-		html = utils.Form.formify(models.dynamicforms.Result
-				.findByResults(results));
-		if (html == null || html.equals(""))
-			return notFound(views.html.notFound.render());
-		return ok(views.html.dynamicforms.dynamic.render(batch, dynamicForm,
-				program, html));
+		return TODO;
 	}
 
-	// TODO
 	@Transactional
-	public static Result save(Long batchId, String program) {
+	public static Result save(Long batchId, Long formId) {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
-
-		Form<forms.dynamicforms.Dynamic> filleddynamicForm = dynamicForm
-				.bindFromRequest();
-		if (filleddynamicForm.field("action").value().equals("peruuta")) {
-			flash("status", "Lomakkeen tallennus peruutettu!");
-			return redirect(controllers.routes.Batches2.show(batchId));
-		}
-
-		Dynamic dynamic = filleddynamicForm.get();
-		// List<Fieldset> values = filleddynamicForm.get().values;
-
-		if (!filleddynamicForm.hasErrors()) {
-			models.dynamicforms.Results results = new models.dynamicforms.Results(
-					batch, dynamic.values, utils.Form.programToType(program));
-			if (results.save()) {
-				flash("status", "Lomake on tallennettu onnistuneesti!");
-				return redirect(controllers.dynamicforms.routes.Results.show(
-						batchId, program));
-			}
-		}
-
-		flash("status", "Lomakkeen tallennus ei onnistunut!");
-		return badRequest(views.html.dynamicforms.dynamic.render(batch,
-				filleddynamicForm, program, utils.Form.formify(dynamic.values)));
+		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
+		if (f == null)
+			return notFound(views.html.notFound.render());
+		return TODO;
 	}
 
-	// TODO
 	@Transactional(readOnly = true)
-	public static Result show(Long batchId, String program) {
+	public static Result read(Long batchId, Long formId) {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
-		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndType(batch, utils.Form.programToType(program));
-		if (results == null)
+		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
+		if (f == null)
 			return notFound(views.html.notFound.render());
-		List<models.dynamicforms.Result> r = models.dynamicforms.Result
-				.findByResults(results);
-		return ok(views.html.dynamicforms.show.render(batch, program, r));
+		return TODO;
 	}
 
-	// TODO
 	@Transactional(readOnly = true)
-	public static Result history(Long batchId, String program) {
+	public static Result history(Long batchId, Long formId) {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
-		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndType(batch, utils.Form.programToType(program));
-		if (results == null)
+		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
+		if (f == null)
+			return notFound(views.html.notFound.render());
+		return TODO;
+	}
+
+	@Transactional(readOnly = true)
+	public static Result pdfify(Long batchId, Long formId) {
+		Batch batch = Batch.findById(batchId);
+		if (batch == null)
+			return notFound(views.html.notFound.render());
+		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
+		if (f == null)
 			return notFound(views.html.notFound.render());
 		return TODO;
 	}
