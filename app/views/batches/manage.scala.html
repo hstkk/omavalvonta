@@ -17,7 +17,7 @@
 		}
 	}
 	
-	@helper.form(action = routes.Batches.save()){
+	@helper.form(action = routes.Batches.save(), 'class -> "form-horizontal"){
 		@select(batchForm("product.id"), options = options(models.Product.options), '_default -> "", '_label -> "tuote")
 		@actions() {}
 	}
