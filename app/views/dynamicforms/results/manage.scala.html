@@ -1,0 +1,24 @@
+@(FORM: play.data.Form[forms.dynamicforms.Dynamic], batch: Batch, f: models.dynamicforms.Form, html: String)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.alerts._
+@import tags.forms._
+
+@main(batch.product + " " + f.toString + ", erä " + batch.id){
+	@tabs() {
+		<li><a href="@routes.Batches.index">Erät</a></li>
+		<li><a href="@routes.Batches.index">Uusi erä</a></li>
+	}
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	
+	@helper.form(action = routes.Batches.save(), 'class -> "form-horizontal"){
+		@Html(html)
+		@actions() {}
+	}
+}
