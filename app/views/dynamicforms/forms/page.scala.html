@@ -1,4 +1,4 @@
-@(page: models.helpers.Page[Form])
+@(page: models.helpers.Page[models.dynamicforms.Form])
 
 @import tags._
 @import tags.tables._
@@ -22,7 +22,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, controllers.dynamicforms.routes.Forms.page(page.getIndex - 1), page.hasNext, controllers.dynamicforms.routes.Forms.page(page.getIndex + 1)) {}
+		@pagination(page.hasPrevious, controllers.dynamicforms.routes.Forms.page(page.getIndex - 1), page.hasNext, controllers.dynamicforms.routes.Forms.page(page.getIndex + 1))
 	} else {
 		@warning() {
 			Lomakkeita ei löytynyt, voit kuitenkin <a href="@controllers.dynamicforms.routes.Forms.create">lisätä</a> uusia.

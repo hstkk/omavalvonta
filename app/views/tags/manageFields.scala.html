@@ -1,4 +1,4 @@
-@(fields: List[Field])
+@(fields: List[models.dynamicforms.Field])
 @if(fields != null && !fields.isEmpty()){
 	<h2>Lomakkeen kentät</h2>
 	@for(field <- fields){
@@ -9,7 +9,7 @@
 					<li>@field.help</li>
 				}
 				<li>@field</li>
-				<li><a class="btn" href="@controllers.dynamicforms.routes.Field.update(field.form.id, field.id)" title="Muokkaa">Muokkaa</a></li>
+				<li><a class="btn" href="@controllers.dynamicforms.routes.Fields.update(field.form.id, field.id)" title="Muokkaa">Muokkaa</a></li>
 			</ul>
 		</div>
 	}

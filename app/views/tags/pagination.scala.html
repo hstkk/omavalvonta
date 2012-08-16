@@ -1,4 +1,4 @@
-@(hasPrevious: Boolean, previousPage: String, hasNext: Boolean, nextPage: String)
+@(hasPrevious: Boolean, previousPage: play.api.mvc.Call, hasNext: Boolean, nextPage: play.api.mvc.Call)
 <div class="pagination">
 	<ul>
 		@if(hasPrevious) {

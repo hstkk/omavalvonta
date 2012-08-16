@@ -1,8 +1,7 @@
-@(ingredientSupply: IngredientSupply, batches: List[Batch])
+@(ingredient: IngredientSupply, batches: List[Batch])
 
 @import tags._
 @import tags.tables._
-@import tags.alerts._
 
 @main("Vastaanotettu raaka-aine") {
 	@tabs() {
@@ -21,8 +20,8 @@
 			tr() { @ingredient.ingredient.name
 				@ingredient.produced
 				@ingredient.received
-				@ingredient.amount @ingredient.unit
-				@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.unit }
+				@ingredient.amount @ingredient.ingredient.unit
+				@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.ingredient.unit }
 		</tbody>
 	}
 	@if(batches != null) {
@@ -39,7 +38,7 @@
 			</tbody>
 		}
 	} else {
-		@info() {
+		@alerts.info() {
 			Vastaanotettua raaka-aine-erää ei käytä yksikään tuote-erä.
 		}
 	}

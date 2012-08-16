@@ -17,14 +17,14 @@
 				Tuote
 			}
 			<tbody>
-				@for(ingredient <- page.getList) {
+				@for(batch <- page.getList) {
 					tr() { @batch.id
-						<a href="@routes.Batches.read(batch.id)">@batch.format("HH:mm dd.M.yyyy")</a>
+						<a href="@routes.Batches.read(batch.id)">@batch.created.format("HH:mm dd.M.yyyy")</a>
 						@batch.product }
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, routes.Batches.page(page.getIndex - 1), page.hasNext, routes.Batches.page(page.getIndex + 1)) {}
+		@pagination(page.hasPrevious, routes.Batches.page(page.getIndex - 1), page.hasNext, routes.Batches.page(page.getIndex + 1))
 	} else {
 		@warning() {
 			Eriä ei löytynyt, voit kuitenkin <a href="@routes.Batches.create">lisätä</a> uusia.

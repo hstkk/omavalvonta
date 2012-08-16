@@ -1,6 +1,5 @@
 package controllers.dynamicforms;
 
-import models.dynamicforms.FormType;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
@@ -22,7 +21,7 @@ public class Forms extends Controller {
 	 * @return the result
 	 */
 	public static Result create() {
-		return views.html.dynamicforms.forms.manage.render(FORM);
+		return ok(views.html.dynamicforms.forms.manage.render(FORM));
 	}
 
 	/**
@@ -43,8 +42,8 @@ public class Forms extends Controller {
 	 */
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return views.html.dynamicforms.form.page
-				.render(models.dynamicforms.Form.page(index));
+		return ok(views.html.dynamicforms.forms.page
+				.render(models.dynamicforms.Form.page(index)));
 	}
 
 	/**
@@ -60,7 +59,7 @@ public class Forms extends Controller {
 				.findById(formId);
 		if (form == null)
 			return notFound(views.html.notFound.render());
-		return views.html.dynamicforms.form.manage.render(FORM.fill(form));
+		return ok(views.html.dynamicforms.forms.manage.render(FORM.fill(form)));
 	}
 
 	/**
@@ -73,14 +72,16 @@ public class Forms extends Controller {
 		Form<models.dynamicforms.Form> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Lomakkeen tallennus peruutettu!");
-			return redirect(routes.dynamicforms.Forms.index());
+			//return redirect(routes.dynamicforms.Forms.index());
+			return index();
 		} else if (!filledForm.hasErrors()) {
 			models.dynamicforms.Form form = filledForm.get();
 			// TODO smarter save/update
 			if ((form.id != null && form.update())
 					|| (form.id == null && form.save())) {
 				flash("success", "Lomake on tallennettu onnistuneesti!");
-				return redirect(routes.dynamicforms.Forms.index());
+				//return redirect(routes.dynamicforms.Forms.index());
+				return index();
 			}
 		}
 		flash("error", "Lomakkeen tallennus ei onnistunut!");

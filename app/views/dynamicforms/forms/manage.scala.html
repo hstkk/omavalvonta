@@ -34,6 +34,6 @@
 		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
 		@helper.textarea(FORM("description"), '_label -> "kuvaus")
 		@select(FORM("basedOn.id"), options = options(models.dynamicforms.Form.options(FORM("id").value)), '_default -> "", '_label -> "peruslomake", '_help -> "lomake, johon tämä lomake perustuu")
-		@actions() {}
+		@actions
 	}
 }

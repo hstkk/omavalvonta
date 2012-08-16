@@ -2,7 +2,6 @@ package utils;
 
 import java.util.*;
 import models.dynamicforms.Field;
-import models.dynamicforms.FormType;
 import models.dynamicforms.Result;
 import forms.dynamicforms.Fieldset;
 
