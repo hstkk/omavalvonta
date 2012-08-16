@@ -28,7 +28,7 @@ public class Result extends JpaModel {
 
 	// @Required
 	@OneToOne
-	@Valid
+	// @Valid
 	// @NotNull
 	@NotAudited
 	public User user;
@@ -97,16 +97,16 @@ public class Result extends JpaModel {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<Result> findByResults(Results results) {
-		if (results == null || results.id == null)
-			return null;
+	public static List<Result> findByResults(Long resultsId) {
 		try {
-			List<Result> list = JPA
-					.em()
-					.createQuery(
-							"from Result r where ResultsResult.results_id = ? and r.id = ResultsResult.result_id")
-					.setParameter(1, results).getResultList();
-			return list;
+			if (resultsId != null) {
+				List<Result> list = JPA
+						.em()
+						.createQuery(
+								"from Result r where ResultsResult.results_id = ? and r.id = ResultsResult.result_id")
+						.setParameter(1, resultsId).getResultList();
+				return list;
+			}
 		} catch (Exception e) {
 		}
 		return null;
