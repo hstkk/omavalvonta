@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 
+import org.hibernate.annotations.Target;
 import org.hibernate.envers.Audited;
 
 import play.Play;
@@ -30,11 +31,12 @@ public class Batch extends JpaModel {
 	@Required
 	public Boolean isReady = false;
 
-	@Required
+/*	@Required
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	@MapKey
-	public Map<IngredientSupply, Double> ingredients = new HashMap<IngredientSupply, Double>();
+	@Target(IngredientSupply.class)
+	public Map<IngredientSupply, Double> ingredients = new HashMap<IngredientSupply, Double>();*/
 
 	public Batch() {
 	}
