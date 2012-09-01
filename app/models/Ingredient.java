@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.envers.Audited;
+
 import models.helpers.JpaModel;
 import models.helpers.Page;
 
@@ -23,6 +25,7 @@ import play.db.jpa.JPA;
  * @author Sami Hostikka <dev@01.fi>
  */
 @Entity
+@Audited
 public class Ingredient extends JpaModel {
 
 	/** The name. */
