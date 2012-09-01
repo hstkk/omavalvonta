@@ -14,7 +14,7 @@
 	}
 ){
 	@tabs() {
-		<li><a href=@routes.Products.index">Tuotteet</a></li>
+		<li><a href="@routes.Products.index">Tuotteet</a></li>
 		@if(!FORM("id").valueOr("").equals("")) {
 			<li><a href="@routes.Products.create">Uusi</a></li>
 		} else {
