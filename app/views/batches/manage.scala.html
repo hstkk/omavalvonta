@@ -19,6 +19,6 @@
 	
 	@helper.form(action = routes.Batches.save(), 'class -> "form-horizontal"){
 		@select(FORM("product.id"), options = options(models.Product.options), '_default -> "", '_label -> "tuote")
-		@actions
+		@actions()
 	}
 }
