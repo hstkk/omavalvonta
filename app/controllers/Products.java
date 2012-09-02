@@ -11,6 +11,7 @@ public class Products extends Controller {
 
 	final static Form<Product> FORM = form(Product.class);
 
+	@Transactional(readOnly = true)
 	public static Result create() {
 		return ok(views.html.products.manage.render(FORM));
 	}
