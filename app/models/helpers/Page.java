@@ -19,7 +19,7 @@ public class Page<T> {
 	private final int index;
 
 	/** The rows. */
-	private final int rows;
+	private final long rows;
 
 	/** The list. */
 	private final List<T> list;
@@ -36,7 +36,7 @@ public class Page<T> {
 	 * @param list
 	 *            the list
 	 */
-	public Page(int index, int size, int rows, List<T> list) {
+	public Page(int index, int size, long rows, List<T> list) {
 		this.index = index;
 		this.size = size;
 		this.rows = rows;

@@ -97,7 +97,7 @@ public class Product extends JpaModel {
 			int size = Play.application().configuration().getInt("page.size");
 			if (index < 1)
 				index = 1;
-			Integer rows = (Integer) JPA.em()
+			Long rows = (Long) JPA.em()
 					.createQuery("select count(*) from Product")
 					.getSingleResult();
 			List<Product> list = JPA.em()
