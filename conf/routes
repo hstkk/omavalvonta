@@ -3,7 +3,10 @@
 # ~~~~
 
 # Home page
-GET     /                           						controllers.Application.index()
+GET     /													controllers.Application.index
+
+# Management
+GET     /yllapito											controllers.Application.management
 
 # batch management
 GET		/era												controllers.Batches.index
