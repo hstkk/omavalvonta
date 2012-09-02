@@ -1,0 +1,6 @@
+@(style: String)(content: Html)
+<ul class="nav @style">
+	@for(link <- content.toString.trim.lines) {
+		@Html(link)
+	}
+</ul>
