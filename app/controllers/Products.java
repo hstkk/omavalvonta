@@ -15,6 +15,7 @@ public class Products extends Controller {
 		return ok(views.html.products.manage.render(FORM));
 	}
 
+	@Transactional(readOnly = true)
 	public static Result index() {
 		return page(1);
 	}

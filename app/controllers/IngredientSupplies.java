@@ -19,6 +19,7 @@ public class IngredientSupplies extends Controller {
 		return ok(views.html.ingredientsupplies.manage.render(FORM));
 	}
 
+	@Transactional(readOnly = true)
 	public static Result index() {
 		return page(1);
 	}
