@@ -45,7 +45,7 @@ public class Unit extends JpaModel {
 			int size = Play.application().configuration().getInt("page.size");
 			if (index < 1)
 				index = 1;
-			Integer rows = (Integer) JPA.em()
+			Long rows = (Long) JPA.em()
 					.createQuery("select count(*) from Unit").getSingleResult();
 			List<Unit> list = JPA.em()
 					.createQuery("from Unit order by name asc")
@@ -54,7 +54,6 @@ public class Unit extends JpaModel {
 			if (rows != null || list != null)
 				return new Page(index, size, rows, list);
 		} catch (Exception e) {
-			System.out.println("\n\n"+e.toString()+"\n\n");
 		}
 		return null;
 	}
@@ -69,7 +68,6 @@ public class Unit extends JpaModel {
 				map.put(unit.id.toString(), unit.toString());
 			return map;
 		} catch (Exception e) {
-			System.out.println("\n\n"+e.toString()+"\n\n");
 			return map;
 		}
 	}
