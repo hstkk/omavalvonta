@@ -21,8 +21,8 @@
 			tr() { @ingredient.ingredient.name
 				@ingredient.produced
 				@ingredient.received
-				@ingredient.amount @ingredient.ingredient.unit
-				@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.ingredient.unit }
+				@ingredient.amount @ingredient.unit
+				@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.unit }
 		</tbody>
 	}
 	@if(batches != null) {

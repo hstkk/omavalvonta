@@ -33,7 +33,6 @@
 			@FORM("id").value
 		}
 		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
-		@helper.select(FORM("unit"), options = options("Kg"->"Kg", "l"->"l"), '_label -> "mittayksikkö")
 		@helper.inputText(FORM("bestBefore"), '_label -> "säilyvyys (päivää)", '_class -> "control-group")
 		@helper.textarea(FORM("description"), '_label -> "kuvaus")
 		@actions()

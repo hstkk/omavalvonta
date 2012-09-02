@@ -41,6 +41,17 @@ public class IngredientSupply extends JpaModel {
 	@Formats.DateTime(pattern="dd.MM.yyyy")
 	public Date produced;
 
+	//TODO bestbefore
+	@Required
+	@NotNull
+	@Formats.DateTime(pattern="dd.MM.yyyy")
+	public Date bestBefore;
+
+	@Required
+	@NotNull
+	@ManyToOne(cascade = CascadeType.ALL)
+	public Unit unit;
+
 	public static IngredientSupply findById(Long id) {
 		try {
 			if (id != null)

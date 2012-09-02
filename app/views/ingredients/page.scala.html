@@ -14,14 +14,12 @@
 		@table() {
 			@thead() {
 				Nimi
-				Mittayksikkö
 				Kuvaus
 				Säilyvyys (päivää)
 			}
 			<tbody>
 				@for(ingredient <- page.getList) {
-					tr() { <a href="@routes.Ingredients.update(ingredient.id)">@ingredient.name</a>
-						@ingredient.unit
+					tr() { <a href="@routes.Ingredients.update(ingredient.id)">@ingredient</a>
 						@ingredient.description
 						@ingredient.bestBefore }
 				}
