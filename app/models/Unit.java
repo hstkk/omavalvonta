@@ -47,7 +47,6 @@ public class Unit extends JpaModel {
 				index = 1;
 			Long rows = (Long) JPA.em()
 					.createQuery("select count(*) from Unit").getSingleResult();
-			System.out.println(rows);
 			List<Unit> list = JPA.em()
 					.createQuery("from Unit order by name asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
