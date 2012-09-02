@@ -31,26 +31,16 @@ public class Product extends JpaModel {
 	@Column(unique = true)
 	public String name;
 
-	/** The slug. */
-	@Required
-	@NotNull
-	@Column(unique = true)
-	public String slug;
-
 	/** The description. */
 	@Lob
 	public String description;
 
 	// TODO cascade?
 	/** The ingredients. */
-	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-	// TODO cascade?
-	// TODO necessary? hard code?
 	/** The forms. */
-	@NotNull
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Form> forms = new ArrayList<Form>();
 
