@@ -9,6 +9,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.envers.Audited;
 
+import models.Ingredient;
+import models.Product;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 import utils.*;
@@ -143,5 +145,37 @@ public class Form extends JpaModel {
 
 	public static Map<String, String> options() {
 		return options(null);
+	}
+
+	public static String checkboxes(String id) {
+		StringBuilder stringBuilder = new StringBuilder();
+		List<Form> checked = null;
+		try {
+			checked = Product.findById(Long.parseLong(id)).forms;
+		} catch (Exception e) {
+		}
+		try {
+			List<Form> forms = JPA.em()
+					.createQuery("from Form order by name")
+					.getResultList();
+			int i = 0;
+			for (Form form : forms) {
+				stringBuilder.append("<label class=\"checkbox\">");
+				stringBuilder
+						.append("<input type=\"checkbox\" name=\"formIds[");
+				stringBuilder.append(i);
+				stringBuilder.append("]\" value=\"");
+				stringBuilder.append(form.id);
+				stringBuilder.append("\"");
+				if (checked != null && checked.contains(form))
+					stringBuilder.append(" checked=\"checked\"");
+				stringBuilder.append(">");
+				stringBuilder.append(form.toString());
+				stringBuilder.append("</label>");
+				i++;
+			}
+		} catch (Exception e) {
+		}
+		return stringBuilder.toString();
 	}
 }

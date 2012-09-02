@@ -120,7 +120,6 @@ public class Ingredient extends JpaModel {
 					.createQuery("from Ingredient order by name")
 					.getResultList();
 			int i = 0;
-			// for(int i = 0, max = ingredients.length;i<max;i++) {
 			for (Ingredient ingredient : ingredients) {
 				stringBuilder.append("<label class=\"checkbox\">");
 				stringBuilder
