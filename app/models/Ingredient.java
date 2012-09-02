@@ -39,7 +39,7 @@ public class Ingredient extends JpaModel {
 
 	// Days
 	/** The best before. */
-	@Min(1)
+	@Min(0)
 	public Integer bestBefore;
 
 	/**
