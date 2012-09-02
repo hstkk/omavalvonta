@@ -111,7 +111,7 @@ public class Form extends JpaModel {
 					.createQuery("from Form f order by f.name asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
-			if (rows != null || list != null)
+			if (rows != null && list != null && !list.isEmpty())
 				return new Page(index, size, rows, list);
 		} catch (Exception e) {
 		}
