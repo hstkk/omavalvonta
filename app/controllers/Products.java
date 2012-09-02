@@ -9,7 +9,7 @@ import views.html.*;
 
 public class Products extends Controller {
 
-	final static Form<Product> FORM = form(Product.class);
+	final static Form<forms.Product> FORM = form(forms.Product.class);
 
 	@Transactional(readOnly = true)
 	public static Result create() {
@@ -31,17 +31,17 @@ public class Products extends Controller {
 		Product product = Product.findById(productId);
 		if (product == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.products.manage.render(FORM.fill(product)));
+		return ok(views.html.products.manage.render(FORM.fill(new forms.Product(product))));
 	}
 
 	@Transactional
 	public static Result save() {
-		Form<Product> filledForm = FORM.bindFromRequest();
+		Form<forms.Product> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tuotteen tallennus peruutettu!");
 			return redirect(routes.Products.index());
 		} else if (!filledForm.hasErrors()) {
-			Product product = filledForm.get();
+			Product product = new Product(filledForm.get());
 			// TODO smarter save/update
 			if ((product.id != null && product.update())
 					|| (product.id == null && product.save())) {
