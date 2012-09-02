@@ -42,10 +42,6 @@ public class Ingredient extends JpaModel {
 	@Min(1)
 	public Integer bestBefore;
 
-	@Required
-	@NotNull
-	public String unit;
-
 	/**
 	 * Find by id.
 	 * 
@@ -68,7 +64,7 @@ public class Ingredient extends JpaModel {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return name + " (" + unit + ")";
+		return name;
 	}
 
 	/**
