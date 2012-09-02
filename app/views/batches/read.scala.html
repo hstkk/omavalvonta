@@ -17,7 +17,7 @@
 		}
 		<tbody>
 			@for(form <- batch.product.forms) {
-				tr() { <a href="@controllers.dynamicforms.Results.read(batch.id, form.id)">@form</a>
+				@tr() { <a href="@controllers.dynamicforms.Results.read(batch.id, form.id)">@form</a>
 					@if(models.dynamicforms.Results.getIsDone(batch.id, form.id)) { @labels.success() { Valmis } } else {  @labels.important() { Kesken } } }
 			}
 		</tbody>

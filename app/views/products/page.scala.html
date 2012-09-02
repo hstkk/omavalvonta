@@ -18,7 +18,7 @@
 			}
 			<tbody>
 				@for(product <- page.getList) {
-					tr() { <a href="@routes.Products.update(product.id)">@product</a>
+					@tr() { <a href="@routes.Products.update(product.id)">@product</a>
 						@product.description }
 				}
 			</tbody>

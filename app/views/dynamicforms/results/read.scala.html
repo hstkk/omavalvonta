@@ -18,7 +18,7 @@
 		}
 		<tbody>
 			@for(result <- r) {
-				tr() { @result.field.name
+				@tr() { @result.field.name
 					@result.field.help
 					@result }
 			}

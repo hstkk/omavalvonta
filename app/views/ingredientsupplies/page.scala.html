@@ -21,7 +21,7 @@
 			}
 			<tbody>
 				@for(ingredient <- page.getList) {
-					tr() { <a href="@routes.IngredientSupplies.read(ingredient.id)">@ingredient.ingredient.name</a>
+					@tr() { <a href="@routes.IngredientSupplies.read(ingredient.id)">@ingredient.ingredient.name</a>
 						@ingredient.produced
 						@ingredient.received
 						@ingredient.amount @ingredient.unit

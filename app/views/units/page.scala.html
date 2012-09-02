@@ -17,7 +17,7 @@
 			}
 			<tbody>
 				@for(unit <- page.getList) {
-					tr() { <a href="@routes.Units.update(unit.id)">@unit</a> }
+					@tr() { <a href="@routes.Units.update(unit.id)">@unit</a> }
 				}
 			</tbody>
 		}
