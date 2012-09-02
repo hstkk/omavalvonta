@@ -9,7 +9,7 @@
 
 @main(f.toString + " lomake"){
 	@tabs() {
-		<li><a href=@controllers.dynamicforms.routes.Forms.index">Lomakkeet</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Forms.index">Lomakkeet</a></li>
 		@if(!FORM("id").valueOr("").equals("")) {
 			<li><a href="@controllers.dynamicforms.routes.Forms.create">Uusi</a></li>
 		} else {
