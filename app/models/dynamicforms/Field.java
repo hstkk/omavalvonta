@@ -44,6 +44,8 @@ public class Field extends JpaModel {
 
 	public Double max;
 
+	public Double target;
+
 	public Field() {
 	}
 
