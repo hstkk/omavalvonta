@@ -1,0 +1,30 @@
+@(page: models.helpers.Page[Unit])
+
+@import tags._
+@import tags.alerts._
+@import tags.navs._
+@import tags.tables._
+
+@main("Mittayksiköt") {
+	@tabs() {
+		<li class="active"><a href="#">Mittayksiköt</a></li>
+		<li><a href="@routes.Units.create">Uusi</a></li>
+	}
+	@if(page != null){
+		@table() {
+			@thead() {
+				Mittayksikkö
+			}
+			<tbody>
+				@for(unit <- page.getList) {
+					tr() { <a href="@routes.Units.update(unit.id)">@unit</a> }
+				}
+			</tbody>
+		}
+		@pagination(page.hasPrevious, routes.Units.page(page.getIndex - 1), page.hasNext, routes.Units.page(page.getIndex + 1))
+	} else {
+		@warning() {
+			Mittayksiköitä ei löytynyt, voit kuitenkin <a href="@routes.Units.create">lisätä</a> uusia.
+		}
+	}
+}
