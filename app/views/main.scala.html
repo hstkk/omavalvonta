@@ -10,11 +10,18 @@
 		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-responsive.css")">
 		<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")"></script>
+		<script src="@routes.Assets.at("javascripts/bootstrap.js")"></script>
 	</head>
 	<body>
-		<div class="navbar navbar-fixed-top">
+		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
 					<a class="brand" href="@routes.Application.index">Omavalvonta</a>
 					<div class="nav-collapse">
 						<ul class="nav">
