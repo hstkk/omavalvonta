@@ -86,7 +86,7 @@ public class Ingredient extends JpaModel {
 					.createQuery("from Ingredient i order by i.name asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
-			if (rows != null || list != null)
+			if (rows != null && list != null && !list.isEmpty())
 				return new Page(index, size, rows, list);
 		} catch (Exception e) {
 		}

@@ -120,7 +120,7 @@ public class Batch extends JpaModel {
 					.createQuery("from Batch b order by b.created asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
-			if (rows != null || list != null)
+			if (rows != null && list != null && !list.isEmpty())
 				return new Page(index, size, rows, list);
 		} catch (Exception e) {
 		}
