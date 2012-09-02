@@ -13,6 +13,7 @@ public class Batches extends Controller {
 
 	final static Form<Batch> FORM = form(Batch.class);
 
+	@Transactional(readOnly = true)
 	public static Result create() {
 		return ok(views.html.batches.manage.render(FORM));
 	}
