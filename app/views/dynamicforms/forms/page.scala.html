@@ -18,7 +18,7 @@
 			}
 			<tbody>
 				@for(form <- page.getList) {
-					@tr() { <a href="@controllers.dynamicforms.routes.Forms.update(form.id)">@form</a>
+					@tr() { <a href="@controllers.dynamicforms.routes.Fields.create(form.id)">@form</a>
 						@form.description }
 				}
 			</tbody>
