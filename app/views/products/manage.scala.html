@@ -37,7 +37,10 @@
 			<legend>Raaka-aineet</legend>
 			@Html(models.Ingredient.checkboxes(FORM("id").value))
 		</fieldset>
-		@multiselect("formIds", "lomakkeet", models.dynamicforms.Form.options)
+		<fieldset>
+			<legend>Lomakkeet</legend>
+			@Html(models.dynamicforms.Form.checkboxes(FORM("id").value))
+		</fieldset>
 		@actions()
 	}
 }
