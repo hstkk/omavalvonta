@@ -32,8 +32,8 @@
 		@hidden() {
 			@FORM("id").value
 		}
+		<input type="hidden" name="bestBefore" value="0"/>
 		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
-		@helper.inputText(FORM("bestBefore"), '_label -> "säilyvyys (päivää)", '_class -> "control-group")
 		@helper.textarea(FORM("description"), '_label -> "kuvaus")
 		@actions()
 	}
