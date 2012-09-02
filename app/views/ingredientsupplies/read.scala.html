@@ -14,15 +14,17 @@
 			Raaka-aine
 			Valmistuspäivä
 			Vastaanottopäivä
+			Parasta ennen
 			Määrä
 			Jäljellä
 		}
 		<tbody>
 			@tr() { @ingredient.ingredient.name
-				@ingredient.produced
-				@ingredient.received
-				@ingredient.amount @ingredient.unit
-				@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.unit }
+						@ingredient.produced.format("dd.MM.yyyy")
+						@ingredient.received.format("dd.MM.yyyy")
+						@ingredient.bestBefore.format("dd.MM.yyyy")
+						@ingredient.amount @ingredient.unit
+						@if(ingredient.amountAvailable > 0) { <span class="label label-success">@ingredient.amountAvailable</span> } else { @ingredient.amountAvailable } @ingredient.unit }
 		</tbody>
 	}
 	@if(batches != null) {

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import models.dynamicforms.Form;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 
@@ -31,7 +32,7 @@ public class IngredientSupply extends JpaModel {
 	public Double amount;
 
 	@Min(0)
-	public Double amountAvailable = amount;
+	public Double amountAvailable;
 
 	@NotNull
 	public Date received = new Date();
@@ -51,6 +52,40 @@ public class IngredientSupply extends JpaModel {
 	@NotNull
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Unit unit;
+
+	private void set() {
+		if (this.ingredient.id == null)
+			this.ingredient = null;
+		else
+			this.ingredient = Ingredient.findById(this.ingredient.id);
+		if (this.unit.id == null)
+			this.unit = null;
+		else
+			this.unit = Unit.findById(this.unit.id);
+	}
+
+	public boolean save() {
+		try {
+			this.amountAvailable = this.amount;
+			set();
+			JPA.em().persist(this);
+			return true;
+		} catch (Exception e) {
+			System.out.print(e);
+			return false;
+		}
+	}
+
+	public boolean update() {
+		try {
+			set();
+			JPA.em().merge(this);
+			return true;
+		} catch (Exception e) {
+			System.out.print(e);
+			return false;
+		}
+	}
 
 	public static IngredientSupply findById(Long id) {
 		try {

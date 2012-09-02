@@ -16,16 +16,18 @@
 				Raaka-aine
 				Valmistuspäivä
 				Vastaanottopäivä
+				Parasta ennen
 				Määrä
 				Jäljellä
 			}
 			<tbody>
 				@for(ingredient <- page.getList) {
 					@tr() { <a href="@routes.IngredientSupplies.read(ingredient.id)">@ingredient.ingredient.name</a>
-						@ingredient.produced
-						@ingredient.received
+						@ingredient.produced.format("dd.MM.yyyy")
+						@ingredient.received.format("dd.MM.yyyy")
+						@ingredient.bestBefore.format("dd.MM.yyyy")
 						@ingredient.amount @ingredient.unit
-						@if(ingredient.amountAvailable > 0) { @labels.success() { @ingredient.amountAvailable } } else { @ingredient.amountAvailable } @ingredient.unit }
+						@if(ingredient.amountAvailable > 0) { <span class="label label-success">@ingredient.amountAvailable</span> } else { @ingredient.amountAvailable } @ingredient.unit }
 				}
 			</tbody>
 		}
