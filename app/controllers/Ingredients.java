@@ -30,6 +30,7 @@ public class Ingredients extends Controller {
 	 * 
 	 * @return the result
 	 */
+	@Transactional(readOnly = true)
 	public static Result index() {
 		return page(1);
 	}

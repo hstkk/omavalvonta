@@ -17,6 +17,7 @@ public class Batches extends Controller {
 		return ok(views.html.batches.manage.render(FORM));
 	}
 
+	@Transactional(readOnly = true)
 	public static Result index() {
 		return page(1);
 	}
