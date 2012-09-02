@@ -1,0 +1,38 @@
+@(FORM: play.data.Form[models.Unit])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.alerts._
+@import tags.forms._
+@import tags.navs._
+
+@main(
+	if(!FORM("id").valueOr("").equals("")) {
+		"Muokkaa mittaykikköä"
+	} else{
+		"Uusi mittayksikkö"
+	}
+){
+	@tabs() {
+		<li><a href=@routes.Units.index">Mittayksiköt</a></li>
+		@if(!FORM("id").valueOr("").equals("")) {
+			<li><a href="@routes.Units.create">Uusi</a></li>
+		} else {
+			<li class="active"><a href="#">Uusi</a></li>
+		}
+	}
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	
+	@helper.form(action = routes.Units.save(), 'class -> "form-horizontal"){
+		@hidden() {
+			@FORM("id").value
+		}
+		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+		@actions()
+	}
+}
