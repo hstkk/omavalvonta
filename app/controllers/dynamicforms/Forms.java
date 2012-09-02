@@ -20,6 +20,7 @@ public class Forms extends Controller {
 	 * 
 	 * @return the result
 	 */
+	@Transactional(readOnly = true)
 	public static Result create() {
 		return ok(views.html.dynamicforms.forms.manage.render(FORM));
 	}
