@@ -1,12 +1,10 @@
 @(name: String, label: String, options: Map[String, String])
 <div class="control-group">
-	<label class="control-label" for="@name">@label</label>
-	<div class="controls">
-		<select multiple="multiple" name="@name">
-			<option></option>
-			@for((key, value) <- options) {
-				<option value="@key">@value</option>
-			}
-		</select>
-	</div>
+	<label for="@name">@label</label>
+	<select multiple="multiple" name="@name">
+		<option></option>
+		@for((key, value) <- options) {
+			<option value="@key">@value</option>
+		}
+	</select>
 </div>
