@@ -54,6 +54,7 @@ public class Unit extends JpaModel {
 			if (rows != null || list != null)
 				return new Page(index, size, rows, list);
 		} catch (Exception e) {
+			System.out.println("\n\n"+e.toString()+"\n\n");
 		}
 		return null;
 	}
@@ -68,6 +69,7 @@ public class Unit extends JpaModel {
 				map.put(unit.id.toString(), unit.toString());
 			return map;
 		} catch (Exception e) {
+			System.out.println("\n\n"+e.toString()+"\n\n");
 			return map;
 		}
 	}

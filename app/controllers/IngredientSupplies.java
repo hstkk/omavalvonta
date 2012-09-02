@@ -14,6 +14,7 @@ public class IngredientSupplies extends Controller {
 
 	final static Form<IngredientSupply> FORM = form(IngredientSupply.class);
 
+	@Transactional(readOnly = true)
 	public static Result create() {
 		return ok(views.html.ingredientsupplies.manage.render(FORM));
 	}
