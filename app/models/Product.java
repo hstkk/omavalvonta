@@ -37,11 +37,11 @@ public class Product extends JpaModel {
 
 	// TODO cascade?
 	/** The ingredients. */
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
 	/** The forms. */
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Form> forms = new ArrayList<Form>();
 
 	/**
