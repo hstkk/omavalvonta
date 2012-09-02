@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,5 +106,38 @@ public class Ingredient extends JpaModel {
 		} catch (Exception e) {
 			return map;
 		}
+	}
+
+	public static String checkboxes(String id) {
+		StringBuilder stringBuilder = new StringBuilder();
+		List<Ingredient> checked = null;
+		try {
+			checked = Product.findById(Long.parseLong(id)).ingredients;
+		} catch (Exception e) {
+		}
+		try {
+			List<Ingredient> ingredients = JPA.em()
+					.createQuery("from Ingredient order by name")
+					.getResultList();
+			int i = 0;
+			// for(int i = 0, max = ingredients.length;i<max;i++) {
+			for (Ingredient ingredient : ingredients) {
+				stringBuilder.append("<label class=\"checkbox\">");
+				stringBuilder
+						.append("<input type=\"checkbox\" name=\"ingredientIds[");
+				stringBuilder.append(i);
+				stringBuilder.append("]\" value=\"");
+				stringBuilder.append(ingredient.id);
+				stringBuilder.append("\"");
+				if (checked != null && checked.contains(ingredient))
+					stringBuilder.append(" checked=\"checked\"");
+				stringBuilder.append(">");
+				stringBuilder.append(ingredient.toString());
+				stringBuilder.append("</label>");
+				i++;
+			}
+		} catch (Exception e) {
+		}
+		return stringBuilder.toString();
 	}
 }

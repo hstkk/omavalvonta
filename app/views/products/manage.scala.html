@@ -33,7 +33,10 @@
 		}
 		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
 		@helper.textarea(FORM("description"), '_label -> "kuvaus")
-		@multiselect("ingredientIds", "raaka-aineet", models.Ingredient.options)
+		<fieldset>
+			<legend>Raaka-aineet</legend>
+			@Html(models.Ingredient.checkboxes(FORM("id").value))
+		</fieldset>
 		@multiselect("formIds", "lomakkeet", models.dynamicforms.Form.options)
 		@actions()
 	}
