@@ -1,4 +1,4 @@
-@(page: models.helpers.Page[Product])
+@(product: models.Product, page: models.helpers.Page[models.dynamicforms.Results])
 
 @import tags._
 @import tags.alerts._
@@ -7,8 +7,9 @@
 
 @main("Tulokset") {
 	@tabs() {
-		<li><a href="@routes.Batches.index">Erät</a></li>
-		<li><a href="@routes.Batches.create">Uusi</a></li>
+		@for(form <- product.forms) {
+			<li><a href="@controllers.dynamicforms.routes.Results.create(product.id, form.id)">@form</a></li>
+		}
 	}
 	@if(page != null){
 		@table() {

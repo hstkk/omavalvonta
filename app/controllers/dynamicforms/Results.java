@@ -24,17 +24,12 @@ public class Results extends Controller {
 	}
 
 	@Transactional(readOnly = true)
-	public static Result index2(Long productId) {
-		return page(productId, 0);
-	}
-
-	@Transactional(readOnly = true)
 	public static Result page(Long productId, int index) {
 		Product product = Product.findById(productId);
 		if (product == null)
 			return notFound(views.html.notFound.render());
 		return ok(views.html.dynamicforms.results.page
-				.render(models.dynamicforms.Results.page(index)));
+				.render(product, models.dynamicforms.Results.page(index)));
 	}
 
 	@Transactional(readOnly = true)
