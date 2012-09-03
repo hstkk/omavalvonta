@@ -28,8 +28,8 @@ public class Results extends Controller {
 		Product product = Product.findById(productId);
 		if (product == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.dynamicforms.results.page
-				.render(product, models.dynamicforms.Results.page(index)));
+		return ok(views.html.dynamicforms.results.page.render(product,
+				models.dynamicforms.Results.page(index)));
 	}
 
 	@Transactional(readOnly = true)
@@ -39,8 +39,6 @@ public class Results extends Controller {
 		if (product == null || f == null)
 			return notFound(views.html.notFound.render());
 		String html = f.html;
-		if (html == null || html.equals(""))
-			return notFound(views.html.notFound.render());
 		return ok(views.html.dynamicforms.results.manage.render(FORM, product,
 				f, html));
 	}
