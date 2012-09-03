@@ -121,7 +121,7 @@ public class Batch extends JpaModel {
 					.createQuery("select count(*) from Batch")
 					.getSingleResult();
 			List<Batch> list = JPA.em()
-					.createQuery("from Batch b order by b.created asc")
+					.createQuery("from Batch b order by b.created desc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
 			if (rows != null && list != null && !list.isEmpty())
