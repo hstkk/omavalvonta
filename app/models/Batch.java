@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import models.dynamicforms.Form;
 import models.helpers.JpaModel;
 import models.helpers.KeyValue;
+import models.helpers.KeyValueBatch;
 import models.helpers.Page;
 
 import org.hibernate.annotations.Target;
@@ -43,7 +44,7 @@ public class Batch extends JpaModel {
 
 	public Batch(forms.Batch form) {
 		this.product = form.product;
-		for (KeyValue<Long, Double> keyvalue : form.keyvalue)
+		for (KeyValueBatch keyvalue : form.keyvalue)
 			if (keyvalue.value != null) {
 				IngredientSupply ingredientSupply = IngredientSupply
 						.findById(keyvalue.key);
