@@ -114,7 +114,7 @@ public class IngredientSupply extends JpaModel {
 					stringBuilder.append(ingredient.toString());
 					stringBuilder.append("</legend>");
 					for (IngredientSupply i : list) {
-						stringBuilder.append("<div class=\"input-append\">");
+						stringBuilder.append("<div><div class=\"input-append\">");
 						stringBuilder
 								.append("<input class=\"span2\" id=\"appendedInput\" size=\"16\" type=\"text\" placeholder=\"");
 						stringBuilder.append(i.amountAvailable);
@@ -133,7 +133,7 @@ public class IngredientSupply extends JpaModel {
 						stringBuilder.append(". Parasta ennen ");
 						stringBuilder.append(simpleDateFormat
 								.format(i.bestBefore));
-						stringBuilder.append(".</span>");
+						stringBuilder.append(".</span></div><br/>");
 					}
 					stringBuilder.append("</fieldset>");
 					return stringBuilder.toString();
