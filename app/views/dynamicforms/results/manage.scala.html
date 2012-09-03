@@ -13,9 +13,14 @@
 			@FORM.globalError.message
 		}
 	}
-	
-	@helper.form(action = routes.Batches.save(), 'class -> "form-horizontal"){
-		@Html(html)
-		@actions()
+	@if(html == null || html.equals("")) {
+		@error() {
+			Lomakkeella ei ole vielä kenttiä.
+		}
+	} else {
+		@helper.form(action = routes.Batches.save(), 'class -> "form-horizontal"){
+			@Html(html)
+			@actions()
+		}
 	}
 }

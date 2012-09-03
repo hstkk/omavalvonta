@@ -84,7 +84,7 @@ public class Form {
 					if (field.help.length() > 0)
 						html.append(field.help);
 					if (field.when != null && !field.when.toString().equals("")) {
-						html.append(" Määritystiheys");
+						html.append(" Määritystiheys ");
 						html.append(field.when.toString());
 					}
 					html.append("</p>");
