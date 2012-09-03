@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import models.Batch;
 import models.helpers.JpaModel;
 
+import forms.Product;
 import forms.dynamicforms.Fieldset;
 
 import play.data.validation.Constraints.*;
@@ -25,24 +26,23 @@ public class Results extends JpaModel {
 	public Form form;
 
 	@Required
+	@ManyToOne(cascade = CascadeType.ALL)
+	@NotNull
+	public Product product;
+
+	@Required
 	public Boolean isDone = false;
 
 	@Required
 	// @Valid
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "ResultsResult", joinColumns = { @JoinColumn(name = "results_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "result_id", referencedColumnName = "id", unique = true) })
 	public List<Result> results;
-
-	@Required
-	@ManyToOne(cascade = CascadeType.ALL)
-	@NotNull
-	public Batch batch;
 
 	public Results() {
 	}
 
-	public Results(Batch batch, List<Fieldset> values, Form form) {
-		this.batch = batch;
+	public Results(Product product, List<Fieldset> values, Form form) {
+		this.product = product;
 		this.updated = new Date();
 		this.form = form;
 		this.results = new ArrayList<Result>();
@@ -53,20 +53,6 @@ public class Results extends JpaModel {
 
 	public static Results findById(int id) {
 		return JPA.em().find(Results.class, id);
-	}
-
-	public static Results findByBatchAndForm(Long batchId, Long formId) {
-		try {
-			if (batchId != null && formId != null)
-				return (Results) JPA
-						.em()
-						.createQuery(
-								"from Results r where r.batch.id = ? and r.form.id = ?")
-						.setParameter(1, batchId).setParameter(2, formId)
-						.getSingleResult();
-		} catch (Exception e) {
-		}
-		return null;
 	}
 
 	public static boolean getIsDone(Long batchId, Long formId) {
