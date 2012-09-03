@@ -77,9 +77,16 @@ public class Form {
 					html.append("</textarea>");
 					break;
 				}
-				if (field.help.length() > 0) {
+				if (field.help.length() > 0
+						|| (field.when != null && !field.when.toString()
+								.equals(""))) {
 					html.append("<p class=\"help-inline\">");
-					html.append(field.help);
+					if (field.help.length() > 0)
+						html.append(field.help);
+					if (field.when != null && !field.when.toString().equals("")) {
+						html.append(" Määritystiheys");
+						html.append(field.when.toString());
+					}
 					html.append("</p>");
 				}
 				html.append("</div></div>");
@@ -95,7 +102,9 @@ public class Form {
 				html.append(field.id);
 				html.append("\"/><div class=\"control-group\"><div class=\"controls\"><textarea class=\"input-xlarge\" name=\"values["
 						+ i
-						+ "].comment\" rows=\"3\">" + comment + "</textarea><label class=\"help-inline\">Huomautuksia</label></div></div>");
+						+ "].comment\" rows=\"3\">"
+						+ comment
+						+ "</textarea><label class=\"help-inline\">Huomautuksia</label></div></div>");
 				html.append("</fieldset>");
 				i++;
 			}
