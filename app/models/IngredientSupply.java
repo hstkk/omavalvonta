@@ -123,16 +123,16 @@ public class IngredientSupply extends JpaModel {
 					for (IngredientSupply i : list) {
 						stringBuilder
 								.append("<div><div class=\"input-append\">");
-						stringBuilder.append("<input type=\"hidden\" name=\"ingredientSupplyId[");
+						stringBuilder.append("<input type=\"hidden\" name=\"keyvalue[");
 						stringBuilder.append(index);
-						stringBuilder.append("]\" value=\"");
+						stringBuilder.append("].key\" value=\"");
 						stringBuilder.append(i.id);
 						stringBuilder.append("\"/>");
 						stringBuilder
-								.append("<input class=\"span2\" name=\"amount[");
+								.append("<input class=\"span2\" name=\"keyvalue[");
 						stringBuilder.append(index);
 						stringBuilder
-								.append("]\" size=\"16\" type=\"text\" placeholder=\"");
+								.append("].value\" size=\"16\" type=\"text\" placeholder=\"");
 						stringBuilder.append(i.amountAvailable);
 						stringBuilder.append(" ");
 						stringBuilder.append(i.unit);

@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
 import models.helpers.JpaModel;
+import models.helpers.KeyValue;
 import models.helpers.Page;
 
 import org.hibernate.annotations.Target;
@@ -42,15 +43,13 @@ public class Batch extends JpaModel {
 
 	public Batch(forms.Batch form) {
 		this.product = form.product;
-		Double[] amounts = (Double[]) form.amount.toArray();
-		Long[] ids = (Long[]) form.ingredientSupplyId.toArray();
-		for (int i = 0, max = ids.length; i < max; i++)
-			if (amounts[i] != null) {
+		for (KeyValue<Long, Double> keyvalue : form.keyvalue)
+			if (keyvalue.value != null) {
 				IngredientSupply ingredientSupply = IngredientSupply
-						.findById(ids[i]);
+						.findById(keyvalue.key);
 				if (ingredientSupply != null)
 					ingredientAmounts.add(new IngredientAmount(
-							ingredientSupply, amounts[i]));
+							ingredientSupply, keyvalue.value));
 			}
 	}
 
