@@ -18,7 +18,7 @@
 			Lomakkeella ei ole vielä kenttiä.
 		}
 	} else {
-		@helper.form(action = routes.Batches.save(), 'class -> "form-horizontal"){
+		@helper.form(action = controllers.dynamicforms.routes.Results.save(product.id, f.id), 'class -> "form-horizontal"){
 			@Html(html)
 			@actions()
 		}

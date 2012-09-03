@@ -52,8 +52,7 @@ public class Results extends Controller {
 				.findById(resultsId);
 		if (results == null)
 			return notFound(views.html.notFound.render());
-		String html = utils.Form.formify(models.dynamicforms.Result
-				.findByResults(results.id));
+		String html = utils.Form.formify(results.results);
 		if (html == null || html.equals(""))
 			return notFound(views.html.notFound.render());
 		return ok(views.html.dynamicforms.results.manage.render(FORM, product,
@@ -71,8 +70,7 @@ public class Results extends Controller {
 		Form<Dynamic> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tuloksen tallennus peruutettu!");
-			// TODO
-			// return Batches.read(batchId);
+			return page(productId, 0);
 		}
 		Dynamic dynamic = filledForm.get();
 		if (!filledForm.hasErrors()) {

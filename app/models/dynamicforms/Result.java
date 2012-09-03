@@ -95,20 +95,4 @@ public class Result extends JpaModel {
 					.toString();
 		return "";
 	}
-
-	@SuppressWarnings("unchecked")
-	public static List<Result> findByResults(Long resultsId) {
-		try {
-			if (resultsId != null) {
-				List<Result> list = JPA
-						.em()
-						.createQuery(
-								"from Result r where ResultsResult.results_id = ? and r.id = ResultsResult.result_id")
-						.setParameter(1, resultsId).getResultList();
-				return list;
-			}
-		} catch (Exception e) {
-		}
-		return null;
-	}
 }
