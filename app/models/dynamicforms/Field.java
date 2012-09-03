@@ -21,14 +21,15 @@ public class Field extends JpaModel {
 	public FieldType type;
 
 	@Enumerated(EnumType.STRING)
-	public When when;		//aka määritys tiheys
+	@Column(name = "tiheys")
+	public When when; // aka määritys tiheys
 
 	@Required
 	@NotNull
-	public String name;		//aka määritys
+	public String name; // aka määritys
 
 	@Lob
-	public String help;		//aka vaatimus
+	public String help; // aka vaatimus
 
 	@Required
 	@NotNull
