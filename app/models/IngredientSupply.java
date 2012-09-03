@@ -2,15 +2,22 @@ package models;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Target;
 
 import models.dynamicforms.Form;
 import models.helpers.JpaModel;
+import models.helpers.KeyValue;
 import models.helpers.Page;
 
 import play.Play;
@@ -97,7 +104,8 @@ public class IngredientSupply extends JpaModel {
 		return null;
 	}
 
-	public static String findAliveByIngredient(Ingredient ingredient) {
+	public static KeyValue<String, Integer> findAliveByIngredient(Ingredient ingredient, int index) {
+		StringBuilder stringBuilder = new StringBuilder();
 		try {
 			if (ingredient != null) {
 				List<IngredientSupply> list = JPA
@@ -106,7 +114,6 @@ public class IngredientSupply extends JpaModel {
 								"from IngredientSupply i where i.amountAvailable > 0 and i.ingredient.id = ? and current_date() < i.bestBefore order by i.produced asc ")
 						.setParameter(1, ingredient.id).getResultList();
 				if (!list.isEmpty()) {
-					StringBuilder stringBuilder = new StringBuilder();
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
 							"dd.MM.yyyy");
 					stringBuilder.append("<fieldset>");
@@ -114,9 +121,18 @@ public class IngredientSupply extends JpaModel {
 					stringBuilder.append(ingredient.toString());
 					stringBuilder.append("</legend>");
 					for (IngredientSupply i : list) {
-						stringBuilder.append("<div><div class=\"input-append\">");
 						stringBuilder
-								.append("<input class=\"span2\" id=\"appendedInput\" size=\"16\" type=\"text\" placeholder=\"");
+								.append("<div><div class=\"input-append\">");
+						stringBuilder.append("<input type=\"hidden\" name=\"ingredientSupplyId[");
+						stringBuilder.append(index);
+						stringBuilder.append("]\" value=\"");
+						stringBuilder.append(i.id);
+						stringBuilder.append("\"/>");
+						stringBuilder
+								.append("<input class=\"span2\" name=\"amount[");
+						stringBuilder.append(index);
+						stringBuilder
+								.append("]\" size=\"16\" type=\"text\" placeholder=\"");
 						stringBuilder.append(i.amountAvailable);
 						stringBuilder.append(" ");
 						stringBuilder.append(i.unit);
@@ -134,15 +150,15 @@ public class IngredientSupply extends JpaModel {
 						stringBuilder.append(simpleDateFormat
 								.format(i.bestBefore));
 						stringBuilder.append(".</span></div><br/>");
+						index++;
 					}
 					stringBuilder.append("</fieldset>");
-					return stringBuilder.toString();
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "";
+		return new KeyValue<String, Integer>(stringBuilder.toString(), index);
 	}
 
 	/**
