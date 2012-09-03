@@ -14,7 +14,7 @@ import play.data.validation.Constraints.*;
 public class Batch {
 	@Required
 	@NotNull
-	public Product product;
+	public models.Product product;
 
 	@Required
 	@NotNull
@@ -29,7 +29,8 @@ public class Batch {
 
 	public String validate() {
 		String result = null;
-		if(ingredientSupplyId.isEmpty() || amount.isEmpty())
+		if (ingredientSupplyId.isEmpty() || amount.isEmpty()
+				|| ingredientSupplyId.size() != amount.size())
 			result = "Raaka-aineita ei ole valittu";
 		return result;
 	}
