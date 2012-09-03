@@ -99,14 +99,12 @@ public class IngredientSupply extends JpaModel {
 
 	public static String findAliveByIngredient(Ingredient ingredient) {
 		try {
-			/* and i.ingredient.id = ? and i.bestBefore > ? */
 			if (ingredient != null) {
 				List<IngredientSupply> list = JPA
 						.em()
 						.createQuery(
-								"from IngredientSupply i where i.amountAvailable > 0 and i.ingredient.id = ? order by i.produced asc ")
-						.setParameter(1, ingredient.id)
-						/* .setParameter(2, new Date()) */.getResultList();
+								"from IngredientSupply i where i.amountAvailable > 0 and i.ingredient.id = ? and current_date() < i.bestBefore order by i.produced asc ")
+						.setParameter(1, ingredient.id).getResultList();
 				if (!list.isEmpty()) {
 					StringBuilder stringBuilder = new StringBuilder();
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
