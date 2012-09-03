@@ -1,5 +1,6 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -39,13 +40,13 @@ public class IngredientSupply extends JpaModel {
 
 	@Required
 	@NotNull
-	@Formats.DateTime(pattern="dd.MM.yyyy")
+	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date produced;
 
-	//TODO bestbefore
+	// TODO bestbefore
 	@Required
 	@NotNull
-	@Formats.DateTime(pattern="dd.MM.yyyy")
+	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date bestBefore;
 
 	@Required
@@ -96,6 +97,55 @@ public class IngredientSupply extends JpaModel {
 		return null;
 	}
 
+	public static String findAliveByIngredient(Ingredient ingredient) {
+		try {
+			if (ingredient != null) {
+				List<IngredientSupply> list = JPA
+						.em()
+						.createQuery(
+								"from IngredientSupply i where i.amountAvaible > 0 and i.ingredient.id = ? and i.bestBefore > ? order by i.produced asc ")
+						.setParameter(1, ingredient.id)
+						.setParameter(2, new Date()).getResultList();
+				if (!list.isEmpty()) {
+					StringBuilder stringBuilder = new StringBuilder();
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+							"dd.MM.yyyy");
+					stringBuilder.append("<fieldset>");
+					stringBuilder.append("<legend>");
+					stringBuilder.append(ingredient.toString());
+					stringBuilder.append("</legend>");
+					for (IngredientSupply i : list) {
+						stringBuilder.append("<div class=\"input-append\">");
+						stringBuilder
+								.append("<input class=\"span2\" id=\"appendedInput\" size=\"16\" type=\"text\"  placeholder=\"");
+						stringBuilder.append(i.amountAvailable);
+						stringBuilder.append(" ");
+						stringBuilder.append(i.unit);
+						stringBuilder.append("\"><span class=\"add-on\">");
+						stringBuilder.append(i.unit);
+						stringBuilder.append("</span>");
+						stringBuilder.append("<span class=\"help-inline\">");
+						stringBuilder.append("Valmistuspäivä ");
+						stringBuilder.append(simpleDateFormat
+								.format(i.produced));
+						stringBuilder.append(". Parasta ennen ");
+						stringBuilder.append(simpleDateFormat
+								.format(i.bestBefore));
+						stringBuilder.append(".</span>");
+						stringBuilder.append("</div>");
+					}
+					stringBuilder.append("</fieldset>");
+					return stringBuilder.toString();
+				}
+				else
+					System.out.println("FAIL");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 	/**
 	 * Page.
 	 * 
@@ -111,8 +161,10 @@ public class IngredientSupply extends JpaModel {
 			Long rows = (Long) JPA.em()
 					.createQuery("select count(*) from IngredientSupply")
 					.getSingleResult();
-			List<IngredientSupply> list = JPA.em()
-					.createQuery("from IngredientSupply i order by i.produced asc")
+			List<IngredientSupply> list = JPA
+					.em()
+					.createQuery(
+							"from IngredientSupply i order by i.produced asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
 			if (rows != null && list != null && !list.isEmpty())

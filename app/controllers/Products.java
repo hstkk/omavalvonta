@@ -1,5 +1,7 @@
 package controllers;
 
+import models.Ingredient;
+import models.IngredientSupply;
 import models.Product;
 import play.*;
 import play.data.Form;
@@ -31,7 +33,8 @@ public class Products extends Controller {
 		Product product = Product.findById(productId);
 		if (product == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.products.manage.render(FORM.fill(new forms.Product(product))));
+		return ok(views.html.products.manage.render(FORM
+				.fill(new forms.Product(product))));
 	}
 
 	@Transactional
@@ -58,7 +61,13 @@ public class Products extends Controller {
 		Product product = Product.findById(productId);
 		if (product == null)
 			return notFound(views.html.notFound.render());
-		return ok("HELLO");
+		if (product.ingredients == null || product.ingredients.isEmpty())
+			return ok("Tuotteen raaka-aineita ei löytynyt");
+		StringBuilder stringBuilder = new StringBuilder();
+		for (Ingredient ingredient : product.ingredients)
+			stringBuilder.append(IngredientSupply
+					.findAliveByIngredient(ingredient));
+		return ok(stringBuilder.toString());
 	}
 
 }
