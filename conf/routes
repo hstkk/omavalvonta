@@ -15,12 +15,13 @@ GET		/era/uusi											controllers.Batches.create
 GET		/era/sivu/:index									controllers.Batches.page(index: Int)
 GET		/era/:batchId										controllers.Batches.read(batchId: Long)
 
-# batch results
-#GET		/era/:batchId/:formId								controllers.dynamicforms.Results.create(batchId: Long, formId: Long)
-#POST	/era/:batchId/:formId								controllers.dynamicforms.Results.save(batchId: Long, formId: Long)
-#GET		/era/:batchId/:formId/tulokset						controllers.dynamicforms.Results.read(batchId: Long, formId: Long)
-#GET		/era/:batchId/:formId/historia						controllers.dynamicforms.Results.history(batchId: Long, formId: Long)
-#GET		/era/:batchId/:formId/pdf							controllers.dynamicforms.Results.pdfify(batchId: Long, formId: Long)
+# results
+GET		/tulos/												controllers.dynamicforms.Results.index
+GET		/tulos/:productId									controllers.dynamicforms.Results.create(productId: Long)
+POST	/tulos/:productId									controllers.dynamicforms.Results.save(productId: Long)
+GET		/tulos/:productId/:resultsId						controllers.dynamicforms.Results.read(productId: Long, resultsId: Long)
+GET		/tulos/:productId/:resultsId/historia				controllers.dynamicforms.Results.history(productId: Long, resultsId: Long)
+GET		/tulos/:productId/:resultsId/pdf					controllers.dynamicforms.Results.pdfify(productId: Long, resultsId: Long)
 
 # ingredient supply
 GET		/raaka-aine											controllers.IngredientSupplies.index
