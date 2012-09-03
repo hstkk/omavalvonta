@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import models.helpers.KeyValue;
+import models.helpers.KeyValueBatch;
 import play.data.validation.Constraints.*;
 
 // TODO: Auto-generated Javadoc
@@ -20,7 +21,7 @@ public class Batch {
 
 	@Required
 	@NotNull
-	public List<KeyValue<Long, Double>> keyvalue = new ArrayList<KeyValue<Long, Double>>();
+	public List<KeyValueBatch> keyvalue = new ArrayList<KeyValueBatch>();
 
 	public Batch() {
 	}
