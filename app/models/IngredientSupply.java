@@ -99,13 +99,14 @@ public class IngredientSupply extends JpaModel {
 
 	public static String findAliveByIngredient(Ingredient ingredient) {
 		try {
+			/* and i.ingredient.id = ? and i.bestBefore > ? */
 			if (ingredient != null) {
 				List<IngredientSupply> list = JPA
 						.em()
 						.createQuery(
-								"from IngredientSupply i where i.amountAvaible > 0 and i.ingredient.id = ? and i.bestBefore > ? order by i.produced asc ")
+								"from IngredientSupply i where i.amountAvailable > 0 and i.ingredient.id = ? order by i.produced asc ")
 						.setParameter(1, ingredient.id)
-						.setParameter(2, new Date()).getResultList();
+						/* .setParameter(2, new Date()) */.getResultList();
 				if (!list.isEmpty()) {
 					StringBuilder stringBuilder = new StringBuilder();
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
@@ -124,6 +125,7 @@ public class IngredientSupply extends JpaModel {
 						stringBuilder.append("\"><span class=\"add-on\">");
 						stringBuilder.append(i.unit);
 						stringBuilder.append("</span>");
+						stringBuilder.append("</div>");
 						stringBuilder.append("<span class=\"help-inline\">");
 						stringBuilder.append("Valmistuspäivä ");
 						stringBuilder.append(simpleDateFormat
@@ -132,12 +134,10 @@ public class IngredientSupply extends JpaModel {
 						stringBuilder.append(simpleDateFormat
 								.format(i.bestBefore));
 						stringBuilder.append(".</span>");
-						stringBuilder.append("</div>");
 					}
 					stringBuilder.append("</fieldset>");
 					return stringBuilder.toString();
-				}
-				else
+				} else
 					System.out.println("FAIL");
 			}
 		} catch (Exception e) {
