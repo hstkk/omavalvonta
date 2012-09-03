@@ -5,6 +5,8 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import forms.dynamicforms.Fieldset;
+
 import models.helpers.KeyValue;
 import models.helpers.KeyValueBatch;
 import play.data.validation.Constraints.*;
@@ -21,14 +23,14 @@ public class Batch {
 
 	@Required
 	@NotNull
-	public List<KeyValueBatch> keyvalue = new ArrayList<KeyValueBatch>();
+	public List<Ingredients> values;
 
 	public Batch() {
 	}
 
 	public String validate() {
 		String result = null;
-		if (keyvalue.isEmpty())
+		if (values.isEmpty())
 			result = "Raaka-aineita ei ole valittu";
 		return result;
 	}

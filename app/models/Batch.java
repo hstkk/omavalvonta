@@ -16,6 +16,8 @@ import org.hibernate.annotations.Target;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
+import forms.Ingredients;
+
 import play.Play;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
@@ -44,13 +46,13 @@ public class Batch extends JpaModel {
 
 	public Batch(forms.Batch form) {
 		this.product = form.product;
-		for (KeyValueBatch keyvalue : form.keyvalue)
-			if (keyvalue.value != null) {
+		for (Ingredients i : form.values)
+			if (i.amount != null) {
 				IngredientSupply ingredientSupply = IngredientSupply
-						.findById(keyvalue.key);
+						.findById(i.id);
 				if (ingredientSupply != null)
 					ingredientAmounts.add(new IngredientAmount(
-							ingredientSupply, keyvalue.value));
+							ingredientSupply, i.amount));
 			}
 	}
 
