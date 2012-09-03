@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import models.helpers.KeyValue;
 import play.data.validation.Constraints.*;
 
 // TODO: Auto-generated Javadoc
@@ -18,19 +20,14 @@ public class Batch {
 
 	@Required
 	@NotNull
-	public List<Long> ingredientSupplyId = new ArrayList<Long>();
-
-	@Required
-	@NotNull
-	public List<Double> amount = new ArrayList<Double>();
+	public List<KeyValue<Long, Double>> keyvalue = new ArrayList<KeyValue<Long, Double>>();
 
 	public Batch() {
 	}
 
 	public String validate() {
 		String result = null;
-		if (ingredientSupplyId.isEmpty() || amount.isEmpty()
-				|| ingredientSupplyId.size() != amount.size())
+		if (keyvalue.isEmpty())
 			result = "Raaka-aineita ei ole valittu";
 		return result;
 	}
