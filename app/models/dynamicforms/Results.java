@@ -37,6 +37,7 @@ public class Results extends JpaModel {
 
 	@Required
 	// @Valid
+	@Column(name = "result")
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Result> results;
 
@@ -62,27 +63,14 @@ public class Results extends JpaModel {
 		return null;
 	}
 
-	public static boolean getIsDone(Long batchId, Long formId) {
-		try {
-			if (batchId != null && formId != null)
-				return ((Results) JPA
-						.em()
-						.createQuery(
-								"from Results r where r.batch.id = ? and r.form.id = ?")
-						.setParameter(1, batchId).setParameter(2, formId)
-						.getSingleResult()).isDone;
-		} catch (Exception e) {
-		}
-		return false;
-	}
-
 	public static Page page(int index) {
 		try {
 			int size = Play.application().configuration().getInt("page.size");
 			if (index < 1)
 				index = 1;
 			Long rows = (Long) JPA.em()
-					.createQuery("select count(*) from Results").getSingleResult();
+					.createQuery("select count(*) from Results")
+					.getSingleResult();
 			List<Results> list = JPA.em()
 					.createQuery("from Results order by id asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
