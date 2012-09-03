@@ -135,8 +135,7 @@ public class IngredientSupply extends JpaModel {
 					}
 					stringBuilder.append("</fieldset>");
 					return stringBuilder.toString();
-				} else
-					System.out.println("FAIL");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
