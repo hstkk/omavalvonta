@@ -40,6 +40,20 @@ public class Batch extends JpaModel {
 	public Batch() {
 	}
 
+	public Batch(forms.Batch form) {
+		this.product = form.product;
+		Double[] amounts = (Double[]) form.amount.toArray();
+		Long[] ids = (Long[]) form.ingredientSupplyId.toArray();
+		for (int i = 0, max = ids.length; i < max; i++)
+			if (amounts[i] != null) {
+				IngredientSupply ingredientSupply = IngredientSupply
+						.findById(ids[i]);
+				if (ingredientSupply != null)
+					ingredientAmounts.add(new IngredientAmount(
+							ingredientSupply, amounts[i]));
+			}
+	}
+
 	private void set() {
 		if (this.product.id == null)
 			this.product = null;
@@ -51,16 +65,6 @@ public class Batch extends JpaModel {
 		try {
 			set();
 			JPA.em().persist(this);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	public boolean update() {
-		try {
-			set();
-			JPA.em().merge(this);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -96,12 +100,11 @@ public class Batch extends JpaModel {
 
 	public static List<Batch> findByIngredientSupply(Long id) {
 		try {
-			/*if (id != null)
-				return JPA
-						.em()
-						.createQuery(
-								"from Batch b where b.IngredientSupply.id = ? order by b.created asc")
-						.setParameter(1, id).getResultList();*/
+			/*
+			 * if (id != null) return JPA .em() .createQuery(
+			 * "from Batch b where b.IngredientSupply.id = ? order by b.created asc"
+			 * ) .setParameter(1, id).getResultList();
+			 */
 		} catch (Exception e) {
 		}
 		return null;
