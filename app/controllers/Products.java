@@ -3,6 +3,7 @@ package controllers;
 import models.Ingredient;
 import models.IngredientSupply;
 import models.Product;
+import models.helpers.KeyValue;
 import play.*;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -64,9 +65,13 @@ public class Products extends Controller {
 		if (product.ingredients == null || product.ingredients.isEmpty())
 			return ok("Tuotteen raaka-aineita ei löytynyt");
 		StringBuilder stringBuilder = new StringBuilder();
-		for (Ingredient ingredient : product.ingredients)
-			stringBuilder.append(IngredientSupply
-					.findAliveByIngredient(ingredient));
+		int index = 0;
+		for (Ingredient ingredient : product.ingredients) {
+			KeyValue<String, Integer> keyvalue = IngredientSupply
+					.findAliveByIngredient(ingredient, index);
+			index = keyvalue.value;
+			stringBuilder.append(keyvalue.key);
+		}
 		return ok(stringBuilder.toString());
 	}
 

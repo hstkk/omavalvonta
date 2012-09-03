@@ -6,11 +6,13 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import models.dynamicforms.Form;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 
 import org.hibernate.annotations.Target;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import play.Play;
 import play.data.validation.Constraints.*;
@@ -31,12 +33,9 @@ public class Batch extends JpaModel {
 	@Required
 	public Boolean isReady = false;
 
-/*	@Required
-	@NotNull
-	@OneToMany(cascade = CascadeType.ALL)
-	@MapKey
-	@Target(IngredientSupply.class)
-	public Map<IngredientSupply, Double> ingredients = new HashMap<IngredientSupply, Double>();*/
+	@ManyToMany(cascade = CascadeType.ALL)
+	@NotAudited
+	public List<IngredientAmount> ingredientAmounts = new ArrayList<IngredientAmount>();
 
 	public Batch() {
 	}
