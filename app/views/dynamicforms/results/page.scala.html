@@ -1,0 +1,26 @@
+@(page: models.helpers.Page[Product])
+
+@import tags._
+@import tags.alerts._
+@import tags.navs._
+@import tags.tables._
+
+@main("Tulokset") {
+	@tabs() {
+		<li><a href="@routes.Batches.index">Erät</a></li>
+		<li><a href="@routes.Batches.create">Uusi</a></li>
+	}
+	@if(page != null){
+		@table() {
+			@thead() {
+				Nimi
+			}
+			<tbody>
+				@for(product <- page.getList) {
+					@tr() { <a href="nmnamicforms.Results.index2(product.id)">@product</a> }
+				}
+			</tbody>
+		}
+	} else {
+	}
+}

@@ -16,9 +16,10 @@ GET		/era/sivu/:index									controllers.Batches.page(index: Int)
 GET		/era/:batchId										controllers.Batches.read(batchId: Long)
 
 # results
-#GET		/tulos												controllers.dynamicforms.Results.index
-#GET		/tulos/:productId									controllers.dynamicforms.Results.create(productId: Long)
-#GET		/tulos/:productId/sivu/:index						controllers.dynamicforms.Results.page(index: Int, productId: Long)
+GET		/tulos												controllers.dynamicforms.Results.index
+GET		/tulos/:productId									controllers.dynamicforms.Results.index2(productId: Long)
+GET		/tulos/:productId/sivu/:index						controllers.dynamicforms.Results.page(productId: Long, index: Int)
+GET		/tulos/:productId/:formId							controllers.dynamicforms.Results.create(productId: Long, formId: Long)
 POST	/tulos/:productId/:formId							controllers.dynamicforms.Results.save(productId: Long, formId: Long)
 GET		/tulos/:productId/:resultsId						controllers.dynamicforms.Results.read(productId: Long, resultsId: Long)
 POST	/tulos/:productId:resultsId/muokkaa					controllers.dynamicforms.Results.update(productId: Long, resultsId: Long)
