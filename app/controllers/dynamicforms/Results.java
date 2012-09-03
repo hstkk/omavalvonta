@@ -19,35 +19,39 @@ public class Results extends Controller {
 	final static Form<Dynamic> FORM = form(Dynamic.class);
 
 	@Transactional(readOnly = true)
-	public static Result create(Long batchId, Long formId) {
-		Batch batch = Batch.findById(batchId);
-		if (batch == null)
-			return notFound(views.html.notFound.render());
+	public static Result create(Long productId, Long formId) {
+		Product product = Product.findById(productId);
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
-		if (f == null)
+		if (product == null || f == null)
+			return notFound(views.html.notFound.render());
+		String html = f.html;
+		if (html == null || html.equals(""))
+			return notFound(views.html.notFound.render());
+		return ok(views.html.dynamicforms.results.manage.render(FORM, product,
+				f, html));
+	}
+
+	@Transactional(readOnly = true)
+	public static Result update(Long productId, Long resultsId) {
+		Product product = Product.findById(productId);
+		if (product == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndForm(batch.id, f.id);
-		String html;
-		if (results == null) {
-			html = f.html;
-			if (html == null || html.equals(""))
-				return notFound(views.html.notFound.render());
-			return ok(views.html.dynamicforms.results.manage.render(FORM,
-					batch, f, html));
-		}
-		html = utils.Form.formify(models.dynamicforms.Result
+				.findById(resultsId);
+		if (results == null)
+			return notFound(views.html.notFound.render());
+		String html = utils.Form.formify(models.dynamicforms.Result
 				.findByResults(results.id));
 		if (html == null || html.equals(""))
 			return notFound(views.html.notFound.render());
-		return ok(views.html.dynamicforms.results.manage.render(FORM, batch, f,
-				html));
+		return ok(views.html.dynamicforms.results.manage.render(FORM, product,
+				results.form, html));
 	}
 
 	@Transactional
-	public static Result save(Long batchId, Long formId) {
-		Batch batch = Batch.findById(batchId);
-		if (batch == null)
+	public static Result save(Long productId, Long formId) {
+		Product product = Product.findById(productId);
+		if (product == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
@@ -55,70 +59,62 @@ public class Results extends Controller {
 		Form<Dynamic> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tuloksen tallennus peruutettu!");
-			//return redirect(routes.Batches.read(batchId));
-			return Batches.read(batchId);
+			// TODO
+			// return Batches.read(batchId);
 		}
 		Dynamic dynamic = filledForm.get();
 		if (!filledForm.hasErrors()) {
 			models.dynamicforms.Results results = new models.dynamicforms.Results(
-					batch, dynamic.values, f);
+					dynamic.values, f);
 			if (results.save()) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
-				//return redirect(controllers.dynamicforms.routes.Results.read(
-				//		batchId, formId));
-				return read(batchId, formId);
+				return read(productId, results.id);
 			}
 		}
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
 		return badRequest(views.html.dynamicforms.results.manage.render(
-				filledForm, batch, f, utils.Form.formify(dynamic.values)));
+				filledForm, product, f, utils.Form.formify(dynamic.values)));
 	}
 
 	@Transactional(readOnly = true)
-	public static Result read(Long batchId, Long formId) {
-		Batch batch = Batch.findById(batchId);
-		if (batch == null)
-			return notFound(views.html.notFound.render());
-		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
-		if (f == null)
+	public static Result read(Long productId, Long resultsId) {
+		Product product = Product.findById(productId);
+		if (product == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndForm(batchId, formId);
+				.findById(resultsId);
 		if (results == null)
 			return notFound(views.html.notFound.render());
 		List<models.dynamicforms.Result> r = models.dynamicforms.Result
 				.findByResults(results.id);
-		return ok(views.html.dynamicforms.results.read.render(batch, f,
-				results, r));
+		return ok(views.html.dynamicforms.results.read.render(results, r));
+	}
+
+	/*@Transactional(readOnly = true)
+	public static Result history(Long productId, Long resultsId) {
+		Product product = Product.findById(productId);
+		if (product == null)
+			return notFound(views.html.notFound.render());
+		models.dynamicforms.Results results = models.dynamicforms.Results
+				.findById(resultsId);
+		if (results == null)
+			return notFound(views.html.notFound.render());
+		List<models.dynamicforms.Result> r = models.dynamicforms.Result
+				.findByResults(results.id);
+		return ok(views.html.dynamicforms.results.read.render(results, r));
 	}
 
 	@Transactional(readOnly = true)
-	public static Result history(Long batchId, Long formId) {
-		Batch batch = Batch.findById(batchId);
-		if (batch == null)
-			return notFound(views.html.notFound.render());
-		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
-		if (f == null)
+	public static Result pdfify(Long productId, Long resultsId) {
+		Product product = Product.findById(productId);
+		if (product == null)
 			return notFound(views.html.notFound.render());
 		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndForm(batchId, formId);
+				.findById(resultsId);
 		if (results == null)
 			return notFound(views.html.notFound.render());
-		return TODO;
-	}
-
-	@Transactional(readOnly = true)
-	public static Result pdfify(Long batchId, Long formId) {
-		Batch batch = Batch.findById(batchId);
-		if (batch == null)
-			return notFound(views.html.notFound.render());
-		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
-		if (f == null)
-			return notFound(views.html.notFound.render());
-		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findByBatchAndForm(batchId, formId);
-		if (results == null)
-			return notFound(views.html.notFound.render());
-		return TODO;
-	}
+		List<models.dynamicforms.Result> r = models.dynamicforms.Result
+				.findByResults(results.id);
+		return ok(views.html.dynamicforms.results.read.render(results, r));
+	}*/
 }

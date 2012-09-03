@@ -1,4 +1,4 @@
-@(FORM: play.data.Form[forms.dynamicforms.Dynamic], batch: Batch, f: models.dynamicforms.Form, html: String)
+@(FORM: play.data.Form[forms.dynamicforms.Dynamic], product: models.Product, f: models.dynamicforms.Form, html: String)
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -7,11 +7,7 @@
 @import tags.forms._
 @import tags.navs._
 
-@main(batch.product + " " + f.toString + ", erä " + batch.id){
-	@tabs() {
-		<li><a href="@routes.Batches.index">Erät</a></li>
-		<li><a href="@routes.Batches.index">Uusi erä</a></li>
-	}
+@main(product.toString + " " + f.toString){
 	@if(FORM.hasGlobalErrors) {
 		@error() {
 			@FORM.globalError.message
