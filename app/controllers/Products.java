@@ -52,4 +52,13 @@ public class Products extends Controller {
 		flash("error", "Tuotteen tallennus ei onnistunut!");
 		return badRequest(views.html.products.manage.render(filledForm));
 	}
+
+	@Transactional(readOnly = true)
+	public static Result batch(Long productId) {
+		Product product = Product.findById(productId);
+		if (product == null)
+			return notFound(views.html.notFound.render());
+		return ok("HELLO");
+	}
+
 }
