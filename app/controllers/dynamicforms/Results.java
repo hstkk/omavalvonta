@@ -88,17 +88,15 @@ public class Results extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result read(Long productId, Long resultsId) {
-		/*
-		 * Product product = Product.findById(productId); if (product == null)
-		 * return notFound(views.html.notFound.render());
-		 * models.dynamicforms.Results results = models.dynamicforms.Results
-		 * .findById(resultsId); if (results == null) return
-		 * notFound(views.html.notFound.render());
-		 * List<models.dynamicforms.Result> r = models.dynamicforms.Result
-		 * .findByResults(results.id); return
-		 * ok(views.html.dynamicforms.results.read.render(results, r));
-		 */
-		return TODO;
+		Product product = Product.findById(productId);
+		if (product == null)
+			return notFound(views.html.notFound.render());
+		models.dynamicforms.Results results = models.dynamicforms.Results
+				.findById(resultsId);
+		if (results == null)
+			return notFound(views.html.notFound.render());
+		List<models.dynamicforms.Result> r = results.results;
+		return ok(views.html.dynamicforms.results.read.render(product, results, r));
 	}
 
 	/*

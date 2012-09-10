@@ -1,15 +1,11 @@
-@(batch: Batch, f: models.dynamicforms.Form, results: models.dynamicforms.Results, r: List[models.dynamicforms.Result])
+@(product: Product, results: models.dynamicforms.Results, r: List[models.dynamicforms.Result])
 
 @import tags._
 @import tags.navs._
 @import tags.tables._
 
-@main(batch.toString) {
-	@tabs() {
-		<li><a href="@routes.Batches.index">Erät</a></li>
-		<li><a href="@routes.Batches.create">Uusi erä</a></li>
-	}
-	<p>@batch.product.description</p>
+@main(product.toString + " " + results.form.toString + " tulokset") {
+	<p>@product.description</p>
 	@table() {
 		@thead() {
 			Toiminto

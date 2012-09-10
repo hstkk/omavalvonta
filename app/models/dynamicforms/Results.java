@@ -37,7 +37,8 @@ public class Results extends JpaModel {
 
 	@Required
 	// @Valid
-	@Column(name = "result")
+	//@Column(name = "result")
+	@JoinTable(name = "ResultsResult", joinColumns = { @JoinColumn(name = "results_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "result_id", referencedColumnName = "id", unique = true) })
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Result> results;
 

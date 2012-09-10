@@ -14,11 +14,13 @@
 	@if(page != null){
 		@table() {
 			@thead() {
-				Nimi
+				Lomake
+				Päivämäärä
 			}
 			<tbody>
-				@for(product <- page.getList) {
-					@tr() { <a href="nmnamicforms.Results.index2(product.id)">@product</a> }
+				@for(result <- page.getList) {
+					@tr() { <a href="nmnamicforms.Results.index2(product.id)">@product</a>
+					 		@result.updated.format("dd.MM.YYYY")}
 				}
 			</tbody>
 		}
