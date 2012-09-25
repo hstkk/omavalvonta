@@ -56,29 +56,34 @@ public class Result extends JpaModel {
 	public Result() {
 	}
 
+	//TODO prevent null records
 	public Result(Fieldset fieldset) {
 		System.out.println(fieldset.fieldId);
-		this.field = Field.findById(fieldset.fieldId);
-		this.comment = fieldset.comment;
-		switch (field.type) {
-		case CHECKBOX:
-			this.valueBoolean = Converter.stringToBool(fieldset.value);
-			break;
-		case DATE:
-			this.valueDate = Converter.stringToDate(fieldset.value);
-			break;
-		case INT:
-			this.valueInt = Converter.stringToInt(fieldset.value);
-			break;
-		case DOUBLE:
-			this.valueDouble = Converter.stringToDouble(fieldset.value);
-			break;
-		case TEXT:
-		case TEXTAREA:
-			this.valueString = fieldset.value;
-			break;
+		if (fieldset.value != null && fieldset.comment != null) {
+			this.field = Field.findById(fieldset.fieldId);
+			this.comment = fieldset.comment;
+			switch (field.type) {
+			case CHECKBOX:
+				this.valueBoolean = Converter.stringToBool(fieldset.value);
+				break;
+			case DATE:
+				this.valueDate = Converter.stringToDate(fieldset.value);
+				break;
+			case INT:
+				this.valueInt = Converter.stringToInt(fieldset.value);
+				break;
+			case DOUBLE:
+				this.valueDouble = Converter.stringToDouble(fieldset.value);
+				break;
+			case TEXT:
+			case TEXTAREA:
+				this.valueString = fieldset.value;
+				break;
+			}
+			if (!((field.type == FieldType.TEXT || field.type == FieldType.TEXTAREA) && this.valueString
+					.isEmpty()))
+				this.save();
 		}
-		this.save();
 	}
 
 	public String toString() {
