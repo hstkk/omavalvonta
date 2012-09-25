@@ -38,10 +38,25 @@ public class Form {
 				html.append("</label><div class=\"controls\">");
 				switch (field.type) {
 				case CHECKBOX:
-					html.append("<input type=\"checkbox\" name=\"values[" + i
-							+ "].value\" value=\"");
-					html.append(value);
-					html.append("\"/>");
+					boolean bool = false;
+					try {
+						bool = Boolean.parseBoolean(value);
+					} catch (Exception ex) {
+					}
+					html.append("<label class=\"radio inline\">");
+					html.append("<input type=\"radio\" value=\"true\" name=\"values[");
+					html.append(i);
+					html.append("].value\"");
+					if (bool)
+						html.append(" checked");
+					html.append(">Ok</label>");
+					html.append("<label class=\"radio inline\">");
+					html.append("<input type=\"radio\" value=\"false\" name=\"values[");
+					html.append(i);
+					html.append("].value\"");
+					if (!bool)
+						html.append(" checked");
+					html.append(">Ei ok</label>");
 					break;
 				case DATE:
 					html.append("<input class=\"input-xlarge\" name=\"values["
