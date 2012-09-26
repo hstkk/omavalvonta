@@ -3,6 +3,7 @@ package controllers.dynamicforms;
 import java.util.List;
 
 import controllers.Batches;
+import controllers.routes;
 
 import forms.dynamicforms.Dynamic;
 
@@ -55,7 +56,8 @@ public class Results extends Controller {
 		String html = utils.Form.formify(results.results);
 		if (html == null || html.equals(""))
 			return notFound(views.html.notFound.render());
-		return ok(views.html.dynamicforms.results.manage.render(FORM.fill(new forms.dynamicforms.Dynamic(resultsId)), product,
+		return ok(views.html.dynamicforms.results.manage.render(
+				FORM.fill(new forms.dynamicforms.Dynamic(resultsId)), product,
 				results.form, html));
 	}
 
@@ -79,7 +81,7 @@ public class Results extends Controller {
 			if (((results.id != null && results.update())
 					|| (results.id == null && results.save()))) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
-				return read(productId, results.id);
+				return redirect(controllers.dynamicforms.routes.Results.read(productId, results.id));
 			}
 		}
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
@@ -97,7 +99,8 @@ public class Results extends Controller {
 		if (results == null)
 			return notFound(views.html.notFound.render());
 		List<models.dynamicforms.Result> r = results.results;
-		return ok(views.html.dynamicforms.results.read.render(product, results, r));
+		return ok(views.html.dynamicforms.results.read.render(product, results,
+				r));
 	}
 
 	/*
