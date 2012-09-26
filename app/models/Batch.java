@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import models.dynamicforms.Form;
 import models.helpers.JpaModel;
 import models.helpers.KeyValue;
-import models.helpers.KeyValueBatch;
 import models.helpers.Page;
 
 import org.hibernate.annotations.Target;
