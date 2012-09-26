@@ -73,7 +73,7 @@ public class Results extends JpaModel {
 					.createQuery("select count(*) from Results")
 					.getSingleResult();
 			List<Results> list = JPA.em()
-					.createQuery("from Results order by id asc")
+					.createQuery("from Results order by id desc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
 			if (rows != null && list != null && !list.isEmpty())
