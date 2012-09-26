@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
@@ -24,6 +26,7 @@ import play.db.jpa.*;
 
 @Entity
 @Audited
+//TODO updated
 public class Result extends JpaModel {
 
 	// @Required
@@ -103,5 +106,16 @@ public class Result extends JpaModel {
 			return new SimpleDateFormat("dd.MM.yyyy").format(valueDate)
 					.toString();
 		return "";
+	}
+
+	public List<Result> getHistory() {
+		List<Result> history = new ArrayList<Result>();
+		AuditReader auditReader = AuditReaderFactory.get(JPA.em());
+		List<Number> revisions = auditReader.getRevisions(this.getClass(), id);
+		for (Number revision : revisions) {
+			Result result = auditReader.find(this.getClass(), id, revision);
+			history.add(result);
+		}
+		return history;
 	}
 }
