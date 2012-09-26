@@ -10,6 +10,7 @@ import models.helpers.JpaModel;
 import models.helpers.Page;
 
 import forms.Product;
+import forms.dynamicforms.Dynamic;
 import forms.dynamicforms.Fieldset;
 
 import play.Play;
@@ -45,13 +46,13 @@ public class Results extends JpaModel {
 	public Results() {
 	}
 
-	public Results(models.Product product2, List<Fieldset> values, Form form) {
-		this.product = product2;
+	public Results(models.Product product, Dynamic dynamic, Form form) {
+		this.id = dynamic.id;
+		this.product = product;
 		this.updated = new Date();
 		this.form = form;
 		this.results = new ArrayList<Result>();
-		System.out.println(values.size());
-		for (Fieldset value : values)
+		for (Fieldset value : dynamic.values)
 			results.add(new Result(value));
 	}
 

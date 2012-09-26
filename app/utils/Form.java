@@ -18,6 +18,7 @@ public class Form {
 		for (Object e : list) {
 			Field field = null;
 			String value = "", comment = "";
+			Long id = null;
 			if (Field.class.isAssignableFrom(e.getClass()))
 				field = (Field) e;
 			else if (Result.class.isAssignableFrom(e.getClass())) {
@@ -25,6 +26,7 @@ public class Form {
 				field = Field.findById(result.field.id);
 				value = result.toString();
 				comment = result.comment;
+				id = result.id;
 			} else if (Fieldset.class.isAssignableFrom(e.getClass())) {
 				Fieldset fieldset = (Fieldset) e;
 				field = Field.findById(fieldset.fieldId);
@@ -33,6 +35,11 @@ public class Form {
 			}
 
 			if (field != null) {
+				html.append("<input type=\"hidden\" name=\"values[");
+				html.append(i);
+				html.append("].id\" value=\"");
+				html.append(id);
+				html.append("\"/>");
 				html.append("<fieldset><div class=\"control-group\"><label class=\"control-label\">");
 				html.append(field.name);
 				html.append("</label><div class=\"controls\">");
