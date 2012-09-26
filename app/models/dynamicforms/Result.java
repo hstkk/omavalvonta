@@ -81,9 +81,10 @@ public class Result extends JpaModel {
 			}
 			if (!((field.type == FieldType.TEXT || field.type == FieldType.TEXTAREA) && this.valueString
 					.isEmpty())) {
-				if (fieldset.id != null)
+				if (fieldset.id != null) {
+					this.id = fieldset.id;
 					this.update();
-				else
+				} else
 					this.save();
 			}
 		}
