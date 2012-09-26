@@ -19,6 +19,9 @@
 		}
 	} else {
 		@helper.form(action = controllers.dynamicforms.routes.Results.save(product.id, f.id), 'class -> "form-horizontal"){
+			@hidden() {
+				@FORM("id").value
+			}
 			@Html(html)
 			@actions()
 		}
