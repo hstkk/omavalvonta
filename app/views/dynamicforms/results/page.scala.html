@@ -19,7 +19,7 @@
 			}
 			<tbody>
 				@for(result <- page.getList) {
-					@tr() { <a href="nmnamicforms.Results.index2(product.id)">@product</a>
+					@tr() { <a href="@controllers.dynamicforms.routes.Results.read(product.id, result.id)">@product</a>
 					 		@result.updated.format("dd.MM.YYYY")}
 				}
 			</tbody>
