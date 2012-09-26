@@ -43,7 +43,7 @@ public class Converter {
 	public static Date stringToDate(String value) {
 		try {
 			// TODO use locale
-			return new SimpleDateFormat("dd.mm.yyyy").parse(value);
+			return new SimpleDateFormat("dd.MM.yyyy").parse(value);
 		} catch (Exception e) {
 			return null;
 		}
