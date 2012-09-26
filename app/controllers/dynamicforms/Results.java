@@ -75,8 +75,9 @@ public class Results extends Controller {
 		Dynamic dynamic = filledForm.get();
 		if (!filledForm.hasErrors()) {
 			models.dynamicforms.Results results = new models.dynamicforms.Results(
-					product, dynamic.values, f);
-			if (results.save()) {
+					product, dynamic, f);
+			if (((results.id != null && results.update())
+					|| (results.id == null && results.save()))) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
 				return read(productId, results.id);
 			}

@@ -9,6 +9,8 @@ import play.data.validation.Constraints.*;
  * 
  */
 public class Fieldset {
+	public Long id;
+	
 	@Required
 	public Long fieldId;
 
@@ -22,7 +24,8 @@ public class Fieldset {
 	public Fieldset() {
 	}
 
-	public Fieldset(Long fieldId, String value, Boolean ack, String comment) {
+	public Fieldset(Long id, Long fieldId, String value, Boolean ack, String comment) {
+		this.id = id;
 		this.fieldId = fieldId;
 		this.value = value;
 		this.ack = ack;

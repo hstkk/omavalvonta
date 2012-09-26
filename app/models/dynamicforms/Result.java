@@ -56,9 +56,8 @@ public class Result extends JpaModel {
 	public Result() {
 	}
 
-	//TODO prevent null records
+	// TODO prevent null records
 	public Result(Fieldset fieldset) {
-		System.out.println(fieldset.fieldId);
 		if (fieldset.value != null && fieldset.comment != null) {
 			this.field = Field.findById(fieldset.fieldId);
 			this.comment = fieldset.comment;
@@ -81,8 +80,12 @@ public class Result extends JpaModel {
 				break;
 			}
 			if (!((field.type == FieldType.TEXT || field.type == FieldType.TEXTAREA) && this.valueString
-					.isEmpty()))
-				this.save();
+					.isEmpty())) {
+				if (fieldset.id != null)
+					this.update();
+				else
+					this.save();
+			}
 		}
 	}
 
