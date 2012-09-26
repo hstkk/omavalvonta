@@ -21,7 +21,7 @@ GET		/tulos/:productId/sivu/:index						controllers.dynamicforms.Results.page(pr
 GET		/tulos/:productId/:formId							controllers.dynamicforms.Results.create(productId: Long, formId: Long)
 POST	/tulos/:productId/:formId							controllers.dynamicforms.Results.save(productId: Long, formId: Long)
 GET		/tulokset/:productId/:resultsId						controllers.dynamicforms.Results.read(productId: Long, resultsId: Long)
-POST	/tulokset/:productId/:resultsId/muokkaa					controllers.dynamicforms.Results.update(productId: Long, resultsId: Long)
+GET		/tulokset/:productId/:resultsId/muokkaa					controllers.dynamicforms.Results.update(productId: Long, resultsId: Long)
 #GET		/tulokset/:productId/:resultsId/historia				controllers.dynamicforms.Results.history(productId: Long, resultsId: Long)
 #GET		/tulokset/:productId/:resultsId/pdf					controllers.dynamicforms.Results.pdfify(productId: Long, resultsId: Long)
 
