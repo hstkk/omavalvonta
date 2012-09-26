@@ -55,7 +55,7 @@ public class Results extends Controller {
 		String html = utils.Form.formify(results.results);
 		if (html == null || html.equals(""))
 			return notFound(views.html.notFound.render());
-		return ok(views.html.dynamicforms.results.manage.render(FORM, product,
+		return ok(views.html.dynamicforms.results.manage.render(FORM.fill(new forms.dynamicforms.Dynamic(resultsId)), product,
 				results.form, html));
 	}
 

@@ -17,6 +17,8 @@ import utils.Validation;
  * 
  */
 public class Dynamic {
+	public Long id;
+	
 	//@Required
 	//@OneToMany
 	public List<Fieldset> values;
@@ -112,5 +114,9 @@ public class Dynamic {
 		this.values = new ArrayList<Fieldset>();
 		for(String value: values)
 			System.out.println(value);
+	}
+
+	public Dynamic(Long id) {
+		this.id = id;
 	}
 }
