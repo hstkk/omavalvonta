@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import forms.dynamicforms.Fieldset;
 
 import models.helpers.KeyValue;
-import models.helpers.KeyValueBatch;
 import play.data.validation.Constraints.*;
 
 // TODO: Auto-generated Javadoc

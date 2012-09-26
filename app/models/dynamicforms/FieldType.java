@@ -8,47 +8,27 @@ import java.util.Map;
  * @author Sami Hostikka <dev@01.fi>
  * 
  */
-//TODO
+// TODO
 public enum FieldType {
-	TEXT /*{
-		public String toString() {
-			return "Teksti";
-		}
-	}*/,
-	INT /*{
-		public String toString() {
-			return "Kokonaisluku";
-		}
-	}*/,
-	DOUBLE /*{
-		public String toString() {
-			return "Desimaaliluku";
-		}
-	}*/,
-	DATE /*{
-		public String toString() {
-			return "Päivämäärä";
-		}
-	}*/,
-	CHECKBOX /*{
-		public String toString() {
-			return "Kyllä ei";
-		}
-	}*/,
-	DATETIME, TEXTAREA /*{
-		public String toString() {
-			return "Tekstikenttä";
-		}
-	}*/;
+	TEXT("Teksti"), INT("Kokonaisluku"), DOUBLE("Desimaaliluku"), DATE(
+			"Päivämäärä"), CHECKBOX("Kyllä ei"), TEXTAREA("Tekstikenttä"), LEGEND(
+			"Väliotsikko");
+
+	private FieldType(final String text) {
+		this.text = text;
+	}
+
+	private final String text;
+
+	@Override
+	public String toString() {
+		return text;
+	}
 
 	public static Map<String, String> map() {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("TEXT", "Teksti");
-		map.put("INT", "Kokonaisluku");
-		map.put("DOUBLE", "Desimaaliluku");
-		map.put("DATE", "Päivämäärä");
-		map.put("CHECKBOX", "Kyllä ei");
-		map.put("TEXTAREA", "Tekstikenttä");
+		for(FieldType value: FieldType.values())
+			map.put(value.name(), value.toString());
 		return map;
 	}
 }
