@@ -18,7 +18,7 @@ public class Field extends JpaModel {
 	@Required
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	public FieldType type;
+	public FieldType fieldType;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tiheys")
@@ -55,12 +55,12 @@ public class Field extends JpaModel {
 
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder("Tietotyypiltä ");
-		stringBuilder.append(type.toString());
+		stringBuilder.append(fieldType.toString());
 		if (isRequired)
 			stringBuilder.append(", vaadittu");
 		if (isSigned)
 			stringBuilder.append(", kuitattava");
-		if (type == FieldType.INT || type == FieldType.DOUBLE) {
+		if (fieldType == FieldType.INT || fieldType == FieldType.DOUBLE) {
 			if (min != null)
 				stringBuilder.append(", minimi " + min);
 			if (max != null)
@@ -117,7 +117,7 @@ public class Field extends JpaModel {
 
 	public String validate() {
 		StringBuilder result = new StringBuilder();
-		if (type != FieldType.INT || type != FieldType.DOUBLE) {
+		if (fieldType != FieldType.INT || fieldType != FieldType.DOUBLE) {
 			if (min != null)
 				result.append("Vain numeraalisilla arvoilla voi olla minimi. ");
 			if (max != null)
@@ -179,7 +179,7 @@ public class Field extends JpaModel {
 				List<Field> legends = JPA
 						.em()
 						.createQuery(
-								"from Field f where f.form = ? and f.type = ?")
+								"from Field f where f.form = ? and f.fieldType = ?")
 						.setParameter(1, form)
 						.setParameter(2, FieldType.LEGEND).getResultList();
 				for (Field legend : legends)

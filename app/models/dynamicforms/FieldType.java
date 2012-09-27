@@ -11,7 +11,7 @@ import java.util.Map;
 // TODO
 public enum FieldType {
 	TEXT("Teksti"), INT("Kokonaisluku"), DOUBLE("Desimaaliluku"), DATE(
-			"Päivämäärä"), CHECKBOX("Kyllä ei"), TEXTAREA("Tekstikenttä"), LEGEND(
+			"Päivämäärä"), CHECKBOX("Kyllä/Ei"), TEXTAREA("Tekstikenttä"), LEGEND(
 			"Väliotsikko");
 
 	private FieldType(final String text) {

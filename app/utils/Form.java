@@ -36,7 +36,7 @@ public class Form {
 			}
 
 			if (field != null) {
-				if (field.type == FieldType.LEGEND) {
+				if (field.fieldType == FieldType.LEGEND) {
 					html.append("<fieldset><legend>");
 					html.append(field.name);
 					html.append("</fieldset></legend>");
@@ -51,7 +51,7 @@ public class Form {
 					html.append("<fieldset><div class=\"control-group\"><label class=\"control-label\">");
 					html.append(field.name);
 					html.append("</label><div class=\"controls\">");
-					switch (field.type) {
+					switch (field.fieldType) {
 					case CHECKBOX:
 						boolean bool = false;
 						try {
