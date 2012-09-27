@@ -50,6 +50,8 @@ public class Field extends JpaModel {
 
 	public Double target;
 
+	public Double targetBool;
+
 	public Field() {
 	}
 
