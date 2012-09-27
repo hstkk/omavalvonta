@@ -54,6 +54,12 @@ public class Results extends JpaModel {
 		this.results = new ArrayList<Result>();
 		for (Fieldset value : dynamic.values)
 			results.add(new Result(value));
+		int resultsIsDone = 0;
+		for (Result result : results)
+			if (result.isDone)
+				resultsIsDone++;
+		if (!results.isEmpty() && resultsIsDone == results.size())
+			this.isDone = true;
 	}
 
 	public static Results findById(Long id) {
