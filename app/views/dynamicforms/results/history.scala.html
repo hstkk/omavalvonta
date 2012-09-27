@@ -1,1 +1,35 @@
 @(product: Product, results: models.dynamicforms.Results, history: Map[models.dynamicforms.Field, List[models.dynamicforms.Result]])
+
+@import tags._
+@import tags.navs._
+@import tags.tables._
+
+@main(product.toString + " " + results.form.toString + " historia") {
+	<h2>Määritykset</h2>
+	@stacked() {
+		@history.map { case (key, value) =>
+			<li><a href="#f@key.id">@key.name</a></li>
+		}
+	}
+
+	@history.map { case (key, value) =>
+		<h3 id="f@key.id">@key.name</h3>
+		@if(key.help != ""){
+			<p>@key.help</p>
+		}
+		@table() {
+			@thead() {
+				Päivitetty
+				Tulos
+				Kommentti
+			}
+			<tbody>
+				@for(result <- value) {
+					@tr() { @result.updated
+						@result
+						@result.comment }
+				}
+			</tbody>
+		}
+	}
+}

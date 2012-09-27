@@ -66,7 +66,7 @@ public class Results extends JpaModel {
 	}
 
 	public Map<Field, List<Result>> getHistory() {
-		Map<Field, List<Result>> history = new HashMap<Field, List<Result>>();
+		Map<Field, List<Result>> history = new LinkedHashMap<Field, List<Result>>();
 		for (Result result : results)
 			history.put(result.field, result.getHistory());
 		return history;
