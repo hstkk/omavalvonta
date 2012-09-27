@@ -23,7 +23,7 @@ POST	/tulos/:productId/:formId							controllers.dynamicforms.Results.save(produ
 GET		/tulokset/:productId/:resultsId						controllers.dynamicforms.Results.read(productId: Long, resultsId: Long)
 GET		/tulokset/:productId/:resultsId/muokkaa				controllers.dynamicforms.Results.update(productId: Long, resultsId: Long)
 GET		/tulokset/:productId/:resultsId/historia			controllers.dynamicforms.Results.history(productId: Long, resultsId: Long)
-#GET		/tulokset/:productId/:resultsId/pdf					controllers.dynamicforms.Results.pdfify(productId: Long, resultsId: Long)
+GET		/tulokset/:productId/:resultsId/pdf					controllers.dynamicforms.Results.pdfify(productId: Long, resultsId: Long)
 
 # ingredient supply
 GET		/raaka-aine											controllers.IngredientSupplies.index
