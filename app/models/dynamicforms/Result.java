@@ -58,6 +58,8 @@ public class Result extends JpaModel implements Comparable<Result> {
 	@Lob
 	public String comment;
 
+	public Boolean isDone = false;
+
 	public Result() {
 	}
 
