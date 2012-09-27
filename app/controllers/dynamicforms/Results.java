@@ -19,6 +19,7 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
+import util.pdf.PDF;
 
 public class Results extends Controller {
 
@@ -129,5 +130,23 @@ public class Results extends Controller {
 				.getHistory();
 		return ok(views.html.dynamicforms.results.history.render(product,
 				results, history));
+	}
+
+	@Transactional(readOnly = true)
+	public static Result pdfify(Long productId, Long resultsId) {
+		Product product = Product.findById(productId);
+		if (product == null)
+			return notFound(views.html.notFound.render());
+		models.dynamicforms.Results results = models.dynamicforms.Results
+				.findById(resultsId);
+		if (results == null)
+			return notFound(views.html.notFound.render());
+		List<models.dynamicforms.Result> r = new ArrayList<models.dynamicforms.Result>(
+				results.results);
+		r.addAll(Field.headerify(results.form));
+		Collections.sort(r);
+		return ok(
+				PDF.toBytes(views.html.dynamicforms.results.pdfify.render(
+						product, results, r))).as("application/pdf");
 	}
 }
