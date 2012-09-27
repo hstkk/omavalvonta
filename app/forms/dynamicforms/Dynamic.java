@@ -18,28 +18,20 @@ import utils.Validation;
  */
 public class Dynamic {
 	public Long id;
-	
-	//@Required
-	//@OneToMany
+
+	// @Required
+	// @OneToMany
 	public List<Fieldset> values;
 
-	public String validate() {
-		System.out.println(values.size());
-		for(Fieldset fieldset: values)
-			System.out.println(fieldset.value);
-		if(values.isEmpty())
-			return "FAIL";
-		return null;
-	}
 	/**
 	 * Validates the form data.
 	 * 
 	 * @return null if no errors else errors.
 	 */
-	/*@Transactional(readOnly = true)
+	@Transactional(readOnly = true)
 	public String validate() {
-		StringBuilder result = new StringBuilder();*/
-		/*if (values != null) {
+		StringBuilder result = new StringBuilder();
+		if (values != null) {
 			for (Fieldset fieldset : values) {
 				if (fieldset != null
 						&& (fieldset.ack || !fieldset.value.isEmpty() || !fieldset.comment
@@ -102,17 +94,17 @@ public class Dynamic {
 						result.append("Virhe, lomakkeen kenttää ei löytynyt. ");
 				}
 			}
-		}*//*
+		}
 		return (result.length() == 0) ? "" : result.toString();
-	}*/
+	}
 
 	public Dynamic() {
 		this.values = new ArrayList<Fieldset>();
 	}
-	
+
 	public Dynamic(String... values) {
 		this.values = new ArrayList<Fieldset>();
-		for(String value: values)
+		for (String value : values)
 			System.out.println(value);
 	}
 
