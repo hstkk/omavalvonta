@@ -11,6 +11,15 @@
 	</head>
 	<body>
 	@table() {
+		<tbody>
+			@tr() { HAMI/Sairio Opetusmeijeri
+			 		Ohjetyyppi: Omavalvonta }
+		</tbody>
+	}
+	<p><strong>AIHE: @results.form</strong></p>
+	<p>Valmiste: @product</p>
+	<p>Valmistuspäivä: @results.updated.format("dd.MM.yyyy")</p>
+	@table() {
 		@thead() {
 			Määritys
 			Määritys tiheys
