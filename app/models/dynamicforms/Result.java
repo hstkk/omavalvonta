@@ -72,19 +72,32 @@ public class Result extends JpaModel implements Comparable<Result> {
 			switch (field.fieldType) {
 			case CHECKBOX:
 				this.valueBoolean = Converter.stringToBool(fieldset.value);
+				if (this.field.targetBool == null
+						|| this.field.targetBool == this.valueBoolean)
+					this.isDone = true;
 				break;
 			case DATE:
 				this.valueDate = Converter.stringToDate(fieldset.value);
+				this.isDone = true;
 				break;
 			case INT:
 				this.valueInt = Converter.stringToInt(fieldset.value);
+				if ((this.field.min == null || this.valueInt >= this.field.min)
+						&& (this.field.max == null || this.valueInt <= this.field.max))
+					this.isDone = true;
 				break;
 			case DOUBLE:
 				this.valueDouble = Converter.stringToDouble(fieldset.value);
+				if ((this.field.min == null || this.valueDouble >= this.field.min)
+						&& (this.field.max == null || this.valueDouble <= this.field.max))
+					this.isDone = true;
+
 				break;
 			case TEXT:
 			case TEXTAREA:
 				this.valueString = fieldset.value;
+				if (!this.valueString.isEmpty())
+					this.isDone = true;
 				break;
 			}
 			if (!((field.fieldType == FieldType.TEXT || field.fieldType == FieldType.TEXTAREA) && this.valueString
