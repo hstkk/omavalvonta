@@ -23,7 +23,7 @@
 		</tbody>
 	}
 	@if(batch.ingredientAmounts != null) {
-		<h2>Erässä on käytetyt raaka-aineet</h2>
+		<h2>Erässä käytetyt raaka-aineet</h2>
 		@table() {
 			@thead() {
 				Tuote
@@ -33,7 +33,7 @@
 			<tbody>
 				@for(i <- batch.ingredientAmounts) {
 					@tr() { @i.ingredientSupply.ingredient
-							@i.ingredientSupply.received.format("dd.MM.yyyy")
+							<a href="@routes.IngredientSupplies.read(i.ingredientSupply.id)">@i.ingredientSupply.received.format("dd.MM.yyyy")</a>
 							@i.amount @i.ingredientSupply.unit}
 				}
 			</tbody>
