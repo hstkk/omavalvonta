@@ -108,7 +108,10 @@ public class Results extends Controller {
 				.findById(resultsId);
 		if (results == null)
 			return notFound(views.html.notFound.render());
-		List<models.dynamicforms.Result> r = results.results;
+		List<models.dynamicforms.Result> r = new ArrayList<models.dynamicforms.Result>(
+				results.results);
+		r.addAll(Field.headerify(results.form));
+		Collections.sort(r);
 		return ok(views.html.dynamicforms.results.read.render(product, results,
 				r));
 	}

@@ -67,7 +67,7 @@ public class Result extends JpaModel implements Comparable<Result> {
 			this.updated = new Date();
 			this.field = Field.findById(fieldset.fieldId);
 			this.comment = fieldset.comment;
-			switch (field.type) {
+			switch (field.fieldType) {
 			case CHECKBOX:
 				this.valueBoolean = Converter.stringToBool(fieldset.value);
 				break;
@@ -85,7 +85,7 @@ public class Result extends JpaModel implements Comparable<Result> {
 				this.valueString = fieldset.value;
 				break;
 			}
-			if (!((field.type == FieldType.TEXT || field.type == FieldType.TEXTAREA) && this.valueString
+			if (!((field.fieldType == FieldType.TEXT || field.fieldType == FieldType.TEXTAREA) && this.valueString
 					.isEmpty())) {
 				if (fieldset.id != null) {
 					this.id = fieldset.id;

@@ -46,7 +46,7 @@ public class Dynamic {
 								.isEmpty())) {
 					Field field = Field.findById(fieldset.fieldId);
 					if (field != null) {
-						switch (field.type) {
+						switch (field.fieldType) {
 						case CHECKBOX:
 							if (Validation.isBoolean(fieldset.value) == null)
 								result.append("Kentän " + field.name
