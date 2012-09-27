@@ -50,7 +50,7 @@ public class Field extends JpaModel {
 
 	public Double target;
 
-	public Double targetBool;
+	public Boolean targetBool;
 
 	public Field() {
 	}
@@ -119,11 +119,13 @@ public class Field extends JpaModel {
 
 	public String validate() {
 		StringBuilder result = new StringBuilder();
-		if (fieldType != FieldType.INT || fieldType != FieldType.DOUBLE) {
+		if (fieldType != FieldType.INT && fieldType != FieldType.DOUBLE) {
 			if (min != null)
 				result.append("Vain numeraalisilla arvoilla voi olla minimi. ");
 			if (max != null)
 				result.append("Vain numeraalisilla arvoilla voi olla maksimi. ");
+			if (target != null)
+				result.append("Vain numeraalisilla arvoilla voi olla tavoitearvo. ");
 		} else if (min >= max)
 			result.append("Minimi ei voi olla maksimia suurempi.");
 		return result.length() > 0 ? result.toString() : null;
