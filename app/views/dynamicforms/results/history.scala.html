@@ -5,6 +5,13 @@
 @import tags.tables._
 
 @main(product.toString + " " + results.form.toString + " historia") {
+	@tabs() {
+		<li><a href="@controllers.dynamicforms.routes.Results.page(product.id,0)">Lomakkeet</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Results.read(product.id, results.id)">Tulokset</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Results.update(product.id, results.id)">Muokkaa</a></li>
+		<li class="active"><a href="@controllers.dynamicforms.routes.Results.history(product.id, results.id)">Historia</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Results.pdfify(product.id, results.id)">PDF-tiedosto</a></li>
+	}
 	<h2>Määritykset</h2>
 	@stacked() {
 		@history.map { case (key, value) =>
