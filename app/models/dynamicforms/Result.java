@@ -26,8 +26,10 @@ import play.db.jpa.*;
 
 @Entity
 @Audited
-//TODO updated
 public class Result extends JpaModel {
+	@Required
+	@NotNull
+	public Date updated;
 
 	// @Required
 	@OneToOne
@@ -62,6 +64,7 @@ public class Result extends JpaModel {
 	// TODO prevent null records
 	public Result(Fieldset fieldset) {
 		if (fieldset.value != null && fieldset.comment != null) {
+			this.updated = new Date();
 			this.field = Field.findById(fieldset.fieldId);
 			this.comment = fieldset.comment;
 			switch (field.type) {
