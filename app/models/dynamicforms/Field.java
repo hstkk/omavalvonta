@@ -171,4 +171,21 @@ public class Field extends JpaModel {
 		}
 		return null;
 	}
+
+	public static List<Result> headerify(Form form) {
+		List<Result> headers = new ArrayList<Result>();
+		if (form != null && form.id != null)
+			try {
+				List<Field> legends = JPA
+						.em()
+						.createQuery(
+								"from Field f where f.form = ? and f.type = ?")
+						.setParameter(1, form)
+						.setParameter(2, FieldType.LEGEND).getResultList();
+				for (Field legend : legends)
+					headers.add(new Result(legend));
+			} catch (Exception e) {
+			}
+		return headers;
+	}
 }

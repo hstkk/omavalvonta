@@ -26,7 +26,7 @@ import play.db.jpa.*;
 
 @Entity
 @Audited
-public class Result extends JpaModel {
+public class Result extends JpaModel implements Comparable<Result> {
 	@Required
 	@NotNull
 	public Date updated;
@@ -96,6 +96,10 @@ public class Result extends JpaModel {
 		}
 	}
 
+	public Result(Field field) {
+		this.field = field;
+	}
+
 	public String toString() {
 		if (valueString != null)
 			return valueString;
@@ -120,5 +124,10 @@ public class Result extends JpaModel {
 			history.add(result);
 		}
 		return history;
+	}
+
+	@Override
+	public int compareTo(Result o) {
+		return field.id.compareTo(o.field.id);
 	}
 }

@@ -41,11 +41,13 @@ public class Form {
 					html.append(field.name);
 					html.append("</fieldset></legend>");
 				} else {
-					html.append("<input type=\"hidden\" name=\"values[");
-					html.append(i);
-					html.append("].id\" value=\"");
-					html.append(id);
-					html.append("\"/>");
+					if (id != null) {
+						html.append("<input type=\"hidden\" name=\"values[");
+						html.append(i);
+						html.append("].id\" value=\"");
+						html.append(id);
+						html.append("\"/>");
+					}
 					html.append("<fieldset><div class=\"control-group\"><label class=\"control-label\">");
 					html.append(field.name);
 					html.append("</label><div class=\"controls\">");
