@@ -1,6 +1,7 @@
 package controllers.dynamicforms;
 
 import java.util.List;
+import java.util.Map;
 
 import controllers.Batches;
 import controllers.routes;
@@ -9,6 +10,7 @@ import forms.dynamicforms.Dynamic;
 
 import models.Batch;
 import models.Product;
+import models.dynamicforms.Field;
 import play.*;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -78,10 +80,11 @@ public class Results extends Controller {
 		if (!filledForm.hasErrors()) {
 			models.dynamicforms.Results results = new models.dynamicforms.Results(
 					product, dynamic, f);
-			if (((results.id != null && results.update())
-					|| (results.id == null && results.save()))) {
+			if (((results.id != null && results.update()) || (results.id == null && results
+					.save()))) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
-				return redirect(controllers.dynamicforms.routes.Results.read(productId, results.id));
+				return redirect(controllers.dynamicforms.routes.Results.read(
+						productId, results.id));
 			}
 		}
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
@@ -103,25 +106,18 @@ public class Results extends Controller {
 				r));
 	}
 
-	/*
-	 * @Transactional(readOnly = true) public static Result history(Long
-	 * productId, Long resultsId) { Product product =
-	 * Product.findById(productId); if (product == null) return
-	 * notFound(views.html.notFound.render()); models.dynamicforms.Results
-	 * results = models.dynamicforms.Results .findById(resultsId); if (results
-	 * == null) return notFound(views.html.notFound.render());
-	 * List<models.dynamicforms.Result> r = models.dynamicforms.Result
-	 * .findByResults(results.id); return
-	 * ok(views.html.dynamicforms.results.read.render(results, r)); }
-	 * 
-	 * @Transactional(readOnly = true) public static Result pdfify(Long
-	 * productId, Long resultsId) { Product product =
-	 * Product.findById(productId); if (product == null) return
-	 * notFound(views.html.notFound.render()); models.dynamicforms.Results
-	 * results = models.dynamicforms.Results .findById(resultsId); if (results
-	 * == null) return notFound(views.html.notFound.render());
-	 * List<models.dynamicforms.Result> r = models.dynamicforms.Result
-	 * .findByResults(results.id); return
-	 * ok(views.html.dynamicforms.results.read.render(results, r)); }
-	 */
+	@Transactional(readOnly = true)
+	public static Result history(Long productId, Long resultsId) {
+		Product product = Product.findById(productId);
+		if (product == null)
+			return notFound(views.html.notFound.render());
+		models.dynamicforms.Results results = models.dynamicforms.Results
+				.findById(resultsId);
+		if (results == null)
+			return notFound(views.html.notFound.render());
+		Map<Field, List<models.dynamicforms.Result>> history = results
+				.getHistory();
+		return ok(views.html.dynamicforms.results.history.render(product, results,
+				history));
+	}
 }
