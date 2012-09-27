@@ -126,7 +126,7 @@ public class Field extends JpaModel {
 				result.append("Vain numeraalisilla arvoilla voi olla maksimi. ");
 			if (target != null)
 				result.append("Vain numeraalisilla arvoilla voi olla tavoitearvo. ");
-		} else if (min >= max)
+		} else if (min != null && max != null && min >= max)
 			result.append("Minimi ei voi olla maksimia suurempi.");
 		return result.length() > 0 ? result.toString() : null;
 	}

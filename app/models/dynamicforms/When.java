@@ -10,13 +10,23 @@ import java.util.Map;
  */
 // TODO
 public enum When {
-	AINA, JOSKUS;
+	AINA("joka erä"), JOSKUS("kerran lukukaudessa");
+
+	private When(final String text) {
+		this.text = text;
+	}
+
+	private final String text;
+
+	@Override
+	public String toString() {
+		return text;
+	}
 
 	public static Map<String, String> map() {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("", "");
-		map.put("AINA", "Joka erä");
-		map.put("JOSKUS", "Kerran lukukaudessa");
+		for(When value: When.values())
+			map.put(value.name(), value.toString());
 		return map;
 	}
 }

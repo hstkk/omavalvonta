@@ -71,7 +71,7 @@ public class Form {
 						html.append("].value\"");
 						if (!bool)
 							html.append(" checked");
-						html.append(">Ei ok</label>");
+						html.append(">Ei ok</label><br/>");
 						break;
 					case DATE:
 						html.append("<input class=\"input-xlarge\" name=\"values["
