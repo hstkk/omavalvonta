@@ -53,6 +53,7 @@
 		@helper.inputText(FORM("min"), '_label -> "minimiarvo", '_class -> "control-group")
 		@helper.inputText(FORM("max"), '_label -> "maksimiarvo", '_class -> "control-group")
 		@helper.inputText(FORM("target"), '_label -> "tavoitearvo", '_class -> "control-group")
+		@helper.checkbox(FORM("targetBool"), '_label -> None, '_text -> "kyllä/ei kentän tavoite tulos on ok", '_showConstraints -> false)
 		@helper.checkbox(FORM("isRequired"), '_label -> None, '_text -> "vaadittu", '_showConstraints -> false)
 		@actions()
 	}
