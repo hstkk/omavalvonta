@@ -101,14 +101,16 @@ public class Batch extends JpaModel {
 
 	public static List<Batch> findByIngredientSupply(Long id) {
 		try {
-
-			if (id != null)
-				return JPA
+			if (id != null) {
+				List<Batch> list = JPA
 						.em()
 						.createQuery(
-								"from Batch b where b.IngredientSupply.id = ? order by b.created asc")
+								"select b from Batch b join b.ingredientAmounts as IngredientSupply where IngredientSupply.id = ?")
 						.setParameter(1, id).getResultList();
+				return list;
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
