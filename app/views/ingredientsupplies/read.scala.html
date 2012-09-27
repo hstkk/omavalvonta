@@ -36,7 +36,8 @@
 			}
 			<tbody>
 				@for(batch <- batches) {
-
+					@tr() { @batch.product
+							@batch.created.format("dd.MM.yyyy") }
 				}
 			</tbody>
 		}
