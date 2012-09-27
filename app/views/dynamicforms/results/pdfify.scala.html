@@ -2,30 +2,37 @@
 
 @import tags._
 @import tags.tables._
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
 		<title>title</title>
 		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	</head>
 	<body>
-@table() {
-	@thead() {
-		Toiminto
-		Ohje
-		Tulos
-	}
-	<tbody>
-		@for(result <- r) {
-			@if(result.field.fieldType == models.dynamicforms.FieldType.LEGEND) {
-				<tr><th colspan="3">@result.field.name</th></tr>
-			} else {
-				@tr() { @result.field.name
-					@result.field.help
-					@result }
-			}
+	@table() {
+		@thead() {
+			Määritys
+			Määritys tiheys
+			Vaatimus
+			Tulos
+			Kuittaus
+			Huomioita
 		}
-	</tbody>
-}
+		<tbody>
+			@for(result <- r) {
+				@if(result.field.fieldType == models.dynamicforms.FieldType.LEGEND) {
+					<tr><th colspan="6">@result.field.name</th></tr>
+				} else {
+					@tr() { @result.field.name
+						@result.field.when
+						@result.field.help
+						@result
+						
+						@result.comment }
+				}
+			}
+		</tbody>
+	}
 	</body>
 </html>
