@@ -39,10 +39,14 @@ public class IngredientAmount extends JpaModel {
 	@Min(0)
 	public Double amount;
 
+	public IngredientAmount() {
+	}
+
 	public IngredientAmount(IngredientSupply ingredientSupply, Double amount) {
 		this.ingredientSupply = ingredientSupply;
 		this.amount = amount;
-		ingredientSupply.amountAvailable = ingredientSupply.amountAvailable - amount;
+		ingredientSupply.amountAvailable = ingredientSupply.amountAvailable
+				- amount;
 		ingredientSupply.update();
 		this.save();
 	}
