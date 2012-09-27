@@ -1,5 +1,8 @@
 package controllers.dynamicforms;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +58,11 @@ public class Results extends Controller {
 				.findById(resultsId);
 		if (results == null)
 			return notFound(views.html.notFound.render());
-		String html = utils.Form.formify(results.results);
+		List<models.dynamicforms.Result> r = new ArrayList<models.dynamicforms.Result>(
+				results.results);
+		r.addAll(Field.headerify(results.form));
+		Collections.sort(r);
+		String html = utils.Form.formify(r);
 		if (html == null || html.equals(""))
 			return notFound(views.html.notFound.render());
 		return ok(views.html.dynamicforms.results.manage.render(
@@ -117,7 +124,7 @@ public class Results extends Controller {
 			return notFound(views.html.notFound.render());
 		Map<Field, List<models.dynamicforms.Result>> history = results
 				.getHistory();
-		return ok(views.html.dynamicforms.results.history.render(product, results,
-				history));
+		return ok(views.html.dynamicforms.results.history.render(product,
+				results, history));
 	}
 }
