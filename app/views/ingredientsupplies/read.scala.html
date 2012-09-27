@@ -31,12 +31,14 @@
 		<h2>Vastaanotettua raaka-ainetta käyttävät erät</h2>
 		@table() {
 			@thead() {
+				Erä
 				Tuote
 				Valmistuspäivä
 			}
 			<tbody>
 				@for(batch <- batches) {
-					@tr() { @batch.product
+					@tr() { <a href="@routes.Batches.read(batch.id)">@batch.id</a>
+							@batch.product
 							@batch.created.format("dd.MM.yyyy") }
 				}
 			</tbody>
