@@ -28,13 +28,13 @@ public class Dynamic {
 	 * 
 	 * @return null if no errors else errors.
 	 */
-	@Transactional(readOnly = true)
+/*	@Transactional(readOnly = true)
 	public String validate() {
 		StringBuilder result = new StringBuilder();
 		if (values != null) {
 			for (Fieldset fieldset : values) {
 				if (fieldset != null
-						&& (fieldset.ack || !fieldset.value.isEmpty() || !fieldset.comment
+						&& (!fieldset.value.isEmpty() || !fieldset.comment
 								.isEmpty())) {
 					Field field = Field.findById(fieldset.fieldId);
 					if (field != null) {
@@ -96,7 +96,7 @@ public class Dynamic {
 			}
 		}
 		return (result.length() == 0) ? "" : result.toString();
-	}
+	}*/
 
 	public Dynamic() {
 		this.values = new ArrayList<Fieldset>();
