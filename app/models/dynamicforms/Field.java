@@ -188,4 +188,11 @@ public class Field extends JpaModel {
 			}
 		return headers;
 	}
+
+	public static Map<String, String> targetOptions() {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("true", "kyllä");
+		map.put("false", "ei");
+		return map;
+	}
 }
