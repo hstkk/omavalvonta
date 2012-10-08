@@ -47,7 +47,7 @@
 		}
 		<input type="hidden" name="form.id" value="@f.id"/>
 		@helper.inputText(FORM("name"), '_label -> "määritys", '_class -> "control-group")
-		@helper.select(FORM("when"), options = options(models.dynamicforms.When.map), '_default -> FORM("when").value, '_label -> "määritys tiheys")
+		@helper.select(FORM("when"), options = options(models.dynamicforms.When.map), '_default -> FORM("when").value, '_label -> "määritystiheys")
 		@helper.textarea(FORM("help"), '_label -> "vaatimus")
 		@helper.select(FORM("fieldType"), options = options(models.dynamicforms.FieldType.map), '_default -> FORM("type").value, '_label -> "tietotyyppi")
 		@helper.inputText(FORM("min"), '_label -> "minimiarvo", '_class -> "control-group")
