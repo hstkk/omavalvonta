@@ -48,9 +48,7 @@ public class Field extends JpaModel {
 
 	public Double max;
 
-	public Double target;
-
-	public Boolean targetBool;
+	public Boolean targetValue;
 
 	public Field() {
 	}
@@ -124,8 +122,6 @@ public class Field extends JpaModel {
 				result.append("Vain numeraalisilla arvoilla voi olla minimi. ");
 			if (max != null)
 				result.append("Vain numeraalisilla arvoilla voi olla maksimi. ");
-			if (target != null)
-				result.append("Vain numeraalisilla arvoilla voi olla tavoitearvo. ");
 		} else if (min != null && max != null && min >= max)
 			result.append("Minimi ei voi olla maksimia suurempi.");
 		return result.length() > 0 ? result.toString() : null;
