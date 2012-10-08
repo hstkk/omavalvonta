@@ -72,8 +72,8 @@ public class Result extends JpaModel implements Comparable<Result> {
 			switch (field.fieldType) {
 			case CHECKBOX:
 				this.valueBoolean = Converter.stringToBool(fieldset.value);
-				if (this.field.targetBool == null
-						|| this.field.targetBool == this.valueBoolean)
+				if (this.field.targetValue == null
+						|| this.field.targetValue == this.valueBoolean)
 					this.isDone = true;
 				break;
 			case DATE:
