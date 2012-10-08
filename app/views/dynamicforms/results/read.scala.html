@@ -30,7 +30,7 @@
 					@tr() { @result.field.name
 						@result.field.when
 						@result.field.help
-						@result
+						@if(result.isDone) { @result } @if(!result.isDone) { <span class="label label-important"> @result </span> }
 						
 						@result.comment }
 				}
