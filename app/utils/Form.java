@@ -76,21 +76,21 @@ public class Form {
 					case DATE:
 						html.append("<input class=\"input-xlarge\" name=\"values["
 								+ i
-								+ "].value\" type=\"text\" placeholder=\"pp.kk.vvvv\" value=\"");
+								+ "].value\" type=\"text\" pattern=\"\\d{1,2}\\.\\d{1,2}\\.\\d{4}\"  placeholder=\"pp.kk.vvvv\" value=\"");
 						html.append(value);
 						html.append("\"/>");
 						break;
 					case INT:
 						html.append("<input class=\"input-xlarge\" name=\"values["
 								+ i
-								+ "].value\" type=\"text\" placeholder=\"0\" value=\"");
+								+ "].value\" type=\"number\" placeholder=\"0\" value=\"");
 						html.append(value);
 						html.append("\"/>");
 						break;
 					case DOUBLE:
 						html.append("<input class=\"input-xlarge\" name=\"values["
 								+ i
-								+ "].value\" type=\"text\" placeholder=\"0,0\" value=\"");
+								+ "].value\" type=\"number\" placeholder=\"0,0\" value=\"");
 						html.append(value);
 						html.append("\"/>");
 						break;
