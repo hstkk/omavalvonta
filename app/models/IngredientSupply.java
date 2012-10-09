@@ -48,8 +48,8 @@ public class IngredientSupply extends JpaModel {
 	public Date received;
 
 	// TODO bestbefore
-	@Required
-	@NotNull
+	//@Required
+	//@NotNull
 	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date bestBefore;
 
