@@ -28,10 +28,19 @@
 		}
 	}	
 	@helper.form(action = routes.Products.save(), 'class -> "form-horizontal"){
-		@hidden() {
-			@FORM("id").value
-		}
 		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+		@if(!FORM("id").valueOr("").equals("")) {
+			@hidden() {
+				@FORM("id").value
+			}
+			<div class="clearfix control-group">
+				<label>tuotenumero</label>
+				<span class="uneditable-input">@FORM("id").value</span>
+			</div>
+		} else {
+			<input type="hidden" name="new" value="true"/>
+			@helper.inputText(FORM("id"), '_label -> "tuotenumero", '_class -> "control-group")
+		}
 		@helper.textarea(FORM("description"), '_label -> "kuvaus")
 		<fieldset>
 			<legend>Raaka-aineet</legend>
