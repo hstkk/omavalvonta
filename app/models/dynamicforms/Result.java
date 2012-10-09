@@ -71,23 +71,26 @@ public class Result extends JpaModel implements Comparable<Result> {
 			switch (field.fieldType) {
 			case CHECKBOX:
 				this.valueBoolean = Converter.stringToBool(fieldset.value);
-				if (this.field.targetValue == null
+				if (!this.field.isRequired || this.field.targetValue == null
 						|| this.field.targetValue == this.valueBoolean)
 					this.isDone = true;
 				break;
 			case DATE:
 				this.valueDate = Converter.stringToDate(fieldset.value);
-				this.isDone = true;
+				if (!this.field.isRequired || this.valueDate != null)
+					this.isDone = true;
 				break;
 			case INT:
 				this.valueInt = Converter.stringToInt(fieldset.value);
-				if ((this.field.min == null || this.valueInt >= this.field.min)
+				if (!this.field.isRequired
+						|| (this.field.min == null || this.valueInt >= this.field.min)
 						&& (this.field.max == null || this.valueInt <= this.field.max))
 					this.isDone = true;
 				break;
 			case DOUBLE:
 				this.valueDouble = Converter.stringToDouble(fieldset.value);
-				if ((this.field.min == null || this.valueDouble >= this.field.min)
+				if (!this.field.isRequired
+						|| (this.field.min == null || this.valueDouble >= this.field.min)
 						&& (this.field.max == null || this.valueDouble <= this.field.max))
 					this.isDone = true;
 
@@ -95,13 +98,13 @@ public class Result extends JpaModel implements Comparable<Result> {
 			case TEXT:
 			case TEXTAREA:
 				this.valueString = fieldset.value;
-				if (!this.valueString.isEmpty())
+				if (!this.field.isRequired || !this.valueString.isEmpty())
 					this.isDone = true;
 				break;
 			}
 			if (!((field.fieldType == FieldType.TEXT || field.fieldType == FieldType.TEXTAREA) && this.valueString
 					.isEmpty())) {
-				if (this.user == null)
+				if (this.field.isSigned && this.user == null)
 					this.isDone = false;
 				if (fieldset.id != null) {
 					this.id = fieldset.id;
