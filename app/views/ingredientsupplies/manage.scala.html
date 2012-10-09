@@ -22,7 +22,7 @@
 		@helper.select(FORM("ingredient.id"), options = options(models.Ingredient.options), '_label -> "raaka-aine")
 		@helper.inputText(FORM("amount"), '_label -> "määrä", '_class -> "control-group")
 		@helper.select(FORM("unit.id"), options = options(models.Unit.options), '_label -> "mittayksikkö")
-		@helper.inputText(FORM("produced"), '_label -> "valmistettu", '_class -> "control-group")
+		@helper.inputText(FORM("received"), '_label -> "vastaanottopäivä", '_class -> "control-group")
 		@helper.inputText(FORM("bestBefore"), '_label -> "parasta ennen", '_class -> "control-group")
 		@actions()
 	}

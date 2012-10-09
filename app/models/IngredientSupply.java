@@ -42,13 +42,10 @@ public class IngredientSupply extends JpaModel {
 	@Min(0)
 	public Double amountAvailable;
 
-	@NotNull
-	public Date received = new Date();
-
 	@Required
 	@NotNull
 	@Formats.DateTime(pattern = "dd.MM.yyyy")
-	public Date produced;
+	public Date received;
 
 	// TODO bestbefore
 	@Required
@@ -111,7 +108,7 @@ public class IngredientSupply extends JpaModel {
 				List<IngredientSupply> list = JPA
 						.em()
 						.createQuery(
-								"from IngredientSupply i where i.amountAvailable > 0 and i.ingredient.id = ? and current_date() < i.bestBefore order by i.produced asc ")
+								"from IngredientSupply i where i.amountAvailable > 0 and i.ingredient.id = ? and current_date() < i.bestBefore order by i.received asc ")
 						.setParameter(1, ingredient.id).getResultList();
 				if (!list.isEmpty()) {
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
@@ -143,9 +140,9 @@ public class IngredientSupply extends JpaModel {
 						stringBuilder.append("</span>");
 						stringBuilder.append("</div>");
 						stringBuilder.append("<span class=\"help-inline\">");
-						stringBuilder.append("Valmistuspäivä ");
+						stringBuilder.append("Vastaanottopäivä ");
 						stringBuilder.append(simpleDateFormat
-								.format(i.produced));
+								.format(i.received));
 						stringBuilder.append(". Parasta ennen ");
 						stringBuilder.append(simpleDateFormat
 								.format(i.bestBefore));
@@ -179,7 +176,7 @@ public class IngredientSupply extends JpaModel {
 			List<IngredientSupply> list = JPA
 					.em()
 					.createQuery(
-							"from IngredientSupply i order by i.produced asc")
+							"from IngredientSupply i order by i.received asc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
 			if (rows != null && list != null && !list.isEmpty())
