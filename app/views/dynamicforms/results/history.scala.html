@@ -34,14 +34,15 @@
 			@thead() {
 				Määritetty
 				Tulos
-				Kommentti
+				Huomioita
 				Muutoksen syy
 			}
 			<tbody>
 				@for(result <- value) {
 					@tr() { @result.updated.format("HH:mm:ss dd.MM.YYYY")
 						@result
-						@result.comment }
+						@result.comment
+						 }
 				}
 			</tbody>
 		}
