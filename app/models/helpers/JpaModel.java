@@ -15,6 +15,7 @@ public class JpaModel {
 	/** The id. */
 	@Id
 	@GeneratedValue
+	@Column(updatable=false)
 	public Long id;
 
 	/**
