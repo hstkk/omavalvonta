@@ -1,6 +1,7 @@
 @(product: Product, results: models.dynamicforms.Results, history: Map[models.dynamicforms.Field, List[models.dynamicforms.Result]])
 
 @import tags._
+@import tags.alerts._
 @import tags.navs._
 @import tags.tables._
 
@@ -12,6 +13,11 @@
 		<li class="active"><a href="@controllers.dynamicforms.routes.Results.history(product.id, results.id)">Historia</a></li>
 		<li><a href="@controllers.dynamicforms.routes.Results.pdfify(product.id, results.id)">PDF-tiedosto</a></li>
 	}
+
+	@info() {
+		Määrityksen viimeinen tulos on nykyinen tulos.
+	}
+
 	<h2>Määritykset</h2>
 	@stacked() {
 		@history.map { case (key, value) =>
