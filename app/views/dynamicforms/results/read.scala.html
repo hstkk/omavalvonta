@@ -13,6 +13,22 @@
 		<li><a href="@controllers.dynamicforms.routes.Results.pdfify(product.id, results.id)">PDF-tiedosto</a></li>
 	}
 	<p>@product.description</p>
+
+	<h2>Erät</h2>
+	@table() {
+		@thead() {
+			Erä
+			Valmistuspäivä
+		}
+		<tbody>
+			for(batch <- batches) {
+				tr() { <a href="routes.Batches.read(batch.id)">batch.id</a>
+						batch.created.format("dd.MM.yyyy") }
+			}
+		</tbody>
+	}
+
+	<h2>Tulokset</h2>
 	@table() {
 		@thead() {
 			Määritys
