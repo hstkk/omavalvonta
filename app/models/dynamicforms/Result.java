@@ -25,6 +25,7 @@ import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
+@org.hibernate.annotations.Entity(selectBeforeUpdate = true, dynamicInsert = true, dynamicUpdate = true)
 @Audited
 public class Result extends JpaModel implements Comparable<Result> {
 	@Required
@@ -56,17 +57,15 @@ public class Result extends JpaModel implements Comparable<Result> {
 	public Date valueDate = null;
 
 	@Lob
-	public String comment;
+	public String comment = null;
 
 	public Boolean isDone = false;
 
 	public Result() {
 	}
 
-	// TODO prevent null records
 	public Result(Fieldset fieldset) {
 		if (fieldset.value != null && fieldset.comment != null) {
-			this.updated = new Date();
 			this.field = Field.findById(fieldset.fieldId);
 			this.comment = fieldset.comment;
 			switch (field.fieldType) {
@@ -104,6 +103,9 @@ public class Result extends JpaModel implements Comparable<Result> {
 					.isEmpty())) {
 				if (fieldset.id != null) {
 					this.id = fieldset.id;
+					Result revision = Result.findById(this.id);
+					if (revision != null)
+						this.updated = revision.updated;
 					this.update();
 				} else
 					this.save();
@@ -144,5 +146,24 @@ public class Result extends JpaModel implements Comparable<Result> {
 	@Override
 	public int compareTo(Result o) {
 		return field.id.compareTo(o.field.id);
+	}
+
+	public static Result findById(Long id) {
+		try {
+			if (id != null)
+				return JPA.em().find(Result.class, id);
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	@PrePersist
+	protected void onCreate() {
+		updated = new Date();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		updated = new Date();
 	}
 }
