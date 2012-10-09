@@ -74,13 +74,10 @@ public class Batch extends JpaModel {
 
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Erä ");
-		stringBuilder.append(this.id);
-		stringBuilder.append(", ");
-		stringBuilder.append(new SimpleDateFormat("HH:mm dd.MM.yyyy").format(
+		stringBuilder.append(new SimpleDateFormat("yyyyMMdd").format(
 				this.created).toString());
-		stringBuilder.append(", ");
-		stringBuilder.append(product.name);
+		stringBuilder.append(product.id);
+		stringBuilder.append(this.id);
 		return stringBuilder.toString();
 	}
 
