@@ -125,7 +125,10 @@ public class Result extends JpaModel implements Comparable<Result> {
 		else if (valueDouble != null)
 			return valueDouble.toString();
 		else if (valueBoolean != null)
-			return valueBoolean.toString();
+			if(valueBoolean)
+				return "ok";
+			else
+				return "Ei ok";
 		else if (valueDate != null)
 			return new SimpleDateFormat("dd.MM.yyyy").format(valueDate)
 					.toString();
