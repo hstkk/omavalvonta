@@ -14,7 +14,6 @@
 		@table() {
 			@thead() {
 				Raaka-aine
-				Valmistuspäivä
 				Vastaanottopäivä
 				Parasta ennen
 				Määrä
@@ -23,7 +22,6 @@
 			<tbody>
 				@for(ingredient <- page.getList) {
 					@tr() { <a href="@routes.IngredientSupplies.read(ingredient.id)">@ingredient.ingredient.name</a>
-						@ingredient.produced.format("dd.MM.yyyy")
 						@ingredient.received.format("dd.MM.yyyy")
 						@ingredient.bestBefore.format("dd.MM.yyyy")
 						@ingredient.amount @ingredient.unit
