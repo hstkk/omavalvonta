@@ -6,19 +6,52 @@
 <html>
 	<head>
 		<title>title</title>
-		<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.css")"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				/*width: 21cm;*/
+				margin-top: 1cm;
+				margin-botton: 1cm;
+				margin-left: 2cm;
+				margin-right: 1cm;
+			}
+
+			table {
+				border-collapse:collapse;
+				width: 100%;
+			}
+
+			table,th, td {
+				border: 1px solid black;
+			}
+
+		table th, table td {
+			padding: 0 8px;
+		}
+		</style>
 	</head>
 	<body>
-	@table() {
-		<tbody>
-			@tr() { HAMI/Sairio Opetusmeijeri
-			 		Ohjetyyppi: Omavalvonta }
-		</tbody>
-	}
+	<div>
+		<p style="float: left;width: 6.9cm;">HAMI/Sairio Opetusmeijeri</p>
+		<p style="float: left;margin-left: 2.3cm;">Ohjetyyppi: Omavalvonta</p>
+	</div>
+	<div style="clear: both;"></div>
+	<pre>
+	
+	
+	</pre>
 	<p><strong>AIHE: @results.form</strong></p>
+	<pre>
+	</pre>
 	<p>Valmiste: @product</p>
 	<p>Valmistuspäivä: @results.updated.format("dd.MM.yyyy")</p>
+	<pre>
+	</pre>
 	@table() {
 		@thead() {
 			Määritys
@@ -43,5 +76,8 @@
 			}
 		</tbody>
 	}
+	<pre>
+	</pre>
+	<p style="text-align:right;"><small>Tulostettu @(new Date().format("HH:mm dd.MM.YYYY")).</small></p>
 	</body>
 </html>
