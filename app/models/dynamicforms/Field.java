@@ -65,6 +65,12 @@ public class Field extends JpaModel {
 				stringBuilder.append(", minimi " + min);
 			if (max != null)
 				stringBuilder.append(", maksimi " + max);
+		} else if(fieldType == FieldType.CHECKBOX && targetValue != null){
+			stringBuilder.append(", tavoite tulos ");
+			if(targetValue)
+				stringBuilder.append("kyllä");
+			else
+				stringBuilder.append("ei");
 		}
 		return stringBuilder.toString();
 	}
