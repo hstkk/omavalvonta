@@ -101,6 +101,8 @@ public class Result extends JpaModel implements Comparable<Result> {
 			}
 			if (!((field.fieldType == FieldType.TEXT || field.fieldType == FieldType.TEXTAREA) && this.valueString
 					.isEmpty())) {
+				if (this.user == null)
+					this.isDone = false;
 				if (fieldset.id != null) {
 					this.id = fieldset.id;
 					Result revision = Result.findById(this.id);
@@ -125,7 +127,7 @@ public class Result extends JpaModel implements Comparable<Result> {
 		else if (valueDouble != null)
 			return valueDouble.toString();
 		else if (valueBoolean != null)
-			if(valueBoolean)
+			if (valueBoolean)
 				return "ok";
 			else
 				return "Ei ok";
