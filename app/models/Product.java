@@ -23,7 +23,59 @@ import play.db.jpa.*;
  */
 @Entity
 @Audited
-public class Product extends JpaModel {
+public class Product {
+	/** The id. */
+	@Id
+	@Column(updatable = false, unique = true)
+	@Required
+	@NotNull
+	public Long id;
+
+	/**
+	 * Save.
+	 * 
+	 * @return true, if successful
+	 */
+	public boolean saveOrUpdate() {
+		try {
+			//JPA.em().persist(this);
+			JPA.em().merge(this);
+			return true;
+		} catch (Exception e) {
+			System.out.println("\n\n" + e + "\n\n");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * Delete.
+	 * 
+	 * @return true, if successful
+	 */
+	public boolean delete() {
+		try {
+			JPA.em().remove(this);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Update.
+	 * 
+	 * @return true, if successful
+	 *//*
+	public boolean update() {
+		try {
+			JPA.em().merge(this);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}
+	}*/
 
 	/** The name. */
 	@Required

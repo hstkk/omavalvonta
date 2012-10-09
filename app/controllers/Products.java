@@ -46,9 +46,18 @@ public class Products extends Controller {
 			return redirect(routes.Products.index());
 		} else if (!filledForm.hasErrors()) {
 			Product product = new Product(filledForm.get());
+			if (filledForm.field("new") != null
+					&& filledForm.field("new").value() != null
+					&& filledForm.field("new").value().equals("true")) {
+				if (Product.findById(product.id) != null) {
+					product.id = null;
+					flash("error", "Tuotenumero on jo käytössä!");
+					return badRequest(views.html.products.manage.render(FORM
+							.fill(new forms.Product(product))));
+				}
+			}
 			// TODO smarter save/update
-			if ((product.id != null && product.update())
-					|| (product.id == null && product.save())) {
+			if ((product.saveOrUpdate())) {
 				flash("success", "Tuote on tallennettu onnistuneesti!");
 				return redirect(routes.Products.index());
 			}

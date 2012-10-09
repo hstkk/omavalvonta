@@ -13,12 +13,14 @@
 	@if(page != null){
 		@table() {
 			@thead() {
+				Tuotenumero
 				Nimi
 				Kuvaus
 			}
 			<tbody>
 				@for(product <- page.getList) {
-					@tr() { <a href="@routes.Products.update(product.id)">@product</a>
+					@tr() { @product.id 
+						<a href="@routes.Products.update(product.id)">@product</a>
 						@product.description }
 				}
 			</tbody>
