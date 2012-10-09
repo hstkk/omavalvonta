@@ -47,7 +47,7 @@
 						@result.field.when
 						@result.field.help
 						@if(result.isDone) { @result } @if(!result.isDone) { <span class="label label-important"> @result </span> }
-						
+						@if(result.user == null) { <span class="label label-important"> ? </span> } else { @result.user }
 						@result.comment }
 				}
 			}
