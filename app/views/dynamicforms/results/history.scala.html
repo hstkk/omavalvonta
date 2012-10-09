@@ -34,6 +34,7 @@
 			@thead() {
 				Määritetty
 				Tulos
+				Kuittaus
 				Huomioita
 				Muutoksen syy
 			}
@@ -41,6 +42,7 @@
 				@for(result <- value) {
 					@tr() { @result.updated.format("HH:mm:ss dd.MM.YYYY")
 						@result
+						@result.user
 						@result.comment
 						 }
 				}
