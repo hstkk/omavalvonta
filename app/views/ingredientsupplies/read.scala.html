@@ -37,7 +37,7 @@
 			}
 			<tbody>
 				@for(batch <- batches) {
-					@tr() { <a href="@routes.Batches.read(batch.id)">@batch.id</a>
+					@tr() { <a href="@routes.Batches.read(batch.id)">@batch</a>
 							@batch.product
 							@batch.created.format("dd.MM.yyyy") }
 				}
