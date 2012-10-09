@@ -16,12 +16,14 @@
 			@thead() {
 				Lomake
 				Päivämäärä
+				Erät
 				Tila
 			}
 			<tbody>
 				@for(result <- page.getList) {
 					@tr() { <a href="@controllers.dynamicforms.routes.Results.read(product.id, result.id)">@product</a>
 					 		@result.updated.format("dd.MM.YYYY")
+					 		
 					 		@if(result.isDone) { <span class="label label-success">Valmis</span> } @if(!result.isDone) { <span class="label label-important">Kesken</span> } }
 				}
 			</tbody>
