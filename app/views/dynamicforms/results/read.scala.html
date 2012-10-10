@@ -1,4 +1,4 @@
-@(product: Product, results: models.dynamicforms.Results, r: List[models.dynamicforms.Result])
+@(product: Product, results: models.dynamicforms.Results, r: List[models.dynamicforms.Result], batches: List[Batch])
 
 @import tags._
 @import tags.navs._
@@ -15,19 +15,19 @@
 	<p@results.created.format("dd.MM.yyyy")</p>
 	<p>@product.description</p>
 
+@if(batches != null) {
 	<h2>Erät</h2>
 	@table() {
 		@thead() {
 			Erä
-			Valmistuspäivä
 		}
 		<tbody>
-			for(batch <- batches) {
-				tr() { <a href="routes.Batches.read(batch.id)">batch.id</a>
-						batch.created.format("dd.MM.yyyy") }
+			@for(batch <- batches) {
+				@tr() { <a href="@routes.Batches.read(batch.id)">@batch</a> }
 			}
 		</tbody>
 	}
+}
 
 	<h2>Tulokset</h2>
 	@table() {

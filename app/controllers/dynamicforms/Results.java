@@ -113,8 +113,9 @@ public class Results extends Controller {
 				results.results);
 		r.addAll(Field.headerify(results.form));
 		Collections.sort(r);
+		List<Batch> batches = Batch.findByResults(results);
 		return ok(views.html.dynamicforms.results.read.render(product, results,
-				r));
+				r, batches));
 	}
 
 	@Transactional(readOnly = true)
