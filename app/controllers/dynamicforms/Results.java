@@ -10,6 +10,7 @@ import controllers.Batches;
 import controllers.routes;
 
 import forms.dynamicforms.Dynamic;
+import forms.dynamicforms.Fieldset;
 
 import models.Batch;
 import models.Product;
@@ -91,6 +92,14 @@ public class Results extends Controller {
 			if (((results.id != null && results.update()) || (results.id == null && results
 					.save()))) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
+				
+				/*List<Long> ids = new ArrayList<Long>();
+				for(Fieldset fieldset: dynamic.values)
+					if(fieldset.ack)
+						ids.add(fieldset.id);
+				if(!ids.isEmpty())
+					return ok(views.html.dynamicforms.results.ack.render(ids));*/
+				
 				return redirect(controllers.dynamicforms.routes.Results.read(
 						productId, results.id));
 			}
