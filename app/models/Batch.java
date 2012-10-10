@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
+import models.dynamicforms.Results;
 import models.helpers.JpaModel;
 import models.helpers.KeyValue;
 import models.helpers.Page;
@@ -131,4 +132,29 @@ public class Batch extends JpaModel {
 		return null;
 	}
 
+	public static List<Batch> findByResults(Results results) {
+		try {
+			if (results != null) {
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(results.created);
+				List<Batch> list = JPA
+						.em()
+						.createQuery(
+								"select b from Batch b "
+										+ "where b.product = ? and "
+										+ "day(b.created) = ? and "
+										+ "month(b.created) = ? and "
+										+ "year(b.created) = ?")
+						.setParameter(1, results.product)
+						.setParameter(2, cal.get(Calendar.DATE))
+						.setParameter(3, cal.get(Calendar.MONTH) + 1)
+						.setParameter(4, cal.get(Calendar.YEAR))
+						.getResultList();
+				return list;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
