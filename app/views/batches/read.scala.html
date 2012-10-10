@@ -1,4 +1,4 @@
-@(batch: Batch)
+@(batch: Batch, results: List[models.dynamicforms.Results])
 
 @import tags._
 @import tags.alerts._
@@ -10,23 +10,32 @@
 		<li><a href="@routes.Batches.index">Erät</a></li>
 		<li><a href="@routes.Batches.create">Uusi</a></li>
 	}
-	@table() {
-		@thead() {
-			Lomake
-			Tila
-		}
-		<tbody>
-			@for(form <- batch.product.forms) {
-				@tr() { <a href="controllers.dynamicforms.Results.read(batch.id, form.id)">@form</a>
-					if(models.dynamicforms.Results.getIsDone(batch.id, form.id)) { @labels.success() { Valmis } } else {  @labels.important() { Kesken } } }
+	<ul>
+		<li>Tuote: @batch.product</li>
+	</ul>
+	@if(results != null) {
+		@table() {
+			@thead() {
+				Lomake
+				Tila
 			}
-		</tbody>
+			<tbody>
+				@for(form <- results) {
+					@tr() { <a href="controllers.dynamicforms.Results.read(batch.id, form.id)">@form</a>
+						if(models.dynamicforms.Results.getIsDone(batch.id, form.id)) { @labels.success() { Valmis } } else {  @labels.important() { Kesken } } }
+				}
+			</tbody>
+		}
+	} else {
+		@warning() {
+			Erällä ei ole tuloksia!
+		}
 	}
 	@if(batch.ingredientAmounts != null) {
 		<h2>Erässä käytetyt raaka-aineet</h2>
 		@table() {
 			@thead() {
-				Tuote
+				Raaka-aine
 				Vastaanottopäivämäärä
 				Määrä
 			}

@@ -12,6 +12,7 @@
 		<li><a href="@controllers.dynamicforms.routes.Results.history(product.id, results.id)">Historia</a></li>
 		<li><a href="@controllers.dynamicforms.routes.Results.pdfify(product.id, results.id)">PDF-tiedosto</a></li>
 	}
+	<p@results.created.format("dd.MM.yyyy")</p>
 	<p>@product.description</p>
 
 	<h2>Erät</h2>
