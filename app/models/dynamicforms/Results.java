@@ -101,9 +101,9 @@ public class Results extends JpaModel {
 
 	public static List<Results> findByBatch(Batch batch) {
 		try {
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(batch.created);
 			if (batch != null) {
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(batch.created);
 				List<Results> list = JPA
 						.em()
 						.createQuery(
@@ -114,7 +114,7 @@ public class Results extends JpaModel {
 										+ "year(r.created) = ?")
 						.setParameter(1, batch.product)
 						.setParameter(2, cal.get(Calendar.DATE))
-						.setParameter(3, cal.get(Calendar.MONTH)+1)
+						.setParameter(3, cal.get(Calendar.MONTH) + 1)
 						.setParameter(4, cal.get(Calendar.YEAR))
 						.getResultList();
 				return list;
