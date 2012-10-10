@@ -48,7 +48,7 @@ public class Results extends JpaModel {
 
 	public Results(models.Product product, Dynamic dynamic, Form form) {
 		Results old = Results.findById(dynamic.id);
-		if(old!=null)
+		if (old != null)
 			this.created = old.created;
 		this.id = dynamic.id;
 		this.product = product;
@@ -101,6 +101,8 @@ public class Results extends JpaModel {
 
 	public static List<Results> findByBatch(Batch batch) {
 		try {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(batch.created);
 			if (batch != null) {
 				List<Results> list = JPA
 						.em()
@@ -111,9 +113,9 @@ public class Results extends JpaModel {
 										+ "month(r.created) = ? and "
 										+ "year(r.created) = ?")
 						.setParameter(1, batch.product)
-						.setParameter(2, batch.created.getDay())
-						.setParameter(3, batch.created.getMonth())
-						.setParameter(4, batch.created.getYear())
+						.setParameter(2, cal.get(Calendar.DATE))
+						.setParameter(3, cal.get(Calendar.MONTH)+1)
+						.setParameter(4, cal.get(Calendar.YEAR))
 						.getResultList();
 				return list;
 			}
