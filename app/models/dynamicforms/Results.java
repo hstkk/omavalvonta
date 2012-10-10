@@ -21,7 +21,7 @@ import play.db.jpa.*;
 public class Results extends JpaModel {
 	@Required
 	@NotNull
-	public Date updated;
+	public Date created = new Date();
 
 	@Required
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -47,9 +47,11 @@ public class Results extends JpaModel {
 	}
 
 	public Results(models.Product product, Dynamic dynamic, Form form) {
+		Results old = Results.findById(dynamic.id);
+		if(old!=null)
+			this.created = old.created;
 		this.id = dynamic.id;
 		this.product = product;
-		this.updated = new Date();
 		this.form = form;
 		this.results = new ArrayList<Result>();
 		for (Fieldset value : dynamic.values)
@@ -97,4 +99,27 @@ public class Results extends JpaModel {
 		return null;
 	}
 
+	public static List<Results> findByBatch(Batch batch) {
+		try {
+			if (batch != null) {
+				List<Results> list = JPA
+						.em()
+						.createQuery(
+								"select r from Results r "
+										+ "where r.product = ? and "
+										+ "day(r.created) = ? and "
+										+ "month(r.created) = ? and "
+										+ "year(r.created) = ?")
+						.setParameter(1, batch.product)
+						.setParameter(2, batch.created.getDay())
+						.setParameter(3, batch.created.getMonth())
+						.setParameter(4, batch.created.getYear())
+						.getResultList();
+				return list;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

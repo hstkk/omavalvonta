@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import models.Batch;
+import models.dynamicforms.Results;
 import play.*;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -51,6 +52,7 @@ public class Batches extends Controller {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.batches.read.render(batch));
+		List<Results> results =  models.dynamicforms.Results.findByBatch(batch);
+		return ok(views.html.batches.read.render(batch, results));
 	}
 }
