@@ -21,7 +21,7 @@
 			<tbody>
 				@for(result <- page.getList) {
 					@tr() { <a href="@controllers.dynamicforms.routes.Results.read(product.id, result.id)">@product</a>
-					 		@result.created.format("dd.MM.YYYY")
+					 		@result.created.format("dd.MM.yyyy")
 					 		@if(result.isDone) { <span class="label label-success">Valmis</span> } @if(!result.isDone) { <span class="label label-important">Kesken</span> } }
 				}
 			</tbody>
