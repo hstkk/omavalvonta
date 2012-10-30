@@ -9,9 +9,23 @@ package models;
 public enum TermCategory {
 	FORMTYPE(0), REASON(1), UNIT(2);
 
-	private TermCategory(final int id) {
-		this.id = id;
+	private TermCategory(int ordinal) {
+		this.ordinal = ordinal;
 	}
 
-	private final int id;
+	public int getValue() {
+		return ordinal;
+	}
+
+	public static TermCategory setValue(int ordinal) {
+		TermCategory category = null;
+		for (TermCategory value : TermCategory.values())
+			if (value.getValue() == ordinal) {
+				category = value;
+				break;
+			}
+		return category;
+	}
+
+	private final int ordinal;
 }
