@@ -8,14 +8,16 @@ GET     /													controllers.Application.index
 # Management
 GET     /yllapito											controllers.Application.management
 
-# batch management
-GET		/era												controllers.Batches.index
-POST	/era												controllers.Batches.save
+# Batches
+GET		/erat												controllers.Batches.index
+GET		/erat/sivu/:index									controllers.Batches.page(index: Int)
+
+# Batch management
 GET		/era/uusi											controllers.Batches.create
-GET		/era/sivu/:index									controllers.Batches.page(index: Int)
+POST	/era/uusi											controllers.Batches.save
 GET		/era/:batchId										controllers.Batches.read(batchId: Long)
 
-# results
+# Results
 GET		/tulos												controllers.dynamicforms.Results.index
 GET		/tulos/:productId/sivu/:index						controllers.dynamicforms.Results.page(productId: Long, index: Int)
 GET		/tulos/:productId/:formId							controllers.dynamicforms.Results.create(productId: Long, formId: Long)
@@ -25,28 +27,28 @@ GET		/tulokset/:productId/:resultsId/muokkaa				controllers.dynamicforms.Results
 GET		/tulokset/:productId/:resultsId/historia			controllers.dynamicforms.Results.history(productId: Long, resultsId: Long)
 GET		/tulokset/:productId/:resultsId/pdf					controllers.dynamicforms.Results.pdfify(productId: Long, resultsId: Long)
 
-# ingredient supply
+# Ingredient supply
 GET		/raaka-aine											controllers.IngredientSupplies.index
 GET		/raaka-aine/vastaanotto								controllers.IngredientSupplies.create
 POST	/raaka-aine/vastaanotto								controllers.IngredientSupplies.save
 GET		/raaka-aine/sivu/:index								controllers.IngredientSupplies.page(index: Int)
 GET		/raaka-aine/:ingredientId							controllers.IngredientSupplies.read(ingredientId: Long)
 
-# unit management
+# Unit management
 GET		/yllapito/mittayksikko								controllers.Units.index
 POST	/yllapito/mittayksikko								controllers.Units.save
 GET		/yllapito/mittayksikko/uusi							controllers.Units.create
 GET		/yllapito/mittayksikko/sivu/:index					controllers.Units.page(index: Int)
 GET		/yllapito/mittayksikko/:unitId						controllers.Units.update(unitId: Long)
 
-# ingredient management
+# Ingredient management
 GET		/yllapito/raaka-aine								controllers.Ingredients.index
 POST	/yllapito/raaka-aine								controllers.Ingredients.save
 GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.create
 GET		/yllapito/raaka-aine/sivu/:index					controllers.Ingredients.page(index: Int)
 GET		/yllapito/raaka-aine/:ingredientId					controllers.Ingredients.update(ingredientId: Long)
 
-# product management
+# Product management
 GET		/yllapito/tuote										controllers.Products.index
 POST	/yllapito/tuote										controllers.Products.save
 GET		/yllapito/tuote/uusi								controllers.Products.create
@@ -54,7 +56,7 @@ GET		/yllapito/tuote/sivu/:index							controllers.Products.page(index: Int)
 GET		/yllapito/tuote/:productId							controllers.Products.update(productId: Long)
 GET		/tuote/:productId									controllers.Products.batch(productId: Long)
 
-# form management
+# Form management
 GET		/yllapito/lomake									controllers.dynamicforms.Forms.index
 POST	/yllapito/lomake									controllers.dynamicforms.Forms.save
 GET		/yllapito/lomake/uusi								controllers.dynamicforms.Forms.create
@@ -62,7 +64,7 @@ GET		/yllapito/lomake/sivu/:index						controllers.dynamicforms.Forms.page(index
 GET		/yllapito/lomake/:formId							controllers.dynamicforms.Forms.update(formId: Long)
 GET		/yllapito/lomake/:formId/esikatselu					controllers.dynamicforms.Forms.preview(formId: Long)
 
-# field management
+# Field management
 POST	/yllapito/lomake/:formId							controllers.dynamicforms.Fields.save(formId: Long)
 GET		/yllapito/lomake/:formId/kentat						controllers.dynamicforms.Fields.create(formId: Long)
 GET		/yllapito/lomake/:formId/kentta/:fieldId			controllers.dynamicforms.Fields.update(formId: Long, fieldId: Long)
