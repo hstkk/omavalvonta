@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import models.helpers.Crud;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 
@@ -22,6 +23,9 @@ import play.db.jpa.*;
 @Entity(name = "term")
 @Audited
 public class Term extends JpaModel {
+
+	public final static Crud<Term, Long> crud = new Crud<>(Term.class);
+
 	@Column(name = "name")
 	@Required
 	@NotNull
@@ -40,7 +44,7 @@ public class Term extends JpaModel {
 		category = categoryEnum.getValue();
 	}
 
-	// @PostLoad
+	@PostLoad
 	private void intToEnum() {
 		categoryEnum = TermCategory.setValue(this.category);
 	}
