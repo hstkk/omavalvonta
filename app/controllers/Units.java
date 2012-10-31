@@ -1,6 +1,7 @@
 package controllers;
 
-import models.Unit;
+import models.Term;
+import models.TermCategory;
 import play.*;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -9,7 +10,8 @@ import views.html.*;
 
 public class Units extends Controller {
 
-	final static Form<Unit> FORM = form(Unit.class);
+	final static Form<forms.Term> FORM = form(forms.Term.class);
+	final static TermCategory CATEGORY = TermCategory.UNIT;
 
 	public static Result create() {
 		return ok(views.html.units.manage.render(FORM));
@@ -22,12 +24,12 @@ public class Units extends Controller {
 
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		return ok(views.html.units.page.render(Unit.page(index)));
+		return ok(views.html.units.page.render(Term.page(CATEGORY, index)));
 	}
 
 	@Transactional(readOnly = true)
 	public static Result update(Long unitId) {
-		Unit unit = Unit.findById(unitId);
+		Term term = Term.findById(unitId);
 		if (unit == null)
 			return notFound(views.html.notFound.render());
 		return ok(views.html.units.manage.render(FORM.fill(unit)));
