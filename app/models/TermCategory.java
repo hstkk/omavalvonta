@@ -6,11 +6,19 @@ package models;
  * 
  */
 // TODO documentation
+// TODO localization
 public enum TermCategory {
-	FORMTYPE(0), REASON(1), UNIT(2);
+	FORMTYPE(0, "Lomake tyyppi"), REASON(1, "Muutoksen syy"), UNIT(2,
+			"Mittayksikkö");
 
-	private TermCategory(int ordinal) {
+	private TermCategory(int ordinal, String name) {
 		this.ordinal = ordinal;
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 
 	public int getValue() {
@@ -28,4 +36,5 @@ public enum TermCategory {
 	}
 
 	private final int ordinal;
+	private final String name;
 }
