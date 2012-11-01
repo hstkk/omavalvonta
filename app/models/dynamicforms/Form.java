@@ -41,11 +41,10 @@ public class Form extends JpaModel {
 	public String html = "";
 
 	@Required
-	@NotNull
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term category;
 
-	@PrePersist
+	//@PrePersist
 	private void idify() {
 		try {
 			if (this.category.id == null)
@@ -64,6 +63,7 @@ public class Form extends JpaModel {
 	}
 
 	private void set() {
+		idify();
 		try {
 			if (this.basedOn.id == null)
 				this.basedOn = null;
