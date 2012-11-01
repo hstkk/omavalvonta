@@ -10,23 +10,39 @@ import java.util.Map;
  */
 // TODO
 public enum When {
-	AINA("joka erä"), JOSKUS("kerran lukukaudessa");
+	AINA(0, "joka erä"), JOSKUS(1, "kerran lukukaudessa");
 
-	private When(final String text) {
-		this.text = text;
+	private When(int ordinal, String name) {
+		this.ordinal = ordinal;
+		this.name = name;
 	}
-
-	private final String text;
 
 	@Override
 	public String toString() {
-		return text;
+		return name;
 	}
+
+	public int getValue() {
+		return ordinal;
+	}
+
+	public static When setValue(int ordinal) {
+		When when = null;
+		for (When value : When.values())
+			if (value.getValue() == ordinal) {
+				when = value;
+				break;
+			}
+		return when;
+	}
+
+	private final int ordinal;
+	private final String name;
 
 	public static Map<String, String> map() {
 		Map<String, String> map = new HashMap<String, String>();
-		for(When value: When.values())
-			map.put(value.name(), value.toString());
+		for (When value : When.values())
+			map.put(Integer.toString(value.getValue()), value.toString());
 		return map;
 	}
 }

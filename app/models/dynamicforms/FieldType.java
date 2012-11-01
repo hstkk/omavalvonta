@@ -10,25 +10,41 @@ import java.util.Map;
  */
 // TODO
 public enum FieldType {
-	TEXT("Teksti"), INT("Kokonaisluku"), DOUBLE("Desimaaliluku"), DATE(
-			"Päivämäärä"), CHECKBOX("Kyllä/Ei"), TEXTAREA("Tekstikenttä"), LEGEND(
-			"Väliotsikko");
+	TEXT(0, "Teksti"), INT(1, "Kokonaisluku"), DOUBLE(2, "Desimaaliluku"), DATE(
+			3, "Päivämäärä"), CHECKBOX(4, "Kyllä/Ei"), TEXTAREA(5,
+			"Tekstikenttä"), LEGEND(6, "Väliotsikko");
 
-	private FieldType(final String text) {
-		this.text = text;
+	private FieldType(int ordinal, String name) {
+		this.ordinal = ordinal;
+		this.name = name;
 	}
-
-	private final String text;
 
 	@Override
 	public String toString() {
-		return text;
+		return name;
 	}
+
+	public int getValue() {
+		return ordinal;
+	}
+
+	public static FieldType setValue(int ordinal) {
+		FieldType type = null;
+		for (FieldType value : FieldType.values())
+			if (value.getValue() == ordinal) {
+				type = value;
+				break;
+			}
+		return type;
+	}
+
+	private final int ordinal;
+	private final String name;
 
 	public static Map<String, String> map() {
 		Map<String, String> map = new HashMap<String, String>();
-		for(FieldType value: FieldType.values())
-			map.put(value.name(), value.toString());
+		for (FieldType value : FieldType.values())
+			map.put(Integer.toString(value.getValue()), value.toString());
 		return map;
 	}
 }
