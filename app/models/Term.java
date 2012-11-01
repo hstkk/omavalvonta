@@ -63,23 +63,18 @@ public class Term extends JpaModel {
 		return name;
 	}
 
-	public static Page<Term> page(int index, TermCategory categoryEnum) {
+	public static Page<Term> page(int index) {
 		try {
-			if (categoryEnum != null) {
-				int size = Play.application().configuration()
-						.getInt("page.size");
-				if (index < 1)
-					index = 1;
-				Long rows = (Long) JPA.em()
-						.createQuery("select count(*) from Term")
-						.getSingleResult();
-				List<Term> list = JPA.em()
-						.createQuery("from Term order by name")
-						.setFirstResult((index - 1) * size).setMaxResults(size)
-						.getResultList();
-				if (rows != null && list != null && !list.isEmpty())
-					return new Page(index, size, rows, list);
-			}
+			int size = Play.application().configuration().getInt("page.size");
+			if (index < 1)
+				index = 1;
+			Long rows = (Long) JPA.em()
+					.createQuery("select count(*) from Term").getSingleResult();
+			List<Term> list = JPA.em().createQuery("from Term order by name")
+					.setFirstResult((index - 1) * size).setMaxResults(size)
+					.getResultList();
+			if (rows != null && list != null && !list.isEmpty())
+				return new Page(index, size, rows, list);
 		} catch (Exception e) {
 		}
 		return null;
