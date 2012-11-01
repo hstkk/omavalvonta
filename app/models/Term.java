@@ -70,16 +70,11 @@ public class Term extends JpaModel {
 						.getInt("page.size");
 				if (index < 1)
 					index = 1;
-				Long rows = (Long) JPA
-						.em()
-						.createQuery(
-								"select count(*) from Term where category=?")
-						.setParameter(1, categoryEnum.getValue())
+				Long rows = (Long) JPA.em()
+						.createQuery("select count(*) from Term")
 						.getSingleResult();
-				List<Term> list = JPA
-						.em()
-						.createQuery("from Term order by name where category=?")
-						.setParameter(1, categoryEnum.getValue())
+				List<Term> list = JPA.em()
+						.createQuery("from Term order by name")
 						.setFirstResult((index - 1) * size).setMaxResults(size)
 						.getResultList();
 				if (rows != null && list != null && !list.isEmpty())
@@ -90,19 +85,30 @@ public class Term extends JpaModel {
 		return null;
 	}
 
+	public static Map<String, String> options() {
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		try {
+			List<Term> terms = JPA.em().createQuery("from Term order by name")
+					.getResultList();
+			for (Term term : terms)
+				map.put(term.id.toString(), term.toString());
+		} catch (Exception e) {
+		}
+		return map;
+	}
+
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> options(TermCategory categoryEnum) {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		try {
 			if (categoryEnum != null) {
-				List<Term> units = JPA
+				List<Term> terms = JPA
 						.em()
 						.createQuery("from Term order by name where category=?")
 						.setParameter(1, categoryEnum.getValue())
 						.getResultList();
-				for (Term unit : units)
-					map.put(unit.id.toString(), unit.toString());
-				return map;
+				for (Term term : terms)
+					map.put(term.id.toString(), term.toString());
 			}
 		} catch (Exception e) {
 		}
