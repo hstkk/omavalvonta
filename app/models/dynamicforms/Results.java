@@ -43,6 +43,13 @@ public class Results extends JpaModel {
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Result> results;
 
+	//TODO 1.11
+	@Required
+	@OneToMany(cascade = CascadeType.ALL)
+	@NotNull
+	public List<Batch> baches;
+	
+
 	public Results() {
 	}
 
