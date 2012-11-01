@@ -12,6 +12,7 @@ import models.helpers.Page;
 import org.hibernate.envers.Audited;
 
 import play.Play;
+import play.data.Form;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
@@ -49,17 +50,16 @@ public class Term extends JpaModel {
 		categoryEnum = TermCategory.setValue(this.category);
 	}
 
-	public String toString() {
-		return name;
+	public Term(forms.Term form) {
+		set(form);
 	}
 
-	public static Term findById(Long id) {
-		try {
-			if (id != null)
-				return JPA.em().find(Term.class, id);
-		} catch (Exception e) {
-		}
-		return null;
+	public void set(forms.Term form) {
+		this.name = form.name;
+	}
+
+	public String toString() {
+		return name;
 	}
 
 	public static List<Term> findByCategory(TermCategory categoryEnum) {
@@ -78,7 +78,7 @@ public class Term extends JpaModel {
 		return null;
 	}
 
-	public static Page page(TermCategory categoryEnum, int index) {
+	public static Page<Term> page(int index, TermCategory categoryEnum) {
 		try {
 			if (categoryEnum != null) {
 				int size = Play.application().configuration()
