@@ -39,8 +39,8 @@ GET		/yllapito/termit									controllers.Terms.index
 GET		/yllapito/termit/uusi								controllers.Terms.create
 POST	/yllapito/termit/uusi								controllers.Terms.save
 GET		/yllapito/termit/sivu/:index						controllers.Terms.page(index: Int)
-GET		/yllapito/termit/:id								controllers.Terms.read(id: Long)
-POST	/yllapito/termit/:id								controllers.Terms.update(id: Long)
+#GET		/yllapito/termit/:id								controllers.Terms.read(id: Long)
+#POST	/yllapito/termit/:id								controllers.Terms.update(id: Long)
 
 # Ingredient management
 GET		/yllapito/raaka-aine								controllers.Ingredients.index
