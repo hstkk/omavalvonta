@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import models.Batch;
 import models.dynamicforms.Field;
@@ -17,6 +18,10 @@ import utils.Validation;
  * 
  */
 public class Dynamic {
+	@Required
+	@NotNull
+	public List<Long> batchIds = new ArrayList<Long>();
+
 	public Long id;
 
 	// @Required
