@@ -9,13 +9,13 @@ import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
 
-public class Units extends Controller{
+public class Terms extends Controller{
 
 	final static Form<forms.Term> FORM = form(forms.Term.class);
 	final static TermCategory CATEGORY = TermCategory.UNIT;
 
 	public static Result create() {
-		return ok(views.html.units.manage.render(FORM));
+		return ok(views.html.terms.manage.render(FORM));
 	}
 
 	@Transactional(readOnly = true)
@@ -23,7 +23,7 @@ public class Units extends Controller{
 		Term term = Term.crud.read(id);
 		if (term == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.units.manage.render(FORM.fill(new forms.Term(term))));
+		return ok(views.html.terms.manage.render(FORM.fill(new forms.Term(term))));
 	}
 
 	@Transactional
@@ -34,16 +34,16 @@ public class Units extends Controller{
 		Form<forms.Term> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tallennus peruutettu!");
-			return redirect(routes.Units.index());
+			return redirect(routes.Terms.index());
 		} else if (!filledForm.hasErrors()) {
 			term.set(filledForm.get());
 			if (Term.crud.update(term)) {
 				flash("success", "Tallennus onnistui!");
-				return redirect(routes.Units.index());
+				return redirect(routes.Terms.index());
 			}
 		}
 		flash("error", "Tallennus epäonnistui!");
-		return badRequest(views.html.units.manage.render(filledForm));
+		return badRequest(views.html.terms.manage.render(filledForm));
 	}
 
 	@Transactional
@@ -52,7 +52,7 @@ public class Units extends Controller{
 		if (term == null)
 			return notFound(views.html.notFound.render());
 		Term.crud.delete(term);
-		return redirect(routes.Units.index());
+		return redirect(routes.Terms.index());
 	}
 
 	@Transactional
@@ -60,16 +60,16 @@ public class Units extends Controller{
 		Form<forms.Term> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tallennus peruutettu!");
-			return redirect(routes.Units.index());
+			return redirect(routes.Terms.index());
 		} else if (!filledForm.hasErrors()) {
 			Term term = new Term(filledForm.get(), CATEGORY);
 			if (Term.crud.create(term)) {
 				flash("success", "Tallennus onnistui!");
-				return redirect(routes.Units.index());
+				return redirect(routes.Terms.index());
 			}
 		}
 		flash("error", "Tallennus epäonnistui!");
-		return badRequest(views.html.units.manage.render(filledForm));
+		return badRequest(views.html.terms.manage.render(filledForm));
 	}
 
 	@Transactional(readOnly = true)
@@ -80,6 +80,6 @@ public class Units extends Controller{
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
 		Page<Term> page = Term.page(index, CATEGORY);
-		return ok(views.html.units.page.render(page));
+		return ok(views.html.terms.page.render(page));
 	}
 }

@@ -34,13 +34,13 @@ POST	/raaka-aine/vastaanotto								controllers.IngredientSupplies.save
 GET		/raaka-aine/sivu/:index								controllers.IngredientSupplies.page(index: Int)
 GET		/raaka-aine/:ingredientId							controllers.IngredientSupplies.read(ingredientId: Long)
 
-# Unit management
-GET		/yllapito/mittayksikko								controllers.Units.index
-GET		/yllapito/mittayksikko/uusi							controllers.Units.create
-POST	/yllapito/mittayksikko/uusi							controllers.Units.save
-GET		/yllapito/mittayksikko/sivu/:index					controllers.Units.page(index: Int)
-GET		/yllapito/mittayksikko/:unitId						controllers.Units.read(unitId: Long)
-POST	/yllapito/mittayksikko/:unitId						controllers.Units.update(unitId: Long)
+# Term management
+GET		/yllapito/termit									controllers.Terms.index
+GET		/yllapito/termit/uusi								controllers.Terms.create
+POST	/yllapito/termit/uusi								controllers.Terms.save
+GET		/yllapito/termit/sivu/:index						controllers.Terms.page(index: Int)
+GET		/yllapito/termit/:id								controllers.Terms.read(id: Long)
+POST	/yllapito/termit/:id								controllers.Terms.update(id: Long)
 
 # Ingredient management
 GET		/yllapito/raaka-aine								controllers.Ingredients.index
