@@ -79,7 +79,7 @@ public class Terms extends Controller{
 
 	@Transactional(readOnly = true)
 	public static Result page(int index) {
-		Page<Term> page = Term.page(index, CATEGORY);
+		Page<Term> page = Term.page(index);
 		return ok(views.html.terms.page.render(page));
 	}
 }

@@ -5,26 +5,28 @@
 @import tags.navs._
 @import tags.tables._
 
-@main("Mittayksiköt") {
+@main("Termit") {
 	@tabs() {
-		<li class="active"><a href="#">Mittayksiköt</a></li>
-		<li><a href="@routes.Units.create">Uusi</a></li>
+		<li class="active"><a href="#">Termit</a></li>
+		<li><a href="@routes.Terms.create">Uusi</a></li>
 	}
 	@if(page != null){
 		@table() {
 			@thead() {
-				Mittayksikkö
+				Termi
+				Kategoria
 			}
 			<tbody>
 				@for(unit <- page.getList) {
-					@tr() { <a href="@routes.Units.update(unit.id)">@unit</a> }
+					@tr() { <a href="@routes.Terms.update(unit.id)">@unit</a>
+							@unit.categoryEnum }
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, routes.Units.page(page.getIndex - 1), page.hasNext, routes.Units.page(page.getIndex + 1))
+		@pagination(page.hasPrevious, routes.Terms.page(page.getIndex - 1), page.hasNext, routes.Terms.page(page.getIndex + 1))
 	} else {
 		@warning() {
-			Mittayksiköitä ei löytynyt, voit kuitenkin <a href="@routes.Units.create">lisätä</a> uusia.
+			Termejä ei löytynyt, voit kuitenkin <a href="@routes.Terms.create">lisätä</a> uusia.
 		}
 	}
 }

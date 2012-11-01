@@ -15,9 +15,9 @@
 	}
 ){
 	@tabs() {
-		<li><a href="@routes.Units.index">Mittayksiköt</a></li>
+		<li><a href="@routes.Terms.index">Termit</a></li>
 		@if(!FORM("id").valueOr("").equals("")) {
-			<li><a href="@routes.Units.create">Uusi</a></li>
+			<li><a href="@routes.Terms.create">Uusi</a></li>
 		} else {
 			<li class="active"><a href="#">Uusi</a></li>
 		}
@@ -29,12 +29,12 @@
 	}
 	
 	@if(!FORM("id").valueOr("").equals("")) {
-		@helper.form(action = routes.Units.update(FORM("id").value.toLong), 'class -> "form-horizontal"){
+		@helper.form(action = routes.Terms.update(FORM("id").value.toLong), 'class -> "form-horizontal"){
 			@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
 			@actions()
 		}
 	} else{
-		@helper.form(action = routes.Units.save(), 'class -> "form-horizontal"){
+		@helper.form(action = routes.Terms.save(), 'class -> "form-horizontal"){
 			@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
 			@actions()
 		}
