@@ -33,6 +33,7 @@
 			@FORM("id").value
 		}
 		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+		@helper.select(FORM("category.id"), options = options(models.Term.options(models.TermCategory.FORMTYPE)), '_default -> "", '_label -> "tyyppi")
 		@helper.textarea(FORM("description"), '_label -> "kuvaus")
 		@select(FORM("basedOn.id"), options = options(models.dynamicforms.Form.options(FORM("id").value)), '_default -> "", '_label -> "peruslomake", '_help -> "lomake, johon tämä lomake perustuu")
 		@actions()
