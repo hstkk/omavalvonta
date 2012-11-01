@@ -12,13 +12,12 @@ import views.html.*;
 public class Terms extends Controller{
 
 	final static Form<forms.Term> FORM = form(forms.Term.class);
-	final static TermCategory CATEGORY = TermCategory.UNIT;
 
 	public static Result create() {
 		return ok(views.html.terms.manage.render(FORM));
 	}
 
-	@Transactional(readOnly = true)
+	/*@Transactional(readOnly = true)
 	public static Result read(Long id) {
 		Term term = Term.crud.read(id);
 		if (term == null)
@@ -53,7 +52,7 @@ public class Terms extends Controller{
 			return notFound(views.html.notFound.render());
 		Term.crud.delete(term);
 		return redirect(routes.Terms.index());
-	}
+	}*/
 
 	@Transactional
 	public static Result save() {
