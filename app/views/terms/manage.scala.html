@@ -1,4 +1,4 @@
-@(FORM: play.data.Form[forms.Term])
+@(FORM: play.data.Form[models.Term])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -29,13 +29,14 @@
 	}
 	
 	@if(!FORM("id").valueOr("").equals("")) {
-		@helper.form(action = routes.Terms.update(FORM("id").value.toLong), 'class -> "form-horizontal"){
-			@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
-			@actions()
+		helper.form(action = routes.Terms.update(FORM("id").value.toLong), 'class -> "form-horizontal"){
+			helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+			actions()
 		}
 	} else{
 		@helper.form(action = routes.Terms.save(), 'class -> "form-horizontal"){
 			@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+			@select(FORM("category"), options = options(models.TermCategory.options), '_default -> "", '_label -> "kategoria")
 			@actions()
 		}
 	}

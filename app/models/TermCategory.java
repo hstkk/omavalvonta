@@ -1,5 +1,10 @@
 package models;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import models.dynamicforms.FieldType;
+
 /**
  * 
  * @author Sami Hostikka <dev@01.fi>
@@ -37,4 +42,11 @@ public enum TermCategory {
 
 	private final int ordinal;
 	private final String name;
+
+	public static Map<String, String> options() {
+		Map<String, String> map = new HashMap<String, String>();
+		for (TermCategory value : TermCategory.values())
+			map.put(Integer.toString(value.getValue()), value.toString());
+		return map;
+	}
 }
