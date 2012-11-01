@@ -14,7 +14,7 @@ public class Units {
 	final static TermCategory CATEGORY = TermCategory.UNIT;
 
 	public static Result create() {
-		return ok(views.html.terms.manage.render(FORM, CATEGORY));
+		return ok(views.html.units.manage.render(FORM, CATEGORY));
 	}
 
 	@Transactional(readOnly = true)
@@ -22,7 +22,7 @@ public class Units {
 		Term term = Term.crud.read(id);
 		if (term == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.terms.manage.render(FORM.fill(new forms.Term(term)), CATEGORY));
+		return ok(views.html.units.manage.render(FORM.fill(new forms.Term(term)), CATEGORY));
 	}
 
 	@Transactional
@@ -42,7 +42,7 @@ public class Units {
 			}
 		}
 		flash("error", "Tallennus epäonnistui!");
-		return badRequest(views.html.terms.manage.render(filledForm), CATEGORY);
+		return badRequest(views.html.units.manage.render(filledForm), CATEGORY);
 	}
 
 	@Transactional
@@ -68,7 +68,7 @@ public class Units {
 			}
 		}
 		flash("error", "Tallennus epäonnistui!");
-		return badRequest(views.html.terms.manage.render(filledForm));
+		return badRequest(views.html.units.manage.render(filledForm));
 	}
 
 	@Transactional(readOnly = true)

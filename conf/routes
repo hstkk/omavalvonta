@@ -36,10 +36,11 @@ GET		/raaka-aine/:ingredientId							controllers.IngredientSupplies.read(ingredi
 
 # Unit management
 GET		/yllapito/mittayksikko								controllers.Units.index
-POST	/yllapito/mittayksikko								controllers.Units.save
 GET		/yllapito/mittayksikko/uusi							controllers.Units.create
+POST	/yllapito/mittayksikko/uusi							controllers.Units.save
 GET		/yllapito/mittayksikko/sivu/:index					controllers.Units.page(index: Int)
-GET		/yllapito/mittayksikko/:unitId						controllers.Units.update(unitId: Long)
+GET		/yllapito/mittayksikko/:unitId						controllers.Units.read(unitId: Long)
+POST	/yllapito/mittayksikko/:unitId						controllers.Units.update(unitId: Long)
 
 # Ingredient management
 GET		/yllapito/raaka-aine								controllers.Ingredients.index
