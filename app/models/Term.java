@@ -62,22 +62,6 @@ public class Term extends JpaModel {
 		return name;
 	}
 
-	public static List<Term> findByCategory(TermCategory categoryEnum) {
-		try {
-			if (categoryEnum != null) {
-				List<Term> list = JPA
-						.em()
-						.createQuery(
-								"from Term order by id asc where category=?")
-						.setParameter(1, categoryEnum.getValue())
-						.getResultList();
-				return list;
-			}
-		} catch (Exception e) {
-		}
-		return null;
-	}
-
 	public static Page<Term> page(int index, TermCategory categoryEnum) {
 		try {
 			if (categoryEnum != null) {
@@ -106,16 +90,21 @@ public class Term extends JpaModel {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static Map<String, String> options() {
+	public static Map<String, String> options(TermCategory categoryEnum) {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		try {
-			List<Term> units = JPA.em().createQuery("from Term order by name")
-					.getResultList();
-			for (Term unit : units)
-				map.put(unit.id.toString(), unit.toString());
-			return map;
+			if (categoryEnum != null) {
+				List<Term> units = JPA
+						.em()
+						.createQuery("from Term order by name where category=?")
+						.setParameter(1, categoryEnum.getValue())
+						.getResultList();
+				for (Term unit : units)
+					map.put(unit.id.toString(), unit.toString());
+				return map;
+			}
 		} catch (Exception e) {
-			return map;
 		}
+		return map;
 	}
 }

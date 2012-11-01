@@ -9,9 +9,9 @@
 
 @main(
 	if(!FORM("id").valueOr("").equals("")) {
-		"Muokkaa mittaykikköä"
+		"Muokkaa"
 	} else{
-		"Uusi mittayksikkö"
+		"Uusi"
 	}
 ){
 	@tabs() {
@@ -28,11 +28,15 @@
 		}
 	}
 	
-	@helper.form(action = routes.Units.save(), 'class -> "form-horizontal"){
-		@hidden() {
-			@FORM("id").value
+	if(!FORM("id").valueOr("").equals("")) {
+		@helper.form(action = routes.Units.update(FORM("id").value.toLong), 'class -> "form-horizontal"){
+			@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+			@actions()
 		}
-		@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
-		@actions()
+	} else{
+		@helper.form(action = routes.Units.save(), 'class -> "form-horizontal"){
+			@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+			@actions()
+		}
 	}
 }
