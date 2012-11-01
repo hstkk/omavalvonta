@@ -40,7 +40,7 @@ public class Term extends JpaModel {
 	@Transient
 	public TermCategory categoryEnum;
 
-//	@PrePersist
+	// @PrePersist
 	private void enumToInt() {
 		category = categoryEnum.getValue();
 	}
@@ -78,7 +78,8 @@ public class Term extends JpaModel {
 			if (categoryEnum != null) {
 				List<Term> terms = JPA
 						.em()
-						.createQuery("from Term where category=? order by name ")
+						.createQuery(
+								"from Term where category=? order by name ")
 						.setParameter(1, categoryEnum.getValue())
 						.getResultList();
 				for (Term term : terms)
@@ -87,5 +88,21 @@ public class Term extends JpaModel {
 		} catch (Exception e) {
 		}
 		return map;
+	}
+
+	public static List<Term> findByCategory(TermCategory categoryEnum) {
+		try {
+			if (categoryEnum != null) {
+				List<Term> terms = JPA
+						.em()
+						.createQuery(
+								"from Term where category=? order by name ")
+						.setParameter(1, categoryEnum.getValue())
+						.getResultList();
+				return terms;
+			}
+		} catch (Exception e) {
+		}
+		return null;
 	}
 }

@@ -12,6 +12,7 @@ import org.hibernate.envers.Audited;
 import models.Ingredient;
 import models.Product;
 import models.Term;
+import models.TermCategory;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 import utils.*;
@@ -44,7 +45,7 @@ public class Form extends JpaModel {
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term category;
 
-	//@PrePersist
+	// @PrePersist
 	private void idify() {
 		try {
 			if (this.category.id == null)
@@ -137,6 +138,19 @@ public class Form extends JpaModel {
 		return null;
 	}
 
+	public static List<Form> findByCategory(Term category) {
+		try {
+			List<Form> list = JPA
+					.em()
+					.createQuery(
+							"from Form f where category=? order by f.name asc")
+					.setParameter(1, category).getResultList();
+			return list;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> options(String formId) {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
@@ -172,24 +186,30 @@ public class Form extends JpaModel {
 		} catch (Exception e) {
 		}
 		try {
-			List<Form> forms = JPA.em()
-					.createQuery("from Form order by name")
-					.getResultList();
+			List<Term> terms = Term.findByCategory(TermCategory.FORMTYPE);
+			if (terms == null)
+				return "";
 			int i = 0;
-			for (Form form : forms) {
-				stringBuilder.append("<label class=\"checkbox\">");
-				stringBuilder
-						.append("<input type=\"checkbox\" name=\"formIds[");
-				stringBuilder.append(i);
-				stringBuilder.append("]\" value=\"");
-				stringBuilder.append(form.id);
-				stringBuilder.append("\"");
-				if (checked != null && checked.contains(form))
-					stringBuilder.append(" checked=\"checked\"");
-				stringBuilder.append(">");
-				stringBuilder.append(form.toString());
-				stringBuilder.append("</label>");
-				i++;
+			for (Term category : terms) {
+				stringBuilder.append("<h5>");
+				stringBuilder.append(category.name);
+				stringBuilder.append("</h5>");
+				List<Form> forms = findByCategory(category);
+				for (Form form : forms) {
+					stringBuilder.append("<label class=\"checkbox\">");
+					stringBuilder
+							.append("<input type=\"checkbox\" name=\"formIds[");
+					stringBuilder.append(i);
+					stringBuilder.append("]\" value=\"");
+					stringBuilder.append(form.id);
+					stringBuilder.append("\"");
+					if (checked != null && checked.contains(form))
+						stringBuilder.append(" checked=\"checked\"");
+					stringBuilder.append(">");
+					stringBuilder.append(form.toString());
+					stringBuilder.append("</label>");
+					i++;
+				}
 			}
 		} catch (Exception e) {
 		}
