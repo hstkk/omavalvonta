@@ -11,6 +11,7 @@ import org.hibernate.envers.Audited;
 
 import models.Ingredient;
 import models.Product;
+import models.Term;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 import utils.*;
@@ -38,6 +39,22 @@ public class Form extends JpaModel {
 	@Lob
 	@NotNull
 	public String html = "";
+
+	@Required
+	@NotNull
+	@ManyToOne(cascade = CascadeType.ALL)
+	public Term category;
+
+	@PrePersist
+	private void idify() {
+		try {
+			if (this.category.id == null)
+				this.category = null;
+			else
+				this.category = Term.crud.read(category.id);
+		} catch (Exception e) {
+		}
+	}
 
 	public Form() {
 	}
