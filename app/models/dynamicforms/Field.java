@@ -76,7 +76,7 @@ public class Field extends JpaModel {
 
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder("Tietotyypiltä ");
-		stringBuilder.append(fieldType.toString());
+		stringBuilder.append(fieldTypeEnum.toString());
 		if (isRequired)
 			stringBuilder.append(", vaadittu");
 		if (isSigned)
