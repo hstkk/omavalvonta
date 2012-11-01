@@ -63,7 +63,7 @@
 		}
 		<tbody>
 			@for(result <- r) {
-				@if(result.field.fieldType == models.dynamicforms.FieldType.LEGEND) {
+				@if(result.field.fieldTypeEnum == models.dynamicforms.FieldType.LEGEND) {
 					<tr><th colspan="6">@result.field.name</th></tr>
 				} else {
 					@tr() { @result.field.name
