@@ -21,7 +21,7 @@ import play.db.jpa.*;
  * @author Sami Hostikka <dev@01.fi>
  * 
  */
-@Entity(name = "term")
+@Entity(name = "Term")
 @Audited
 public class Term extends JpaModel {
 
