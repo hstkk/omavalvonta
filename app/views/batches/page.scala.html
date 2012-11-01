@@ -20,7 +20,7 @@
 			}
 			<tbody>
 				@for(batch <- page.getList) {
-					@tr() { @batch.id
+					@tr() { @batch
 						<a href="@routes.Batches.read(batch.id)">@batch.created.format("HH:mm dd.M.yyyy")</a>
 						@batch.product }
 				}
