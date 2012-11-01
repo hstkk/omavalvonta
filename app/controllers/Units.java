@@ -9,12 +9,13 @@ import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
 
-public class Units {
+public class Units extends Controller{
+
 	final static Form<forms.Term> FORM = form(forms.Term.class);
 	final static TermCategory CATEGORY = TermCategory.UNIT;
 
 	public static Result create() {
-		return ok(views.html.units.manage.render(FORM, CATEGORY));
+		return ok(views.html.units.manage.render(FORM));
 	}
 
 	@Transactional(readOnly = true)
@@ -22,7 +23,7 @@ public class Units {
 		Term term = Term.crud.read(id);
 		if (term == null)
 			return notFound(views.html.notFound.render());
-		return ok(views.html.units.manage.render(FORM.fill(new forms.Term(term)), CATEGORY));
+		return ok(views.html.units.manage.render(FORM.fill(new forms.Term(term))));
 	}
 
 	@Transactional
@@ -42,7 +43,7 @@ public class Units {
 			}
 		}
 		flash("error", "Tallennus epäonnistui!");
-		return badRequest(views.html.units.manage.render(filledForm), CATEGORY);
+		return badRequest(views.html.units.manage.render(filledForm));
 	}
 
 	@Transactional
@@ -64,7 +65,7 @@ public class Units {
 			Term term = new Term(filledForm.get());
 			if (Term.crud.create(term)) {
 				flash("success", "Tallennus onnistui!");
-				return redirect(routes.Terms.index());
+				return redirect(routes.Units.index());
 			}
 		}
 		flash("error", "Tallennus epäonnistui!");
