@@ -157,4 +157,40 @@ public class Batch extends JpaModel {
 		}
 		return null;
 	}
+
+	// TODO
+	public static List<Batch> findNotDone() {
+		try {
+			List<Batch> list = JPA
+					.em()
+					.createQuery(
+							"from Batch b where b.isReady = false order by created")
+					.getResultList();
+			return list;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	public static String checkboxify() {
+		StringBuilder stringBuilder = new StringBuilder();
+		try {
+			List<Batch> list = findNotDone();
+			int i = 0;
+			for (Batch batch : list) {
+				stringBuilder.append("<label class=\"checkbox\">");
+				stringBuilder
+						.append("<input type=\"checkbox\" name=\"batchIds[");
+				stringBuilder.append(i);
+				stringBuilder.append("]\" value=\"");
+				stringBuilder.append(batch.id);
+				stringBuilder.append("\">");
+				stringBuilder.append(batch.toString());
+				stringBuilder.append("</label>");
+				i++;
+			}
+		} catch (Exception e) {
+		}
+		return stringBuilder.toString();
+	}
 }
