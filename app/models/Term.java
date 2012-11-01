@@ -78,7 +78,7 @@ public class Term extends JpaModel {
 			if (categoryEnum != null) {
 				List<Term> terms = JPA
 						.em()
-						.createQuery("from Term order by name where category=?")
+						.createQuery("from Term where category=? order by name ")
 						.setParameter(1, categoryEnum.getValue())
 						.getResultList();
 				for (Term term : terms)
