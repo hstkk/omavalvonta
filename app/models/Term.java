@@ -40,7 +40,7 @@ public class Term extends JpaModel {
 	@Transient
 	public TermCategory categoryEnum;
 
-	@PrePersist
+//	@PrePersist
 	private void enumToInt() {
 		category = categoryEnum.getValue();
 	}
@@ -48,15 +48,6 @@ public class Term extends JpaModel {
 	@PostLoad
 	private void intToEnum() {
 		categoryEnum = TermCategory.setValue(this.category);
-	}
-
-	public Term(forms.Term form, TermCategory categoryEnum) {
-		set(form);
-		this.categoryEnum = categoryEnum;
-	}
-
-	public void set(forms.Term form) {
-		this.name = form.name;
 	}
 
 	public String toString() {
@@ -78,18 +69,6 @@ public class Term extends JpaModel {
 		} catch (Exception e) {
 		}
 		return null;
-	}
-
-	public static Map<String, String> options() {
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		try {
-			List<Term> terms = JPA.em().createQuery("from Term order by name")
-					.getResultList();
-			for (Term term : terms)
-				map.put(term.id.toString(), term.toString());
-		} catch (Exception e) {
-		}
-		return map;
 	}
 
 	@SuppressWarnings("unchecked")

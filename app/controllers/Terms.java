@@ -11,7 +11,7 @@ import views.html.*;
 
 public class Terms extends Controller{
 
-	final static Form<forms.Term> FORM = form(forms.Term.class);
+	final static Form<Term> FORM = form(Term.class);
 
 	public static Result create() {
 		return ok(views.html.terms.manage.render(FORM));
@@ -56,13 +56,12 @@ public class Terms extends Controller{
 
 	@Transactional
 	public static Result save() {
-		Form<forms.Term> filledForm = FORM.bindFromRequest();
+		Form<Term> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tallennus peruutettu!");
 			return redirect(routes.Terms.index());
 		} else if (!filledForm.hasErrors()) {
-			Term term = new Term(filledForm.get(), CATEGORY);
-			if (Term.crud.create(term)) {
+			if (Term.crud.create(filledForm.get())) {
 				flash("success", "Tallennus onnistui!");
 				return redirect(routes.Terms.index());
 			}
