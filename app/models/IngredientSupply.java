@@ -56,7 +56,7 @@ public class IngredientSupply extends JpaModel {
 	@Required
 	@NotNull
 	@ManyToOne(cascade = CascadeType.ALL)
-	public Unit unit;
+	public Term unit;
 
 	private void set() {
 		if (this.ingredient.id == null)
@@ -66,7 +66,7 @@ public class IngredientSupply extends JpaModel {
 		if (this.unit.id == null)
 			this.unit = null;
 		else
-			this.unit = Unit.findById(this.unit.id);
+			this.unit = Term.crud.read(this.unit.id);
 	}
 
 	public boolean save() {
