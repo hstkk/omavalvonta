@@ -28,7 +28,7 @@
 		}
 	}
 	
-	if(!FORM("id").valueOr("").equals("")) {
+	@if(!FORM("id").valueOr("").equals("")) {
 		@helper.form(action = routes.Units.update(FORM("id").value.toLong), 'class -> "form-horizontal"){
 			@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
 			@actions()
