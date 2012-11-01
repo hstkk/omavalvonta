@@ -68,7 +68,7 @@ public class Result extends JpaModel implements Comparable<Result> {
 		if (fieldset.value != null && fieldset.comment != null) {
 			this.field = Field.findById(fieldset.fieldId);
 			this.comment = fieldset.comment;
-			switch (field.fieldType) {
+			switch (field.fieldTypeEnum) {
 			case CHECKBOX:
 				this.valueBoolean = Converter.stringToBool(fieldset.value);
 				if (!this.field.isRequired || this.field.targetValue == null
@@ -102,7 +102,7 @@ public class Result extends JpaModel implements Comparable<Result> {
 					this.isDone = true;
 				break;
 			}
-			if (!((field.fieldType == FieldType.TEXT || field.fieldType == FieldType.TEXTAREA) && this.valueString
+			if (!((field.fieldTypeEnum == FieldType.TEXT || field.fieldTypeEnum == FieldType.TEXTAREA) && this.valueString
 					.isEmpty())) {
 				if (this.field.isSigned && this.user == null)
 					this.isDone = false;
