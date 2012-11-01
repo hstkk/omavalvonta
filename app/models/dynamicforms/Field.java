@@ -75,6 +75,8 @@ public class Field extends JpaModel {
 	}
 
 	public String toString() {
+		if(fieldType != null)
+			fieldTypeEnum = FieldType.setValue(this.fieldType);
 		StringBuilder stringBuilder = new StringBuilder("Tietotyypiltä ");
 		stringBuilder.append(fieldTypeEnum.toString());
 		if (isRequired)
@@ -208,7 +210,7 @@ public class Field extends JpaModel {
 						.createQuery(
 								"from Field f where f.form = ? and f.fieldType = ?")
 						.setParameter(1, form)
-						.setParameter(2, FieldType.LEGEND).getResultList();
+						.setParameter(2, FieldType.LEGEND.getValue()).getResultList();
 				for (Field legend : legends)
 					headers.add(new Result(legend));
 			} catch (Exception e) {
