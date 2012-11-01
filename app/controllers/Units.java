@@ -62,7 +62,7 @@ public class Units extends Controller{
 			flash("warning", "Tallennus peruutettu!");
 			return redirect(routes.Units.index());
 		} else if (!filledForm.hasErrors()) {
-			Term term = new Term(filledForm.get());
+			Term term = new Term(filledForm.get(), CATEGORY);
 			if (Term.crud.create(term)) {
 				flash("success", "Tallennus onnistui!");
 				return redirect(routes.Units.index());

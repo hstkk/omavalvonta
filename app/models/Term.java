@@ -50,8 +50,9 @@ public class Term extends JpaModel {
 		categoryEnum = TermCategory.setValue(this.category);
 	}
 
-	public Term(forms.Term form) {
+	public Term(forms.Term form, TermCategory categoryEnum) {
 		set(form);
+		this.categoryEnum = categoryEnum;
 	}
 
 	public void set(forms.Term form) {
