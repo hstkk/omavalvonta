@@ -22,7 +22,7 @@
 			Erä
 		}
 		<tbody>
-			@for(batch <- batches) {
+			@for(batch <- results.baches) {
 				@tr() { <a href="@routes.Batches.read(batch.id)">@batch</a> }
 			}
 		</tbody>
