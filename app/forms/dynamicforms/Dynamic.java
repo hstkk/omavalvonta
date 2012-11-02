@@ -110,7 +110,7 @@ public class Dynamic {
 			result.append("Virhe, eriä ei ole valittu. ");
 		else if(values == null || values.isEmpty())
 			result.append("Virhe, tuloksia ei ole syötetty.");
-		return (result.length() == 0) ? "" : result.toString();
+		return (result.length() == 0) ? null : result.toString();
 	}
 
 	public Dynamic() {

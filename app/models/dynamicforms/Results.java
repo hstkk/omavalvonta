@@ -43,12 +43,11 @@ public class Results extends JpaModel {
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Result> results;
 
-	//TODO 1.11
+	// TODO 1.11
 	@Required
 	@OneToMany(cascade = CascadeType.ALL)
 	@NotNull
 	public List<Batch> baches;
-	
 
 	public Results() {
 	}
@@ -60,6 +59,10 @@ public class Results extends JpaModel {
 		this.id = dynamic.id;
 		this.product = product;
 		this.form = form;
+		this.baches = new ArrayList<Batch>();
+		for (Long id : dynamic.batchIds)
+			if (id != null)
+				baches.add(Batch.findById(id));
 		this.results = new ArrayList<Result>();
 		for (Fieldset value : dynamic.values)
 			results.add(new Result(value));
