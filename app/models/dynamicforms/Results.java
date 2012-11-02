@@ -45,7 +45,7 @@ public class Results extends JpaModel {
 
 	// TODO 1.11
 	@Required
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@NotNull
 	public List<Batch> baches;
 
