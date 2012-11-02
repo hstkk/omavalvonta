@@ -157,7 +157,7 @@ public class Form {
 
 	private static String optionifyReason(int i){
 		StringBuilder html = new StringBuilder();
-	    html.append("<select id=\"reasonId\" name=\"values["
+	    html.append("<div class=\"control-group\"><label class=\"control-label\">Muutoksen syy</label><select id=\"reasonId\" name=\"values["
 	    		+ i
 	    		+ "].reasonId\" rows=\"3\">");
 	    html.append("<option class=\"blank\" value=\"\"></option>");
@@ -168,7 +168,7 @@ public class Form {
 	    	 html.append(term.name);
 	    	 html.append("</option>");
 	    }
-	    html.append("</select>");
+	    html.append("</select></div>");
 		return html.toString();
 	}
 }
