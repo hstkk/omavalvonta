@@ -118,15 +118,8 @@ public class Results extends JpaModel {
 						.em()
 						.createQuery(
 								"select r from Results r "
-										+ "where r.product = ? and "
-										+ "day(r.created) = ? and "
-										+ "month(r.created) = ? and "
-										+ "year(r.created) = ?")
-						.setParameter(1, batch.product)
-						.setParameter(2, cal.get(Calendar.DATE))
-						.setParameter(3, cal.get(Calendar.MONTH) + 1)
-						.setParameter(4, cal.get(Calendar.YEAR))
-						.getResultList();
+										+ "where ? in elements (r.baches)")
+						.setParameter(1, batch).getResultList();
 				return list;
 			}
 		} catch (Exception e) {

@@ -122,7 +122,7 @@ public class Results extends Controller {
 				results.results);
 		r.addAll(Field.headerify(results.form));
 		Collections.sort(r);
-		List<Batch> batches = Batch.findByResults(results);
+		List<Batch> batches = null;
 		return ok(views.html.dynamicforms.results.read.render(product, results,
 				r, batches));
 	}
