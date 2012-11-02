@@ -1,6 +1,9 @@
 package utils;
 
 import java.util.*;
+
+import models.Term;
+import models.TermCategory;
 import models.dynamicforms.Field;
 import models.dynamicforms.FieldType;
 import models.dynamicforms.Result;
@@ -8,12 +11,16 @@ import forms.dynamicforms.Fieldset;
 
 public class Form {
 
+	static List<Term> terms;
+	
 	// TODO label for
 	public static <T> String formify(List<T> list) {
 		if (list == null || list.isEmpty())
 			return null;
 
 		int i = 0;
+
+		terms = Term.findByCategory(TermCategory.REASON);
 
 		StringBuilder html = new StringBuilder();
 		for (Object e : list) {
@@ -136,11 +143,32 @@ public class Form {
 							+ "].comment\" rows=\"3\">"
 							+ comment
 							+ "</textarea><label class=\"help-inline\">Huomautuksia</label></div></div>");
+
+					if (value != null || !value.equals(""))
+						html.append(optionifyReason(i));
+
 					html.append("</fieldset>");
 					i++;
 				}
 			}
 		}
 		return (html.length() > 0) ? html.toString() : null;
+	}
+
+	private static String optionifyReason(int i){
+		StringBuilder html = new StringBuilder();
+	    html.append("<select id=\"reasonId\" name=\"values["
+	    		+ i
+	    		+ "].reasonId\" rows=\"3\">");
+	    html.append("<option class=\"blank\" value=\"\"></option>");
+	    for(Term term: terms){
+	    	 html.append("<option value=\"");
+	    	 html.append(term.id);
+	    	 html.append("\" >");
+	    	 html.append(term.name);
+	    	 html.append("</option>");
+	    }
+	    html.append("</select>");
+		return html.toString();
 	}
 }

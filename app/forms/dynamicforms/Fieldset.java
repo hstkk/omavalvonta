@@ -21,6 +21,8 @@ public class Fieldset {
 	@Lob
 	public String comment;
 
+	public Long reasonId;
+
 	public Fieldset() {
 	}
 

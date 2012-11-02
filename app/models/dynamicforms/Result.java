@@ -15,6 +15,7 @@ import org.hibernate.envers.NotAudited;
 import forms.dynamicforms.Fieldset;
 import utils.Converter;
 
+import models.Term;
 import models.User;
 import models.dynamicforms.Field;
 import models.helpers.JpaModel;
@@ -61,59 +62,68 @@ public class Result extends JpaModel implements Comparable<Result> {
 
 	public Boolean isDone = false;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	public Term reason;
+
 	public Result() {
 	}
 
 	public Result(Fieldset fieldset) {
-		if (fieldset.value != null && fieldset.comment != null) {
-			this.field = Field.findById(fieldset.fieldId);
-			this.comment = fieldset.comment;
-			switch (field.fieldTypeEnum) {
-			case CHECKBOX:
-				this.valueBoolean = Converter.stringToBool(fieldset.value);
-				if (!this.field.isRequired || this.field.targetValue == null
-						|| this.field.targetValue == this.valueBoolean)
-					this.isDone = true;
-				break;
-			case DATE:
-				this.valueDate = Converter.stringToDate(fieldset.value);
-				if (!this.field.isRequired || this.valueDate != null)
-					this.isDone = true;
-				break;
-			case INT:
-				this.valueInt = Converter.stringToInt(fieldset.value);
-				if (!this.field.isRequired
-						|| (this.field.min == null || this.valueInt >= this.field.min)
-						&& (this.field.max == null || this.valueInt <= this.field.max))
-					this.isDone = true;
-				break;
-			case DOUBLE:
-				this.valueDouble = Converter.stringToDouble(fieldset.value);
-				if (!this.field.isRequired
-						|| (this.field.min == null || this.valueDouble >= this.field.min)
-						&& (this.field.max == null || this.valueDouble <= this.field.max))
-					this.isDone = true;
+		if (fieldset.id == null
+				|| (fieldset.id != null && fieldset.reasonId != null)) {
+			if (fieldset.reasonId != null)
+				reason = Term.crud.read(fieldset.reasonId);
+			if (fieldset.value != null && fieldset.comment != null) {
+				this.field = Field.findById(fieldset.fieldId);
+				this.comment = fieldset.comment;
+				switch (field.fieldTypeEnum) {
+				case CHECKBOX:
+					this.valueBoolean = Converter.stringToBool(fieldset.value);
+					if (!this.field.isRequired
+							|| this.field.targetValue == null
+							|| this.field.targetValue == this.valueBoolean)
+						this.isDone = true;
+					break;
+				case DATE:
+					this.valueDate = Converter.stringToDate(fieldset.value);
+					if (!this.field.isRequired || this.valueDate != null)
+						this.isDone = true;
+					break;
+				case INT:
+					this.valueInt = Converter.stringToInt(fieldset.value);
+					if (!this.field.isRequired
+							|| (this.field.min == null || this.valueInt >= this.field.min)
+							&& (this.field.max == null || this.valueInt <= this.field.max))
+						this.isDone = true;
+					break;
+				case DOUBLE:
+					this.valueDouble = Converter.stringToDouble(fieldset.value);
+					if (!this.field.isRequired
+							|| (this.field.min == null || this.valueDouble >= this.field.min)
+							&& (this.field.max == null || this.valueDouble <= this.field.max))
+						this.isDone = true;
 
-				break;
-			case TEXT:
-			case TEXTAREA:
-				this.valueString = fieldset.value;
-				if (!this.field.isRequired || !this.valueString.isEmpty())
-					this.isDone = true;
-				break;
-			}
-			if (!((field.fieldTypeEnum == FieldType.TEXT || field.fieldTypeEnum == FieldType.TEXTAREA) && this.valueString
-					.isEmpty())) {
-				if (this.field.isSigned && this.user == null)
-					this.isDone = false;
-				if (fieldset.id != null) {
-					this.id = fieldset.id;
-					Result revision = Result.findById(this.id);
-					if (revision != null)
-						this.updated = revision.updated;
-					this.update();
-				} else
-					this.save();
+					break;
+				case TEXT:
+				case TEXTAREA:
+					this.valueString = fieldset.value;
+					if (!this.field.isRequired || !this.valueString.isEmpty())
+						this.isDone = true;
+					break;
+				}
+				if (!((field.fieldTypeEnum == FieldType.TEXT || field.fieldTypeEnum == FieldType.TEXTAREA) && this.valueString
+						.isEmpty())) {
+					if (this.field.isSigned && this.user == null)
+						this.isDone = false;
+					if (fieldset.id != null) {
+						this.id = fieldset.id;
+						Result revision = Result.findById(this.id);
+						if (revision != null)
+							this.updated = revision.updated;
+						this.update();
+					} else
+						this.save();
+				}
 			}
 		}
 	}
