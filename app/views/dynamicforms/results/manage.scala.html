@@ -28,10 +28,12 @@
 		}
 	} else {
 		@helper.form(action = controllers.dynamicforms.routes.Results.save(product.id, f.id), 'class -> "form-horizontal"){
-			<fieldset>
-				<legend>Erät</legend>
-				@Html(models.Batch.checkboxify)
-			</fieldset>
+			@if(FORM("id").valueOr("").equals("")) {
+				<fieldset>
+					<legend>Erät</legend>
+					@Html(models.Batch.checkboxify)
+				</fieldset>
+			}
 			@hidden() {
 				@FORM("id").value
 			}

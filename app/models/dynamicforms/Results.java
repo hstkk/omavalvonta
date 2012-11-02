@@ -63,6 +63,8 @@ public class Results extends JpaModel {
 		for (Long id : dynamic.batchIds)
 			if (id != null)
 				baches.add(Batch.findById(id));
+		if (this.baches.isEmpty() && old != null)
+			this.baches = old.baches;
 		this.results = new ArrayList<Result>();
 		for (Fieldset value : dynamic.values)
 			results.add(new Result(value));

@@ -106,7 +106,7 @@ public class Dynamic {
 
 	public String validate() {
 		StringBuilder result = new StringBuilder();
-		if(batchIds == null || batchIds.isEmpty())
+		if(id == null && (batchIds == null || batchIds.isEmpty()))
 			result.append("Virhe, eriä ei ole valittu. ");
 		else if(values == null || values.isEmpty())
 			result.append("Virhe, tuloksia ei ole syötetty.");
