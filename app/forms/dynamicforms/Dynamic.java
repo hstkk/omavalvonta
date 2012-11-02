@@ -18,14 +18,15 @@ import utils.Validation;
  * 
  */
 public class Dynamic {
-	@Required
-	@NotNull
+	//@Required
+	//@NotNull
 	public List<Long> batchIds = new ArrayList<Long>();
 
 	public Long id;
 
-	// @Required
-	// @OneToMany
+	//@Required
+	//@NotNull
+	//@OneToMany
 	public List<Fieldset> values;
 
 	/**
@@ -102,6 +103,15 @@ public class Dynamic {
 		}
 		return (result.length() == 0) ? "" : result.toString();
 	}*/
+
+	public String validate() {
+		StringBuilder result = new StringBuilder();
+		if(batchIds == null || batchIds.isEmpty())
+			result.append("Virhe, eriä ei ole valittu. ");
+		else if(values == null || values.isEmpty())
+			result.append("Virhe, tuloksia ei ole syötetty.");
+		return (result.length() == 0) ? "" : result.toString();
+	}
 
 	public Dynamic() {
 		this.values = new ArrayList<Fieldset>();

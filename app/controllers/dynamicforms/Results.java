@@ -85,28 +85,28 @@ public class Results extends Controller {
 			flash("warning", "Tuloksen tallennus peruutettu!");
 			return page(productId, 0);
 		}
-		Dynamic dynamic = filledForm.get();
 		if (!filledForm.hasErrors()) {
+			Dynamic dynamic = filledForm.get();
 			models.dynamicforms.Results results = new models.dynamicforms.Results(
 					product, dynamic, f);
 			if (((results.id != null && results.update()) || (results.id == null && results
 					.save()))) {
 				flash("status", "Lomake on tallennettu onnistuneesti!");
-				
-				/*List<Long> ids = new ArrayList<Long>();
-				for(Fieldset fieldset: dynamic.values)
-					if(fieldset.ack)
-						ids.add(fieldset.id);
-				if(!ids.isEmpty())
-					return ok(views.html.dynamicforms.results.ack.render(ids));*/
-				
+
+				/*
+				 * List<Long> ids = new ArrayList<Long>(); for(Fieldset
+				 * fieldset: dynamic.values) if(fieldset.ack)
+				 * ids.add(fieldset.id); if(!ids.isEmpty()) return
+				 * ok(views.html.dynamicforms.results.ack.render(ids));
+				 */
+
 				return redirect(controllers.dynamicforms.routes.Results.read(
 						productId, results.id));
 			}
 		}
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
 		return badRequest(views.html.dynamicforms.results.manage.render(
-				filledForm, product, f, utils.Form.formify(dynamic.values)));
+				filledForm, product, f, f.html));
 	}
 
 	@Transactional(readOnly = true)
