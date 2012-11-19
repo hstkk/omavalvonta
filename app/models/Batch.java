@@ -77,7 +77,9 @@ public class Batch extends JpaModel {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(new SimpleDateFormat("yyyyMMdd").format(
 				this.created).toString());
+		stringBuilder.append("-");
 		stringBuilder.append(product.id);
+		stringBuilder.append("-");
 		stringBuilder.append(this.id);
 		return stringBuilder.toString();
 	}
