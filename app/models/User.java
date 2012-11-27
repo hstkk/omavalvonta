@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
 import models.helpers.JpaModel;
-import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;

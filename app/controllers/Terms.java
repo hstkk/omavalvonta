@@ -1,12 +1,15 @@
 package controllers;
 
+import play.*;
+import play.mvc.*;
+import play.data.*;
+import static play.data.Form.*;
+import play.db.jpa.*;
+
 import models.Term;
 import models.TermCategory;
 import models.helpers.Page;
-import play.*;
-import play.data.Form;
-import play.db.jpa.Transactional;
-import play.mvc.*;
+
 import views.html.*;
 
 public class Terms extends Controller{

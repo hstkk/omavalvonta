@@ -2,12 +2,15 @@ package controllers;
 
 import java.util.List;
 
+import play.*;
+import play.mvc.*;
+import play.data.*;
+import static play.data.Form.*;
+import play.db.jpa.*;
+
 import models.Batch;
 import models.IngredientSupply;
-import play.*;
-import play.data.Form;
-import play.db.jpa.Transactional;
-import play.mvc.*;
+
 import views.html.*;
 
 public class IngredientSupplies extends Controller {
@@ -40,7 +43,8 @@ public class IngredientSupplies extends Controller {
 			IngredientSupply ingredientSupply = filledForm.get();
 			// TODO smarter save/update
 			if (ingredientSupply.save()) {
-				flash("success", "Raaka-aineen vastaanotto on tallennettu onnistuneesti!");
+				flash("success",
+						"Raaka-aineen vastaanotto on tallennettu onnistuneesti!");
 				return redirect(routes.IngredientSupplies.index());
 			}
 		}

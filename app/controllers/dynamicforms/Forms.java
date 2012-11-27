@@ -1,8 +1,10 @@
 package controllers.dynamicforms;
 
-import play.data.Form;
-import play.db.jpa.Transactional;
+import play.*;
 import play.mvc.*;
+import play.data.*;
+import static play.data.Form.*;
+import play.db.jpa.*;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -74,7 +76,7 @@ public class Forms extends Controller {
 		Form<models.dynamicforms.Form> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Lomakkeen tallennus peruutettu!");
-			//return redirect(routes.dynamicforms.Forms.index());
+			// return redirect(routes.dynamicforms.Forms.index());
 			return index();
 		} else if (!filledForm.hasErrors()) {
 			models.dynamicforms.Form form = filledForm.get();
@@ -82,7 +84,7 @@ public class Forms extends Controller {
 			if ((form.id != null && form.update())
 					|| (form.id == null && form.save())) {
 				flash("success", "Lomake on tallennettu onnistuneesti!");
-				//return redirect(routes.dynamicforms.Forms.index());
+				// return redirect(routes.dynamicforms.Forms.index());
 				return index();
 			}
 		}

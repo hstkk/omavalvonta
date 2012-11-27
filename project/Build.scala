@@ -1,6 +1,6 @@
 import sbt._
 import Keys._
-import PlayProject._
+import play.Project._
 
 object ApplicationBuild extends Build {
 
@@ -8,15 +8,17 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0-SNAPSHOT"
 
     val appDependencies = Seq(
+		javaCore,
+		javaJdbc,
+		javaJpa,
+		filters,
 		"org.hibernate" % "hibernate-entitymanager" % "3.6.10.Final",
 		"org.hibernate" % "hibernate-envers" % "3.6.10.Final",
-		"mysql" % "mysql-connector-java" % "5.1.18",
-		"pdf" % "pdf_2.9.1" % "0.3"
+		"mysql" % "mysql-connector-java" % "5.1.18"
     )
 
-    val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
-		ebeanEnabled := false,
-		resolvers += Resolver.url("My GitHub Play Repository", url("http://www.joergviola.de/releases/"))(Resolver.ivyStylePatterns)
+    val main = play.Project(appName, appVersion, appDependencies).settings(
+		ebeanEnabled := false
     )
 
 }

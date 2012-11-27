@@ -1,13 +1,16 @@
 package controllers;
 
+import play.*;
+import play.mvc.*;
+import play.data.*;
+import static play.data.Form.*;
+import play.db.jpa.*;
+
 import models.Ingredient;
 import models.IngredientSupply;
 import models.Product;
 import models.helpers.KeyValue;
-import play.*;
-import play.data.Form;
-import play.db.jpa.Transactional;
-import play.mvc.*;
+
 import views.html.*;
 
 public class Products extends Controller {

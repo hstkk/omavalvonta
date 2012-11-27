@@ -6,6 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import play.*;
+import play.mvc.*;
+import play.data.*;
+import static play.data.Form.*;
+import play.db.jpa.*;
+
 import controllers.Batches;
 import controllers.routes;
 
@@ -15,12 +21,10 @@ import forms.dynamicforms.Fieldset;
 import models.Batch;
 import models.Product;
 import models.dynamicforms.Field;
-import play.*;
-import play.data.Form;
-import play.db.jpa.Transactional;
-import play.mvc.*;
+
 import views.html.*;
-import util.pdf.PDF;
+
+//import util.pdf.PDF;
 
 public class Results extends Controller {
 
@@ -142,7 +146,7 @@ public class Results extends Controller {
 				results, history));
 	}
 
-	@Transactional(readOnly = true)
+	/*@Transactional(readOnly = true)
 	public static Result pdfify(Long productId, Long resultsId) {
 		Product product = Product.findById(productId);
 		if (product == null)
@@ -158,5 +162,5 @@ public class Results extends Controller {
 		return ok(
 				PDF.toBytes(views.html.dynamicforms.results.pdfify.render(
 						product, results, r))).as("application/pdf");
-	}
+	}*/
 }
