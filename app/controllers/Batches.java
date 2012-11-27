@@ -54,7 +54,7 @@ public class Batches extends Controller {
 	public static Result read(Long batchId) {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		List<Results> results = models.dynamicforms.Results.findByBatch(batch);
 		return ok(views.html.batches.read.render(batch, results));
 	}

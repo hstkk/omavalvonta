@@ -25,7 +25,7 @@ public class Fields extends Controller {
 	public static Result create(Long formId) {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		List<models.dynamicforms.Field> fields = Field.findByForm(f);
 		return ok(views.html.dynamicforms.fields.manage.render(FORM, f, fields));
 	}
@@ -34,10 +34,10 @@ public class Fields extends Controller {
 	public static Result update(Long formId, Long fieldId) {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		Field field = Field.findByFormAndId(f, fieldId);
 		if (field == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		List<models.dynamicforms.Field> fields = Field.findByForm(f);
 		return ok(views.html.dynamicforms.fields.manage.render(
 				FORM.fill(field), f, fields));
@@ -47,7 +47,7 @@ public class Fields extends Controller {
 	public static Result save(Long formId) {
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		Form<Field> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Kentän tallennus peruutettu!");

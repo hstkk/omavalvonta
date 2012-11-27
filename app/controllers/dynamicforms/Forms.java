@@ -62,7 +62,7 @@ public class Forms extends Controller {
 		models.dynamicforms.Form form = models.dynamicforms.Form
 				.findById(formId);
 		if (form == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		return ok(views.html.dynamicforms.forms.manage.render(FORM.fill(form)));
 	}
 
@@ -98,7 +98,7 @@ public class Forms extends Controller {
 		models.dynamicforms.Form form = models.dynamicforms.Form
 				.findById(formId);
 		if (form == null || form.html == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		if (form.basedOn != null)
 			form.basedOn = models.dynamicforms.Form.findById(form.basedOn.id);
 		return ok(views.html.dynamicforms.forms.preview.render(form));

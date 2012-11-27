@@ -58,7 +58,7 @@ public class IngredientSupplies extends Controller {
 		IngredientSupply ingredientSupply = IngredientSupply
 				.findById(ingredientId);
 		if (ingredientSupply == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		List<Batch> batches = Batch.findByIngredientSupply(ingredientId);
 		return ok(views.html.ingredientsupplies.read.render(ingredientSupply,
 				batches));
