@@ -1,0 +1,36 @@
+# Default messages
+
+# --- Constraints
+constraint.required=Vaadittu
+constraint.min=Minimiarvo: {0}
+constraint.max=Maksimiarvo: {0}
+constraint.minLength=Minimipituus: {0}
+constraint.maxLength=Maksimipituus: {0}
+constraint.email=Sähköposti
+
+# --- Formats
+format.date=Päivämäärä (''{0}'')
+format.numeric=Numeric
+format.real=Real
+
+# --- Errors
+error.invalid=Invalid value
+error.required=This field is required
+error.number=Numeric value expected
+error.real=Real number value expected
+error.min=Must be greater or equal to {0}
+error.max=Must be less or equal to {0}
+error.minLength=Minimum length is {0}
+error.maxLength=Maximum length is {0}
+error.email=Valid email required
+error.pattern=Must satisfy {0}
+
+# Custom messages
+
+# --- HTTP errors
+http.400=400 Kelpaamaton pyyntö
+http.400.description=Pyynnön syntaksia ei ymmärretty.
+http.404=404 Sivua ei löytynyt
+http.404.description=Yritä myöhemmin uudelleen. Tarkista, että osoite on oikea ja että osoite on kirjoitettu oikein.
+http.500=500 Sisäinen palvelinvirhe
+http.500.description=Pyyntöä ei voitu käsitellä.

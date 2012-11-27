@@ -1,4 +1,5 @@
 import play.*;
+import play.i18n.Messages;
 import play.mvc.*;
 import play.mvc.Http.*;
 import static play.mvc.Results.*;
@@ -9,17 +10,22 @@ import static play.mvc.Results.*;
 public class Global extends GlobalSettings {
 	@Override
 	public Result onError(RequestHeader request, Throwable t) {
-		return internalServerError(views.html.errors.internalServerError
-				.render());
+		String title = Messages.get("http.500");
+		String description = Messages.get("http.500.description");
+		return internalServerError(views.html.error.render(title, description));
 	}
 
 	@Override
 	public Result onHandlerNotFound(RequestHeader request) {
-		return notFound(views.html.errors.notFound.render());
+		String title = Messages.get("http.404");
+		String description = Messages.get("http.404.description");
+		return internalServerError(views.html.error.render(title, description));
 	}
 
 	@Override
 	public Result onBadRequest(RequestHeader request, String error) {
-		return badRequest(views.html.errors.badRequest.render());
+		String title = Messages.get("http.400");
+		String description = Messages.get("http.400.description");
+		return internalServerError(views.html.error.render(title, description));
 	}
 }
