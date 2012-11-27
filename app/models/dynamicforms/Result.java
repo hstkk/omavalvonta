@@ -20,7 +20,6 @@ import models.User;
 import models.dynamicforms.Field;
 import models.helpers.JpaModel;
 
-import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;

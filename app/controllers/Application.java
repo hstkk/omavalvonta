@@ -1,9 +1,12 @@
 package controllers;
 
-import play.*;
-import play.db.jpa.Transactional;
-import play.mvc.*;
 import java.util.*;
+
+import play.*;
+import play.mvc.*;
+import play.data.*;
+import static play.data.Form.*;
+import play.db.jpa.*;
 
 import views.html.*;
 

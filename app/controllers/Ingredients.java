@@ -1,9 +1,12 @@
 package controllers;
 
-import models.Ingredient;
-import play.data.Form;
-import play.db.jpa.Transactional;
+import play.*;
 import play.mvc.*;
+import play.data.*;
+import static play.data.Form.*;
+import play.db.jpa.*;
+
+import models.Ingredient;
 
 // TODO: Auto-generated Javadoc
 /**

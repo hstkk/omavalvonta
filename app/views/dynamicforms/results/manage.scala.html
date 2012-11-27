@@ -19,7 +19,7 @@
 				<li><a href="@controllers.dynamicforms.routes.Results.read(product.id, FORM("id").value.toLong)">Tulokset</a></li>
 				<li class="active"><a href="@controllers.dynamicforms.routes.Results.update(product.id, FORM("id").value.toLong)">Muokkaa</a></li>
 				<li><a href="@controllers.dynamicforms.routes.Results.history(product.id, FORM("id").value.toLong)">Historia</a></li>
-				<li><a href="@controllers.dynamicforms.routes.Results.pdfify(product.id, FORM("id").value.toLong)">PDF-tiedosto</a></li>
+				<li><a href="controllers.dynamicforms.routes.Results.pdfify(product.id, FORM("id").value.toLong)">PDF-tiedosto</a></li>
 			}
 		}
 	@if(html == null || html.equals("")) {
