@@ -26,7 +26,7 @@ import views.html.*;
 
 //import util.pdf.PDF;
 
-public class Results extends Controller {
+public class Results extends  Controller {
 
 	final static Form<Dynamic> FORM = form(Dynamic.class);
 
@@ -39,7 +39,7 @@ public class Results extends Controller {
 	public static Result page(Long productId, int index) {
 		Product product = Product.findById(productId);
 		if (product == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		return ok(views.html.dynamicforms.results.page.render(product,
 				models.dynamicforms.Results.page(index)));
 	}
@@ -49,7 +49,7 @@ public class Results extends Controller {
 		Product product = Product.findById(productId);
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (product == null || f == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		String html = f.html;
 		return ok(views.html.dynamicforms.results.manage.render(FORM, product,
 				f, html));
@@ -59,18 +59,18 @@ public class Results extends Controller {
 	public static Result update(Long productId, Long resultsId) {
 		Product product = Product.findById(productId);
 		if (product == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		models.dynamicforms.Results results = models.dynamicforms.Results
 				.findById(resultsId);
 		if (results == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		List<models.dynamicforms.Result> r = new ArrayList<models.dynamicforms.Result>(
 				results.results);
 		r.addAll(Field.headerify(results.form));
 		Collections.sort(r);
 		String html = utils.Form.formify(r);
 		if (html == null || html.equals(""))
-			return notFound(views.html.notFound.render());
+			return notFound();
 		return ok(views.html.dynamicforms.results.manage.render(
 				FORM.fill(new forms.dynamicforms.Dynamic(resultsId)), product,
 				results.form, html));
@@ -80,10 +80,10 @@ public class Results extends Controller {
 	public static Result save(Long productId, Long formId) {
 		Product product = Product.findById(productId);
 		if (product == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
 		if (f == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		Form<Dynamic> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tuloksen tallennus peruutettu!");
@@ -117,11 +117,11 @@ public class Results extends Controller {
 	public static Result read(Long productId, Long resultsId) {
 		Product product = Product.findById(productId);
 		if (product == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		models.dynamicforms.Results results = models.dynamicforms.Results
 				.findById(resultsId);
 		if (results == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		List<models.dynamicforms.Result> r = new ArrayList<models.dynamicforms.Result>(
 				results.results);
 		r.addAll(Field.headerify(results.form));
@@ -135,11 +135,11 @@ public class Results extends Controller {
 	public static Result history(Long productId, Long resultsId) {
 		Product product = Product.findById(productId);
 		if (product == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		models.dynamicforms.Results results = models.dynamicforms.Results
 				.findById(resultsId);
 		if (results == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		Map<Field, List<models.dynamicforms.Result>> history = results
 				.getHistory();
 		return ok(views.html.dynamicforms.results.history.render(product,
@@ -150,11 +150,11 @@ public class Results extends Controller {
 	public static Result pdfify(Long productId, Long resultsId) {
 		Product product = Product.findById(productId);
 		if (product == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		models.dynamicforms.Results results = models.dynamicforms.Results
 				.findById(resultsId);
 		if (results == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		List<models.dynamicforms.Result> r = new ArrayList<models.dynamicforms.Result>(
 				results.results);
 		r.addAll(Field.headerify(results.form));

@@ -61,7 +61,7 @@ public class Ingredients extends Controller {
 	public static Result update(Long ingredientId) {
 		Ingredient ingredient = Ingredient.findById(ingredientId);
 		if (ingredient == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		return ok(views.html.ingredients.manage.render(FORM.fill(ingredient)));
 	}
 

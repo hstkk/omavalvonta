@@ -36,7 +36,7 @@ public class Products extends Controller {
 	public static Result update(Long productId) {
 		Product product = Product.findById(productId);
 		if (product == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		return ok(views.html.products.manage.render(FORM
 				.fill(new forms.Product(product))));
 	}
@@ -73,7 +73,7 @@ public class Products extends Controller {
 	public static Result batch(Long productId) {
 		Product product = Product.findById(productId);
 		if (product == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		if (product.ingredients == null || product.ingredients.isEmpty())
 			return ok("Tuotteen raaka-aineita ei löytynyt");
 		StringBuilder stringBuilder = new StringBuilder();

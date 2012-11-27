@@ -24,7 +24,7 @@ public class Terms extends Controller{
 	public static Result read(Long id) {
 		Term term = Term.crud.read(id);
 		if (term == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		return ok(views.html.terms.manage.render(FORM.fill(new forms.Term(term))));
 	}
 
@@ -32,7 +32,7 @@ public class Terms extends Controller{
 	public static Result update(Long id) {
 		Term term = Term.crud.read(id);
 		if (term == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		Form<forms.Term> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tallennus peruutettu!");
@@ -52,7 +52,7 @@ public class Terms extends Controller{
 	public static Result delete(Long id) {
 		Term term = Term.crud.read(id);
 		if (term == null)
-			return notFound(views.html.notFound.render());
+			return notFound();
 		Term.crud.delete(term);
 		return redirect(routes.Terms.index());
 	}*/
