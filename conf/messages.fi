@@ -18,10 +18,10 @@ error.invalid=Invalid value
 error.required=This field is required
 error.number=Numeric value expected
 error.real=Real number value expected
-error.min=Must be greater or equal to {0}
-error.max=Must be less or equal to {0}
-error.minLength=Minimum length is {0}
-error.maxLength=Maximum length is {0}
+error.min=Tulee olla suurempi tai yhtä suuri kuin {0}
+error.max=Tulee olla pienempi tai yhtä suuri kuin {0}
+error.minLength=Minimipituus on {0}
+error.maxLength=Maksimipituus on {0}
 error.email=Valid email required
 error.pattern=Must satisfy {0}
 
