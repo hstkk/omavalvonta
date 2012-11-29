@@ -9,6 +9,8 @@ public interface GeneralDao<T, ID extends Serializable> {
 
 	boolean update(T t);
 
+	boolean createOrUpdate(T t);
+
 	boolean delete(T t);
 
 	Page<T> page(int index);
