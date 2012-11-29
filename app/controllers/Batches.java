@@ -9,6 +9,7 @@ import static play.data.Form.*;
 import play.db.jpa.*;
 
 import models.Batch;
+import models.FinalProduct;
 import models.dynamicforms.Results;
 
 import views.html.*;
@@ -56,6 +57,7 @@ public class Batches extends Controller {
 		if (batch == null)
 			return notFound();
 		List<Results> results = models.dynamicforms.Results.findByBatch(batch);
-		return ok(views.html.batches.read.render(batch, results));
+		FinalProduct finalProduct = FinalProduct.findByBatch(batch);
+		return ok(views.html.batches.read.render(batch, results, finalProduct));
 	}
 }
