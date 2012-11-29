@@ -15,6 +15,7 @@ import org.hibernate.envers.NotAudited;
 import forms.dynamicforms.Fieldset;
 import utils.Converter;
 
+import models.Batch;
 import models.Term;
 import models.User;
 import models.dynamicforms.Field;
@@ -182,5 +183,25 @@ public class Result extends JpaModel implements Comparable<Result> {
 	@PreUpdate
 	protected void onUpdate() {
 		updated = new Date();
+	}
+
+	public static List<Result> findImportantByBatch(Batch batch) {
+		try {
+			if (batch != null) {
+				List<Results> results = Results.findByBatch(batch);
+				if (results != null && !results.isEmpty()) {
+					List<Result> list = JPA
+							.em()
+							.createQuery(
+									"from Result r where "
+											+ "r.field.isImportant = true and "
+											+ "" + "r in elements (?)")
+							.setParameter(1, results).getResultList();
+					return list;
+				}
+			}
+		} catch (Exception e) {
+		}
+		return null;
 	}
 }
