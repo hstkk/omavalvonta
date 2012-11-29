@@ -44,6 +44,10 @@ public class Field extends JpaModel {
 	@NotNull
 	public boolean isSigned;
 
+	@Required
+	@NotNull
+	public boolean isImportant;
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Required
 	@NotNull
