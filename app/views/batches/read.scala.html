@@ -1,4 +1,4 @@
-@(batch: Batch, results: List[models.dynamicforms.Results])
+@(batch: Batch, results: List[models.dynamicforms.Results], finalProduct: FinalProduct)
 
 @import tags._
 @import tags.alerts._
@@ -13,6 +13,11 @@
 	<ul>
 		<li>Tuote: @batch.product</li>
 	</ul>
+	@if(finalProduct != null) {
+		<a class="btn btn-large btn-success" href="@routes.FinalProducts.read(batch.id)">Myyntihyväksyntä</a>
+	} else {
+		<a class="btn btn-large btn-warning" href="@routes.FinalProducts.edit(batch.id)">Hyväksy myyntiin</a>
+	}
 	@if(results != null) {
 		@table() {
 			@thead() {
