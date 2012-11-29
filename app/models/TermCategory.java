@@ -14,7 +14,7 @@ import models.dynamicforms.FieldType;
 // TODO localization
 public enum TermCategory {
 	FORMTYPE(0, "Lomaketyyppi"), REASON(1, "Muutoksen syy"), UNIT(2,
-			"Mittayksikkö");
+			"Mittayksikkö"), DESTINY(3, "Erän Kohtalo myyntihyväksynnässä");
 
 	private TermCategory(int ordinal, String name) {
 		this.ordinal = ordinal;
