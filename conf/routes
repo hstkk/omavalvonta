@@ -70,5 +70,12 @@ POST	/yllapito/lomake/:formId							controllers.dynamicforms.Fields.save(formId:
 GET		/yllapito/lomake/:formId/kentat						controllers.dynamicforms.Fields.create(formId: Long)
 GET		/yllapito/lomake/:formId/kentta/:fieldId			controllers.dynamicforms.Fields.update(formId: Long, fieldId: Long)
 
+# Final product
+GET		/myyntihyvaksynnat									controllers.FinalProducts.index
+GET		/myyntihyvaksynnat/sivu/:index						controllers.FinalProducts.page(index: Int)
+GET		/myyntihyvaksynta/:batchId							controllers.FinalProducts.read(batchId: Long)
+POST	/myyntihyvaksynta/:batchId							controllers.FinalProducts.save(batchId: Long)
+GET		/myyntihyvaksynta/:batchId/muokkaa					controllers.FinalProducts.edit(batchId: Long)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
