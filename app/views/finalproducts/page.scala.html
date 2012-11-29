@@ -1,0 +1,34 @@
+@(page: models.helpers.Page[FinalProduct])
+
+@import tags._
+@import tags.alerts._
+@import tags.navs._
+@import tags.tables._
+
+@main("Myyntihyväksynnät") {
+	@if(page != null){
+		@table() {
+			@thead() {
+				Erä
+				Tuote
+				Ajankohta
+				Paino
+				Tila
+			}
+			<tbody>
+				@for(finalProduct <- page.getList) {
+					@tr() { <a href="@routes.FinalProducts.read(finalProduct.batch.id)">@finalProduct.batch</a>
+						@finalProduct.batch.product
+						@finalProduct.date
+						@finalProduct.amount @finalProduct.unit
+						@finalProduct.destiny }
+				}
+			</tbody>
+		}
+		@pagination(page.hasPrevious, routes.Batches.page(page.getIndex - 1), page.hasNext, routes.Batches.page(page.getIndex + 1))
+	} else {
+		@warning() {
+			Myyntihyväksyntöjä ei löytynyt.
+		}
+	}
+}
