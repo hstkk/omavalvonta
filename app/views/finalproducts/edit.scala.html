@@ -21,7 +21,7 @@
 	@helper.form(action = routes.FinalProducts.save(batch.id), 'class -> "form-horizontal"){
 		<fieldset>
 			<legend>Lopputuotteen punnitus</legend>
-			@helper.inputText(FORM("amount"), '_label -> "paino", '_class -> "control-group hide")
+			@helper.inputText(FORM("amount"), '_label -> "paino")
 			@helper.select(FORM("unit.id"), options = options(models.Term.options(models.TermCategory.UNIT)), '_default -> "", '_label -> "mittayksikkö")
 		</fieldset>
 		<fieldset>
