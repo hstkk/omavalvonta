@@ -58,16 +58,21 @@ GET		/yllapito/tuote/:productId							controllers.Products.update(productId: Lon
 GET		/tuote/:productId									controllers.Products.batch(productId: Long)
 
 # Form management
-GET		/yllapito/lomake									controllers.dynamicforms.Forms.index
-POST	/yllapito/lomake									controllers.dynamicforms.Forms.save
-GET		/yllapito/lomake/uusi								controllers.dynamicforms.Forms.create
-GET		/yllapito/lomake/sivu/:index						controllers.dynamicforms.Forms.page(index: Int)
+GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.index
+POST	/yllapito/lomakkeet									controllers.dynamicforms.Forms.save
+GET		/yllapito/lomakkeet/uusi							controllers.dynamicforms.Forms.create
+GET		/yllapito/lomakkeet/sivu/:index						controllers.dynamicforms.Forms.page(index: Int)
 GET		/yllapito/lomake/:formId							controllers.dynamicforms.Forms.update(formId: Long)
 GET		/yllapito/lomake/:formId/esikatselu					controllers.dynamicforms.Forms.preview(formId: Long)
 
+# Fieldset management
+POST	/yllapito/lomake/:formId/kentat						controllers.dynamicforms.Fields.save(formId: Long)
+GET		/yllapito/lomake/:formId/kentat/uusi				controllers.dynamicforms.Fields.create(formId: Long)
+GET		/yllapito/lomake/:formId/kentat/:fieldId			controllers.dynamicforms.Fields.update(formId: Long, fieldId: Long)
+
 # Field management
-POST	/yllapito/lomake/:formId							controllers.dynamicforms.Fields.save(formId: Long)
-GET		/yllapito/lomake/:formId/kentat						controllers.dynamicforms.Fields.create(formId: Long)
+POST	/yllapito/lomake/:formId/kentta						controllers.dynamicforms.Fields.save(formId: Long)
+GET		/yllapito/lomake/:formId/kentta						controllers.dynamicforms.Fields.create(formId: Long)
 GET		/yllapito/lomake/:formId/kentta/:fieldId			controllers.dynamicforms.Fields.update(formId: Long, fieldId: Long)
 
 # Final product
