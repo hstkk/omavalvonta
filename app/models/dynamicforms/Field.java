@@ -182,11 +182,14 @@ public class Field extends JpaModel {
 		if (form == null || form.id == null)
 			return null;
 		try {
+			Long id = form.id;
 			List<Field> fields = JPA.em()
-					.createQuery("from Field f where f.form = ?")
-					.setParameter(1, form).getResultList();
+					.createQuery("from Field f where f.form.id = ?")
+					.setParameter(1, id).getResultList();
 			return fields;
 		} catch (Exception e) {
+			System.out.println("\n\n" + e + "\n\n");
+			e.printStackTrace();
 		}
 		return null;
 	}

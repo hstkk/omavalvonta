@@ -40,9 +40,10 @@ public class Term extends JpaModel {
 	@Transient
 	public TermCategory categoryEnum;
 
-	// @PrePersist
+	@PrePersist
 	private void enumToInt() {
-		category = categoryEnum.getValue();
+		if (categoryEnum != null)
+			category = categoryEnum.getValue();
 	}
 
 	@PostLoad
@@ -102,6 +103,7 @@ public class Term extends JpaModel {
 				return terms;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
