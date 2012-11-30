@@ -55,8 +55,8 @@ public class FinalProducts extends Controller {
 			finalProduct.amount = filledForm.get().amount;
 			finalProduct.comment = filledForm.get().comment;
 			finalProduct.batch = batch;
-			finalProduct.unit = filledForm.get().unit;
-			finalProduct.destiny = filledForm.get().destiny;
+			finalProduct.unit = Term.crud.read(filledForm.get().unit.id);
+			finalProduct.destiny = Term.crud.read(filledForm.get().destiny.id);
 			if (FinalProduct.crud.createOrUpdate(finalProduct)) {
 				flash("success", "Tallennus onnistui!");
 				return redirect(routes.FinalProducts.read(batchId));
@@ -73,7 +73,8 @@ public class FinalProducts extends Controller {
 			return notFound();
 		FinalProduct result = FinalProduct.findByBatch(batch);
 		if (result != null)
-			return ok(views.html.finalproducts.edit.render(batch, FORM.fill(new forms.FinalProduct(result))));
+			return ok(views.html.finalproducts.edit.render(batch,
+					FORM.fill(new forms.FinalProduct(result))));
 		return ok(views.html.finalproducts.edit.render(batch, FORM));
 	}
 }
