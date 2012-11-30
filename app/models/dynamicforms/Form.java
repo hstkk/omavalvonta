@@ -66,12 +66,16 @@ public class Form extends JpaModel {
 		idify();
 		List<Fieldset> fieldsets2 = fieldsets;
 		fieldsets = new ArrayList<Fieldset>();
+		this.html = "";
 		for (Fieldset fieldset : fieldsets2) {
 			if (fieldset.id == null)
 				fieldset = null;
 			else {
-				if (fieldset != null)
-					fieldsets.add(Fieldset.findById(fieldset.id));
+				if (fieldset != null) {
+					Fieldset fieldset2 = Fieldset.findById(fieldset.id);
+					fieldsets.add(fieldset2);
+					this.html += fieldset2.html;
+				}
 			}
 		}
 	}
@@ -90,7 +94,6 @@ public class Form extends JpaModel {
 	public boolean update() {
 		try {
 			set();
-			formify();
 			JPA.em().merge(this);
 			return true;
 		} catch (Exception e) {
@@ -98,19 +101,8 @@ public class Form extends JpaModel {
 		}
 	}
 
-	private void formify() {
-		String html = utils.Form.formify(Field.findByForm(this));
-		if (html != null)
-			this.html = html;
-	}
-
 	public String toForm() {
-		if (this.basedOn == null || this.basedOn.html.equals(""))
-			return this.html;
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(this.basedOn.html);
-		stringBuilder.append(this.html);
-		return (stringBuilder.length() > 0) ? stringBuilder.toString() : null;
+		return this.html;
 	}
 
 	public static Form findById(Long id) {
