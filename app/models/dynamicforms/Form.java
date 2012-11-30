@@ -25,11 +25,6 @@ import play.db.jpa.*;
 @Audited
 public class Form extends JpaModel {
 
-	// @Valid
-	@ManyToOne(cascade = CascadeType.ALL)
-	@Fetch(FetchMode.JOIN)
-	public Form basedOn = null;
-
 	@Required
 	@NotNull
 	public String name;
@@ -44,6 +39,10 @@ public class Form extends JpaModel {
 	@Required
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term category;
+
+	@Required
+	@ManyToMany(cascade = CascadeType.ALL)
+	public List<Fieldset> fieldsets = new ArrayList<Fieldset>();
 
 	// @PrePersist
 	private void idify() {
@@ -65,12 +64,15 @@ public class Form extends JpaModel {
 
 	private void set() {
 		idify();
-		try {
-			if (this.basedOn.id == null)
-				this.basedOn = null;
-			else
-				this.basedOn = Form.findById(this.basedOn.id);
-		} catch (Exception e) {
+		List<Fieldset> fieldsets2 = fieldsets;
+		fieldsets = new ArrayList<Fieldset>();
+		for (Fieldset fieldset : fieldsets2) {
+			if (fieldset.id == null)
+				fieldset = null;
+			else {
+				if (fieldset != null)
+					fieldsets.add(Fieldset.findById(fieldset.id));
+			}
 		}
 	}
 
@@ -140,12 +142,15 @@ public class Form extends JpaModel {
 
 	public static List<Form> findByTerm(Term category) {
 		try {
-			/*					.createQuery("from Form f where f.category.id=?")
-					.setParameter(1, category.id).getResultList();*/
+			/*
+			 * .createQuery("from Form f where f.category.id=?")
+			 * .setParameter(1, category.id).getResultList();
+			 */
 			Long i = category.id;
 			System.out.println("\n\n" + category.id + "\n\n");
 			List<Form> list = JPA.em()
-					.createQuery("from Form f where f.category.id=?").setParameter(1, i).getResultList();
+					.createQuery("from Form f where f.category.id=?")
+					.setParameter(1, i).getResultList();
 			return list;
 		} catch (Exception e) {
 			System.out.println("\n\n" + e + "\n\n");
