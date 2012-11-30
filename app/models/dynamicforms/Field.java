@@ -26,7 +26,7 @@ public class Field extends JpaModel {
 	@Transient
 	public When whenEnum; // aka määritys tiheys
 
-	@Column(name="tiheys")
+	@Column(name = "tiheys")
 	public Integer when;
 
 	@Required
@@ -51,7 +51,7 @@ public class Field extends JpaModel {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Required
 	@NotNull
-	public Form form;
+	public Fieldset fieldset;
 
 	public Double min;
 
@@ -69,9 +69,9 @@ public class Field extends JpaModel {
 
 	@PostLoad
 	private void intToEnum() {
-		if(when != null)
+		if (when != null)
 			whenEnum = When.setValue(this.when);
-		if(fieldType != null)
+		if (fieldType != null)
 			fieldTypeEnum = FieldType.setValue(this.fieldType);
 	}
 
@@ -79,7 +79,7 @@ public class Field extends JpaModel {
 	}
 
 	public String toString() {
-		if(fieldType != null)
+		if (fieldType != null)
 			fieldTypeEnum = FieldType.setValue(this.fieldType);
 		StringBuilder stringBuilder = new StringBuilder("Tietotyypiltä ");
 		stringBuilder.append(fieldTypeEnum.toString());
@@ -103,10 +103,10 @@ public class Field extends JpaModel {
 	}
 
 	private void set() {
-		if (this.form.id == null)
-			this.form = null;
+		if (this.fieldset.id == null)
+			this.fieldset = null;
 		else
-			this.form = Form.findById(this.form.id);
+			this.fieldset = Fieldset.findById(this.fieldset.id);
 	}
 
 	public boolean save() {
@@ -145,8 +145,9 @@ public class Field extends JpaModel {
 
 	private void formify() {
 		set();
-		//if (form != null)
-			form.update();
+		// if (form != null)
+		fieldset.formify();
+		fieldset.update();
 	}
 
 	public String validate() {
@@ -178,13 +179,13 @@ public class Field extends JpaModel {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<Field> findByForm(Form form) {
-		if (form == null || form.id == null)
+	public static List<Field> findByFieldset(Fieldset fieldset) {
+		if (fieldset == null || fieldset.id == null)
 			return null;
 		try {
-			Long id = form.id;
+			Long id = fieldset.id;
 			List<Field> fields = JPA.em()
-					.createQuery("from Field f where f.form.id = ?")
+					.createQuery("from Field f where f.fieldset.id = ?")
 					.setParameter(1, id).getResultList();
 			return fields;
 		} catch (Exception e) {
@@ -194,33 +195,17 @@ public class Field extends JpaModel {
 		return null;
 	}
 
-	public static Field findByFormAndId(Form form, Long id) {
-		if (form != null && id != null) {
-			try {
-				Long id2 = form.id;
-				return (Field) JPA
-						.em()
-						.createQuery(
-								"from Field f where f.form.id = ? and f.id = ?")
-						.setParameter(1, id2).setParameter(2, id)
-						.getSingleResult();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
-
-	public static List<Result> headerify(Form form) {
+	public static List<Result> headerify(Fieldset fieldset) {
 		List<Result> headers = new ArrayList<Result>();
-		if (form != null && form.id != null)
+		if (fieldset != null && fieldset.id != null)
 			try {
 				List<Field> legends = JPA
 						.em()
 						.createQuery(
-								"from Field f where f.form = ? and f.fieldType = ?")
-						.setParameter(1, form)
-						.setParameter(2, FieldType.LEGEND.getValue()).getResultList();
+								"from Field f where f.fieldset = ? and f.fieldType = ?")
+						.setParameter(1, fieldset)
+						.setParameter(2, FieldType.LEGEND.getValue())
+						.getResultList();
 				for (Field legend : legends)
 					headers.add(new Result(legend));
 			} catch (Exception e) {
