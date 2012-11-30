@@ -190,17 +190,22 @@ public class Result extends JpaModel implements Comparable<Result> {
 			if (batch != null) {
 				List<Results> results = Results.findByBatch(batch);
 				if (results != null && !results.isEmpty()) {
+					List<Long> ids = new ArrayList<Long>();
+					for (Results result : results)
+						for (Result r : result.results)
+							ids.add(r.id);
 					List<Result> list = JPA
 							.em()
 							.createQuery(
 									"from Result r where "
 											+ "r.field.isImportant = true and "
-											+ "" + "r in elements (?)")
-							.setParameter(1, results).getResultList();
+											+ "r.id in elements (?)")
+							.setParameter(1, ids).getResultList();
 					return list;
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
