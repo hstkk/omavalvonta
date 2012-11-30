@@ -29,7 +29,7 @@ public class FinalProduct extends JpaModel {
 
 	@Required
 	@NotNull
-	public Date date;
+	public Date date = new Date();
 
 	@Required
 	@NotNull

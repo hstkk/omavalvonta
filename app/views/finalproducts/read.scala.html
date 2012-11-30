@@ -7,7 +7,8 @@
 
 @main("Erän " + finalProduct.batch.toString + " myyntihyväksyntä") {
 	@tabs() {
-		<li><a href="@routes.FinalProducts.edit(finalProduct.id)">Muokkaa</a></li>
+		<li class="active"><a href="@routes.FinalProducts.read(finalProduct.batch.id)">Myyntihyväksyntä</a></li>
+		<li><a href="@routes.FinalProducts.edit(finalProduct.batch.id)">Muokkaa</a></li>
 	}
 	@table() {
 		@thead() {
