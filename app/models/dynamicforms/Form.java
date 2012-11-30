@@ -138,15 +138,18 @@ public class Form extends JpaModel {
 		return null;
 	}
 
-	public static List<Form> findByCategory(Term category) {
+	public static List<Form> findByTerm(Term category) {
 		try {
-			List<Form> list = JPA
-					.em()
-					.createQuery(
-							"from Form f where category=? order by f.name asc")
-					.setParameter(1, category).getResultList();
+			/*					.createQuery("from Form f where f.category.id=?")
+					.setParameter(1, category.id).getResultList();*/
+			Long i = category.id;
+			System.out.println("\n\n" + category.id + "\n\n");
+			List<Form> list = JPA.em()
+					.createQuery("from Form f where f.category.id=?").setParameter(1, i).getResultList();
 			return list;
 		} catch (Exception e) {
+			System.out.println("\n\n" + e + "\n\n");
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -194,7 +197,7 @@ public class Form extends JpaModel {
 				stringBuilder.append("<h5>");
 				stringBuilder.append(category.name);
 				stringBuilder.append("</h5>");
-				List<Form> forms = findByCategory(category);
+				List<Form> forms = findByTerm(category);
 				for (Form form : forms) {
 					stringBuilder.append("<label class=\"checkbox\">");
 					stringBuilder
