@@ -83,4 +83,19 @@ public class Fieldset extends JpaModel {
 	public static Map<String, String> options() {
 		return options(null);
 	}
+
+	public static List<Fieldset> findByForm(Form form) {
+		if (form == null || form.id == null)
+			return null;
+		try {
+			List<Fieldset> fields = JPA.em()
+					.createQuery("from Fieldset f where f in elements(?)")
+					.setParameter(1, form.fieldsets).getResultList();
+			return fields;
+		} catch (Exception e) {
+			System.out.println("\n\n" + e + "\n\n");
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
