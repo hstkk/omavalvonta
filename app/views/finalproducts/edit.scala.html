@@ -1,0 +1,34 @@
+@(batch: Batch, FORM: play.data.Form[forms.FinalProduct])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.alerts._
+@import tags.forms._
+@import tags.navs._
+
+@main("Uusi erä") {
+	@tabs() {
+		<li><a href="@routes.FinalProducts.read(batch.id)">Myyntihyväksyntä</a></li>
+		<li class="active"><a href="@routes.FinalProducts.edit(batch.id)">Muokkaa</a></li>
+	}
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	@summary(models.dynamicforms.Result.findImportantByBatch(batch))
+	@helper.form(action = routes.FinalProducts.save(batch.id), 'class -> "form-horizontal"){
+		<fieldset>
+			<legend>Lopputuotteen punnitus</legend>
+			@helper.inputText(FORM("amount"), '_label -> "paino", '_class -> "control-group hide")
+			@helper.select(FORM("unit.id"), options = options(models.Term.options(models.TermCategory.UNIT)), '_default -> "", '_label -> "mittayksikkö")
+		</fieldset>
+		<fieldset>
+			<legend>Myyntihyväksyntä</legend>
+			@helper.select(FORM("destiny.id"), options = options(models.Term.options(models.TermCategory.DESTINY)), '_default -> "", '_label -> "erän kohtalo")
+			@helper.textarea(FORM("comment"), '_label -> "huomioita")
+		</fieldset>
+		@actions()
+	}
+}
