@@ -1,4 +1,4 @@
-@(FORM: play.data.Form[models.dynamicforms.Field], f: models.dynamicforms.Form, fields: List[models.dynamicforms.Field])
+@(FORM: play.data.Form[models.dynamicforms.Field], fieldset2: models.dynamicforms.Fieldset, fields: List[models.dynamicforms.Field])
 
 @import helper._
 @import helper.twitterBootstrap._
@@ -44,19 +44,6 @@
 			<li class="active"><a href="#">Uusi</a></li>
 		}
 	}
-	<ul>
-		@if(f.description != ""){
-			<li>@f.description</li>
-		}
-		@if(f.basedOn != null){
-			<li>Perustuu lomakkeeseen <a href="@controllers.dynamicforms.routes.Forms.update(f.basedOn.id)">@f.basedOn</a></li>
-		}
-	</ul>
-	@if(f.html != null){
-		<a class="btn btn-primary" href="@controllers.dynamicforms.routes.Forms.preview(f.id)" title="Esikatsele">Esikatsele</a>
-	}
-	<a class="btn" href="@controllers.dynamicforms.routes.Forms.update(f.id)" title="Muokkaa">Muokkaa</a>
-
 	@manageFields(fields)
 	@if(!FORM("id").valueOr("").equals("")){
 		<h2>Muokkaa kenttää</h2>
@@ -69,11 +56,11 @@
 		}
 	}
 	
-	@helper.form(action = controllers.dynamicforms.routes.Fields.save(f.id), 'class -> "form-horizontal"){
+	@helper.form(action = controllers.dynamicforms.routes.Fields.save(fieldset2.id), 'class -> "form-horizontal"){
 		@hidden() {
 			@FORM("id").value
 		}
-		<input type="hidden" name="form.id" value="@f.id"/>
+		<input type="hidden" name="fieldset.id" value="@fieldset2.id"/>
 		@helper.inputText(FORM("name"), '_label -> "määritys", '_class -> "control-group")
 		@helper.select(FORM("when"), options = options(models.dynamicforms.When.map), '_default -> "", '_label -> "määritystiheys")
 		@helper.textarea(FORM("help"), '_label -> "vaatimus")

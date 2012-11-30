@@ -66,14 +66,14 @@ GET		/yllapito/lomake/:formId							controllers.dynamicforms.Forms.update(formId
 GET		/yllapito/lomake/:formId/esikatselu					controllers.dynamicforms.Forms.preview(formId: Long)
 
 # Fieldset management
-POST	/yllapito/lomake/:formId/kentat						controllers.dynamicforms.Fieldsets.save(formId: Long)
-GET		/yllapito/lomake/:formId/kentat/uusi				controllers.dynamicforms.Fieldsets.create(formId: Long)
-GET		/yllapito/lomake/:formId/kentat/:fieldId			controllers.dynamicforms.Fieldsets.update(formId: Long, fieldId: Long)
+#POST	/yllapito/lomake/:formId/kentat						controllers.dynamicforms.Fieldsets.save(formId: Long)
+#GET		/yllapito/lomake/:formId/kentat/uusi				controllers.dynamicforms.Fieldsets.create(formId: Long)
+#GET		/yllapito/lomake/:formId/kentat/:fieldId			controllers.dynamicforms.Fieldsets.update(formId: Long, fieldId: Long)
 
 # Field management
-POST	/yllapito/lomake/:formId/kentta						controllers.dynamicforms.Fields.save(formId: Long)
-GET		/yllapito/lomake/:formId/kentta						controllers.dynamicforms.Fields.create(formId: Long)
-GET		/yllapito/lomake/:formId/kentta/:fieldId			controllers.dynamicforms.Fields.update(formId: Long, fieldId: Long)
+POST	/yllapito/lomake/kentat/:fieldsetId/kentta			controllers.dynamicforms.Fields.save(fieldsetId: Long)
+GET		/yllapito/lomake/kentat/:fieldsetId/kentta			controllers.dynamicforms.Fields.create(fieldsetId: Long)
+GET		/yllapito/lomake/kentat/:fieldsetId/kentta/:fieldId	controllers.dynamicforms.Fields.update(fieldsetId: Long, fieldId: Long)
 
 # Final product
 GET		/myyntihyvaksynnat									controllers.FinalProducts.index
