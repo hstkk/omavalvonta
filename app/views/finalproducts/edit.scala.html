@@ -7,7 +7,7 @@
 @import tags.forms._
 @import tags.navs._
 
-@main("Uusi erä") {
+@main("Erän " + batch.toString + " myyntihyväksyntä") {
 	@tabs() {
 		<li><a href="@routes.FinalProducts.read(batch.id)">Myyntihyväksyntä</a></li>
 		<li class="active"><a href="@routes.FinalProducts.edit(batch.id)">Muokkaa</a></li>
