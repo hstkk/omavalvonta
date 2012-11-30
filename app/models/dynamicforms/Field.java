@@ -197,13 +197,15 @@ public class Field extends JpaModel {
 	public static Field findByFormAndId(Form form, Long id) {
 		if (form != null && id != null) {
 			try {
+				Long id2 = form.id;
 				return (Field) JPA
 						.em()
 						.createQuery(
-								"from Field f where f.form = ? and f.id = ?")
-						.setParameter(1, form).setParameter(2, id)
+								"from Field f where f.form.id = ? and f.id = ?")
+						.setParameter(1, id2).setParameter(2, id)
 						.getSingleResult();
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		return null;
