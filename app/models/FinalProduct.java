@@ -31,6 +31,7 @@ public class FinalProduct extends JpaModel {
 	@NotNull
 	public Date date = new Date();
 
+	@ManyToOne(cascade = CascadeType.ALL)
 	@Required
 	@NotNull
 	public Term destiny;
@@ -39,13 +40,14 @@ public class FinalProduct extends JpaModel {
 	@NotNull
 	public Double amount;
 
+	@ManyToOne(cascade = CascadeType.ALL)
 	@Required
 	@NotNull
 	public Term unit;
 
+	@ManyToOne(cascade = CascadeType.ALL)
 	@Required
 	@NotNull
-	@Column(unique = true, updatable = false)
 	public Batch batch;
 
 	@Lob
