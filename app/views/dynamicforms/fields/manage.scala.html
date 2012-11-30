@@ -77,6 +77,7 @@
 		@helper.inputText(FORM("name"), '_label -> "määritys", '_class -> "control-group")
 		@helper.select(FORM("when"), options = options(models.dynamicforms.When.map), '_default -> "", '_label -> "määritystiheys")
 		@helper.textarea(FORM("help"), '_label -> "vaatimus")
+		@helper.checkbox(FORM("isImportant"), '_label -> None, '_text -> "myyntihyväksyntään", '_showConstraints -> false)
 		@helper.checkbox(FORM("isRequired"), '_label -> None, '_text -> "vaadittu", '_showConstraints -> false)
 		@helper.checkbox(FORM("isSigned"), '_label -> None, '_text -> "kuitattava", '_showConstraints -> false)
 		@helper.select(FORM("fieldType"), options = options(models.dynamicforms.FieldType.map), '_default -> "", '_label -> "tietotyyppi")
