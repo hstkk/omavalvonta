@@ -63,7 +63,7 @@ public class FinalProducts extends Controller {
 			}
 		}
 		flash("error", "Tallennus epäonnistui!");
-		return ok(views.html.finalproducts.edit.render(filledForm));
+		return ok(views.html.finalproducts.edit.render(batch, filledForm));
 	}
 
 	@Transactional(readOnly = true)
@@ -73,7 +73,7 @@ public class FinalProducts extends Controller {
 			return notFound();
 		FinalProduct result = FinalProduct.findByBatch(batch);
 		if (result != null)
-			return ok(views.html.finalproducts.edit.render(FORM.fill(result)));
-		return ok(views.html.finalproducts.edit.render(FORM));
+			return ok(views.html.finalproducts.edit.render(batch, FORM.fill(new forms.FinalProduct(result))));
+		return ok(views.html.finalproducts.edit.render(batch, FORM));
 	}
 }
