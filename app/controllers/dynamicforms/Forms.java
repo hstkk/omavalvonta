@@ -99,8 +99,6 @@ public class Forms extends Controller {
 				.findById(formId);
 		if (form == null || form.html == null)
 			return notFound();
-		if (form.basedOn != null)
-			form.basedOn = models.dynamicforms.Form.findById(form.basedOn.id);
 		return ok(views.html.dynamicforms.forms.preview.render(form));
 	}
 }

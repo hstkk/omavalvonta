@@ -195,15 +195,15 @@ public class Field extends JpaModel {
 		return null;
 	}
 
-	public static List<Result> headerify(Fieldset fieldset) {
+	public static List<Result> headerify(Form form) {
 		List<Result> headers = new ArrayList<Result>();
-		if (fieldset != null && fieldset.id != null)
+		if (form != null && form.id != null)
 			try {
 				List<Field> legends = JPA
 						.em()
 						.createQuery(
-								"from Field f where f.fieldset = ? and f.fieldType = ?")
-						.setParameter(1, fieldset)
+								"from Field f where f.fieldset in elements (?) and f.fieldType = ?")
+						.setParameter(1, form)
 						.setParameter(2, FieldType.LEGEND.getValue())
 						.getResultList();
 				for (Field legend : legends)
