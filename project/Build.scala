@@ -9,6 +9,7 @@ object ApplicationBuild extends Build {
 
     val appDependencies = Seq(
 		javaCore,
+		jdbc,
 		javaJdbc,
 		javaJpa,
 		filters,

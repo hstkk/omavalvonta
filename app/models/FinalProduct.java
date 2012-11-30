@@ -55,10 +55,14 @@ public class FinalProduct extends JpaModel {
 
 	public static FinalProduct findByBatch(Batch batch) {
 		try {
-			if (batch != null)
-				return (FinalProduct) JPA.em()
-						.createQuery("from FinalProduct " + "where batch = ?")
-						.setParameter(1, batch).getSingleResult();
+			if (batch != null) {
+				Long id = batch.id;
+				return (FinalProduct) JPA
+						.em()
+						.createQuery(
+								"from FinalProduct " + "where batch.id = ?")
+						.setParameter(1, id).getSingleResult();
+			}
 		} catch (Exception e) {
 		}
 		return null;
