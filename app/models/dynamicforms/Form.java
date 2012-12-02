@@ -32,10 +32,6 @@ public class Form extends JpaModel {
 	@Lob
 	public String description = "";
 
-	@Lob
-	@NotNull
-	public String html = "";
-
 	@Required
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term category;

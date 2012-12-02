@@ -48,11 +48,6 @@ public class Field extends JpaModel {
 	@NotNull
 	public boolean isImportant;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@Required
-	@NotNull
-	public Fieldset fieldset;
-
 	public Double min;
 
 	public Double max;
