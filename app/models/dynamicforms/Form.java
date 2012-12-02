@@ -52,24 +52,6 @@ public class Form extends Model<Form> {
 		return name;
 	}
 
-	public static Page page(int index) {
-		try {
-			int size = Play.application().configuration().getInt("page.size");
-			if (index < 1)
-				index = 1;
-			Long rows = (Long) JPA.em()
-					.createQuery("select count(*) from Form").getSingleResult();
-			List<Form> list = JPA.em()
-					.createQuery("from Form f order by f.name asc")
-					.setFirstResult((index - 1) * size).setMaxResults(size)
-					.getResultList();
-			if (rows != null && list != null && !list.isEmpty())
-				return new Page(index, size, rows, list);
-		} catch (Exception e) {
-		}
-		return null;
-	}
-
 	public static List<Form> findByTerm(Term category) {
 		try {
 			Long i = category.id;

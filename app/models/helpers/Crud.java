@@ -1,7 +1,11 @@
 package models.helpers;
 
 import java.io.Serializable;
+import java.util.List;
 
+import models.Term;
+
+import play.Play;
 import play.db.jpa.JPA;
 
 public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
@@ -11,6 +15,8 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 	public Crud(Class<T> clazz) {
 		this.clazz = clazz;
 	}
+
+	//TODO order by
 
 	@Override
 	public boolean create(T t) {
@@ -58,9 +64,22 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 		}
 	}
 
+	// TODO
 	@Override
 	public Page<T> page(int index) {
-		// TODO Auto-generated method stub
+		try {
+			int size = Play.application().configuration().getInt("page.size");
+			if (index < 1)
+				index = 1;
+			Long rows = (Long) JPA.em().createQuery("select count(*) from ?")
+					.setParameter(1, clazz).getSingleResult();
+			List<T> list = JPA.em().createQuery("from ? order by name")
+					.setParameter(1, clazz).setFirstResult((index - 1) * size)
+					.setMaxResults(size).getResultList();
+			if (rows != null && list != null && !list.isEmpty())
+				return new Page<T>(index, size, rows, list);
+		} catch (Exception e) {
+		}
 		return null;
 	}
 }
