@@ -58,7 +58,7 @@ GET		/yllapito/tuote/:productId							controllers.Products.update(productId: Lon
 GET		/tuote/:productId									controllers.Products.batch(productId: Long)
 
 # Fieldset management
-GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.index
+GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.page(index: Int = 1)
 GET		/yllapito/lomakkeet/kentat/sivu/:index				controllers.dynamicforms.Fieldsets.page(index: Int)
 #GET		/yllapito/lomakkeet/kentat/uusi
 #POST		/yllapito/lomakkeet/kentat/uusi
@@ -68,7 +68,7 @@ GET		/yllapito/lomakkeet/kentat/sivu/:index				controllers.dynamicforms.Fieldset
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/esikatselu
 
 # Form management
-GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.index
+GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.page(index: Int = 1)
 #GET		/yllapito/lomakkeet/uusi
 #POST	/yllapito/lomakkeet/uusi
 GET		/yllapito/lomakkeet/sivu/:index						controllers.dynamicforms.Forms.page(index: Int)
