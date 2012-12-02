@@ -13,7 +13,9 @@ import models.Ingredient;
 import models.Product;
 import models.Term;
 import models.TermCategory;
+import models.helpers.Crud;
 import models.helpers.JpaModel;
+import models.helpers.Model;
 import models.helpers.Page;
 import utils.*;
 
@@ -23,7 +25,13 @@ import play.db.jpa.*;
 
 @Entity
 @Audited
-public class Fieldset extends JpaModel {
+public class Fieldset extends Model<Fieldset> {
+
+	public Fieldset() {
+		super(Fieldset.class);
+	}
+
+	public final static Crud<Fieldset, Long> crud = new Crud<>(Fieldset.class);
 
 	@Required
 	@NotNull
@@ -33,29 +41,8 @@ public class Fieldset extends JpaModel {
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Field> fields = new ArrayList<Field>();
 
-	public Fieldset() {
-	}
-
 	public String toString() {
 		return name;
-	}
-
-	@PrePersist
-	public void formify() {
-		this.html = utils.Form.formify(Field.findByFieldset(this));
-	}
-
-	public String toForm() {
-		return this.html;
-	}
-
-	public static Fieldset findById(Long id) {
-		try {
-			if (id != null)
-				return JPA.em().find(Fieldset.class, id);
-		} catch (Exception e) {
-		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")

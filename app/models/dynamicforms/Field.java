@@ -8,14 +8,23 @@ import javax.validation.constraints.*;
 import org.hibernate.envers.Audited;
 
 import models.TermCategory;
+import models.helpers.Crud;
 import models.helpers.JpaModel;
+import models.helpers.Model;
 
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
 @Audited
-public class Field extends JpaModel {
+public class Field extends Model<Field> {
+
+	public Field() {
+		super(Field.class);
+	}
+
+	public final static Crud<Field, Long> crud = new Crud<>(Field.class);
+
 	@Transient
 	public FieldType fieldTypeEnum;
 
@@ -70,9 +79,6 @@ public class Field extends JpaModel {
 			fieldTypeEnum = FieldType.setValue(this.fieldType);
 	}
 
-	public Field() {
-	}
-
 	public String toString() {
 		if (fieldType != null)
 			fieldTypeEnum = FieldType.setValue(this.fieldType);
@@ -97,54 +103,6 @@ public class Field extends JpaModel {
 		return stringBuilder.toString();
 	}
 
-	private void set() {
-		if (this.fieldset.id == null)
-			this.fieldset = null;
-		else
-			this.fieldset = Fieldset.findById(this.fieldset.id);
-	}
-
-	public boolean save() {
-		try {
-			set();
-			JPA.em().persist(this);
-			formify();
-			return true;
-		} catch (Exception e) {
-			System.out.print(e);
-			return false;
-		}
-	}
-
-	public boolean delete() {
-		try {
-			JPA.em().remove(this);
-			formify();
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	public boolean update() {
-		try {
-			set();
-			JPA.em().merge(this);
-			formify();
-			return true;
-		} catch (Exception e) {
-			System.out.print(e);
-			return false;
-		}
-	}
-
-	private void formify() {
-		set();
-		// if (form != null)
-		fieldset.formify();
-		fieldset.update();
-	}
-
 	public String validate() {
 		StringBuilder result = new StringBuilder();
 		if (fieldTypeEnum != FieldType.INT && fieldTypeEnum != FieldType.DOUBLE) {
@@ -155,22 +113,6 @@ public class Field extends JpaModel {
 		} else if (min != null && max != null && min >= max)
 			result.append("Minimi ei voi olla maksimia suurempi.");
 		return result.length() > 0 ? result.toString() : null;
-	}
-
-	/**
-	 * Finds field by field id.
-	 * 
-	 * @param Fields
-	 *            id.
-	 * @return Field object if find is successful else null.
-	 */
-	public static Field findById(Long id) {
-		try {
-			if (id != null)
-				return JPA.em().find(Field.class, id);
-		} catch (Exception e) {
-		}
-		return null;
 	}
 
 	@SuppressWarnings("unchecked")
