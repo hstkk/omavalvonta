@@ -2,6 +2,15 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Naming conventions
+#GET	/foo				page?sivu=1
+#GET	/foo/uusi			new
+#POST	/foo				create
+#GET	/foo/:id			show
+#GET	/foo/:id/muokkaa	edit
+#POST	/foo/:id			update
+#POST	/foo/:id/poista		destroy
+
 # Home page
 GET     /													controllers.Application.index
 
@@ -58,31 +67,29 @@ GET		/yllapito/tuote/:productId							controllers.Products.update(productId: Lon
 GET		/tuote/:productId									controllers.Products.batch(productId: Long)
 
 # Fieldset management
-GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.page(index: Int = 1)
-GET		/yllapito/lomakkeet/kentat/sivu/:index				controllers.dynamicforms.Fieldsets.page(index: Int)
-#GET		/yllapito/lomakkeet/kentat/uusi
-#POST		/yllapito/lomakkeet/kentat/uusi
-#GET		/yllapito/lomakkeet/kentat/:fieldsetId
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/poista
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/esikatselu
+GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.page(sivu: Integer ?= 1)
+#POST		/yllapito/lomakkeet/kentat						controllers.dynamicforms.Fieldsets.create
+#GET		/yllapito/lomakkeet/kentat/uusi					controllers.dynamicforms.Fieldsets.new
+#GET		/yllapito/lomakkeet/kentat/:fieldsetId			controllers.dynamicforms.Fieldsets.show(fieldsetId: Long)
+#POST		/yllapito/lomakkeet/kentat/:fieldsetId			controllers.dynamicforms.Fieldsets.update(fieldsetId: Long)
+#GET		/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa	controllers.dynamicforms.Fieldsets.edit(fieldsetId: Long)
+#POST		/yllapito/lomakkeet/kentat/:fieldsetId/poista	controllers.dynamicforms.Fieldsets.destroy(fieldsetId: Long)
 
-# Form management
-GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.page(index: Int = 1)
-#GET		/yllapito/lomakkeet/uusi
-#POST	/yllapito/lomakkeet/uusi
-GET		/yllapito/lomakkeet/sivu/:index						controllers.dynamicforms.Forms.page(index: Int)
-#GET		/yllapito/lomake/:formId
-#POST	/yllapito/lomake/:formId
-#GET		/yllapito/lomake/:formId/poista
-#GET		/yllapito/lomake/:formId/esikatselu
+# Form managementh
+GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.page(sivu: Integer ?= 1)
+#GET		/yllapito/lomakkeet/uusi						controllers.dynamicforms.Forms.new
+#POST		/yllapito/lomakkeet								controllers.dynamicforms.Forms.create
+#GET		/yllapito/lomake/:formId						controllers.dynamicforms.Forms.show(formId: Long)
+#POST		/yllapito/lomake/:formId						controllers.dynamicforms.Forms.update(formId: Long)
+#GET		/yllapito/lomake/:formId/muokkaa				controllers.dynamicforms.Forms.edit(formId: Long)
+#GET		/yllapito/lomake/:formId/poista					controllers.dynamicforms.Forms.destroy(formId: Long)
 
 # Field management
-#GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/uusi
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/uusi
-#GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/poista
+#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta					controllers.dynamicforms.Forms.create(fieldsetId: Long)
+#GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/uusi				controllers.dynamicforms.Forms.new(fieldsetId: Long)
+#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId			controllers.dynamicforms.Forms.update(fieldsetId: Long, fieldId: Long)
+#GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.dynamicforms.Forms.edit(fieldsetId: Long, fieldId: Long)
+#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/poista	controllers.dynamicforms.Forms.destroy(fieldsetId: Long, fieldId: Long)
 
 # Final product
 GET		/myyntihyvaksynnat									controllers.FinalProducts.index
