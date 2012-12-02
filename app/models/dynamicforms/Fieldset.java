@@ -29,8 +29,9 @@ public class Fieldset extends JpaModel {
 	@NotNull
 	public String name;
 
-	@Lob
-	public String html = "";
+	@Required
+	@ManyToMany(cascade = CascadeType.ALL)
+	public List<Field> fields = new ArrayList<Field>();
 
 	public Fieldset() {
 	}
