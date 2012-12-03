@@ -25,6 +25,7 @@ public class Crud<T> extends Controller implements CrudInterface {
 	}
 
 	@Override
+	@Transactional
 	public Result page(int index) {
 		return ok(PAGETEMPLATE.render(CRUD.page(index)));
 	}

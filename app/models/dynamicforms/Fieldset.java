@@ -28,11 +28,11 @@ import play.db.jpa.*;
 public class Fieldset extends Model<Fieldset> {
 
 	public Fieldset() {
-		super(Fieldset.class);
+		super(Fieldset.class, "Fieldset");
 	}
 
 	public final static Crud<Fieldset, Long> crud = new Crud<Fieldset, Long>(
-			Fieldset.class);
+			Fieldset.class, "Fieldset");
 
 	@Required
 	@NotNull
