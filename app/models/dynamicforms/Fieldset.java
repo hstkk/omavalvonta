@@ -38,7 +38,6 @@ public class Fieldset extends Model<Fieldset> {
 	@NotNull
 	public String name;
 
-	@Required
 	@Lob
 	public String description;
 

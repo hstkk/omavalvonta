@@ -8,4 +8,8 @@ public interface CrudInterface {
 	Result fresh();
 
 	Result create();
+
+	Result edit(Long id);
+
+	Result update(Long id);
 }
