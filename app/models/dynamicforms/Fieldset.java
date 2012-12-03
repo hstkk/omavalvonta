@@ -31,11 +31,20 @@ public class Fieldset extends Model<Fieldset> {
 		super(Fieldset.class);
 	}
 
-	public final static Crud<Fieldset, Long> crud = new Crud<Fieldset, Long>(Fieldset.class);
+	public final static Crud<Fieldset, Long> crud = new Crud<Fieldset, Long>(
+			Fieldset.class);
 
 	@Required
 	@NotNull
 	public String name;
+
+	@Required
+	@Lob
+	public String description;
+
+	@Required
+	@NotNull
+	public boolean isActive;
 
 	@Required
 	@ManyToMany(cascade = CascadeType.ALL)
