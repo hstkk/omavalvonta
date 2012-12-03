@@ -49,6 +49,14 @@ public class Fieldset extends Model<Fieldset> {
 		return name;
 	}
 
+	// TODO
+	@Override
+	public void fill(Fieldset fieldset) {
+		this.name = fieldset.name;
+		this.description = fieldset.name;
+		this.isActive = fieldset.isActive;
+	}
+
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> options(String fieldsetId) {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
