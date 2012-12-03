@@ -58,4 +58,31 @@ public class Crud<T> extends Controller implements CrudInterface {
 		flash("error", "Tallennus epäonnistui!");
 		return badRequest(CREATETEMPLATE.render(filledForm));
 	}
+
+	// TODO
+	@Override
+	@Transactional
+	public Result update(Long id) {
+		Form<T> filledForm = FORM.bindFromRequest();
+		if (filledForm.field("action").value().equals("peruuta")) {
+			flash("warning", "Tallennus peruutettu!");
+			// return redirect(page(1));
+			return page(1);
+		} else if (!filledForm.hasErrors()) {
+			T t = filledForm.get();
+			if (CRUD.update(t)) {
+				flash("success", "Tallennus onnistui!");
+				// return redirect(routes.dynamicforms.Fieldsets.crud.page(1));
+				return page(1);
+			}
+		}
+		flash("error", "Tallennus epäonnistui!");
+		return badRequest(CREATETEMPLATE.render(filledForm));
+	}
+
+	@Override
+	public Result edit(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
