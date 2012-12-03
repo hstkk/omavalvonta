@@ -1,0 +1,26 @@
+@(id: Long, FORM: play.data.Form[models.dynamicforms.Fieldset])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.alerts._
+@import tags.forms._
+@import tags.navs._
+
+@main("Muokkaa kenttäryhmää"){
+	@tabs() {
+		<li><a href="controllers.dynamicforms.routes.Forms.index">Lomakkeet</a></li>
+		<li><a href="controllers.dynamicforms.routes.Forms.create">Uusi lomake</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.page()">Kenttäryhmät</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.fresh">Uusi kenttäryhmä</a></li>
+	}
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	
+	@helper.form(action = controllers.dynamicforms.routes.Fieldsets.crud.update(id), 'class -> "form-horizontal"){
+		@fields(FORM)
+	}
+}
