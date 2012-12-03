@@ -1,0 +1,12 @@
+@(FORM: play.data.Form[models.dynamicforms.Form])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags.forms._
+
+@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+@helper.select(FORM("category.id"), options = options(models.Term.options(models.TermCategory.FORMTYPE)), '_default -> "", '_label -> "tyyppi")
+@helper.textarea(FORM("description"), '_label -> "kuvaus")
+@helper.checkbox(FORM("isActive"), '_label -> None, '_text -> "Aktiivinen", '_showConstraints -> false)
+fieldsets
+@actions()
