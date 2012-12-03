@@ -45,7 +45,6 @@ public class Fieldset extends Model<Fieldset> {
 	@NotNull
 	public boolean isActive;
 
-	@Required
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Field> fields = new ArrayList<Field>();
 
