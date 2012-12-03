@@ -21,13 +21,13 @@
 			}
 			<tbody>
 				@for(fieldset <- page.getList) {
-					@tr() { <a href="controllers.dynamicforms.routes.Fieldsets.edit(fieldset.id)">fieldset</a>
-						fieldset.description
-						fieldset.isActive }
+					@tr() { <a href="controllers.dynamicforms.routes.Fieldsets.edit(fieldset.id)">@fieldset</a>
+						@fieldset.description
+						@fieldset.isActive }
 				}
 			</tbody>
 		}
-		pagination(page.hasPrevious, controllers.dynamicforms.routes.Forms.page(page.getIndex - 1), page.hasNext, controllers.dynamicforms.routes.Forms.page(page.getIndex + 1))
+		@pagination(page.hasPrevious, controllers.dynamicforms.routes.Fieldsets.crud.page(page.getIndex - 1), page.hasNext, controllers.dynamicforms.routes.Fieldsets.crud.page(page.getIndex + 1))
 	} else {
 		@warning() {
 			Kenttäryhmiä ei löytynyt!
