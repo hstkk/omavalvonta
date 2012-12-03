@@ -13,4 +13,8 @@ public class Model<T> extends Crud<T, Long> {
 	@GeneratedValue
 	@Column(updatable = false)
 	public Long id;
+
+	//TODO
+	public void fill(T t) {
+	}
 }

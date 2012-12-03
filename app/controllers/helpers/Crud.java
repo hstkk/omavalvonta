@@ -19,7 +19,8 @@ public class Crud<T> extends Controller implements CrudInterface {
 
 	public Crud(Class<T> clazz, models.helpers.Crud<T, Long> CRUD,
 			Form<T> FORM, Template1<models.helpers.Page<T>, Html> PAGETEMPLATE,
-			Template1<Form<T>, Html> CREATETEMPLATE, Template2<Long, Form<T>, Html> UPDATETEMPLATE) {
+			Template1<Form<T>, Html> CREATETEMPLATE,
+			Template2<Long, Form<T>, Html> UPDATETEMPLATE) {
 		this.clazz = clazz;
 		this.CRUD = CRUD;
 		this.FORM = FORM;
@@ -65,7 +66,7 @@ public class Crud<T> extends Controller implements CrudInterface {
 	@Transactional
 	public Result update(Long id) {
 		T t = CRUD.findById(id);
-		if(t == null)
+		if (t == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
@@ -73,7 +74,7 @@ public class Crud<T> extends Controller implements CrudInterface {
 			// return redirect(page(1));
 			return page(1);
 		} else if (!filledForm.hasErrors()) {
-			T t = filledForm.get();
+			t = filledForm.get();
 			if (CRUD.update(t)) {
 				flash("success", "Tallennus onnistui!");
 				// return redirect(routes.dynamicforms.Fieldsets.crud.page(1));
@@ -87,7 +88,7 @@ public class Crud<T> extends Controller implements CrudInterface {
 	@Override
 	public Result edit(Long id) {
 		T t = CRUD.findById(id);
-		if(t == null)
+		if (t == null)
 			return notFound();
 		Form<T> filledForm = FORM.fill(t);
 		return ok(UPDATETEMPLATE.render(id, filledForm));
