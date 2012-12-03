@@ -31,7 +31,9 @@ public class Fieldsets extends Controller {
 	 */
 	final static Template1<models.helpers.Page<Fieldset>, Html> PAGETEMPLATE = views.html.dynamicforms.fieldsets.page
 			.ref();
+	final static Template1<Form<Fieldset>, Html> CREATETEMPLATE = views.html.dynamicforms.fieldsets.create
+			.ref();
 
 	public final static Crud<Fieldset> crud = new Crud<Fieldset>(
-			Fieldset.class, CRUD, FORM, PAGETEMPLATE);
+			Fieldset.class, CRUD, FORM, PAGETEMPLATE, CREATETEMPLATE);
 }

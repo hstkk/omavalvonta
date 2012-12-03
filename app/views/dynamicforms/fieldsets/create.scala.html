@@ -1,0 +1,26 @@
+@(FORM: play.data.Form[models.dynamicforms.Fieldset])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.alerts._
+@import tags.forms._
+@import tags.navs._
+
+@main("Uusi kenttäryhmä"){
+	@tabs() {
+		<li><a href="controllers.dynamicforms.routes.Forms.index">Lomakkeet</a></li>
+		<li><a href="controllers.dynamicforms.routes.Forms.create">Uusi lomake</a></li>
+		<li><a href="@(controllers.dynamicforms.routes.Fieldsets.crud.page _)">Kenttäryhmät</a></li>
+		<li class="active"><a href="#">Uusi kenttäryhmä</a></li>
+	}
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	
+	@helper.form(action = controllers.dynamicforms.routes.Fieldsets.crud.create, 'class -> "form-horizontal"){
+		@fields(FORM)
+	}
+}

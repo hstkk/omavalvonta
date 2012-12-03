@@ -68,8 +68,8 @@ GET		/tuote/:productId									controllers.Products.batch(productId: Long)
 
 # Fieldset management
 GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.page(sivu: Int ?= 1)
-#POST		/yllapito/lomakkeet/kentat						controllers.dynamicforms.Fieldsets.create
-#GET		/yllapito/lomakkeet/kentat/uusi					controllers.dynamicforms.Fieldsets.new
+POST	/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.create
+GET		/yllapito/lomakkeet/kentat/uusi						controllers.dynamicforms.Fieldsets.crud.fresh
 #GET		/yllapito/lomakkeet/kentat/:fieldsetId			controllers.dynamicforms.Fieldsets.show(fieldsetId: Long)
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId			controllers.dynamicforms.Fieldsets.update(fieldsetId: Long)
 #GET		/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa	controllers.dynamicforms.Fieldsets.edit(fieldsetId: Long)
