@@ -11,7 +11,7 @@
 	@tabs() {
 		<li><a href="controllers.dynamicforms.routes.Forms.index">Lomakkeet</a></li>
 		<li><a href="controllers.dynamicforms.routes.Forms.create">Uusi lomake</a></li>
-		<li><a href="@(controllers.dynamicforms.routes.Fieldsets.crud.page _)">Kenttäryhmät</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.page()">Kenttäryhmät</a></li>
 		<li class="active"><a href="#">Uusi kenttäryhmä</a></li>
 	}
 	@if(FORM.hasGlobalErrors) {
