@@ -31,7 +31,7 @@ public class Form extends Model<Form> {
 		super(Form.class);
 	}
 
-	public final static Crud<Form, Long> crud = new Crud<>(Form.class);
+	public final static Crud<Form, Long> crud = new Crud<Form, Long>(Form.class);
 
 	@Required
 	@NotNull

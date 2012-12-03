@@ -23,7 +23,7 @@ public class Field extends Model<Field> {
 		super(Field.class);
 	}
 
-	public final static Crud<Field, Long> crud = new Crud<>(Field.class);
+	public final static Crud<Field, Long> crud = new Crud<Field, Long>(Field.class);
 
 	@Transient
 	public FieldType fieldTypeEnum;

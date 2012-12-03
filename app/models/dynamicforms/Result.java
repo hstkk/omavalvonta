@@ -74,7 +74,9 @@ public class Result extends JpaModel implements Comparable<Result> {
 			if (fieldset.reasonId != null)
 				reason = Term.crud.read(fieldset.reasonId);
 			if (fieldset.value != null && fieldset.comment != null) {
-				this.field = Field.findById(fieldset.fieldId);
+				//this.field = Field.crud.findById(fieldset.fieldId);
+				this.field=null;
+				//
 				this.comment = fieldset.comment;
 				switch (field.fieldTypeEnum) {
 				case CHECKBOX:

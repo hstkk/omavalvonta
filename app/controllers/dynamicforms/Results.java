@@ -47,10 +47,12 @@ public class Results extends  Controller {
 	@Transactional(readOnly = true)
 	public static Result create(Long productId, Long formId) {
 		Product product = Product.findById(productId);
-		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
+		models.dynamicforms.Form f = models.dynamicforms.Form.crud.findById(formId);
 		if (product == null || f == null)
 			return notFound();
-		String html = f.html;
+		//String html = f.html;
+		String html = "";
+		//
 		return ok(views.html.dynamicforms.results.manage.render(FORM, product,
 				f, html));
 	}
@@ -81,7 +83,7 @@ public class Results extends  Controller {
 		Product product = Product.findById(productId);
 		if (product == null)
 			return notFound();
-		models.dynamicforms.Form f = models.dynamicforms.Form.findById(formId);
+		models.dynamicforms.Form f = models.dynamicforms.Form.crud.findById(formId);
 		if (f == null)
 			return notFound();
 		Form<Dynamic> filledForm = FORM.bindFromRequest();
@@ -109,8 +111,10 @@ public class Results extends  Controller {
 			}
 		}
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
+//		return badRequest(views.html.dynamicforms.results.manage.render(
+//				filledForm, product, f, f.html));
 		return badRequest(views.html.dynamicforms.results.manage.render(
-				filledForm, product, f, f.html));
+				filledForm, product, f, ""));
 	}
 
 	@Transactional(readOnly = true)
