@@ -4,8 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import play.api.templates.Html;
-import play.api.templates.Template1;
+import play.api.templates.*;
 import play.data.*;
 import static play.data.Form.*;
 
@@ -33,7 +32,10 @@ public class Fieldsets extends Controller {
 			.ref();
 	final static Template1<Form<Fieldset>, Html> CREATETEMPLATE = views.html.dynamicforms.fieldsets.create
 			.ref();
+	final static Template2<Long, Form<Fieldset>, Html> UPDATETEMPLATE = views.html.dynamicforms.fieldsets.update
+			.ref();;
 
 	public final static Crud<Fieldset> crud = new Crud<Fieldset>(
-			Fieldset.class, CRUD, FORM, PAGETEMPLATE, CREATETEMPLATE);
+			Fieldset.class, CRUD, FORM, PAGETEMPLATE, CREATETEMPLATE,
+			UPDATETEMPLATE);
 }

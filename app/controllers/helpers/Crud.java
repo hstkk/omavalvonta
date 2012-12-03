@@ -3,8 +3,7 @@ package controllers.helpers;
 import models.dynamicforms.Fieldset;
 import play.*;
 import play.mvc.*;
-import play.api.templates.Html;
-import play.api.templates.Template1;
+import play.api.templates.*;
 import play.data.*;
 import static play.data.Form.*;
 import play.db.jpa.*;
@@ -16,15 +15,17 @@ public class Crud<T> extends Controller implements CrudInterface {
 	private final Form<T> FORM;
 	private final Template1<models.helpers.Page<T>, Html> PAGETEMPLATE;
 	private final Template1<Form<T>, Html> CREATETEMPLATE;
+	private final Template2<Long, Form<T>, Html> UPDATETEMPLATE;
 
 	public Crud(Class<T> clazz, models.helpers.Crud<T, Long> CRUD,
 			Form<T> FORM, Template1<models.helpers.Page<T>, Html> PAGETEMPLATE,
-			Template1<Form<T>, Html> CREATETEMPLATE) {
+			Template1<Form<T>, Html> CREATETEMPLATE, Template2<Long, Form<T>, Html> UPDATETEMPLATE) {
 		this.clazz = clazz;
 		this.CRUD = CRUD;
 		this.FORM = FORM;
 		this.PAGETEMPLATE = PAGETEMPLATE;
 		this.CREATETEMPLATE = CREATETEMPLATE;
+		this.UPDATETEMPLATE = UPDATETEMPLATE;
 	}
 
 	@Override
@@ -63,6 +64,9 @@ public class Crud<T> extends Controller implements CrudInterface {
 	@Override
 	@Transactional
 	public Result update(Long id) {
+		T t = CRUD.findById(id);
+		if(t == null)
+			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", "Tallennus peruutettu!");
@@ -77,12 +81,15 @@ public class Crud<T> extends Controller implements CrudInterface {
 			}
 		}
 		flash("error", "Tallennus epäonnistui!");
-		return badRequest(CREATETEMPLATE.render(filledForm));
+		return badRequest(UPDATETEMPLATE.render(id, filledForm));
 	}
 
 	@Override
 	public Result edit(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		T t = CRUD.findById(id);
+		if(t == null)
+			return notFound();
+		Form<T> filledForm = FORM.fill(t);
+		return ok(UPDATETEMPLATE.render(id, filledForm));
 	}
 }
