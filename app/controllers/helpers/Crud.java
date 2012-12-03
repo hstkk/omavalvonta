@@ -63,7 +63,7 @@ public class Crud<T> extends Controller implements CrudInterface {
 
 	// TODO
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Result update(Long id) {
 		T t = CRUD.findById(id);
 		if (t == null)
@@ -98,6 +98,7 @@ public class Crud<T> extends Controller implements CrudInterface {
 	}
 
 	@Override
+	@Transactional
 	public Result edit(Long id) {
 		T t = CRUD.findById(id);
 		if (t == null)
