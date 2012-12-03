@@ -26,6 +26,7 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 			JPA.em().persist(t);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -56,6 +57,7 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 			JPA.em().merge(t);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -66,6 +68,7 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 			JPA.em().remove(t);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
