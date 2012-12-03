@@ -4,7 +4,7 @@
 
 # Naming conventions
 #GET	/foo				page?sivu=1
-#GET	/foo/uusi			new
+#GET	/foo/uusi			fresh
 #POST	/foo				create
 #GET	/foo/:id			show
 #GET	/foo/:id/muokkaa	edit
