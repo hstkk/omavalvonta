@@ -49,7 +49,6 @@ public class Form extends Model<Form> {
 	@NotNull
 	public boolean isActive;
 
-	@Required
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Fieldset> fieldsets = new ArrayList<Fieldset>();
 

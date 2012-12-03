@@ -7,26 +7,32 @@
 
 @main("Lomakkeet") {
 	@tabs() {
-		<li class="active"><a href="#">Lomakkeet</a></li>
-		<li><a href="@controllers.dynamicforms.routes.Forms.create">Uusi</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Forms.crud.page()">Lomakkeet</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Forms.crud.fresh">Uusi lomake</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.page()">Kenttäryhmät</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.fresh">Uusi kenttäryhmä</a></li>
 	}
 	@if(page != null){
 		@table() {
 			@thead() {
 				Nimi
 				Kuvaus
+				Aktiivinen
+				Tyyppi
 			}
 			<tbody>
 				@for(form <- page.getList) {
-					@tr() { <a href="@controllers.dynamicforms.routes.Fields.create(form.id)">@form</a>
-						@form.description }
+					@tr() { <a href="@controllers.dynamicforms.routes.Fields.crud.create(form.id)">@form</a>
+						@form.description
+						@form.isActive
+						@form.category }
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, controllers.dynamicforms.routes.Forms.page(page.getIndex - 1), page.hasNext, controllers.dynamicforms.routes.Forms.page(page.getIndex + 1))
+		@pagination(page.hasPrevious, controllers.dynamicforms.routes.Forms.crud.page(page.getIndex - 1), page.hasNext, controllers.dynamicforms.routes.Forms.crud.page(page.getIndex + 1))
 	} else {
 		@warning() {
-			Lomakkeita ei löytynyt, voit kuitenkin <a href="@controllers.dynamicforms.routes.Forms.create">lisätä</a> uusia.
+			Lomakkeita ei löytynyt, voit kuitenkin <a href="@controllers.dynamicforms.routes.Forms.crud.fresh">lisätä</a> uusia.
 		}
 	}
 }
