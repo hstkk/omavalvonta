@@ -45,6 +45,10 @@ public class Form extends Model<Form> {
 	public Term category;
 
 	@Required
+	@NotNull
+	public boolean isActive;
+
+	@Required
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Fieldset> fieldsets = new ArrayList<Fieldset>();
 
