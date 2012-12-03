@@ -71,8 +71,8 @@ GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.pa
 POST	/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.create
 GET		/yllapito/lomakkeet/kentat/uusi						controllers.dynamicforms.Fieldsets.crud.fresh
 #GET		/yllapito/lomakkeet/kentat/:fieldsetId			controllers.dynamicforms.Fieldsets.show(fieldsetId: Long)
-POST	/yllapito/lomakkeet/kentat/:fieldsetId			controllers.dynamicforms.Fieldsets.crud.update(fieldsetId: Long)
-GET		/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa	controllers.dynamicforms.Fieldsets.crud.edit(fieldsetId: Long)
+POST	/yllapito/lomakkeet/kentat/:fieldsetId				controllers.dynamicforms.Fieldsets.crud.update(fieldsetId: Long)
+GET		/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa		controllers.dynamicforms.Fieldsets.crud.edit(fieldsetId: Long)
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/poista	controllers.dynamicforms.Fieldsets.destroy(fieldsetId: Long)
 
 # Form managementh
