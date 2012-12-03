@@ -21,7 +21,7 @@
 			}
 			<tbody>
 				@for(fieldset <- page.getList) {
-					@tr() { <a href="controllers.dynamicforms.routes.Fieldsets.edit(fieldset.id)">@fieldset</a>
+					@tr() { <a href="@controllers.dynamicforms.routes.Fieldsets.crud.edit(fieldset.id)">@fieldset</a>
 						@fieldset.description
 						@fieldset.isActive }
 				}
