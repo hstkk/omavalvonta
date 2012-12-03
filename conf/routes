@@ -76,17 +76,17 @@ GET		/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa		controllers.dynamicforms.Fi
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/poista	controllers.dynamicforms.Fieldsets.destroy(fieldsetId: Long)
 
 # Form managementh
-#GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.page(sivu: Int ?= 1)
-#GET		/yllapito/lomakkeet/uusi						controllers.dynamicforms.Forms.new
-#POST		/yllapito/lomakkeet								controllers.dynamicforms.Forms.create
+GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.page(sivu: Int ?= 1)
+GET		/yllapito/lomakkeet/uusi							controllers.dynamicforms.Forms.crud.fresh
+POST	/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.create
 #GET		/yllapito/lomake/:formId						controllers.dynamicforms.Forms.show(formId: Long)
-#POST		/yllapito/lomake/:formId						controllers.dynamicforms.Forms.update(formId: Long)
-#GET		/yllapito/lomake/:formId/muokkaa				controllers.dynamicforms.Forms.edit(formId: Long)
+POST	/yllapito/lomake/:formId							controllers.dynamicforms.Forms.crud.update(formId: Long)
+GET		/yllapito/lomake/:formId/muokkaa					controllers.dynamicforms.Forms.crud.edit(formId: Long)
 #GET		/yllapito/lomake/:formId/poista					controllers.dynamicforms.Forms.destroy(formId: Long)
 
 # Field management
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta					controllers.dynamicforms.Forms.create(fieldsetId: Long)
-#GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/uusi				controllers.dynamicforms.Forms.new(fieldsetId: Long)
+#GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/uusi				controllers.dynamicforms.Forms.fresh(fieldsetId: Long)
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId			controllers.dynamicforms.Forms.update(fieldsetId: Long, fieldId: Long)
 #GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.dynamicforms.Forms.edit(fieldsetId: Long, fieldId: Long)
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/poista	controllers.dynamicforms.Forms.destroy(fieldsetId: Long, fieldId: Long)
