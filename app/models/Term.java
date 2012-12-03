@@ -25,7 +25,7 @@ import play.db.jpa.*;
 @Audited
 public class Term extends JpaModel {
 
-	public final static Crud<Term, Long> crud = new Crud<>(Term.class);
+	public final static Crud<Term, Long> crud = new Crud<>(Term.class, "Term");
 
 	@Column(name = "name")
 	@Required

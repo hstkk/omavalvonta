@@ -20,10 +20,11 @@ import play.db.jpa.*;
 public class Field extends Model<Field> {
 
 	public Field() {
-		super(Field.class);
+		super(Field.class, "Field");
 	}
 
-	public final static Crud<Field, Long> crud = new Crud<Field, Long>(Field.class);
+	public final static Crud<Field, Long> crud = new Crud<Field, Long>(
+			Field.class, "Field");
 
 	@Transient
 	public FieldType fieldTypeEnum;

@@ -22,7 +22,7 @@ import controllers.helpers.Crud;
 
 public class Fieldsets extends Controller {
 	final static models.helpers.Crud<Fieldset, Long> CRUD = new models.helpers.Crud<Fieldset, Long>(
-			Fieldset.class);
+			Fieldset.class, "Fieldset");
 	final static Form<models.dynamicforms.Fieldset> FORM = form(models.dynamicforms.Fieldset.class);
 	/*
 	 * final static Map<String, String> TEMPLATES; static { Map<String, String>

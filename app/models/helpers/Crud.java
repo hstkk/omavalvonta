@@ -11,9 +11,11 @@ import play.db.jpa.JPA;
 public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 
 	private final Class<T> clazz;
+	private final String table;
 
-	public Crud(Class<T> clazz) {
+	public Crud(Class<T> clazz, String table) {
 		this.clazz = clazz;
+		this.table = table;
 	}
 
 	// TODO order by
@@ -75,14 +77,17 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 			int size = Play.application().configuration().getInt("page.size");
 			if (index < 1)
 				index = 1;
-			Long rows = (Long) JPA.em().createQuery("select count(*) from ?")
-					.setParameter(1, clazz).getSingleResult();
-			List<T> list = JPA.em().createQuery("from ? order by name")
-					.setParameter(1, clazz).setFirstResult((index - 1) * size)
-					.setMaxResults(size).getResultList();
+			Long rows = (Long) JPA.em()
+					.createQuery("select count(*) from " + table)
+					.getSingleResult();
+			List<T> list = JPA.em()
+					.createQuery("from " + table + " order by name")
+					.setFirstResult((index - 1) * size).setMaxResults(size)
+					.getResultList();
 			if (rows != null && list != null && !list.isEmpty())
 				return new Page<T>(index, size, rows, list);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
