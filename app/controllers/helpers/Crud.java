@@ -17,8 +17,7 @@ public class Crud<T> extends Controller implements CrudInterface {
 	private final Template1<models.helpers.Page<T>, Html> PAGETEMPLATE;
 
 	public Crud(Class<T> clazz, models.helpers.Crud<T, Long> CRUD,
-			Form<T> FORM,
-			Template1<models.helpers.Page<T>, Html> PAGETEMPLATE) {
+			Form<T> FORM, Template1<models.helpers.Page<T>, Html> PAGETEMPLATE) {
 		this.clazz = clazz;
 		this.CRUD = CRUD;
 		this.FORM = FORM;
@@ -27,7 +26,6 @@ public class Crud<T> extends Controller implements CrudInterface {
 
 	@Override
 	public Result page(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return ok(PAGETEMPLATE.render(CRUD.page(index)));
 	}
 }
