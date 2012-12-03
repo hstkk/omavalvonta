@@ -31,13 +31,13 @@ public class Form {
 				field = (Field) e;
 			else if (Result.class.isAssignableFrom(e.getClass())) {
 				Result result = (Result) e;
-				field = Field.findById(result.field.id);
+				field = Field.crud.findById(result.field.id);
 				value = result.toString();
 				comment = result.comment;
 				id = result.id;
 			} else if (Fieldset.class.isAssignableFrom(e.getClass())) {
 				Fieldset fieldset = (Fieldset) e;
-				field = Field.findById(fieldset.fieldId);
+				field = Field.crud.findById(fieldset.fieldId);
 				value = fieldset.value;
 				comment = fieldset.comment;
 			}

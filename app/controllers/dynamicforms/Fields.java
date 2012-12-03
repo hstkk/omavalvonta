@@ -22,7 +22,7 @@ public class Fields extends Controller {
 	/** The Constant FORM. */
 	final static Form<Field> FORM = form(Field.class);
 
-	@Transactional(readOnly = true)
+	/*@Transactional(readOnly = true)
 	public static Result create(Long fieldsetId) {
 		Fieldset fieldset= Fieldset.findById(fieldsetId);
 		if (fieldset == null)
@@ -36,7 +36,7 @@ public class Fields extends Controller {
 		Fieldset fieldset = Fieldset.findById(fieldsetId);
 		if (fieldset == null)
 			return notFound();
-		Field field = Field.findById(fieldId);
+		Field field = Field.crud.findById(fieldId);
 		if (field == null)
 			return notFound();
 		List<models.dynamicforms.Field> fields = Field.findByFieldset(fieldset);
@@ -68,5 +68,5 @@ public class Fields extends Controller {
 		List<models.dynamicforms.Field> fields = Field.findByFieldset(fieldset);
 		return badRequest(views.html.dynamicforms.fields.manage.render(
 				filledForm, fieldset, fields));
-	}
+	}*/
 }

@@ -106,14 +106,14 @@ public class Product {
 		this.id = form.id;
 		this.description = form.description;
 		this.name = form.name;
-		if (!form.formIds.isEmpty())
+/*		if (!form.formIds.isEmpty())
 			for (Long id : form.formIds)
 				if (id != null)
 					forms.add(Form.findById(id));
 		if (!form.ingredientIds.isEmpty())
 			for (Long id : form.ingredientIds)
 				if (id != null)
-					ingredients.add(Ingredient.findById(id));
+					ingredients.add(Ingredient.findById(id));*/
 	}
 
 	/*

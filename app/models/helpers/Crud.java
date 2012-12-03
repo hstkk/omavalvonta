@@ -16,7 +16,7 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 		this.clazz = clazz;
 	}
 
-	//TODO order by
+	// TODO order by
 
 	@Override
 	public boolean create(T t) {
@@ -35,13 +35,17 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 	}
 
 	@Override
-	public T read(ID id) {
+	public T findById(ID id) {
 		try {
 			if (id != null)
 				return JPA.em().find(clazz, id);
 		} catch (Exception e) {
 		}
 		return null;
+	}
+
+	public T read(ID id) {
+		return findById(id);
 	}
 
 	@Override

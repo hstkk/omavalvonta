@@ -5,7 +5,7 @@ import java.io.Serializable;
 public interface GeneralDao<T, ID extends Serializable> {
 	boolean create(T t);
 
-	T read(ID id);
+	T findById(ID id);
 
 	boolean update(T t);
 

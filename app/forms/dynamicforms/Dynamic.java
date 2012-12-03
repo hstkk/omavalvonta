@@ -42,7 +42,7 @@ public class Dynamic {
 				if (fieldset != null
 						&& (!fieldset.value.isEmpty() || !fieldset.comment
 								.isEmpty())) {
-					Field field = Field.findById(fieldset.fieldId);
+					Field field = Field.crud.findById(fieldset.fieldId);
 					if (field != null) {
 						switch (field.fieldType) {
 						case CHECKBOX:
