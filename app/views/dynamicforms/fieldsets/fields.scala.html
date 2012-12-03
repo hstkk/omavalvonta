@@ -1,0 +1,10 @@
+@(FORM: play.data.Form[models.dynamicforms.Fieldset])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags.forms._
+
+@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
+@helper.textarea(FORM("description"), '_label -> "kuvaus")
+@helper.checkbox(FORM("isActive"), '_label -> None, '_text -> "Aktiivinen", '_showConstraints -> false)
+@actions()
