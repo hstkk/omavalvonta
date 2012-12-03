@@ -41,7 +41,7 @@ public class Form extends Model<Form> {
 	@Lob
 	public String description = "";
 
-	@Required
+	// @Required
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term category;
 
@@ -54,6 +54,14 @@ public class Form extends Model<Form> {
 
 	public String toString() {
 		return name;
+	}
+
+	@PrePersist
+	private void prePersist() {
+		if (this.category.id == null)
+			this.category = null;
+		else
+			this.category = Term.crud.findById(this.category.id);
 	}
 
 	public static List<Form> findByTerm(Term category) {
