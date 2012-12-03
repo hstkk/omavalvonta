@@ -74,6 +74,18 @@ public class Crud<T> extends Controller implements CrudInterface {
 			// return redirect(page(1));
 			return page(1);
 		} else if (!filledForm.hasErrors()) {
+			/*
+			//reflection
+			try {
+				java.lang.reflect.Field[] fields = clazz.getFields();
+				for (java.lang.reflect.Field field : fields) {
+					// get value
+					Object value = field.get(t);
+					// check the values are different, then update
+					field.set(objetInstance, value);
+				}
+			} catch (Exception e) {
+			}*/
 			t = filledForm.get();
 			if (CRUD.update(t)) {
 				flash("success", "Tallennus onnistui!");
