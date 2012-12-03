@@ -7,9 +7,9 @@
 
 @main("Kenttäryhmät") {
 	@tabs() {
-		<li><a href="controllers.dynamicforms.routes.Forms.index">Lomakkeet</a></li>
-		<li><a href="controllers.dynamicforms.routes.Forms.create">Uusi lomake</a></li>
-		<li class="active"><a href="#">Kenttäryhmät</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Forms.crud.page()">Lomakkeet</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Forms.crud.fresh">Uusi lomake</a></li>
+		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.page()">Kenttäryhmät</a></li>
 		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.fresh">Uusi kenttäryhmä</a></li>
 	}
 	@if(page != null){

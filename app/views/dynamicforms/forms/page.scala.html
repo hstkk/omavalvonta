@@ -22,7 +22,7 @@
 			}
 			<tbody>
 				@for(form <- page.getList) {
-					@tr() { <a href="@controllers.dynamicforms.routes.Fields.crud.create(form.id)">@form</a>
+					@tr() { <a href="@controllers.dynamicforms.routes.Forms.crud.edit(form.id)">@form</a>
 						@form.description
 						@form.isActive
 						@form.category }
