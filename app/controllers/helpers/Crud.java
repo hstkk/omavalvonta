@@ -1,5 +1,7 @@
 package controllers.helpers;
 
+import java.lang.reflect.Field;
+
 import models.dynamicforms.Fieldset;
 import play.*;
 import play.mvc.*;
@@ -65,8 +67,8 @@ public class Crud<T> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result update(Long id) {
-		T t = CRUD.findById(id);
-		if (t == null)
+		T old = CRUD.findById(id);
+		if (old == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
@@ -74,20 +76,20 @@ public class Crud<T> extends Controller implements CrudInterface {
 			// return redirect(page(1));
 			return page(1);
 		} else if (!filledForm.hasErrors()) {
-			/*
-			//reflection
-			try {
-				java.lang.reflect.Field[] fields = clazz.getFields();
-				for (java.lang.reflect.Field field : fields) {
-					// get value
-					Object value = field.get(t);
-					// check the values are different, then update
-					field.set(objetInstance, value);
-				}
+			T fresh = filledForm.get();
+			/*try {
+				Class<?> c = t.getClass();
+				java.lang.reflect.Field field = c.getField("id");
+				 field.setAccessible(true);
+				field.setLong(c, id);
 			} catch (Exception e) {
+				e.printStackTrace();
 			}*/
-			t = filledForm.get();
-			if (CRUD.update(t)) {
+			try {
+				org.apache.commons.beanutils.BeanUtils.copyProperties(fresh, old);
+			} catch (Exception e) {
+			}
+			if (CRUD.update(fresh)) {
 				flash("success", "Tallennus onnistui!");
 				// return redirect(routes.dynamicforms.Fieldsets.crud.page(1));
 				return page(1);

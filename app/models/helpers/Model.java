@@ -11,7 +11,7 @@ public class Model<T> extends Crud<T, Long> {
 
 	@Id
 	@GeneratedValue
-	@Column(updatable = false)
+	//@Column(updatable = false)
 	public Long id;
 
 	//TODO
