@@ -23,11 +23,6 @@ public class Fieldsets extends Controller {
 	final static models.helpers.Crud<Fieldset, Long> CRUD = new models.helpers.Crud<Fieldset, Long>(
 			Fieldset.class, "Fieldset");
 	final static Form<models.dynamicforms.Fieldset> FORM = form(models.dynamicforms.Fieldset.class);
-	/*
-	 * final static Map<String, String> TEMPLATES; static { Map<String, String>
-	 * map = new HashMap<String, String>(); map.put("Harry", "Potter");
-	 * TEMPLATES = Collections.unmodifiableMap(map); }
-	 */
 	final static Template1<models.helpers.Page<Fieldset>, Html> PAGETEMPLATE = views.html.dynamicforms.fieldsets.page
 			.ref();
 	final static Template1<Form<Fieldset>, Html> CREATETEMPLATE = views.html.dynamicforms.fieldsets.create
