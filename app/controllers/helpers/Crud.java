@@ -13,10 +13,10 @@ public class Crud<T extends models.helpers.Model<T>> extends Controller
 
 	private final Class<T> clazz;
 	private final Form<T> FORM;
+	private final models.helpers.Crud<T, Long> CRUD;
 	private final Template1<models.helpers.Page<T>, Html> PAGETEMPLATE;
 	private final Template1<Form<T>, Html> CREATETEMPLATE;
 	private final Template2<Long, Form<T>, Html> UPDATETEMPLATE;
-	private final models.helpers.Crud<T, Long> CRUD;
 
 	public Crud(Class<T> clazz,
 			Template1<models.helpers.Page<T>, Html> PAGETEMPLATE,
