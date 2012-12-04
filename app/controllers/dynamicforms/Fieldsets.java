@@ -18,6 +18,7 @@ import models.dynamicforms.Field;
 import models.dynamicforms.Fieldset;
 
 import controllers.helpers.Crud;
+import controllers.helpers.Render;
 
 public class Fieldsets extends Controller {
 	final static Template1<models.helpers.Page<Fieldset>, Html> PAGETEMPLATE = views.html.dynamicforms.fieldsets.page
@@ -25,7 +26,7 @@ public class Fieldsets extends Controller {
 	final static Template1<Form<Fieldset>, Html> CREATETEMPLATE = views.html.dynamicforms.fieldsets.create
 			.ref();
 	final static Template2<Long, Form<Fieldset>, Html> UPDATETEMPLATE = views.html.dynamicforms.fieldsets.update
-			.ref();;
+			.ref();
 
 	public final static Crud<Fieldset> crud = new Crud<Fieldset>(
 			Fieldset.class, PAGETEMPLATE, CREATETEMPLATE, UPDATETEMPLATE);
