@@ -31,9 +31,6 @@ public class Fieldset extends Model<Fieldset> {
 		super(Fieldset.class, "Fieldset");
 	}
 
-	public final static Crud<Fieldset, Long> crud = new Crud<Fieldset, Long>(
-			Fieldset.class, "Fieldset");
-
 	@Required
 	@NotNull
 	public String name;
