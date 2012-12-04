@@ -34,3 +34,8 @@ http.404=404 Sivua ei löytynyt
 http.404.description=Yritä myöhemmin uudelleen. Tarkista, että osoite on oikea ja että osoite on kirjoitettu oikein.
 http.500=500 Sisäinen palvelinvirhe
 http.500.description=Pyyntöä ei voitu käsitellä.
+
+# --- CRUD
+crud.cancel=Tallennus peruutettu!
+crud.success=Tallennus onnistui!
+crud.fail=Tallennus epäonnistui!

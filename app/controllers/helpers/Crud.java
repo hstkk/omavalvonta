@@ -4,13 +4,14 @@ import java.lang.reflect.Field;
 
 import models.dynamicforms.Fieldset;
 import play.*;
+import play.i18n.Messages;
 import play.mvc.*;
 import play.api.templates.*;
 import play.data.*;
 import static play.data.Form.*;
 import play.db.jpa.*;
 
-public class Crud<T> extends Controller implements CrudInterface {
+public class Crud<T extends models.helpers.Model<T>> extends Controller implements CrudInterface {
 
 	private final Class<T> clazz;
 	private final models.helpers.Crud<T, Long> CRUD;
@@ -48,18 +49,18 @@ public class Crud<T> extends Controller implements CrudInterface {
 	public Result create() {
 		Form<T> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
-			flash("warning", "Tallennus peruutettu!");
+			flash("warning", Messages.get("crud.cancel"));
 			// return redirect(page(1));
 			return page(1);
 		} else if (!filledForm.hasErrors()) {
 			T t = filledForm.get();
 			if (CRUD.create(t)) {
-				flash("success", "Tallennus onnistui!");
+				flash("success", Messages.get("crud.success"));
 				// return redirect(routes.dynamicforms.Fieldsets.crud.page(1));
 				return page(1);
 			}
 		}
-		flash("error", "Tallennus epäonnistui!");
+		flash("error", Messages.get("crud.fail"));
 		return badRequest(CREATETEMPLATE.render(filledForm));
 	}
 
@@ -67,35 +68,24 @@ public class Crud<T> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result update(Long id) {
-		T old = CRUD.findById(id);
-		if (old == null)
+		T t = CRUD.findById(id);
+		if (t == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
-			flash("warning", "Tallennus peruutettu!");
+			flash("warning", Messages.get("crud.cancel"));
 			// return redirect(page(1));
 			return page(1);
 		} else if (!filledForm.hasErrors()) {
 			T fresh = filledForm.get();
-			/*try {
-				Class<?> c = t.getClass();
-				java.lang.reflect.Field field = c.getField("id");
-				 field.setAccessible(true);
-				field.setLong(c, id);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}*/
-			try {
-				org.apache.commons.beanutils.BeanUtils.copyProperties(fresh, old);
-			} catch (Exception e) {
-			}
+			fresh.id = id;
 			if (CRUD.update(fresh)) {
-				flash("success", "Tallennus onnistui!");
+				flash("success", Messages.get("crud.success"));
 				// return redirect(routes.dynamicforms.Fieldsets.crud.page(1));
 				return page(1);
 			}
 		}
-		flash("error", "Tallennus epäonnistui!");
+		flash("error", Messages.get("crud.fail"));
 		return badRequest(UPDATETEMPLATE.render(id, filledForm));
 	}
 
