@@ -20,9 +20,6 @@ import models.dynamicforms.Fieldset;
 import controllers.helpers.Crud;
 
 public class Fieldsets extends Controller {
-	final static models.helpers.Crud<Fieldset, Long> CRUD = new models.helpers.Crud<Fieldset, Long>(
-			Fieldset.class, "Fieldset");
-	final static Form<models.dynamicforms.Fieldset> FORM = form(models.dynamicforms.Fieldset.class);
 	final static Template1<models.helpers.Page<Fieldset>, Html> PAGETEMPLATE = views.html.dynamicforms.fieldsets.page
 			.ref();
 	final static Template1<Form<Fieldset>, Html> CREATETEMPLATE = views.html.dynamicforms.fieldsets.create
@@ -31,6 +28,5 @@ public class Fieldsets extends Controller {
 			.ref();;
 
 	public final static Crud<Fieldset> crud = new Crud<Fieldset>(
-			Fieldset.class, CRUD, FORM, PAGETEMPLATE, CREATETEMPLATE,
-			UPDATETEMPLATE);
+			Fieldset.class, PAGETEMPLATE, CREATETEMPLATE, UPDATETEMPLATE);
 }
