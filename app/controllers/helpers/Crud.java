@@ -51,7 +51,7 @@ public class Crud<T extends models.helpers.Model<T>> extends Controller
 			return page(1);
 		} else if (!filledForm.hasErrors()) {
 			T t = filledForm.get();
-			if (t.create(t)) {
+			if (CRUD.create(t)) {
 				flash("success", Messages.get("crud.success"));
 				// return redirect(routes.dynamicforms.Fieldsets.crud.page(1));
 				return page(1);
@@ -76,7 +76,7 @@ public class Crud<T extends models.helpers.Model<T>> extends Controller
 		} else if (!filledForm.hasErrors()) {
 			T fresh = filledForm.get();
 			fresh.id = id;
-			if (fresh.update(fresh)) {
+			if (CRUD.update(fresh)) {
 				flash("success", Messages.get("crud.success"));
 				// return redirect(routes.dynamicforms.Fieldsets.crud.page(1));
 				return page(1);
