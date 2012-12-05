@@ -20,7 +20,7 @@ import play.db.jpa.*;
 public class Field extends Model<Field> {
 
 	public Field() {
-		super(Field.class, "Field");
+		//super(Field.class, "Field");
 	}
 
 	public final static Crud<Field, Long> crud = new Crud<Field, Long>(
