@@ -57,7 +57,7 @@ public class FinalProducts extends Controller {
 			finalProduct.batch = batch;
 			finalProduct.unit = Term.crud.read(filledForm.get().unit.id);
 			finalProduct.destiny = Term.crud.read(filledForm.get().destiny.id);
-			if (FinalProduct.crud.createOrUpdate(finalProduct)) {
+			if (FinalProduct.crud.update(finalProduct)) {
 				flash("success", "Tallennus onnistui!");
 				return redirect(routes.FinalProducts.read(batchId));
 			}
