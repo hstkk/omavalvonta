@@ -6,7 +6,7 @@ import java.util.List;
 import play.Play;
 import play.db.jpa.JPA;
 
-public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
+public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 
 	private final Class<T> clazz;
 	private final String table;
