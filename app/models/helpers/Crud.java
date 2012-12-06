@@ -10,10 +10,12 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 
 	private final Class<T> clazz;
 	private final String table;
+	private final int pageSize;
 
 	public Crud(Class<T> clazz) {
 		this.clazz = clazz;
 		this.table = clazz.getName();
+		this.pageSize = Play.application().configuration().getInt("page.size");
 	}
 
 	// TODO order by
@@ -28,6 +30,17 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 			return false;
 		}
 	}
+
+	@Override
+	public int count() {
+		try {
+			return (int) JPA.em().createQuery("select count(*) from " + table)
+					.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	};
 
 	@Override
 	public T findById(ID id) {
@@ -69,18 +82,17 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 	@Override
 	public Page<T> page(int index) {
 		try {
-			int size = Play.application().configuration().getInt("page.size");
 			if (index < 1)
 				index = 1;
-			Long rows = (Long) JPA.em()
-					.createQuery("select count(*) from " + table)
-					.getSingleResult();
-			List<T> list = JPA.em()
-					.createQuery("from " + table + " order by name")
-					.setFirstResult((index - 1) * size).setMaxResults(size)
-					.getResultList();
-			if (rows != null && list != null && !list.isEmpty())
-				return new Page<T>(index, size, rows, list);
+			int rows = count();
+			if (rows > 0) {
+				List<T> list = JPA.em()
+						.createQuery("from " + table + " order by name")
+						.setFirstResult((index - 1) * pageSize)
+						.setMaxResults(pageSize).getResultList();
+				if (!list.isEmpty())
+					return new Page<T>(index, pageSize, rows, list);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
