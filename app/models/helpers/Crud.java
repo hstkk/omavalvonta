@@ -11,9 +11,9 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 	private final Class<T> clazz;
 	private final String table;
 
-	public Crud(Class<T> clazz, String table) {
+	public Crud(Class<T> clazz) {
 		this.clazz = clazz;
-		this.table = table;
+		this.table = clazz.getName();
 	}
 
 	// TODO order by
