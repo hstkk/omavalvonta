@@ -24,7 +24,7 @@ public class Field extends Model<Field> {
 	}
 
 	public final static Crud<Field, Long> crud = new Crud<Field, Long>(
-			Field.class, "Field");
+			Field.class);
 
 	@Transient
 	public FieldType fieldTypeEnum;

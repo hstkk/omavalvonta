@@ -28,11 +28,9 @@ import play.db.jpa.*;
 public class Form extends Model<Form> {
 
 	public Form() {
-		//super(Form.class, "Form");
 	}
 
-	public final static Crud<Form, Long> crud = new Crud<Form, Long>(
-			Form.class, "Form");
+	public final static Crud<Form, Long> crud = new Crud<Form, Long>(Form.class);
 
 	@Required
 	@NotNull

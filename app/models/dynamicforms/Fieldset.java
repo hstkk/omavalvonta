@@ -28,7 +28,6 @@ import play.db.jpa.*;
 public class Fieldset extends Model<Fieldset> {
 
 	public Fieldset() {
-		//super(Fieldset.class, "Fieldset");
 	}
 
 	@Required

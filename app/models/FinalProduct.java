@@ -25,7 +25,7 @@ import play.db.jpa.*;
 public class FinalProduct extends JpaModel {
 
 	public final static Crud<FinalProduct, Long> crud = new Crud<>(
-			FinalProduct.class, "FinalProduct");
+			FinalProduct.class);
 
 	@Required
 	@NotNull

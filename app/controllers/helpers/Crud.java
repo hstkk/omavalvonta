@@ -26,7 +26,7 @@ public class Crud<T extends models.helpers.Model<T>> extends Controller
 		this.CREATETEMPLATE = CREATETEMPLATE;
 		this.UPDATETEMPLATE = UPDATETEMPLATE;
 		this.FORM = form(this.clazz);
-		this.CRUD = new models.helpers.Crud<T, Long>(this.clazz, "Fieldset");
+		this.CRUD = new models.helpers.Crud<T, Long>(this.clazz);
 	}
 
 	@Override
@@ -61,7 +61,6 @@ public class Crud<T extends models.helpers.Model<T>> extends Controller
 		return badRequest(CREATETEMPLATE.render(filledForm));
 	}
 
-	// TODO
 	@Override
 	@Transactional(readOnly = true)
 	public Result update(Long id) {
