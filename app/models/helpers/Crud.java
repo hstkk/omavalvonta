@@ -29,12 +29,6 @@ public class Crud<T, ID extends Serializable> implements GeneralDao<T, ID> {
 		}
 	}
 
-	// todo
-	@Override
-	public boolean createOrUpdate(T t) {
-		return update(t);
-	}
-
 	@Override
 	public T findById(ID id) {
 		try {
