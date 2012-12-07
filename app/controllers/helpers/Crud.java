@@ -1,5 +1,6 @@
 package controllers.helpers;
 
+import models.helpers.Model;
 import play.*;
 import play.i18n.Messages;
 import play.mvc.*;
@@ -8,8 +9,7 @@ import play.data.*;
 import static play.data.Form.*;
 import play.db.jpa.*;
 
-public class Crud<T extends models.helpers.Model<T>> extends Controller
-		implements CrudInterface {
+public class Crud<T extends Model> extends Controller implements CrudInterface {
 	private final Class<T> clazz;
 	private final Form<T> FORM;
 	private final models.helpers.Crud<T, Long> CRUD;

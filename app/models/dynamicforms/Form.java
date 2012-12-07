@@ -25,7 +25,7 @@ import play.db.jpa.*;
 
 @Entity
 @Audited
-public class Form extends Model<Form> {
+public class Form extends Model {
 
 	public Form() {
 	}

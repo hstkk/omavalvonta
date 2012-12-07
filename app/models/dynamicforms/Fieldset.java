@@ -25,7 +25,7 @@ import play.db.jpa.*;
 
 @Entity
 @Audited
-public class Fieldset extends Model<Fieldset> {
+public class Fieldset extends Model {
 
 	public Fieldset() {
 	}
@@ -43,14 +43,6 @@ public class Fieldset extends Model<Fieldset> {
 
 	public String toString() {
 		return name;
-	}
-
-	// TODO
-	@Override
-	public void fill(Fieldset fieldset) {
-		this.name = fieldset.name;
-		this.description = fieldset.name;
-		this.isActive = fieldset.isActive;
 	}
 
 	@SuppressWarnings("unchecked")
