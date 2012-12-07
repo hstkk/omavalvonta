@@ -66,7 +66,7 @@ public class IngredientSupply extends JpaModel {
 		if (this.unit.id == null)
 			this.unit = null;
 		else
-			this.unit = Term.crud.read(this.unit.id);
+			this.unit = Term.crud.findById(this.unit.id);
 	}
 
 	public boolean save() {
