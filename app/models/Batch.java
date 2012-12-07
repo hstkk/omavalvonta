@@ -120,14 +120,14 @@ public class Batch extends JpaModel {
 			int size = Play.application().configuration().getInt("page.size");
 			if (index < 1)
 				index = 1;
-			Long rows = (Long) JPA.em()
+			int rows = (int) JPA.em()
 					.createQuery("select count(*) from Batch")
 					.getSingleResult();
 			List<Batch> list = JPA.em()
 					.createQuery("from Batch b order by b.created desc")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
-			if (rows != null && list != null && !list.isEmpty())
+			if (rows > 0 && list != null && !list.isEmpty())
 				return new Page(index, size, rows, list);
 		} catch (Exception e) {
 		}
