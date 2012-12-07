@@ -12,12 +12,12 @@ public class Crud<T extends Model, ID extends Serializable> implements
 		GenericDao<T, ID> {
 
 	private final Class<T> clazz;
-	private final String table;
+	private final String entity;
 	private final int pageSize;
 
 	public Crud(Class<T> clazz) {
 		this.clazz = clazz;
-		this.table = clazz.getName();
+		this.entity = clazz.getName();
 		this.pageSize = Play.application().configuration().getInt("page.size");
 	}
 
@@ -35,7 +35,7 @@ public class Crud<T extends Model, ID extends Serializable> implements
 	public int count() {
 		try {
 			return (int) JPA.em()
-					.createQuery("select count(*) from " + table + " e")
+					.createQuery("select count(*) from " + entity + " e")
 					.getSingleResult();
 		} catch (Exception e) {
 		}
@@ -59,7 +59,7 @@ public class Crud<T extends Model, ID extends Serializable> implements
 				return (boolean) JPA
 						.em()
 						.createQuery(
-								"select count(*) from " + table + " e"
+								"select count(*) from " + entity + " e"
 										+ " where e.id = ?")
 						.setParameter(1, id).getSingleResult();
 		} catch (Exception e) {
@@ -76,7 +76,7 @@ public class Crud<T extends Model, ID extends Serializable> implements
 	public List<T> findAll(Integer pageNumber) {
 		List<T> list = null;
 		try {
-			Query query = JPA.em().createQuery("select e from " + table + " e");
+			Query query = JPA.em().createQuery("select e from " + entity + " e");
 			if (pageNumber != null) {
 				if (pageNumber < 1)
 					pageNumber = 1;
