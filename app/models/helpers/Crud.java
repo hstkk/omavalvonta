@@ -6,7 +6,8 @@ import java.util.List;
 import play.Play;
 import play.db.jpa.JPA;
 
-public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
+public class Crud<T extends Model, ID extends Serializable> implements
+		GenericDao<T, ID> {
 
 	private final Class<T> clazz;
 	private final String table;
@@ -51,13 +52,22 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 	@Override
 	public boolean exists(ID id) {
 		try {
-			return (boolean) JPA
-					.em()
-					.createQuery(
-							"select count(*) from " + table + " where id = ?")
-					.setParameter(1, id).getSingleResult();
+			if (id != null)
+				return (boolean) JPA
+						.em()
+						.createQuery(
+								"select count(*) from " + table
+										+ " where id = ?").setParameter(1, id)
+						.getSingleResult();
 		} catch (Exception e) {
 		}
+		return false;
+	};
+
+	@Override
+	public boolean exists(T t) {
+		if (t != null)
+			return exists((ID) t.id);
 		return false;
 	};
 
