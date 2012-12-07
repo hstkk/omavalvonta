@@ -25,7 +25,7 @@ import play.db.jpa.*;
 
 @Entity
 @Audited
-public class Fieldset extends Model {
+public class Fieldset extends Model<Long> {
 
 	public Fieldset() {
 	}

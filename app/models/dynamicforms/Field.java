@@ -17,7 +17,7 @@ import play.db.jpa.*;
 
 @Entity
 @Audited
-public class Field extends Model {
+public class Field extends Model<Long> {
 
 	public Field() {
 		//super(Field.class, "Field");
