@@ -12,11 +12,9 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	boolean exists(ID id);
 
-	boolean exists(T t);
-
 	List<T> findAll();
 
-	List<T> findAll(int pageNumber);
+	List<T> findAll(Integer pageNumber);
 
 	//List<T> findAllByProperty(String property, Object value);
 
