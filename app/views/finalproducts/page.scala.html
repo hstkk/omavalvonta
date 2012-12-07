@@ -6,7 +6,7 @@
 @import tags.tables._
 
 @main("Myyntihyväksynnät") {
-	@if(page != null){
+	@if(!page.isEmpty){
 		@table() {
 			@thead() {
 				Erä

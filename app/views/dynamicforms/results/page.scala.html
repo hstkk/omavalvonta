@@ -11,7 +11,7 @@
 			<li><a href="@controllers.dynamicforms.routes.Results.create(product.id, form.id)">@form</a></li>
 		}
 	}
-	@if(page != null){
+	@if(!page.isEmpty){
 		@table() {
 			@thead() {
 				Lomake
