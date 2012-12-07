@@ -76,14 +76,14 @@ public class Crud<T extends Model, ID extends Serializable> implements
 	public List<T> findAll(Integer pageNumber) {
 		List<T> list = null;
 		try {
-			Query query = JPA.em().createQuery("select e from " + entity + " e");
+			Query q = JPA.em().createQuery("select e from " + entity + " e");
 			if (pageNumber != null) {
 				if (pageNumber < 1)
 					pageNumber = 1;
-				query.setFirstResult((pageNumber - 1) * pageSize)
+				q.setFirstResult((pageNumber - 1) * pageSize)
 						.setMaxResults(pageSize);
 			}
-			list = query.getResultList();
+			list = q.getResultList();
 		} catch (Exception e) {
 		}
 		return list;
