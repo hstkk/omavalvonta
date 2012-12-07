@@ -6,7 +6,7 @@
 @import tags.tables._
 
 @main("Tuotteet") {
-	@if(page != null){
+	@if(!page.isEmpty){
 		@table() {
 			@thead() {
 				Nimi

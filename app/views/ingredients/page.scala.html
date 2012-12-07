@@ -10,7 +10,7 @@
 		<li class="active"><a href="#">Raaka-aineet</a></li>
 		<li><a href="@routes.Ingredients.create">Uusi</a></li>
 	}
-	@if(page != null){
+	@if(!page.isEmpty){
 		@table() {
 			@thead() {
 				Nimi

@@ -10,7 +10,7 @@
 		<li class="active"><a href="#">Erät</a></li>
 		<li><a href="@routes.Batches.create">Uusi</a></li>
 	}
-	@if(page != null){
+	@if(!page.isEmpty){
 		@table() {
 			@thead() {
 				Erä

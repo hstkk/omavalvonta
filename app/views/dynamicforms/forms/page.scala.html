@@ -12,7 +12,7 @@
 		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.page()">Kenttäryhmät</a></li>
 		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.fresh">Uusi kenttäryhmä</a></li>
 	}
-	@if(page != null){
+	@if(!page.isEmpty){
 		@table() {
 			@thead() {
 				Nimi

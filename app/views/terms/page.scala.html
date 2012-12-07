@@ -10,7 +10,7 @@
 		<li class="active"><a href="#">Termit</a></li>
 		<li><a href="@routes.Terms.create">Uusi</a></li>
 	}
-	@if(page != null){
+	@if(!page.isEmpty){
 		@table() {
 			@thead() {
 				Termi

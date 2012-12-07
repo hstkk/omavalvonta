@@ -10,7 +10,7 @@
 		<li class="active"><a href="#">tuotteet</a></li>
 		<li><a href="@routes.Products.create">Uusi</a></li>
 	}
-	@if(page != null){
+	@if(!page.isEmpty){
 		@table() {
 			@thead() {
 				Tuotenumero
