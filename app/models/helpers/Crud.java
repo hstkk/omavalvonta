@@ -80,8 +80,8 @@ public class Crud<T extends Model, ID extends Serializable> implements
 			if (pageNumber != null) {
 				if (pageNumber < 1)
 					pageNumber = 1;
-				q.setFirstResult((pageNumber - 1) * pageSize)
-						.setMaxResults(pageSize);
+				q.setFirstResult((pageNumber - 1) * pageSize).setMaxResults(
+						pageSize);
 			}
 			list = q.getResultList();
 		} catch (Exception e) {
