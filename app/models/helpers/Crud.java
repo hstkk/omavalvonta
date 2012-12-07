@@ -18,17 +18,14 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 		this.pageSize = Play.application().configuration().getInt("page.size");
 	}
 
-	// TODO order by
-
 	@Override
 	public boolean create(T t) {
 		try {
 			JPA.em().persist(t);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 
 	@Override
@@ -37,10 +34,19 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 			return (int) JPA.em().createQuery("select count(*) from " + table)
 					.getSingleResult();
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return 0;
 	};
+
+	@Override
+	public boolean delete(T t) {
+		try {
+			JPA.em().remove(t);
+			return true;
+		} catch (Exception e) {
+		}
+		return false;
+	}
 
 	@Override
 	public boolean exists(ID id) {
@@ -51,10 +57,34 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 							"select count(*) from " + table + " where id = ?")
 					.setParameter(1, id).getSingleResult();
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return false;
 	};
+
+	@Override
+	public List<T> findAll() {
+		try {
+			List<T> list = JPA.em().createQuery("from " + table)
+					.getResultList();
+			return list;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	@Override
+	public List<T> findAll(int pageNumber) {
+		try {
+			if (pageNumber < 1)
+				pageNumber = 1;
+			List<T> list = JPA.em().createQuery("from " + table)
+					.setFirstResult((pageNumber - 1) * pageSize)
+					.setMaxResults(pageSize).getResultList();
+			return list;
+		} catch (Exception e) {
+		}
+		return null;
+	}
 
 	@Override
 	public T findById(ID id) {
@@ -66,8 +96,16 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 		return null;
 	}
 
-	public T read(ID id) {
-		return findById(id);
+	@Override
+	public Page<T> page(int pageNumber) {
+		List<T> list = null;
+		int rows = count();
+		try {
+			if (rows > 0)
+				list = findAll(pageNumber);
+		} catch (Exception e) {
+		}
+		return new Page<T>(pageNumber, pageSize, rows, list);
 	}
 
 	@Override
@@ -76,40 +114,7 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 			JPA.em().merge(t);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
 		}
-	}
-
-	@Override
-	public boolean delete(T t) {
-		try {
-			JPA.em().remove(t);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	// TODO
-	@Override
-	public Page<T> page(int index) {
-		try {
-			if (index < 1)
-				index = 1;
-			int rows = count();
-			if (rows > 0) {
-				List<T> list = JPA.em()
-						.createQuery("from " + table + " order by name")
-						.setFirstResult((index - 1) * pageSize)
-						.setMaxResults(pageSize).getResultList();
-				if (!list.isEmpty())
-					return new Page<T>(index, pageSize, rows, list);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		return false;
 	}
 }
