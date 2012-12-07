@@ -19,13 +19,13 @@ public class Global extends GlobalSettings {
 	public Result onHandlerNotFound(RequestHeader request) {
 		String title = Messages.get("http.404");
 		String description = Messages.get("http.404.description");
-		return internalServerError(views.html.error.render(title, description));
+		return notFound(views.html.error.render(title, description));
 	}
 
 	@Override
 	public Result onBadRequest(RequestHeader request, String error) {
 		String title = Messages.get("http.400");
 		String description = Messages.get("http.400.description");
-		return internalServerError(views.html.error.render(title, description));
+		return badRequest(views.html.error.render(title, description));
 	}
 }
