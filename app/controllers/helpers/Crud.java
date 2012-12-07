@@ -30,18 +30,6 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public Result page(int index) {
-		return ok(PAGETEMPLATE.render(CRUD.page(index)));
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Result fresh() {
-		return ok(CREATETEMPLATE.render(FORM));
-	}
-
-	@Override
 	@Transactional
 	public Result create() {
 		Form<T> filledForm = FORM.bindFromRequest();
@@ -59,6 +47,34 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		}
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(CREATETEMPLATE.render(filledForm));
+	}
+
+	@Override
+	@Transactional
+	public Result edit(Long id) {
+		T t = CRUD.findById(id);
+		if (t == null)
+			return notFound();
+		Form<T> filledForm = FORM.fill(t);
+		return ok(UPDATETEMPLATE.render(id, filledForm));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Result fresh() {
+		return ok(CREATETEMPLATE.render(FORM));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Result page(int index) {
+		return ok(PAGETEMPLATE.render(CRUD.page(index)));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Result show(Long id) {
+		return TODO;
 	}
 
 	@Override
@@ -82,15 +98,5 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		}
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(UPDATETEMPLATE.render(id, filledForm));
-	}
-
-	@Override
-	@Transactional
-	public Result edit(Long id) {
-		T t = CRUD.findById(id);
-		if (t == null)
-			return notFound();
-		Form<T> filledForm = FORM.fill(t);
-		return ok(UPDATETEMPLATE.render(id, filledForm));
 	}
 }
