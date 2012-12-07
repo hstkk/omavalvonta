@@ -72,7 +72,7 @@ public class Result extends JpaModel implements Comparable<Result> {
 		if (fieldset.id == null
 				|| (fieldset.id != null && fieldset.reasonId != null)) {
 			if (fieldset.reasonId != null)
-				reason = Term.crud.read(fieldset.reasonId);
+				reason = Term.crud.findById(fieldset.reasonId);
 			if (fieldset.value != null && fieldset.comment != null) {
 				//this.field = Field.crud.findById(fieldset.fieldId);
 				this.field=null;
