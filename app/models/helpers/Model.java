@@ -1,11 +1,12 @@
 package models.helpers;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 @MappedSuperclass
-public class Model {
+public class Model<ID extends Serializable> {
 	@Id
 	@GeneratedValue
 	@Column(updatable = false)
-	public Long id;
+	public ID id;
 }
