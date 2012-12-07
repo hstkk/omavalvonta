@@ -3,6 +3,8 @@ package models.helpers;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import play.Play;
 import play.db.jpa.JPA;
 
@@ -32,7 +34,8 @@ public class Crud<T extends Model, ID extends Serializable> implements
 	@Override
 	public int count() {
 		try {
-			return (int) JPA.em().createQuery("select count(*) from " + table)
+			return (int) JPA.em()
+					.createQuery("select count(*) from " + table + " e")
 					.getSingleResult();
 		} catch (Exception e) {
 		}
@@ -56,44 +59,34 @@ public class Crud<T extends Model, ID extends Serializable> implements
 				return (boolean) JPA
 						.em()
 						.createQuery(
-								"select count(*) from " + table
-										+ " where id = ?").setParameter(1, id)
-						.getSingleResult();
+								"select count(*) from " + table + " e"
+										+ " where e.id = ?")
+						.setParameter(1, id).getSingleResult();
 		} catch (Exception e) {
 		}
-		return false;
-	};
-
-	@Override
-	public boolean exists(T t) {
-		if (t != null)
-			return exists((ID) t.id);
 		return false;
 	};
 
 	@Override
 	public List<T> findAll() {
-		try {
-			List<T> list = JPA.em().createQuery("from " + table)
-					.getResultList();
-			return list;
-		} catch (Exception e) {
-		}
-		return null;
+		return findAll(null);
 	}
 
 	@Override
-	public List<T> findAll(int pageNumber) {
+	public List<T> findAll(Integer pageNumber) {
+		List<T> list = null;
 		try {
-			if (pageNumber < 1)
-				pageNumber = 1;
-			List<T> list = JPA.em().createQuery("from " + table)
-					.setFirstResult((pageNumber - 1) * pageSize)
-					.setMaxResults(pageSize).getResultList();
-			return list;
+			Query query = JPA.em().createQuery("select e from " + table + " e");
+			if (pageNumber != null) {
+				if (pageNumber < 1)
+					pageNumber = 1;
+				query.setFirstResult((pageNumber - 1) * pageSize)
+						.setMaxResults(pageSize);
+			}
+			list = query.getResultList();
 		} catch (Exception e) {
 		}
-		return null;
+		return list;
 	}
 
 	@Override
