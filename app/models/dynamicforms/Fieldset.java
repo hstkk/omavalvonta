@@ -30,6 +30,8 @@ public class Fieldset extends Model {
 	public Fieldset() {
 	}
 
+	public final static Crud<Fieldset, Long> crud = new Crud<Fieldset, Long>(Fieldset.class);
+
 	@Required
 	@NotNull
 	public String name;
