@@ -7,10 +7,9 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<non-jta-data-source>DefaultDS</non-jta-data-source>
 		<properties>
-			<!--<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>-->
 			<!--<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>-->
 			<!--Fix MySQL5 boolean type-->
-			<property name="hibernate.dialect" value="utils.MySQL5DialectBooleanAsTinyint"/>
+			<property name="hibernate.dialect" value="models.helpers.MySQL5Dialect"/>
 			<!--Remove when in production (generate table schema)-->
             <property name="hibernate.hbm2ddl.auto" value="update"/>
 			<!--Envers-->
