@@ -13,27 +13,35 @@ import static play.data.Form.*;
 import play.db.jpa.*;
 
 public class Crud<T extends Model> extends Controller implements CrudInterface {
-	private final Class<T> clazz;
 	private final Form<T> FORM;
 	private final models.helpers.Crud<T, Long> CRUD;
-	private final Template2<Long, Form<T>, Html> EDIT;
-	private final Template1<Form<T>, Html> FRESH;
+	private final Template1<Form<T>, Html> CREATE;
 	private final Template1<Page<T>, Html> PAGE;
-	private final Call REDIRECT;
 	private final Template1<T, Html> SHOW;
+	private final Template2<Long, Form<T>, Html> UPDATE;
+	private final Call REDIRECT;
 
 	Result notFound = notFound(views.html.error.render(
 			Messages.get("http.404"), Messages.get("http.404.description")));
 
-	public Crud(Class<T> clazz, models.helpers.Crud<T, Long> CRUD,
-			Template2<Long, Form<T>, Html> EDIT,
-			Template1<Form<T>, Html> FRESH, Template1<Page<T>, Html> PAGE,
-			Call REDIRECT, Template1<T, Html> SHOW) {
-		this.clazz = clazz;
-		this.FORM = form(this.clazz);
+	/**
+	 * 
+	 * @param CRUD
+	 * @param FORM
+	 * @param UPDATE
+	 * @param CREATE
+	 * @param PAGE
+	 * @param SHOW
+	 * @param REDIRECT
+	 */
+	public Crud(models.helpers.Crud<T, Long> CRUD, Form<T> FORM,
+			Template2<Long, Form<T>, Html> UPDATE,
+			Template1<Form<T>, Html> CREATE, Template1<Page<T>, Html> PAGE,
+			Template1<T, Html> SHOW, Call REDIRECT) {
+		this.FORM = FORM;
 		this.CRUD = CRUD;
-		this.EDIT = EDIT;
-		this.FRESH = FRESH;
+		this.UPDATE = UPDATE;
+		this.CREATE = CREATE;
 		this.PAGE = PAGE;
 		this.REDIRECT = REDIRECT;
 		this.SHOW = SHOW;
@@ -54,7 +62,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			}
 		}
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(FRESH.render(filledForm));
+		return badRequest(CREATE.render(filledForm));
 	}
 
 	@Override
@@ -64,13 +72,13 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (t == null)
 			return notFound();
 		Form<T> filledForm = FORM.fill(t);
-		return ok(EDIT.render(id, filledForm));
+		return ok(UPDATE.render(id, filledForm));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
-		return ok(FRESH.render(FORM));
+		return ok(CREATE.render(FORM));
 	}
 
 	@Override
@@ -106,6 +114,6 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			}
 		}
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(EDIT.render(id, filledForm));
+		return badRequest(UPDATE.render(id, filledForm));
 	}
 }
