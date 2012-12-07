@@ -13,10 +13,10 @@ import java.util.List;
 public class Page<T> {
 
 	/** The size. */
-	private final int size;
+	private final int pageSize;
 
 	/** The index. */
-	private final int index;
+	private final int pageNumber;
 
 	/** The rows. */
 	private final int rows;
@@ -36,9 +36,9 @@ public class Page<T> {
 	 * @param list
 	 *            the list
 	 */
-	public Page(int index, int size, int rows, List<T> list) {
-		this.index = index;
-		this.size = size;
+	public Page(int pageNumber, int pageSize, int rows, List<T> list) {
+		this.pageNumber = pageNumber;
+		this.pageSize = pageSize;
 		this.rows = rows;
 		this.list = list;
 	}
@@ -49,7 +49,7 @@ public class Page<T> {
 	 * @return true, if successful
 	 */
 	public boolean hasPrevious() {
-		return index > 1;
+		return pageNumber > 1;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Page<T> {
 	 * @return true, if successful
 	 */
 	public boolean hasNext() {
-		return (rows / size) >= index;
+		return (rows / pageSize) >= pageNumber;
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class Page<T> {
 	 * @return true, if is empty
 	 */
 	public boolean isEmpty() {
-		return list.isEmpty();
+		return (list == null || list.isEmpty());
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class Page<T> {
 	 * @return the index
 	 */
 	public int getIndex() {
-		return index;
+		return pageNumber;
 	}
 
 	/**
