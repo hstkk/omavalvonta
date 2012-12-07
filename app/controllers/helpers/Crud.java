@@ -64,8 +64,7 @@ public class Crud<T extends models.helpers.Model<T>> extends Controller
 	@Override
 	@Transactional(readOnly = true)
 	public Result update(Long id) {
-		T t = CRUD.findById(id);
-		if (t == null)
+		if (!CRUD.exists(id))
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
