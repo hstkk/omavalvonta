@@ -3,11 +3,11 @@ package models.helpers;
 import java.io.Serializable;
 
 public interface GenericDao<T, ID extends Serializable> {
-	boolean exists(T t);
-
 	boolean create(T t);
 
 	int count();
+
+	boolean exists(ID id);
 
 	//List<T> findAll();
 

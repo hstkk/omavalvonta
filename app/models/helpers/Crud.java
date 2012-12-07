@@ -43,6 +43,20 @@ public class Crud<T, ID extends Serializable> implements GenericDao<T, ID> {
 	};
 
 	@Override
+	public boolean exists(ID id) {
+		try {
+			return (boolean) JPA
+					.em()
+					.createQuery(
+							"select count(*) from " + table + " where id = ?")
+					.setParameter(1, id).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	};
+
+	@Override
 	public T findById(ID id) {
 		try {
 			if (id != null)
