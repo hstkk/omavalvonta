@@ -14,13 +14,15 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	List<T> findAll();
 
-	List<T> findAllByProperty(String property, Object value);
+	List<T> findAll(int pageNumber);
+
+	//List<T> findAllByProperty(String property, Object value);
 
 	T findById(ID id);
 
-	T findByProperty(String property, Object value);
+	//T findByProperty(String property, Object value);
 
-	Page<T> page(int index);
+	Page<T> page(int pageNumber);
 
 	boolean update(T t);
 }
