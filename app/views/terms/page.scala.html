@@ -23,7 +23,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, routes.Terms.page(page.getIndex - 1), page.hasNext, routes.Terms.page(page.getIndex + 1))
+		@pagination(page, routes.Terms.page(page.getIndex - 1), routes.Terms.page(page.getIndex + 1))
 	} else {
 		@warning() {
 			Termejä ei löytynyt, voit kuitenkin <a href="@routes.Terms.create">lisätä</a> uusia.

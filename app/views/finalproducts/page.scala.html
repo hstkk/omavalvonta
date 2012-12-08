@@ -25,7 +25,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, routes.Batches.page(page.getIndex - 1), page.hasNext, routes.Batches.page(page.getIndex + 1))
+		@pagination(page, routes.Batches.page(page.getIndex - 1), routes.Batches.page(page.getIndex + 1))
 	} else {
 		@warning() {
 			Myyntihyväksyntöjä ei löytynyt.
