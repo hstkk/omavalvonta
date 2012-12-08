@@ -16,6 +16,12 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	List<T> findAll(Integer pageNumber);
 
+	List<T> findAllBy(String query, Object[] params);
+
+	List<T> findAllBy(String query, Object[] params, Integer pageNumber);
+
+	T findBy(String query, Object[] params);
+
 	T findById(ID id);
 
 	Page<T> page(int pageNumber);
