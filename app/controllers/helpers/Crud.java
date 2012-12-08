@@ -66,7 +66,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public Result edit(Long id) {
 		if (UPDATE == null)
 			return notFound();
@@ -105,7 +105,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional
 	public Result update(Long id) {
 		if (REDIRECT == null || UPDATE == null || !CRUD.exists(id))
 			return notFound();
