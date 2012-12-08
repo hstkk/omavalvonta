@@ -1,5 +1,6 @@
 @(id: Long, FORM: play.data.Form[models.dynamicforms.Fieldset])
 
+@import play.i18n._
 @import helper._
 @import helper.twitterBootstrap._
 @import tags._
@@ -7,7 +8,7 @@
 @import tags.forms._
 @import tags.navs._
 
-@main("Muokkaa kenttäryhmää"){
+@main(Messages.get("fieldset.update")){
 	@tabs() {
 		<li><a href="@controllers.dynamicforms.routes.Forms.crud.page()">Lomakkeet</a></li>
 		<li><a href="@controllers.dynamicforms.routes.Forms.crud.fresh">Uusi lomake</a></li>

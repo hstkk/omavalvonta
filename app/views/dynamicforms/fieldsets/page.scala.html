@@ -1,11 +1,12 @@
 @(page: models.helpers.Page[models.dynamicforms.Fieldset])
 
+@import play.i18n._
 @import tags._
 @import tags.alerts._
 @import tags.tables._
 @import tags.navs._
 
-@main("Kenttäryhmät") {
+@main(Messages.get("fieldset.page")) {
 	@tabs() {
 		<li><a href="@controllers.dynamicforms.routes.Forms.crud.page()">Lomakkeet</a></li>
 		<li><a href="@controllers.dynamicforms.routes.Forms.crud.fresh">Uusi lomake</a></li>
@@ -15,9 +16,9 @@
 	@if(!page.isEmpty){
 		@table() {
 			@thead() {
-				Nimi
-				Kuvaus
-				Aktiivinen
+				@Messages.get("label.name")
+				@Messages.get("label.description")
+				@Messages.get("label.isActive")
 			}
 			<tbody>
 				@for(fieldset <- page.getList) {
@@ -30,7 +31,7 @@
 		@pagination(page.hasPrevious, controllers.dynamicforms.routes.Fieldsets.crud.page(page.getIndex - 1), page.hasNext, controllers.dynamicforms.routes.Fieldsets.crud.page(page.getIndex + 1))
 	} else {
 		@warning() {
-			Kenttäryhmiä ei löytynyt!
+			@Messages.get("fieldset.page.empty")
 		}
 	}
 }

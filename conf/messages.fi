@@ -39,3 +39,14 @@ http.500.description=Pyyntöä ei voitu käsitellä.
 crud.cancel=Tallennus peruutettu!
 crud.success=Tallennus onnistui!
 crud.fail=Tallennus epäonnistui!
+
+# --- Label
+label.name=Nimi
+label.description=Kuvaus
+label.isActive=Aktiivinen
+
+# --- Fieldset
+fieldset.create=Uusi kenttäryhmä
+fieldset.page=Kenttäryhmät
+fieldset.page.empty=Kenttäryhmiä ei löytynyt!
+fieldset.update=Muokkaa kenttäryhmää
