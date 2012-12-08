@@ -43,13 +43,15 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		this.UPDATE = UPDATE;
 		this.CREATE = CREATE;
 		this.PAGE = PAGE;
-		this.REDIRECT = REDIRECT;
 		this.SHOW = SHOW;
+		this.REDIRECT = REDIRECT;
 	}
 
 	@Override
 	@Transactional
 	public Result create() {
+		if (REDIRECT == null || CREATE == null)
+			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
 			flash("warning", Messages.get("crud.cancel"));
@@ -68,6 +70,8 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional
 	public Result edit(Long id) {
+		if (UPDATE == null)
+			return notFound();
 		T t = CRUD.findById(id);
 		if (t == null)
 			return notFound();
@@ -78,18 +82,24 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
+		if (CREATE == null)
+			return notFound();
 		return ok(CREATE.render(FORM));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result page(int index) {
+		if (PAGE == null)
+			return notFound();
 		return ok(PAGE.render(CRUD.page(index)));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result show(Long id) {
+		if (SHOW == null)
+			return notFound();
 		T t = CRUD.findById(id);
 		if (t == null)
 			return notFound();
@@ -99,7 +109,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result update(Long id) {
-		if (!CRUD.exists(id))
+		if (REDIRECT == null || UPDATE == null || !CRUD.exists(id))
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
