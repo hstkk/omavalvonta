@@ -25,7 +25,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, routes.Products.page(page.getIndex - 1), page.hasNext, routes.Products.page(page.getIndex + 1))
+		@pagination(page, routes.Products.page(page.getIndex - 1), routes.Products.page(page.getIndex + 1))
 	} else {
 		@warning() {
 			Tuotteita ei löytynyt, voit kuitenkin <a href="@routes.Products.create">lisätä</a> uusia.

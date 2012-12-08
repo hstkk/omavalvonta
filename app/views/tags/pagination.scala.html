@@ -1,12 +1,12 @@
-@(hasPrevious: Boolean, previousPage: play.api.mvc.Call, hasNext: Boolean, nextPage: play.api.mvc.Call)
+@(page: models.helpers.Page[_], previousPage: play.api.mvc.Call, nextPage: play.api.mvc.Call)
 <div class="pagination">
 	<ul>
-		@if(hasPrevious) {
+		@if(page.hasPrevious) {
 			<li><a href="@previousPage">&larr; Edellinen</a></li>
 		} else {
 			<li class="disabled"><a>&larr; Edellinen</a></li>
 		}
-		@if(hasNext) {
+		@if(page.hasNext) {
 			<li><a href="@nextPage">Seuraava &rarr;</a></li>
 		} else {
 			<li class="disabled"><a>Seuraava &rarr;</a></li>

@@ -23,7 +23,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, routes.Ingredients.page(page.getIndex - 1), page.hasNext, routes.Ingredients.page(page.getIndex + 1))
+		@pagination(page, routes.Ingredients.page(page.getIndex - 1), routes.Ingredients.page(page.getIndex + 1))
 	} else {
 		@warning() {
 			Raaka-aineita ei löytynyt, voit kuitenkin <a href="@routes.Ingredients.create">lisätä</a> uusia.

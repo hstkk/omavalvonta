@@ -29,7 +29,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page.hasPrevious, routes.IngredientSupplies.page(page.getIndex - 1), page.hasNext, routes.IngredientSupplies.page(page.getIndex + 1))
+		@pagination(page, routes.IngredientSupplies.page(page.getIndex - 1), routes.IngredientSupplies.page(page.getIndex + 1))
 	} else {
 		@warning() {
 			Vastaanotettuja raaka-aineita ei löytynyt, voit kuitenkin <a href="@routes.IngredientSupplies.create">lisätä</a> uusia.
