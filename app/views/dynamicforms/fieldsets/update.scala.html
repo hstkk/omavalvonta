@@ -9,12 +9,8 @@
 @import tags.navs._
 
 @main(Messages.get("fieldset.update")){
-	@tabs() {
-		<li><a href="@controllers.dynamicforms.routes.Forms.crud.page()">Lomakkeet</a></li>
-		<li><a href="@controllers.dynamicforms.routes.Forms.crud.fresh">Uusi lomake</a></li>
-		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.page()">Kenttäryhmät</a></li>
-		<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.fresh">Uusi kenttäryhmä</a></li>
-	}
+	@views.html.dynamicforms.forms.navigation()
+
 	@if(FORM.hasGlobalErrors) {
 		@error() {
 			@FORM.globalError.message
