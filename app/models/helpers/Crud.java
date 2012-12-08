@@ -5,20 +5,17 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import play.Play;
 import play.db.jpa.JPA;
 
-public class Crud<T extends Model, ID extends Serializable> implements
-		GenericDao<T, ID> {
+public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
+		implements GenericDao<T, ID> {
 
 	private final Class<T> clazz;
 	private final String entity;
-	private final int pageSize;
 
 	public Crud(Class<T> clazz) {
 		this.clazz = clazz;
 		this.entity = clazz.getName();
-		this.pageSize = Play.application().configuration().getInt("page.size");
 	}
 
 	@Override
@@ -72,21 +69,41 @@ public class Crud<T extends Model, ID extends Serializable> implements
 		return findAll(null);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll(Integer pageNumber) {
-		List<T> list = null;
 		try {
 			Query q = JPA.em().createQuery("select e from " + entity + " e");
-			if (pageNumber != null) {
-				if (pageNumber < 1)
-					pageNumber = 1;
-				q.setFirstResult((pageNumber - 1) * pageSize).setMaxResults(
-						pageSize);
-			}
-			list = q.getResultList();
+			q = setResults(q, pageNumber);
+			return q.getResultList();
 		} catch (Exception e) {
 		}
-		return list;
+		return null;
+	}
+
+	public List<T> findAllBy(String query, Object[] params) {
+		return findAllBy(query, params, null);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> findAllBy(String query, Object[] params, Integer pageNumber) {
+		try {
+			Query q = createQuery(query, params);
+			q = setResults(q, pageNumber);
+			return q.getResultList();
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public T findBy(String query, Object[] params) {
+		try {
+			Query q = createQuery(query, params);
+			return (T) q.getSingleResult();
+		} catch (Exception e) {
+		}
+		return null;
 	}
 
 	@Override
