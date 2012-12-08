@@ -1,0 +1,9 @@
+@import play.i18n._
+@import tags.navs._
+
+@tabs() {
+	<li><a href="@controllers.dynamicforms.routes.Forms.crud.page()">Lomakkeet</a></li>
+	<li><a href="@controllers.dynamicforms.routes.Forms.crud.fresh">Uusi lomake</a></li>
+	<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.page()">@Messages.get("fieldset.page")</a></li>
+	<li><a href="@controllers.dynamicforms.routes.Fieldsets.crud.fresh">@Messages.get("fieldset.create")</a></li>
+}
