@@ -3,13 +3,11 @@ package controllers.helpers;
 import models.helpers.Model;
 import models.helpers.Page;
 
-import play.*;
 import play.i18n.Messages;
 import play.mvc.*;
 import play.api.mvc.Call;
 import play.api.templates.*;
 import play.data.*;
-import static play.data.Form.*;
 import play.db.jpa.*;
 
 public class Crud<T extends Model> extends Controller implements CrudInterface {
