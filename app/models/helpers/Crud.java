@@ -1,6 +1,7 @@
 package models.helpers;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -127,6 +128,15 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 		}
 		return new Page<T>(pageNumber, pageSize, rows, list);
 	}
+
+	@Override
+	public java.util.Map<String, String> options() {
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		List<T> list = findAll();
+		for (T t : list)
+			map.put(t.id.toString(), t.toString());
+		return map;
+	};
 
 	@Override
 	public boolean update(T t) {

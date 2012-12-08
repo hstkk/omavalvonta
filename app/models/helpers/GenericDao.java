@@ -2,6 +2,7 @@ package models.helpers;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public interface GenericDao<T, ID extends Serializable> {
 	boolean create(T t);
@@ -23,6 +24,8 @@ public interface GenericDao<T, ID extends Serializable> {
 	T findBy(String query, Object[] params);
 
 	T findById(ID id);
+
+	Map<String, String> options();
 
 	Page<T> page(int pageNumber);
 
