@@ -38,8 +38,8 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			Template2<Long, Form<T>, Html> UPDATE,
 			Template1<Form<T>, Html> CREATE, Template1<Page<T>, Html> PAGE,
 			Template1<T, Html> SHOW, Call REDIRECT) {
-		this.FORM = FORM;
 		this.CRUD = CRUD;
+		this.FORM = FORM;
 		this.UPDATE = UPDATE;
 		this.CREATE = CREATE;
 		this.PAGE = PAGE;
