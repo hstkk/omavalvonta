@@ -75,7 +75,7 @@ POST	/yllapito/lomakkeet/kentat/:fieldsetId				controllers.dynamicforms.Fieldset
 GET		/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa		controllers.dynamicforms.Fieldsets.crud.edit(fieldsetId: Long)
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/poista	controllers.dynamicforms.Fieldsets.destroy(fieldsetId: Long)
 
-# Form managementh
+# Form management
 GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")
 GET		/yllapito/lomakkeet/uusi							controllers.dynamicforms.Forms.crud.fresh
 POST	/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.create
