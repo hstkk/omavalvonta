@@ -27,7 +27,7 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	Map<String, String> options();
 
-	Page<T> page(int pageNumber);
+	Page<T> page(int pageNumber, String order, String by);
 
 	boolean update(T t);
 }
