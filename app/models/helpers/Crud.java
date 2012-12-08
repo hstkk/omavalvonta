@@ -75,7 +75,7 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 	public List<T> findAll(Integer pageNumber) {
 		try {
 			Query q = JPA.em().createQuery("select e from " + entity + " e");
-			q = setResults(q, pageNumber);
+			q = setPage(q, pageNumber);
 			return q.getResultList();
 		} catch (Exception e) {
 		}
@@ -90,7 +90,7 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 	public List<T> findAllBy(String query, Object[] params, Integer pageNumber) {
 		try {
 			Query q = createQuery(query, params);
-			q = setResults(q, pageNumber);
+			q = setPage(q, pageNumber);
 			return q.getResultList();
 		} catch (Exception e) {
 		}

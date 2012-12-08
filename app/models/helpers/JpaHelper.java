@@ -38,7 +38,7 @@ public class JpaHelper {
 		return bindParameters(q, params);
 	}
 
-	protected Query setResults(Query q, Integer pageNumber) {
+	protected Query setPage(Query q, Integer pageNumber) {
 		if (pageNumber != null) {
 			if (pageNumber < 1)
 				pageNumber = 1;
