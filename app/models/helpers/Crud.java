@@ -30,12 +30,13 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 	}
 
 	@Override
-	public int count() {
+	public long count() {
 		try {
-			return (int) JPA.em()
+			return (long) JPA.em()
 					.createQuery("select count(*) from " + entity + " e")
 					.getSingleResult();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return 0;
 	};
@@ -120,7 +121,7 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 	@Override
 	public Page<T> page(int pageNumber) {
 		List<T> list = null;
-		int rows = count();
+		long rows = count();
 		try {
 			if (rows > 0)
 				list = findAll(pageNumber);
