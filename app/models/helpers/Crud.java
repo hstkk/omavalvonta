@@ -119,7 +119,7 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 	}
 
 	@Override
-	public Page<T> page(int pageNumber) {
+	public Page<T> page(int pageNumber, String order, String by) {
 		List<T> list = null;
 		long rows = count();
 		try {

@@ -9,5 +9,5 @@ public class Forms extends Controller {
 	public final static Crud<Form> crud = new Crud<Form>(Form.crud,
 			form(Form.class),
 			update.ref(), create.ref(), page.ref(), null,
-			routes.Forms.crud.page(1));
+			routes.Forms.crud.page(1, "", ""));
 }
