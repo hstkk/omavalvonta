@@ -9,7 +9,7 @@ public interface CrudInterface {
 
 	Result fresh();
 
-	Result page(int index);
+	Result page(int pageNumber, String order, String by);
 
 	Result show(Long id);
 
