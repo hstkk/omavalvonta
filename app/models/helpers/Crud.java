@@ -55,12 +55,12 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 	public boolean exists(ID id) {
 		try {
 			if (id != null)
-				return (boolean) JPA
+				return ((long) JPA
 						.em()
 						.createQuery(
 								"select count(*) from " + entity + " e"
 										+ " where e.id = ?")
-						.setParameter(1, id).getSingleResult();
+						.setParameter(1, id).getSingleResult()) == 1;
 		} catch (Exception e) {
 		}
 		return false;
