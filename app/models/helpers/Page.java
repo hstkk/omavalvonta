@@ -37,7 +37,7 @@ public class Page<T> {
 	 *            the list
 	 */
 	public Page(int pageNumber, int pageSize, long rows, List<T> list) {
-		this.pageNumber = pageNumber;
+		this.pageNumber = (pageNumber < 1) ? 1 : pageNumber;
 		this.pageSize = pageSize;
 		this.rows = rows;
 		this.list = list;
