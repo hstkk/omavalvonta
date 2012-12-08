@@ -7,7 +7,7 @@ import java.util.Map;
 public interface GenericDao<T, ID extends Serializable> {
 	boolean create(T t);
 
-	int count();
+	long count();
 
 	boolean delete(T t);
 
