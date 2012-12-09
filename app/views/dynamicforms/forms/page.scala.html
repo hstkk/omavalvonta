@@ -29,7 +29,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page, controllers.dynamicforms.routes.Forms.crud.page(page.getIndex - 1), controllers.dynamicforms.routes.Forms.crud.page(page.getIndex + 1))
+		@pagination(page, controllers.dynamicforms.routes.Forms.crud.page(page.getPrevious, page.getOrder, page.getBy), controllers.dynamicforms.routes.Forms.crud.page(page.getNext, page.getOrder, page.getBy))
 	} else {
 		@warning() {
 			Lomakkeita ei löytynyt, voit kuitenkin <a href="@controllers.dynamicforms.routes.Forms.crud.fresh">lisätä</a> uusia.
