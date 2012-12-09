@@ -127,7 +127,7 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 				list = findAll(pageNumber);
 		} catch (Exception e) {
 		}
-		return new Page<T>(pageNumber, pageSize, rows, list);
+		return new Page<T>(pageNumber, pageSize, rows, list, order, by);
 	}
 
 	@Override
