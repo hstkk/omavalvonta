@@ -32,11 +32,13 @@ public class Fields extends Controller {
 			return redirect(REDIRECT);
 		} else if (!filledForm.hasErrors()) {
 			Field t = filledForm.get();
+			t.fieldset = Fieldset.crud.findById(fieldsetId);
 			if (Field.crud.create(t)) {
 				flash("success", Messages.get("crud.success"));
 				return redirect(REDIRECT);
 			}
 		}
+		System.out.println(filledForm.errorsAsJson());
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(views.html.dynamicforms.fields.create.render(filledForm, fieldsetId));
 	}
@@ -67,6 +69,7 @@ public class Fields extends Controller {
 		} else if (!filledForm.hasErrors()) {
 			Field fresh = filledForm.get();
 			fresh.id = fieldId;
+			fresh.fieldset = Fieldset.crud.findById(fieldsetId);
 			if (Field.crud.update(fresh)) {
 				flash("success", Messages.get("crud.success"));
 				return redirect(REDIRECT);
