@@ -60,16 +60,15 @@ public class Term extends Model {
 			int size = Play.application().configuration().getInt("page.size");
 			if (index < 1)
 				index = 1;
-			int rows = (int) JPA.em()
+			long rows = (long) JPA.em()
 					.createQuery("select count(*) from Term").getSingleResult();
 			List<Term> list = JPA.em().createQuery("from Term order by name")
 					.setFirstResult((index - 1) * size).setMaxResults(size)
 					.getResultList();
-			if (rows > 0 && list != null && !list.isEmpty())
 				return new Page(index, size, rows, list);
 		} catch (Exception e) {
 		}
-		return null;
+		return new Page(index, 0, 0, null);
 	}
 
 	@SuppressWarnings("unchecked")

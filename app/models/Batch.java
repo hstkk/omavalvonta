@@ -120,7 +120,7 @@ public class Batch extends JpaModel {
 			int size = Play.application().configuration().getInt("page.size");
 			if (index < 1)
 				index = 1;
-			int rows = (int) JPA.em()
+			long rows = (long) JPA.em()
 					.createQuery("select count(*) from Batch")
 					.getSingleResult();
 			List<Batch> list = JPA.em()
@@ -131,7 +131,7 @@ public class Batch extends JpaModel {
 				return new Page(index, size, rows, list);
 		} catch (Exception e) {
 		}
-		return null;
+		return new Page(index, 0, 0, null);
 	}
 
 	// TODO
