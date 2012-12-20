@@ -14,10 +14,6 @@ import play.db.jpa.*;
 public class User extends JpaModel {
 	@Required
 	@NotNull
-	public String username;
-
-	@Required
-	@NotNull
 	public String firstname;
 
 	@Required
@@ -28,11 +24,6 @@ public class User extends JpaModel {
 	@Email
 	@NotNull
 	public String email;
-
-	@Required
-	public Boolean isTeacher;
-
-	public String schoolClass;
 
 	public User() {
 	}
