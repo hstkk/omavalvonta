@@ -16,7 +16,7 @@
 	@if(finalProduct != null) {
 		<a class="btn btn-large btn-success" href="@routes.FinalProducts.read(batch.id)">Myyntihyväksyntä</a>
 	} else {
-		<a class="btn btn-large btn-warning" href="@routes.FinalProducts.edit(batch.id)">Hyväksy myyntiin</a>
+		<a class="btn btn-large btn-warning" href="@routes.FinalProducts.edit(batch.id)">Myyntihyväksyntään</a>
 	}
 	@if(results != null) {
 		@table() {
