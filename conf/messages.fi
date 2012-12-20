@@ -50,3 +50,7 @@ fieldset.create=Uusi kenttäryhmä
 fieldset.page=Kenttäryhmät
 fieldset.page.empty=Kenttäryhmiä ei löytynyt!
 fieldset.update=Muokkaa kenttäryhmää
+
+# --- Field
+field.create=Uusi kenttä
+field.update=Muokkaa kenttää
