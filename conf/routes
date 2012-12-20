@@ -85,11 +85,11 @@ GET		/yllapito/lomake/:formId/muokkaa					controllers.dynamicforms.Forms.crud.ed
 #GET		/yllapito/lomake/:formId/poista					controllers.dynamicforms.Forms.destroy(formId: Long)
 
 # Field management
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta					controllers.dynamicforms.Forms.create(fieldsetId: Long)
-#GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/uusi				controllers.dynamicforms.Forms.fresh(fieldsetId: Long)
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId			controllers.dynamicforms.Forms.update(fieldsetId: Long, fieldId: Long)
-#GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.dynamicforms.Forms.edit(fieldsetId: Long, fieldId: Long)
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/poista	controllers.dynamicforms.Forms.destroy(fieldsetId: Long, fieldId: Long)
+POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentta					controllers.dynamicforms.Fields.create(fieldsetId: Long)
+GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/uusi				controllers.dynamicforms.Fields.fresh(fieldsetId: Long)
+POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId			controllers.dynamicforms.Fields.update(fieldsetId: Long, fieldId: Long)
+GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.dynamicforms.Fields.edit(fieldsetId: Long, fieldId: Long)
+#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/poista	controllers.dynamicforms.Fields.destroy(fieldsetId: Long, fieldId: Long)
 
 # Final product
 GET		/myyntihyvaksynnat									controllers.FinalProducts.index

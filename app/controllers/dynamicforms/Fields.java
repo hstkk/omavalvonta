@@ -3,6 +3,7 @@ package controllers.dynamicforms;
 import java.util.List;
 
 import play.*;
+import play.i18n.Messages;
 import play.mvc.*;
 import play.data.*;
 import static play.data.Form.*;
@@ -22,51 +23,56 @@ public class Fields extends Controller {
 	/** The Constant FORM. */
 	final static Form<Field> FORM = form(Field.class);
 
-	/*@Transactional(readOnly = true)
+	@Transactional
 	public static Result create(Long fieldsetId) {
-		Fieldset fieldset= Fieldset.findById(fieldsetId);
-		if (fieldset == null)
-			return notFound();
-		List<models.dynamicforms.Field> fields = Field.findByFieldset(fieldset);
-		return ok(views.html.dynamicforms.fields.manage.render(FORM, fieldset, fields));
+		Call REDIRECT = controllers.dynamicforms.routes.Fieldsets.crud.edit(fieldsetId);
+		Form<Field> filledForm = FORM.bindFromRequest();
+		if (filledForm.field("action").value().equals("peruuta")) {
+			flash("warning", Messages.get("crud.cancel"));
+			return redirect(REDIRECT);
+		} else if (!filledForm.hasErrors()) {
+			Field t = filledForm.get();
+			if (Field.crud.create(t)) {
+				flash("success", Messages.get("crud.success"));
+				return redirect(REDIRECT);
+			}
+		}
+		flash("error", Messages.get("crud.fail"));
+		return badRequest(views.html.dynamicforms.fields.create.render(filledForm, fieldsetId));
 	}
 
 	@Transactional(readOnly = true)
-	public static Result update(Long fieldsetId, Long fieldId) {
-		Fieldset fieldset = Fieldset.findById(fieldsetId);
-		if (fieldset == null)
+	public static Result fresh(Long fieldsetId) {
+		return ok(views.html.dynamicforms.fields.create.render(FORM, fieldsetId));
+	}
+
+	@Transactional(readOnly = true)
+	public static Result edit(Long fieldsetId, Long fieldId) {
+		if(!Fieldset.crud.exists(fieldsetId))
 			return notFound();
-		Field field = Field.crud.findById(fieldId);
-		if (field == null)
+		Field t = Field.crud.findById(fieldId);
+		if (t == null)
 			return notFound();
-		List<models.dynamicforms.Field> fields = Field.findByFieldset(fieldset);
-		return ok(views.html.dynamicforms.fields.manage.render(
-				FORM.fill(field), fieldset, fields));
+		Form<Field> filledForm = FORM.fill(t);
+		return ok(views.html.dynamicforms.fields.update.render(filledForm, fieldsetId, fieldId));
 	}
 
 	@Transactional
-	public static Result save(Long fieldsetId) {
-		Fieldset fieldset = Fieldset.findById(fieldsetId);
-		if (fieldset == null)
-			return notFound();
+	public static Result update(Long fieldsetId, Long fieldId) {
+		Call REDIRECT = routes.Fieldsets.crud.edit(fieldsetId);
 		Form<Field> filledForm = FORM.bindFromRequest();
 		if (filledForm.field("action").value().equals("peruuta")) {
-			flash("warning", "Kentän tallennus peruutettu!");
-			// return redirect(dynamicforms.routes.Fields.create());
-			return create(fieldsetId);
+			flash("warning", Messages.get("crud.cancel"));
+			return redirect(REDIRECT);
 		} else if (!filledForm.hasErrors()) {
-			Field field = filledForm.get();
-			// TODO smarter save/update
-			if ((field.id != null && field.update())
-					|| (field.id == null && field.save())) {
-				flash("success", "Kenttä on tallennettu onnistuneesti!");
-				// return redirect(routes.dynamicforms.Fields.create());
-				return create(fieldsetId);
+			Field fresh = filledForm.get();
+			fresh.id = fieldId;
+			if (Field.crud.update(fresh)) {
+				flash("success", Messages.get("crud.success"));
+				return redirect(REDIRECT);
 			}
 		}
-		flash("error", "Kentän tallennus ei onnistunut!");
-		List<models.dynamicforms.Field> fields = Field.findByFieldset(fieldset);
-		return badRequest(views.html.dynamicforms.fields.manage.render(
-				filledForm, fieldset, fields));
-	}*/
+		flash("error", Messages.get("crud.fail"));
+		return badRequest(views.html.dynamicforms.fields.update.render(filledForm, fieldsetId, fieldId));
+	}
 }
