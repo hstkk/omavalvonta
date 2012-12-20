@@ -20,7 +20,7 @@ import play.db.jpa.*;
 public class Field extends Model {
 
 	public Field() {
-		//super(Field.class, "Field");
+		// super(Field.class, "Field");
 	}
 
 	public final static Crud<Field, Long> crud = new Crud<Field, Long>(
@@ -64,8 +64,8 @@ public class Field extends Model {
 
 	public Boolean targetValue;
 
-	@Required
-	@NotNull
+	//@Required
+	//@NotNull
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Fieldset fieldset;
 
@@ -135,7 +135,12 @@ public class Field extends Model {
 			System.out.println("\n\n" + e + "\n\n");
 			e.printStackTrace();
 		}
-		return null;
+		return new ArrayList<Field>();
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Field> findByFieldset(Long fieldsetId) {
+		return findByFieldset(Fieldset.crud.findById(fieldsetId));
 	}
 
 	public static List<Result> headerify(Form form) {

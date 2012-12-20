@@ -20,4 +20,17 @@
 	@helper.form(action = controllers.dynamicforms.routes.Fieldsets.crud.update(id), 'class -> "form-horizontal"){
 		@fields(FORM)
 	}
+
+	<h2>Kentät</h2>
+	<a class="btn btn-primary" href="@controllers.dynamicforms.routes.Fields.fresh(id)" title="Lisää uusi kenttä">Lisää uusi kenttä</a>
+	@for(field <- models.dynamicforms.Field.findByFieldset(id)) {
+			<ul class="unstyled">
+				<li><strong>@field.name</strong></li>
+				@if(field.help != ""){
+					<li>@field.help</li>
+				}
+				<li>@field</li>
+				<li><a class="btn" href="@controllers.dynamicforms.routes.Fields.update(id, field.id)" title="Muokkaa">Muokkaa</a></li>
+			</ul>
+	}
 }
