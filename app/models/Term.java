@@ -28,13 +28,13 @@ public class Term extends Model {
 	public final static Crud<Term, Long> crud = new Crud<>(Term.class);
 
 	@Column(name = "name")
-	@Required
-	@NotNull
+	//@Required
+	//@NotNull
 	public String name;
 
 	@Column(name = "category")
-	@Required
-	@NotNull
+	//@Required
+	//@NotNull
 	public int category;
 
 	@Transient

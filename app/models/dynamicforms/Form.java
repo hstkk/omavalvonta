@@ -3,8 +3,10 @@ package models.dynamicforms;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.envers.Audited;
@@ -39,6 +41,9 @@ public class Form extends Model {
 	@Lob
 	public String description = "";
 
+	@Transient
+	public Long categoryId;
+
 	// @Required
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term category;
@@ -50,16 +55,27 @@ public class Form extends Model {
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Fieldset> fieldsets = new ArrayList<Fieldset>();
 
+	@Transient
+	public List<Long> fieldsetIds = new ArrayList<Long>();
+
 	public String toString() {
 		return name;
 	}
 
 	@PrePersist
+	@PreUpdate
 	private void prePersist() {
-		if (this.category.id == null)
-			this.category = null;
-		else
-			this.category = Term.crud.findById(this.category.id);
+		System.out.println("OK");
+		System.out.println(categoryId);
+		this.category = Term.crud.findById(categoryId);
+		/*if (this.category.id == null)
+			this.category = null;*/
+		//else
+		//	this.category = Term.crud.findById(this.category.id);
+		for(Long fieldsetId : fieldsetIds){
+			System.out.println(fieldsetId);
+			fieldsets.add(Fieldset.crud.findById(fieldsetId));
+		}
 	}
 
 	public static List<Form> findByTerm(Term category) {

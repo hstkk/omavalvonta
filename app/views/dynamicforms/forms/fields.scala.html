@@ -4,9 +4,49 @@
 @import helper.twitterBootstrap._
 @import tags.forms._
 
+	<script>
+		$(document).ready(function() {
+			function magic() {
+				$("input:checkbox[name=fieldsetIds]").each(function() {
+				});
+			}
+			
+			$('#_fieldset').change(function () {
+				var option = $("#_fieldset option:selected");
+				var text = option.text();
+				var val = option.val();
+				option.remove();
+				var id = $("#sortable").children().size();
+				$('#sortable').append(
+					'<label class="checkbox">' +
+					'<input type="checkbox" disabled="disabled" checked="checked" id="fieldsetIds[' + id + ']_'+val+'" style="cursor:move;" value="'+ val +'"> ' + 
+					text + ' &#x25B2;&#x25BC;</label>');
+			});
+
+			$("#sortable" ).sortable({
+				update: function(event, ui) {
+				}
+			});
+        	$( "#sortable" ).disableSelection();
+        	$(".btn-primary").bind("click", function() {
+				var i = 0;
+				$("#fieldsets").each(function() {
+					$(this).attr('id', 'fieldsetIds[' + i + ']');
+					i++;
+				});
+			});
+		});
+	</script>
+
 @helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
-@helper.select(FORM("category.id"), options = options(models.Term.options(models.TermCategory.FORMTYPE)), '_default -> "", '_label -> "tyyppi")
+@helper.select(FORM("categoryId"), options = options(models.Term.options(models.TermCategory.FORMTYPE)), '_default -> "", '_label -> "tyyppi")
 @helper.textarea(FORM("description"), '_label -> "kuvaus")
 @helper.checkbox(FORM("isActive"), '_label -> None, '_text -> "Aktiivinen", '_showConstraints -> false)
-fieldsets
+
+<fieldset>
+	<legend>Kenttäryhmät</legend>
+	@helper.select(FORM("_fieldset"), options = options(models.dynamicforms.Fieldset.options), '_default -> "", '_label -> "Lisää kenttäryhmä")
+	<br>
+	<div id="sortable"></div>
+</fieldset>
 @actions()
