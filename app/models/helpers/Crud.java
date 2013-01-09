@@ -25,6 +25,7 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 			JPA.em().persist(t);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

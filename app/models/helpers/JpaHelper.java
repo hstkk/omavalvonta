@@ -38,6 +38,11 @@ public class JpaHelper {
 		return bindParameters(q, params);
 	}
 
+	protected Query orderBy(String query, String order, String by) {
+		
+		return createQuery(query, null);
+	}
+
 	protected Query setPage(Query q, Integer pageNumber) {
 		if (pageNumber != null) {
 			if (pageNumber < 1)
