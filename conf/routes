@@ -8,7 +8,7 @@
 #POST	/foo				create
 #GET	/foo/:id			show
 #GET	/foo/:id/muokkaa	edit
-#POST	/foo/:id			update
+#POST	/foo/:id/muokkaa	update
 #POST	/foo/:id/poista		destroy
 
 # Home page
@@ -71,7 +71,7 @@ GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.pa
 POST	/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.create
 GET		/yllapito/lomakkeet/kentat/uusi						controllers.dynamicforms.Fieldsets.crud.fresh
 #GET		/yllapito/lomakkeet/kentat/:fieldsetId			controllers.dynamicforms.Fieldsets.show(fieldsetId: Long)
-POST	/yllapito/lomakkeet/kentat/:fieldsetId				controllers.dynamicforms.Fieldsets.crud.update(fieldsetId: Long)
+POST	/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa		controllers.dynamicforms.Fieldsets.crud.update(fieldsetId: Long)
 GET		/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa		controllers.dynamicforms.Fieldsets.crud.edit(fieldsetId: Long)
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/poista	controllers.dynamicforms.Fieldsets.destroy(fieldsetId: Long)
 
@@ -80,14 +80,14 @@ GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.page(sivu: 
 GET		/yllapito/lomakkeet/uusi							controllers.dynamicforms.Forms.crud.fresh
 POST	/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.create
 #GET		/yllapito/lomake/:formId						controllers.dynamicforms.Forms.show(formId: Long)
-POST	/yllapito/lomake/:formId							controllers.dynamicforms.Forms.crud.update(formId: Long)
+POST	/yllapito/lomake/:formId/muokkaa					controllers.dynamicforms.Forms.crud.update(formId: Long)
 GET		/yllapito/lomake/:formId/muokkaa					controllers.dynamicforms.Forms.crud.edit(formId: Long)
 #GET		/yllapito/lomake/:formId/poista					controllers.dynamicforms.Forms.destroy(formId: Long)
 
 # Field management
 POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentta					controllers.dynamicforms.Fields.create(fieldsetId: Long)
 GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/uusi				controllers.dynamicforms.Fields.fresh(fieldsetId: Long)
-POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId			controllers.dynamicforms.Fields.update(fieldsetId: Long, fieldId: Long)
+POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.dynamicforms.Fields.update(fieldsetId: Long, fieldId: Long)
 GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.dynamicforms.Fields.edit(fieldsetId: Long, fieldId: Long)
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/poista	controllers.dynamicforms.Fields.destroy(fieldsetId: Long, fieldId: Long)
 
