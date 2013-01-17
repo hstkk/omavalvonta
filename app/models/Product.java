@@ -113,7 +113,7 @@ public class Product {
 		if (!form.ingredientIds.isEmpty())
 			for (Long id : form.ingredientIds)
 				if (id != null)
-					ingredients.add(Ingredient.findById(id));
+					ingredients.add(Ingredient.crud.findById(id));
 	}
 
 	/*

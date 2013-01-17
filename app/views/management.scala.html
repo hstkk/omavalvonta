@@ -1,9 +1,10 @@
+@import play.i18n._
 @import tags.navs._
 
 @main("Ylläpito") {
 	@stacked() {
 		<li><a href="@routes.Terms.index">termit</a></li>
-		<li><a href="@routes.Ingredients.index">raaka-aineet</a></li>
+		<li><a href="@routes.Ingredients.crud.page()">@Messages.get("ingredient.page")</a></li>
 		<li><a href="@routes.Products.index">tuotteet</a></li>
 		<li><a href="@controllers.dynamicforms.routes.Forms.crud.page()">lomakkeet</a></li>
 	}

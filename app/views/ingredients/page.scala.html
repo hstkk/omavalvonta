@@ -1,32 +1,33 @@
-@(page: models.helpers.Page[Ingredient])
+@(page: models.helpers.Page[models.Ingredient])
 
+@import play.i18n._
 @import tags._
 @import tags.alerts._
-@import tags.navs._
 @import tags.tables._
+@import tags.navs._
 
-@main("Raaka-aineet") {
-	@tabs() {
-		<li class="active"><a href="#">Raaka-aineet</a></li>
-		<li><a href="@routes.Ingredients.create">Uusi</a></li>
-	}
+@main(Messages.get("ingredient.page")) {
+	@navigation()
+
 	@if(!page.isEmpty){
 		@table() {
 			@thead() {
-				Nimi
-				Kuvaus
+				@Messages.get("label.name")
+				@Messages.get("label.description")
+				@Messages.get("label.bestBefore")
 			}
 			<tbody>
 				@for(ingredient <- page.getList) {
-					@tr() { <a href="@routes.Ingredients.update(ingredient.id)">@ingredient</a>
-						@ingredient.description }
+					@tr() { <a href="@routes.Ingredients.crud.edit(ingredient.id)">@ingredient</a>
+						@ingredient.description
+						@ingredient.bestBefore }
 				}
 			</tbody>
 		}
-		@pagination(page, routes.Ingredients.page(page.getIndex - 1), routes.Ingredients.page(page.getIndex + 1))
+		@pagination(page, routes.Ingredients.crud.page(page.getPrevious, page.getOrder, page.getBy), routes.Ingredients.crud.page(page.getNext, page.getOrder, page.getBy))
 	} else {
 		@warning() {
-			Raaka-aineita ei löytynyt, voit kuitenkin <a href="@routes.Ingredients.create">lisätä</a> uusia.
+			@Messages.get("ingredient.page.empty")
 		}
 	}
 }

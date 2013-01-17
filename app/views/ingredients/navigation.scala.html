@@ -1,0 +1,7 @@
+@import play.i18n._
+@import tags.navs._
+
+@tabs() {
+	<li><a href="@routes.Ingredients.crud.page()">@Messages.get("ingredient.page")</a></li>
+	<li><a href="@routes.Ingredients.crud.fresh">@Messages.get("ingredient.create")</a></li>
+}
