@@ -44,6 +44,7 @@ crud.fail=Tallennus epäonnistui!
 label.name=Nimi
 label.description=Kuvaus
 label.isActive=Aktiivinen
+label.bestBefore = Parasta ennen (päivää)
 
 # --- Fieldset
 fieldset.create=Uusi kenttäryhmä
@@ -54,3 +55,9 @@ fieldset.update=Muokkaa kenttäryhmää
 # --- Field
 field.create=Uusi kenttä
 field.update=Muokkaa kenttää
+
+# --- Ingredient
+ingredient.create=Uusi raaka-aine
+ingredient.page=Raaka-aineet
+ingredient.page.empty=Raaka-aineita ei löytynyt!
+ingredient.update=Muokkaa raaka-ainetta

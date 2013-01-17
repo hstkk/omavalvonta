@@ -52,11 +52,11 @@ GET		/yllapito/termit/sivu/:index						controllers.Terms.page(index: Int)
 #POST	/yllapito/termit/:id								controllers.Terms.update(id: Long)
 
 # Ingredient management
-GET		/yllapito/raaka-aine								controllers.Ingredients.index
-POST	/yllapito/raaka-aine								controllers.Ingredients.save
-GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.create
-GET		/yllapito/raaka-aine/sivu/:index					controllers.Ingredients.page(index: Int)
-GET		/yllapito/raaka-aine/:ingredientId					controllers.Ingredients.update(ingredientId: Long)
+GET		/yllapito/raaka-aine								controllers.Ingredients.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")
+GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.crud.fresh
+POST	/yllapito/raaka-aine/uusi							controllers.Ingredients.crud.create
+POST	/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.update(ingredientId: Long)
+GET		/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.edit(ingredientId: Long)
 
 # Product management
 GET		/yllapito/tuote										controllers.Products.index

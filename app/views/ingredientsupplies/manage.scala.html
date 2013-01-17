@@ -19,7 +19,7 @@
 	}
 	
 	@helper.form(action = routes.IngredientSupplies.save(), 'class -> "form-horizontal"){
-		@helper.select(FORM("ingredient.id"), options = options(models.Ingredient.options), '_default -> "", '_label -> "raaka-aine")
+		@helper.select(FORM("ingredient.id"), options = options(models.Ingredient.crud.options), '_default -> "", '_label -> "raaka-aine")
 		@helper.inputText(FORM("amount"), '_label -> "määrä", '_class -> "control-group")
 		@helper.select(FORM("unit.id"), options = options(models.Term.options(models.TermCategory.UNIT)), '_default -> "", '_label -> "mittayksikkö")
 		@helper.inputText(FORM("received"), '_label -> "vastaanottopäivä", '_class -> "control-group")

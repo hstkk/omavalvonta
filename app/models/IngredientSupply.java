@@ -62,7 +62,7 @@ public class IngredientSupply extends JpaModel {
 		if (this.ingredient.id == null)
 			this.ingredient = null;
 		else
-			this.ingredient = Ingredient.findById(this.ingredient.id);
+			this.ingredient = Ingredient.crud.findById(this.ingredient.id);
 		if (this.unit.id == null)
 			this.unit = null;
 		else
