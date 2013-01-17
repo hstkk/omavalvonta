@@ -1,0 +1,10 @@
+@(FORM: play.data.Form[models.Term])
+
+@import play.i18n._
+@import helper._
+@import helper.twitterBootstrap._
+@import tags.forms._
+
+@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
+@select(FORM("category"), options = options(models.TermCategory.options), '_default -> "", '_label ->  Messages.get("label.category"))
+@actions()

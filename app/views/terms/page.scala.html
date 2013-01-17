@@ -1,32 +1,31 @@
-@(page: models.helpers.Page[Term])
+@(page: models.helpers.Page[models.Term])
 
+@import play.i18n._
 @import tags._
 @import tags.alerts._
-@import tags.navs._
 @import tags.tables._
+@import tags.navs._
 
-@main("Termit") {
-	@tabs() {
-		<li class="active"><a href="#">Termit</a></li>
-		<li><a href="@routes.Terms.create">Uusi</a></li>
-	}
+@main(Messages.get("term.page")) {
+	@navigation()
+
 	@if(!page.isEmpty){
 		@table() {
 			@thead() {
-				Termi
-				Kategoria
+				@Messages.get("label.term")
+				@Messages.get("label.category")
 			}
 			<tbody>
-				@for(unit <- page.getList) {
-					@tr() { @unit
-							@unit.categoryEnum }
+				@for(term <- page.getList) {
+					@tr() { <a href="@routes.Terms.crud.edit(term.id)">@term</a>
+						@term.categoryEnum }
 				}
 			</tbody>
 		}
-		@pagination(page, routes.Terms.page(page.getIndex - 1), routes.Terms.page(page.getIndex + 1))
+		@pagination(page, routes.Terms.crud.page(page.getPrevious, page.getOrder, page.getBy), routes.Terms.crud.page(page.getNext, page.getOrder, page.getBy))
 	} else {
 		@warning() {
-			Termejä ei löytynyt, voit kuitenkin <a href="@routes.Terms.create">lisätä</a> uusia.
+			@Messages.get("term.page.empty")
 		}
 	}
 }
