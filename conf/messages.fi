@@ -65,7 +65,7 @@ ingredient.page.empty=Raaka-aineita ei löytynyt!
 ingredient.update=Muokkaa raaka-ainetta
 
 # --- Term
-ingredient.create=Uusi termi
-ingredient.page=Termit
-ingredient.page.empty=Termejä ei löytynyt!
-ingredient.update=Muokkaa termiä
+term.create=Uusi termi
+term.page=Termit
+term.page.empty=Termejä ei löytynyt!
+term.update=Muokkaa termiä
