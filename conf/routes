@@ -17,6 +17,9 @@ GET     /													controllers.Application.index
 # Management
 GET     /yllapito											controllers.Application.management
 
+# API
+GET		/tuote/:productId									controllers.Products.batch(productId: Long)
+
 # Batches
 GET		/erat												controllers.Batches.index
 GET		/erat/sivu/:index									controllers.Batches.page(index: Int)
@@ -63,7 +66,6 @@ POST	/yllapito/tuote										controllers.Products.save
 GET		/yllapito/tuote/uusi								controllers.Products.create
 GET		/yllapito/tuote/sivu/:index							controllers.Products.page(index: Int)
 GET		/yllapito/tuote/:productId							controllers.Products.update(productId: Long)
-GET		/tuote/:productId									controllers.Products.batch(productId: Long)
 
 # Fieldset management
 GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")

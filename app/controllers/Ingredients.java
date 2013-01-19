@@ -2,7 +2,6 @@ package controllers;
 
 import models.Ingredient;
 import controllers.helpers.Crud;
-import static play.data.Form.*;
 import play.mvc.Controller;
 import views.html.ingredients.*;
 

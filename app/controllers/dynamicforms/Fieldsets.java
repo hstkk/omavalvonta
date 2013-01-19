@@ -2,7 +2,6 @@ package controllers.dynamicforms;
 
 import models.dynamicforms.Fieldset;
 import controllers.helpers.Crud;
-import static play.data.Form.*;
 import play.mvc.Controller;
 import views.html.dynamicforms.fieldsets.*;
 
