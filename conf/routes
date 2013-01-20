@@ -5,7 +5,7 @@
 # Naming conventions
 #GET	/foo				page?sivu=1
 #GET	/foo/uusi			fresh
-#POST	/foo				create
+#POST	/foo/uusi			create
 #GET	/foo/:id			show
 #GET	/foo/:id/muokkaa	edit
 #POST	/foo/:id/muokkaa	update
@@ -18,7 +18,8 @@ GET     /													controllers.Application.index
 GET     /yllapito											controllers.Application.management
 
 # API
-GET		/tuote/:productId									controllers.Products.batch(productId: Long)
+GET		/api/reitit											controllers.Api.javascriptRoutes
+GET		/api/raaka-aineet									controllers.Api.batchIngredients(tuote: Long)
 
 # Batches
 GET		/erat												controllers.Batches.index

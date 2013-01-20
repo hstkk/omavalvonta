@@ -8,12 +8,20 @@
 @import tags.navs._
 
 @main("Uusi erä") {
+	<script src="@routes.Api.javascriptRoutes"></script>
 	<script>
 		$(document).ready(function() {
 			$('#product_id').change(function () {
 				var id = $('#product_id').val();
 				if(id > 0)
-					$("#fieldset").load('/tuote/' + id);
+					routes.controllers.Api.batchIngredients(id).ajax({
+						success: function(data) {
+							$("#fieldset").html(data);
+						},
+						error: function() {}
+					})
+				else
+					$('#fieldset').empty();
 			});
 		});
 	</script>

@@ -68,23 +68,4 @@ public class Products extends Controller {
 		flash("error", "Tuotteen tallennus ei onnistunut!");
 		return badRequest(views.html.products.manage.render(filledForm));
 	}
-
-	@Transactional(readOnly = true)
-	public static Result batch(Long productId) {
-		Product product = Product.findById(productId);
-		if (product == null)
-			return notFound();
-		if (product.ingredients == null || product.ingredients.isEmpty())
-			return ok("Tuotteen raaka-aineita ei löytynyt");
-		StringBuilder stringBuilder = new StringBuilder();
-		int index = 0;
-		for (Ingredient ingredient : product.ingredients) {
-			KeyValue<String, Integer> keyvalue = IngredientSupply
-					.findAliveByIngredient(ingredient, index);
-			index = keyvalue.value;
-			stringBuilder.append(keyvalue.key);
-		}
-		return ok(stringBuilder.toString());
-	}
-
 }
