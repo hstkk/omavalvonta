@@ -48,7 +48,7 @@ public class Ingredient extends Model {
 		StringBuilder stringBuilder = new StringBuilder();
 		List<Ingredient> checked = null;
 		try {
-			checked = Product.findById(Long.parseLong(id)).ingredients;
+			checked = Product.crud.findById(Long.parseLong(id)).ingredients;
 		} catch (Exception e) {
 		}
 		try {

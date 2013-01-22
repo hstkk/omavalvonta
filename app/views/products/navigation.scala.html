@@ -1,0 +1,7 @@
+@import play.i18n._
+@import tags.navs._
+
+@tabs() {
+	<li><a href="@routes.Products.crud.page()">@Messages.get("product.page")</a></li>
+	<li><a href="@routes.Products.crud.fresh">@Messages.get("product.create")</a></li>
+}

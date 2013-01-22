@@ -32,12 +32,12 @@ public class Results extends  Controller {
 
 	@Transactional(readOnly = true)
 	public static Result index() {
-		return ok(views.html.dynamicforms.results.index.render(Product.page(0)));
+		return ok(views.html.dynamicforms.results.index.render(Product.crud.page(1, "", "")));
 	}
 
 	@Transactional(readOnly = true)
 	public static Result page(Long productId, int index) {
-		Product product = Product.findById(productId);
+		Product product = Product.crud.findById(productId);
 		if (product == null)
 			return notFound();
 		return ok(views.html.dynamicforms.results.page.render(product,
@@ -46,7 +46,7 @@ public class Results extends  Controller {
 
 	@Transactional(readOnly = true)
 	public static Result create(Long productId, Long formId) {
-		Product product = Product.findById(productId);
+		Product product = Product.crud.findById(productId);
 		models.dynamicforms.Form f = models.dynamicforms.Form.crud.findById(formId);
 		if (product == null || f == null)
 			return notFound();
@@ -59,7 +59,7 @@ public class Results extends  Controller {
 
 	@Transactional(readOnly = true)
 	public static Result update(Long productId, Long resultsId) {
-		Product product = Product.findById(productId);
+		Product product = Product.crud.findById(productId);
 		if (product == null)
 			return notFound();
 		models.dynamicforms.Results results = models.dynamicforms.Results
@@ -80,7 +80,7 @@ public class Results extends  Controller {
 
 	@Transactional
 	public static Result save(Long productId, Long formId) {
-		Product product = Product.findById(productId);
+		Product product = Product.crud.findById(productId);
 		if (product == null)
 			return notFound();
 		models.dynamicforms.Form f = models.dynamicforms.Form.crud.findById(formId);
@@ -119,7 +119,7 @@ public class Results extends  Controller {
 
 	@Transactional(readOnly = true)
 	public static Result read(Long productId, Long resultsId) {
-		Product product = Product.findById(productId);
+		Product product = Product.crud.findById(productId);
 		if (product == null)
 			return notFound();
 		models.dynamicforms.Results results = models.dynamicforms.Results
@@ -137,7 +137,7 @@ public class Results extends  Controller {
 
 	@Transactional(readOnly = true)
 	public static Result history(Long productId, Long resultsId) {
-		Product product = Product.findById(productId);
+		Product product = Product.crud.findById(productId);
 		if (product == null)
 			return notFound();
 		models.dynamicforms.Results results = models.dynamicforms.Results

@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import models.dynamicforms.Form;
 import models.dynamicforms.Results;
 import models.helpers.JpaModel;
-import models.helpers.KeyValue;
 import models.helpers.Page;
 
 import org.hibernate.annotations.Target;
@@ -60,7 +59,7 @@ public class Batch extends JpaModel {
 		if (this.product.id == null)
 			this.product = null;
 		else
-			this.product = Product.findById(this.product.id);
+			this.product = Product.crud.findById(this.product.id);
 	}
 
 	public boolean save() {

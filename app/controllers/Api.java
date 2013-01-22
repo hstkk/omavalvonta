@@ -15,7 +15,7 @@ import play.mvc.Result;
 public class Api extends Controller {
 	@Transactional(readOnly = true)
 	public static Result batchIngredients(Long productId) {
-		Product product = Product.findById(productId);
+		Product product = Product.crud.findById(productId);
 		if (product == null)
 			return notFound();
 		if (product.ingredients == null || product.ingredients.isEmpty())
