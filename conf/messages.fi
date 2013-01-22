@@ -39,6 +39,8 @@ http.500.description=Pyyntöä ei voitu käsitellä.
 crud.cancel=Tallennus peruutettu!
 crud.success=Tallennus onnistui!
 crud.fail=Tallennus epäonnistui!
+crud.action.save=Tallenna
+crud.action.cancel=Peruuta
 
 # --- Label
 label.name=Nimi
@@ -47,6 +49,7 @@ label.isActive=Aktiivinen
 label.bestBefore=Parasta ennen (päivää)
 label.category=Kategoria
 label.term=Termi
+label.productNo=Tuotenumero
 
 # --- Fieldset
 fieldset.create=Uusi kenttäryhmä
@@ -69,3 +72,9 @@ term.create=Uusi termi
 term.page=Termit
 term.page.empty=Termejä ei löytynyt!
 term.update=Muokkaa termiä
+
+# --- Product
+product.create=Uusi tuote
+product.page=Tuotteet
+product.page.empty=Tuotteita ei löytynyt
+product.update=Muokkaa tuotetta

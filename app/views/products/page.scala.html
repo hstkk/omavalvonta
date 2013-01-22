@@ -1,34 +1,33 @@
-@(page: models.helpers.Page[Product])
+@(page: models.helpers.Page[models.Product])
 
+@import play.i18n._
 @import tags._
 @import tags.alerts._
-@import tags.navs._
 @import tags.tables._
+@import tags.navs._
 
-@main("Tuotteet") {
-	@tabs() {
-		<li class="active"><a href="#">tuotteet</a></li>
-		<li><a href="@routes.Products.create">Uusi</a></li>
-	}
+@main(Messages.get("product.page")) {
+	@navigation()
+
 	@if(!page.isEmpty){
 		@table() {
 			@thead() {
-				Tuotenumero
-				Nimi
-				Kuvaus
+				@Messages.get("label.productNo")
+				@Messages.get("label.name")
+				@Messages.get("label.description")
 			}
 			<tbody>
 				@for(product <- page.getList) {
-					@tr() { @product.id 
-						<a href="@routes.Products.update(product.id)">@product</a>
+					@tr() { <a href="@routes.Products.crud.edit(product.id)">@product.no</a> 
+						@product
 						@product.description }
 				}
 			</tbody>
 		}
-		@pagination(page, routes.Products.page(page.getIndex - 1), routes.Products.page(page.getIndex + 1))
+		@pagination(page, routes.Products.crud.page(page.getPrevious, page.getOrder, page.getBy), routes.Products.crud.page(page.getNext, page.getOrder, page.getBy))
 	} else {
 		@warning() {
-			Tuotteita ei löytynyt, voit kuitenkin <a href="@routes.Products.create">lisätä</a> uusia.
+			@Messages.get("product.page.empty")
 		}
 	}
 }

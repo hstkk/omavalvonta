@@ -1,4 +1,6 @@
+@import play.i18n._
+
 <fieldset class="form-actions">
-	<input type="submit" name="action" class="btn btn-primary" value="tallenna"/>
-	<input type="submit" name="action" class="btn btn-warning" value="peruuta"/>
+	<input type="submit" name="action" class="btn btn-primary" value="@Messages.get("crud.action.save")"/>
+	<input type="submit" name="action" class="btn btn-warning" value="@Messages.get("crud.action.cancel")"/>
 </fieldset>

@@ -9,7 +9,6 @@ import models.Batch;
 import models.helpers.JpaModel;
 import models.helpers.Page;
 
-import forms.Product;
 import forms.dynamicforms.Dynamic;
 import forms.dynamicforms.Fieldset;
 

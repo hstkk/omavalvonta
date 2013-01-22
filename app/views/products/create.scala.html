@@ -1,0 +1,23 @@
+@(FORM: play.data.Form[models.Product])
+
+@import play.i18n._
+@import helper._
+@import helper.twitterBootstrap._
+@import tags._
+@import tags.alerts._
+@import tags.forms._
+@import tags.navs._
+
+@main(Messages.get("product.create")){
+	@navigation()
+
+	@if(FORM.hasGlobalErrors) {
+		@error() {
+			@FORM.globalError.message
+		}
+	}
+	
+	@helper.form(action = routes.Products.crud.create, 'class -> "form-horizontal"){
+		@fields(FORM)
+	}
+}

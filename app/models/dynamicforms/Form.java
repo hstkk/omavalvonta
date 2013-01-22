@@ -124,7 +124,7 @@ public class Form extends Model {
 		StringBuilder stringBuilder = new StringBuilder();
 		List<Form> checked = null;
 		try {
-			checked = Product.findById(Long.parseLong(id)).forms;
+			checked = Product.crud.findById(Long.parseLong(id)).forms;
 		} catch (Exception e) {
 		}
 		try {

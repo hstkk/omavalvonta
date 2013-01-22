@@ -62,11 +62,11 @@ POST	/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.u
 GET		/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.edit(ingredientId: Long)
 
 # Product management
-GET		/yllapito/tuote										controllers.Products.index
-POST	/yllapito/tuote										controllers.Products.save
-GET		/yllapito/tuote/uusi								controllers.Products.create
-GET		/yllapito/tuote/sivu/:index							controllers.Products.page(index: Int)
-GET		/yllapito/tuote/:productId							controllers.Products.update(productId: Long)
+GET		/yllapito/tuote										controllers.Products.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")
+GET		/yllapito/tuote/uusi								controllers.Products.crud.fresh
+POST	/yllapito/tuote/uusi								controllers.Products.crud.create
+GET		/yllapito/tuote/:productId/muokkaa					controllers.Products.crud.edit(productId: Long)
+POST	/yllapito/tuote/:productId/muokkaa					controllers.Products.crud.update(productId: Long)
 
 # Fieldset management
 GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")
