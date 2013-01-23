@@ -1,18 +1,27 @@
 package models.helpers;
 
+import java.util.Date;
 import javax.persistence.*;
-
-import org.hibernate.envers.RevisionTimestamp;
+import org.hibernate.envers.NotAudited;
 
 @MappedSuperclass
-public class Model /*implements ModelInterface*/ {
+public class Model implements ModelInterface {
 	@Id
 	@GeneratedValue
 	@Column(updatable = false)
 	public Long id;
 
-	//@Version
-	//Timestamp timestamp;
-	@RevisionTimestamp
-	long timestamp;
+	@NotAudited
+	@Column(nullable = false)
+	public Date lastModified;
+
+	@PrePersist
+	public void onCreate() {
+		lastModified = new Date();
+	}
+
+	@PreUpdate
+	public void onUpdate() {
+		lastModified = new Date();
+	}
 }
