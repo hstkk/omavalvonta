@@ -45,6 +45,6 @@ public class Product extends Model {
 	public List<Long> formIds = new ArrayList<Long>();
 
 	public String toString() {
-		return name;
+		return name + " (" + no.toString() + ")";
 	}
 }
