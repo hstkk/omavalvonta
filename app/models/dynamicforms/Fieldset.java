@@ -5,27 +5,18 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.envers.Audited;
 
-import models.Ingredient;
-import models.Product;
-import models.Term;
-import models.TermCategory;
 import models.helpers.Crud;
-import models.helpers.JpaModel;
-import models.helpers.Model;
-import models.helpers.Page;
+import models.helpers.UserModel;
 import utils.*;
 
-import play.Play;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
 @Audited
-public class Fieldset extends Model {
+public class Fieldset extends UserModel {
 
 	public Fieldset() {
 	}

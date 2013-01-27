@@ -3,17 +3,12 @@ package models;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 import models.helpers.Crud;
-import models.helpers.Model;
-import models.helpers.Page;
+import models.helpers.UserModel;
 
 import org.hibernate.envers.Audited;
 
-import play.Play;
-import play.data.Form;
-import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 /**
@@ -24,7 +19,7 @@ import play.db.jpa.*;
 //TODO Term
 @Entity(name = "Term")
 @Audited
-public class Term extends Model {
+public class Term extends UserModel {
 
 	public final static Crud<Term, Long> crud = new Crud<Term, Long>(Term.class);
 

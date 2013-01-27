@@ -7,17 +7,15 @@ import javax.validation.constraints.*;
 
 import org.hibernate.envers.Audited;
 
-import models.TermCategory;
 import models.helpers.Crud;
-import models.helpers.JpaModel;
-import models.helpers.Model;
+import models.helpers.UserModel;
 
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 
 @Entity
 @Audited
-public class Field extends Model {
+public class Field extends UserModel {
 
 	public Field() {
 		// super(Field.class, "Field");
