@@ -9,14 +9,14 @@ import org.hibernate.envers.Audited;
 
 import models.dynamicforms.Form;
 import models.helpers.Crud;
-import models.helpers.Model;
+import models.helpers.UserModel;
 
 import play.data.validation.Constraints.*;
 
 
 @Entity
 @Audited
-public class Product extends Model {
+public class Product extends UserModel {
 	public final static Crud<Product, Long> crud = new Crud<Product, Long>(Product.class);
 
 	@Required

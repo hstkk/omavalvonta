@@ -6,8 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import models.helpers.Crud;
-import models.helpers.Model;
 import models.helpers.Page;
+import models.helpers.UserModel;
 
 import org.hibernate.envers.Audited;
 
@@ -22,7 +22,7 @@ import play.db.jpa.*;
  */
 @Entity(name = "FinalProduct")
 @Audited
-public class FinalProduct extends Model {
+public class FinalProduct extends UserModel {
 
 	public final static Crud<FinalProduct, Long> crud = new Crud<>(
 			FinalProduct.class);

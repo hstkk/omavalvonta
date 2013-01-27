@@ -2,6 +2,7 @@ package models.helpers;
 
 import java.util.Date;
 import javax.persistence.*;
+
 import org.hibernate.envers.NotAudited;
 
 @MappedSuperclass
@@ -14,6 +15,11 @@ public class Model implements ModelInterface {
 	@NotAudited
 	@Column(nullable = false)
 	public Date lastModified;
+
+	@Override
+	public boolean needAuthentication() {
+		return false;
+	}
 
 	@PrePersist
 	public void onCreate() {

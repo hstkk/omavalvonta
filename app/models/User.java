@@ -1,40 +1,37 @@
 package models;
 
-import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import models.dynamicforms.Form;
-import models.helpers.JpaModel;
-import play.data.format.*;
+import org.hibernate.envers.Audited;
+
+import models.helpers.Crud;
+import models.helpers.Model;
 import play.data.validation.Constraints.*;
-import play.db.jpa.*;
 
 @Entity
-public class User extends JpaModel {
-	@Required
-	@NotNull
-	public String firstname;
+@Audited
+public class User extends Model {
+	public final static Crud<User, Long> crud = new Crud<User, Long>(User.class);
 
-	@Required
-	@NotNull
-	public String surname;
+	public String firstName;
+
+	public String lastName;
 
 	@Required
 	@Email
 	@NotNull
+	@Lob
 	public String email;
+
+	public String role;
 
 	public User() {
 	}
 
-	public static User findById(Long id) {
-		if (id == null)
-			return null;
-		try {
-			return JPA.em().find(User.class, id);
-		} catch (Exception e) {
-			return null;
-		}
+	public String toString() {
+		if (firstName != null && lastName != null)
+			return firstName + " " + lastName;
+		return email;
 	}
 }

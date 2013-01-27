@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 
 import models.helpers.Crud;
-import models.helpers.Model;
+import models.helpers.UserModel;
 
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
@@ -23,7 +23,7 @@ import play.db.jpa.JPA;
  */
 @Entity
 @Audited
-public class Ingredient extends Model {
+public class Ingredient extends UserModel {
 
 	public final static Crud<Ingredient, Long> crud = new Crud<Ingredient, Long>(Ingredient.class);
 
