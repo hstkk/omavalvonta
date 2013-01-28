@@ -1,14 +1,14 @@
 package controllers;
 
 import models.Product;
-import controllers.helpers.Crud;
+import controllers.helpers.SecuredCrud;
 import play.mvc.Controller;
 import views.html.products.*;
 
 
 public class Products extends Controller {
 
-	public final static Crud<Product> crud = new Crud<Product>(Product.crud,
+	public final static SecuredCrud<Product> crud = new SecuredCrud<Product>(Product.crud,
 			form(Product.class),
 			update.ref(),
 			create.ref(),

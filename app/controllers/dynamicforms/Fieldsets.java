@@ -1,12 +1,12 @@
 package controllers.dynamicforms;
 
 import models.dynamicforms.Fieldset;
-import controllers.helpers.Crud;
+import controllers.helpers.SecuredCrud;
 import play.mvc.Controller;
 import views.html.dynamicforms.fieldsets.*;
 
 public class Fieldsets extends Controller {
-	public final static Crud<Fieldset> crud = new Crud<Fieldset>(Fieldset.crud,
+	public final static SecuredCrud<Fieldset> crud = new SecuredCrud<Fieldset>(Fieldset.crud,
 			form(Fieldset.class),
 			update.ref(),
 			create.ref(),

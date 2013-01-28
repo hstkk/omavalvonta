@@ -1,12 +1,12 @@
 package controllers;
 
 import models.Term;
-import controllers.helpers.Crud;
+import controllers.helpers.SecuredCrud;
 import play.mvc.Controller;
 import views.html.terms.*;
 
 public class Terms extends Controller{
-	public final static Crud<Term> crud = new Crud<Term>(Term.crud,
+	public final static SecuredCrud<Term> crud = new SecuredCrud<Term>(Term.crud,
 			form(Term.class),
 			update.ref(),
 			create.ref(),
