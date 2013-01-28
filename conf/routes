@@ -10,6 +10,8 @@
 #GET	/foo/:id/muokkaa	edit
 #POST	/foo/:id/muokkaa	update
 #POST	/foo/:id/poista		destroy
+#GET	/foo/:id/kuittaa	ack(ack = false)
+#POST	/foo/:id/kuittaa	ack(ack = true)
 
 # Home page
 GET     /													controllers.Application.index
