@@ -15,6 +15,7 @@ import play.db.jpa.*;
 import controllers.Batches;
 import controllers.routes;
 import controllers.shib.Secured;
+import controllers.shib.SessionTimeout;
 
 import forms.dynamicforms.Dynamic;
 import forms.dynamicforms.Fieldset;
@@ -29,6 +30,7 @@ import views.html.*;
 
 public class Results extends Controller {
 	@Security.Authenticated(Secured.class)
+	@With(SessionTimeout.class)
 	public Result ack(Boolean bool) {
 		return TODO;
 	}
