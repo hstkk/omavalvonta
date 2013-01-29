@@ -14,6 +14,7 @@ import play.db.jpa.*;
 
 import controllers.Batches;
 import controllers.routes;
+import controllers.shib.Secured;
 
 import forms.dynamicforms.Dynamic;
 import forms.dynamicforms.Fieldset;
@@ -26,13 +27,18 @@ import views.html.*;
 
 //import util.pdf.PDF;
 
-public class Results extends  Controller {
+public class Results extends Controller {
+	@Security.Authenticated(Secured.class)
+	public Result ack(Boolean bool) {
+		return TODO;
+	}
 
 	final static Form<Dynamic> FORM = form(Dynamic.class);
 
 	@Transactional(readOnly = true)
 	public static Result index() {
-		return ok(views.html.dynamicforms.results.index.render(Product.crud.page(1, "", "")));
+		return ok(views.html.dynamicforms.results.index.render(Product.crud
+				.page(1, "", "")));
 	}
 
 	@Transactional(readOnly = true)
@@ -47,10 +53,11 @@ public class Results extends  Controller {
 	@Transactional(readOnly = true)
 	public static Result create(Long productId, Long formId) {
 		Product product = Product.crud.findById(productId);
-		models.dynamicforms.Form f = models.dynamicforms.Form.crud.findById(formId);
+		models.dynamicforms.Form f = models.dynamicforms.Form.crud
+				.findById(formId);
 		if (product == null || f == null)
 			return notFound();
-		//String html = f.html;
+		// String html = f.html;
 		String html = "";
 		//
 		return ok(views.html.dynamicforms.results.manage.render(FORM, product,
@@ -83,7 +90,8 @@ public class Results extends  Controller {
 		Product product = Product.crud.findById(productId);
 		if (product == null)
 			return notFound();
-		models.dynamicforms.Form f = models.dynamicforms.Form.crud.findById(formId);
+		models.dynamicforms.Form f = models.dynamicforms.Form.crud
+				.findById(formId);
 		if (f == null)
 			return notFound();
 		Form<Dynamic> filledForm = FORM.bindFromRequest();
@@ -111,8 +119,8 @@ public class Results extends  Controller {
 			}
 		}
 		flash("status", "Lomakkeen tallennus ei onnistunut!");
-//		return badRequest(views.html.dynamicforms.results.manage.render(
-//				filledForm, product, f, f.html));
+		// return badRequest(views.html.dynamicforms.results.manage.render(
+		// filledForm, product, f, f.html));
 		return badRequest(views.html.dynamicforms.results.manage.render(
 				filledForm, product, f, ""));
 	}
@@ -150,21 +158,16 @@ public class Results extends  Controller {
 				results, history));
 	}
 
-	/*@Transactional(readOnly = true)
-	public static Result pdfify(Long productId, Long resultsId) {
-		Product product = Product.findById(productId);
-		if (product == null)
-			return notFound();
-		models.dynamicforms.Results results = models.dynamicforms.Results
-				.findById(resultsId);
-		if (results == null)
-			return notFound();
-		List<models.dynamicforms.Result> r = new ArrayList<models.dynamicforms.Result>(
-				results.results);
-		r.addAll(Field.headerify(results.form));
-		Collections.sort(r);
-		return ok(
-				PDF.toBytes(views.html.dynamicforms.results.pdfify.render(
-						product, results, r))).as("application/pdf");
-	}*/
+	/*
+	 * @Transactional(readOnly = true) public static Result pdfify(Long
+	 * productId, Long resultsId) { Product product =
+	 * Product.findById(productId); if (product == null) return notFound();
+	 * models.dynamicforms.Results results = models.dynamicforms.Results
+	 * .findById(resultsId); if (results == null) return notFound();
+	 * List<models.dynamicforms.Result> r = new
+	 * ArrayList<models.dynamicforms.Result>( results.results);
+	 * r.addAll(Field.headerify(results.form)); Collections.sort(r); return ok(
+	 * PDF.toBytes(views.html.dynamicforms.results.pdfify.render( product,
+	 * results, r))).as("application/pdf"); }
+	 */
 }

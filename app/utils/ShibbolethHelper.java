@@ -1,25 +1,18 @@
 package utils;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.type.MapType;
 
 import models.User;
 import controllers.routes;
 import controllers.shib.Shibboleth;
-import static play.libs.Json.fromJson;
 import static play.libs.Json.toJson;
 import play.Play;
-import play.libs.Json;
 import play.mvc.Http.Context;
 import play.mvc.Result;
 
@@ -37,8 +30,8 @@ public class ShibbolethHelper {
 		ctx.session().put(ShibbolethDefaults.SESSION_NAME, json);
 	}
 
-	public static String getLoginUrl(Context ctx, String returnUrl)
-			throws UnsupportedEncodingException {
+	public static String getLoginUrl(/* Context ctx */String targetUrl,
+			String returnUrl) throws UnsupportedEncodingException {
 		StringBuilder url = new StringBuilder();
 
 		// Shibboleth login url
@@ -56,21 +49,26 @@ public class ShibbolethHelper {
 		// The URL to return the user to after authenticating
 		Boolean secure = true;
 		url.append("?target=");
-		url.append(URLEncoder.encode(
-				routes.Application.index().absoluteURL(ctx.request(), secure)
-						.toString(), ShibbolethDefaults.URL_ENCODING));
+		url.append(URLEncoder
+				.encode(targetUrl, ShibbolethDefaults.URL_ENCODING));
+		/*
+		 * url.append(URLEncoder.encode(
+		 * routes.Application.index().absoluteURL(ctx.request(), secure)
+		 * .toString(), ShibbolethDefaults.URL_ENCODING));
+		 */
 
 		// Url redirect
 		if (returnUrl == null)
 			returnUrl = ShibbolethDefaults.HOME;
-		url.append("?return=");
+		url.append("?url=");
 		url.append(URLEncoder
 				.encode(returnUrl, ShibbolethDefaults.URL_ENCODING));
 
 		return url.toString();
 	}
 
-	public static String getLogoutUrl() throws UnsupportedEncodingException {
+	public static String getLogoutUrl(Context ctx)
+			throws UnsupportedEncodingException {
 		StringBuilder url = new StringBuilder();
 
 		// Shibboleth logout url
@@ -78,9 +76,10 @@ public class ShibbolethHelper {
 				ShibbolethDefaults.LOGOUT_URL));
 
 		url.append("?return=");
-		url.append(URLEncoder.encode(ShibbolethDefaults.HOME,
-				ShibbolethDefaults.URL_ENCODING));
-
+		boolean secure = true;
+		url.append(URLEncoder.encode(
+				routes.Application.index().absoluteURL(ctx.request(), secure)
+						.toString(), ShibbolethDefaults.URL_ENCODING));
 		return url.toString();
 	}
 
@@ -95,18 +94,36 @@ public class ShibbolethHelper {
 		return value;
 	}
 
+	public static String getRedirectUrl(Context ctx, User user) {
+		String url = ctx.flash().get("url");
+		if (url != null)
+			return url;
+		String[] urls = ctx.request().queryString().get("url");
+		if (urls != null && urls.length > 0 && urls[0] != null)
+			return urls[0];
+		// if(user != null)
+		// return routes.Users.crud.show(user.id).toString();
+		return ShibbolethDefaults.HOME;
+	}
+
 	public static Map<String, String> getSession(Context ctx) {
 		String cookie = ctx.session().get(ShibbolethDefaults.SESSION_NAME);
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			MapType mapType = objectMapper.getTypeFactory().constructMapType(
-					HashMap.class, String.class, String.class);
-			Map<String, String> session = objectMapper.readValue(cookie,
-					mapType);
-			return session;
-		} catch (Exception e) {
-		}
+		if (cookie != null)
+			try {
+				ObjectMapper objectMapper = new ObjectMapper();
+				MapType mapType = objectMapper.getTypeFactory()
+						.constructMapType(HashMap.class, String.class,
+								String.class);
+				Map<String, String> session = objectMapper.readValue(cookie,
+						mapType);
+				return session;
+			} catch (Exception e) {
+			}
 		return null;
+	}
+
+	public static boolean isSession(Context ctx) {
+		return ctx.session().containsKey(ShibbolethDefaults.SESSION_NAME);
 	}
 
 	public static boolean isSessionValid(Map<String, String> session) {
@@ -124,6 +141,11 @@ public class ShibbolethHelper {
 			}
 		}
 		return false;
+	}
+
+	public static boolean isSessionValid(Context ctx) {
+		Map<String, String> session = getSession(ctx);
+		return isSessionValid(session);
 	}
 
 	public static Result verifySession(Map<String, String> session) {

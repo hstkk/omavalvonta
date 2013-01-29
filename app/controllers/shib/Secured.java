@@ -20,13 +20,7 @@ public class Secured extends Security.Authenticator {
 
 	@Override
 	public Result onUnauthorized(Context ctx) {
-		// TODO Auto-generated method stub
-		Boolean secure = true;
-		System.out.println(routes.Application.index()
-				.absoluteURL(ctx.request(), secure).toString());
-		System.out.println(ctx.request().path().toString());
-		System.out.println(ctx.request().uri().toString());
-		return super.onUnauthorized(ctx);
+		return Shibboleth.login(ctx.request().uri().toString());
 	}
 
 	public static boolean isAdmin(User user) {
