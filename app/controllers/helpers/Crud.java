@@ -1,5 +1,6 @@
 package controllers.helpers;
 
+import controllers.shib.SessionTimeout;
 import models.helpers.Model;
 import models.helpers.Page;
 
@@ -10,6 +11,7 @@ import play.api.templates.*;
 import play.data.*;
 import play.db.jpa.*;
 
+@With(SessionTimeout.class)
 public class Crud<T extends Model> extends Controller implements CrudInterface {
 	private final Form<T> FORM;
 	private final models.helpers.Crud<T, Long> CRUD;
@@ -88,7 +90,6 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result page(int pageNumber, String order, String by) {
-//		session("uuid", "asd");
 		if (PAGE == null)
 			return notFound();
 		return ok(PAGE.render(CRUD.page(pageNumber, order, by)));

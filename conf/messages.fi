@@ -35,6 +35,9 @@ http.404.description=Yritä myöhemmin uudelleen. Tarkista, että osoite on oike
 http.500=500 Sisäinen palvelinvirhe
 http.500.description=Pyyntöä ei voitu käsitellä.
 
+# --- Session
+session.timeout=Automaattinen uloskirjautuminen aikakatkaisun vuoksi.
+
 # --- CRUD
 crud.cancel=Tallennus peruutettu!
 crud.success=Tallennus onnistui!

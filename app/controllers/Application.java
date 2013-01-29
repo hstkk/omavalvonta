@@ -1,13 +1,11 @@
 package controllers;
 
 import controllers.shib.Secured;
-import play.*;
+import controllers.shib.SessionTimeout;
 import play.mvc.*;
-import play.data.*;
-import static play.data.Form.*;
-import play.db.jpa.*;
 import views.html.*;
 
+@With(SessionTimeout.class)
 public class Application extends Controller {
 
 	public static Result index() {
