@@ -2,16 +2,10 @@ package utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.type.MapType;
 
 import models.User;
 import controllers.routes;
 import controllers.shib.Shibboleth;
-import static play.libs.Json.toJson;
 import play.Play;
 import play.mvc.Http.Context;
 import play.mvc.Result;
@@ -22,16 +16,12 @@ public class ShibbolethHelper {
 	}
 
 	public static void createSession(Context ctx, User user) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put(ShibbolethDefaults.SESSION_EMAIL, user.email);
-		map.put(ShibbolethDefaults.SESSION_TIMESTAMP,
-				String.valueOf(System.currentTimeMillis()));
-		String json = toJson(map).toString();
-		ctx.session().put(ShibbolethDefaults.SESSION_NAME, json);
+		ctx.session().put("u", user.email);
+		ctx.session().put("t", String.valueOf(System.currentTimeMillis()));
 	}
 
-	public static String getLoginUrl(/* Context ctx */String targetUrl,
-			String returnUrl) throws UnsupportedEncodingException {
+	public static String getLoginUrl(String returnUrl)
+			throws UnsupportedEncodingException {
 		StringBuilder url = new StringBuilder();
 
 		// Shibboleth login url
@@ -49,18 +39,15 @@ public class ShibbolethHelper {
 		// The URL to return the user to after authenticating
 		Boolean secure = true;
 		url.append("?target=");
-		url.append(URLEncoder
-				.encode(targetUrl, ShibbolethDefaults.URL_ENCODING));
-		/*
-		 * url.append(URLEncoder.encode(
-		 * routes.Application.index().absoluteURL(ctx.request(), secure)
-		 * .toString(), ShibbolethDefaults.URL_ENCODING));
-		 */
+		url.append(URLEncoder.encode(
+				getOrElse("shibboleth.login.url", ShibbolethDefaults.LOGIN_URL)
+						+ controllers.shib.routes.Shibboleth.authenticate()
+								.toString(), ShibbolethDefaults.URL_ENCODING));
 
 		// Url redirect
 		if (returnUrl == null)
 			returnUrl = ShibbolethDefaults.HOME;
-		url.append("?url=");
+		url.append("?return=");
 		url.append(URLEncoder
 				.encode(returnUrl, ShibbolethDefaults.URL_ENCODING));
 
@@ -106,31 +93,14 @@ public class ShibbolethHelper {
 		return ShibbolethDefaults.HOME;
 	}
 
-	public static Map<String, String> getSession(Context ctx) {
-		String cookie = ctx.session().get(ShibbolethDefaults.SESSION_NAME);
-		if (cookie != null)
-			try {
-				ObjectMapper objectMapper = new ObjectMapper();
-				MapType mapType = objectMapper.getTypeFactory()
-						.constructMapType(HashMap.class, String.class,
-								String.class);
-				Map<String, String> session = objectMapper.readValue(cookie,
-						mapType);
-				return session;
-			} catch (Exception e) {
-			}
-		return null;
-	}
-
 	public static boolean isSession(Context ctx) {
-		return ctx.session().containsKey(ShibbolethDefaults.SESSION_NAME);
+		return ctx.session().containsKey("u") && ctx.session().containsKey("t");
 	}
 
-	public static boolean isSessionValid(Map<String, String> session) {
-		if (session != null) {
-			String email = getUsername(session);
-			Long timestamp = getTimestamp(session);
-			if (email != null && timestamp != null) {
+	public static boolean isSessionValid(Context ctx, String user) {
+		if (!ctx.session().isEmpty()) {
+			Long timestamp = getTimestamp(ctx);
+			if (user != null && timestamp != null) {
 				Long maxAge = Play.application().configuration()
 						.getMilliseconds("shibboleth.session.maxAge");
 				if (maxAge == null)
@@ -144,14 +114,7 @@ public class ShibbolethHelper {
 	}
 
 	public static boolean isSessionValid(Context ctx) {
-		Map<String, String> session = getSession(ctx);
-		return isSessionValid(session);
-	}
-
-	public static Result verifySession(Map<String, String> session) {
-		if (isSessionValid(session))
-			return null;
-		return Shibboleth.logout();
+		return isSessionValid(ctx, getUsername(ctx));
 	}
 
 	public static void verifyAttributes(Context ctx) {
@@ -159,22 +122,15 @@ public class ShibbolethHelper {
 
 	}
 
-	public static String getUsername(Map<String, String> session) {
-		if (session != null
-				&& session.containsKey(ShibbolethDefaults.SESSION_EMAIL))
-			return session.get(ShibbolethDefaults.SESSION_EMAIL);
-		return null;
+	public static String getUsername(Context ctx) {
+		return ctx.session().get("u");
 	}
 
-	public static Long getTimestamp(Map<String, String> session) {
-		if (session != null
-				&& session.containsKey(ShibbolethDefaults.SESSION_TIMESTAMP))
-			try {
-				String timestamp = session
-						.get(ShibbolethDefaults.SESSION_TIMESTAMP);
-				return Long.parseLong(timestamp);
-			} catch (Exception e) {
-			}
+	public static Long getTimestamp(Context ctx) {
+		try {
+			return Long.parseLong(ctx.session().get("t"));
+		} catch (Exception e) {
+		}
 		return null;
 	}
 }
