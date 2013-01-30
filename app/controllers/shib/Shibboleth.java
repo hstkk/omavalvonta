@@ -2,8 +2,6 @@ package controllers.shib;
 
 import java.io.UnsupportedEncodingException;
 
-import controllers.routes;
-
 import models.User;
 
 import play.*;
@@ -30,10 +28,10 @@ public class Shibboleth extends Controller {
 	// 1.
 	public static Result login(String returnUrl) {
 		try {
-			
-			String targetUrl = routes.Application.index().absoluteURL(ctx().request(), true);
-			String loginUrl = ShibbolethHelper.getLoginUrl(/*ctx()*/targetUrl, returnUrl);
-			System.out.println(loginUrl +"asdasds");
+			String targetUrl = controllers.routes.Application.index().absoluteURL(ctx().request(), true);
+System.out.print(targetUrl);
+			String loginUrl = ShibbolethHelper.getLoginUrl(returnUrl);
+loginUrl = "http://127.0.0.1"+loginUrl;
 			return temporaryRedirect(loginUrl);
 		} catch (UnsupportedEncodingException e) {
 		}
@@ -42,7 +40,7 @@ public class Shibboleth extends Controller {
 
 	// 3.
 	public static Result logout() {
-		session().clear();
+		//TODO
 		ShibbolethHelper.clearSession(ctx());
 		try {
 			String logoutUrl = ShibbolethHelper.getLogoutUrl(ctx());
