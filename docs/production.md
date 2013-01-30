@@ -5,7 +5,7 @@
     zypper refresh
     zypper update
 
-# MySQL
+## MySQL
 
 - MySQL-palvelimen asennus
 
@@ -226,3 +226,9 @@
 - Käynnistetään Apache uudelleen
 
     rcapache2 restart
+
+## Java
+
+- Asennetaan JDK
+
+    zypper install java-1_7_0-openjdk
