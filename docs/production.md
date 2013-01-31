@@ -126,6 +126,7 @@
 ### SSL-sertifikaatti
 
 - Aktivoidaan Apchen uudelleenkirjoitus-moduuli
+
     a2enmod rewrite
 
 - Aktivoidaan Apachen SSL-moduuli
@@ -160,6 +161,12 @@
     Common Name (eg, YOUR name) []:
     Email Address []:
 
+- Määritetään Apache kuuntelemaan SSL-porttia
+
+    #/etc/apache2/listen.conf
+    Listen 80
+    Listen 443
+
 ### Proxy
 
 - Aktivoidaan Apachen proxy-moduuli
@@ -167,10 +174,6 @@
     a2enmod proxy
 
 ### Konfigurointi
-
-- 
-
-    echo "UseCanonicalName On" >> /etc/apache2/httpd.conf
 
 - 
 
@@ -201,7 +204,7 @@
 
 - Käynnistetään Apache uudelleen
 
-    rcapache2 restart
+    systemctl restart apache2.service
 
 ## Shibboleth
 
@@ -218,20 +221,38 @@
     #/etc/apache2/conf.d/shib.conf
     LoadModule mod_shib /usr/lib/shibboleth/mod_shib_22.so
     
+    UseCanonicalName On
+    
     <Location /Shibboleth.sso>
       SetHandler shib
     </Location>
 
-- Käynnistetään Shibboleth-daemon uudelleen
+- Käynnistetään Shibd daemon automaattisesti
 
-    rcshibd restart
+     systemctl enable shibd.service
+
+- Käynnistetään Shibd daemon
+
+     systemctl start shibd.service
 
 - Käynnistetään Apache uudelleen
 
-    rcapache2 restart
+    systemctl restart apache2.service
 
 ## Java
 
 - Asennetaan JDK
 
     zypper install java-1_7_0-openjdk
+    zypper install java-1_7_0-openjdk-devel
+
+## Omavalvonta
+
+- Siirrä omavalvonta-1.0.zip palvelimelle
+- Pura siirretty zip-tiedosto
+
+    unzip omavalvonta-1.0.zip
+
+- Käynnistä omavalvonta
+
+    omavalvonta-1.0/start -Dhttp.port=9000
