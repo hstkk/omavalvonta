@@ -13,11 +13,14 @@
 
 - Käynnistetään MySQL daemon automaattisesti
 
-    chkconfig --add mysql
+     systemctl enable mysql.service
+
+
 
 - Käynnistetään MySQL daemon
 
-    rcmysql start
+    systemctl start mysql.service 
+
 
 - Konfiguroidaan MySQL
 
@@ -114,11 +117,11 @@
 
 - Käynnistetään Apache daemon automaattisesti
 
-    chkconfig --add apache2
+     systemctl enable apache2.service
 
 - Käynnistetään Apache daemon
 
-    rcapache2 start
+     systemctl start apache2.service
 
 ### SSL-sertifikaatti
 
