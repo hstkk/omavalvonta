@@ -40,7 +40,7 @@ public class Results extends Controller {
 	@Transactional(readOnly = true)
 	public static Result index() {
 		return ok(views.html.dynamicforms.results.index.render(Product.crud
-				.page(1, "", "")));
+				.page(1)));
 	}
 
 	@Transactional(readOnly = true)

@@ -24,7 +24,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page, controllers.dynamicforms.routes.Fieldsets.crud.page(page.getPrevious, page.getOrder, page.getBy), controllers.dynamicforms.routes.Fieldsets.crud.page(page.getNext, page.getOrder, page.getBy))
+		@pagination(page, controllers.dynamicforms.routes.Fieldsets.crud.page(page.getPrevious), controllers.dynamicforms.routes.Fieldsets.crud.page(page.getNext))
 	} else {
 		@warning() {
 			@Messages.get("fieldset.page.empty")

@@ -55,28 +55,28 @@ GET		/raaka-aine/sivu/:index								controllers.IngredientSupplies.page(index: I
 GET		/raaka-aine/:ingredientId							controllers.IngredientSupplies.read(ingredientId: Long)
 
 # Term management
-GET		/yllapito/termit									controllers.Terms.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")
+GET		/yllapito/termit									controllers.Terms.crud.page(sivu: Int ?= 1)
 GET		/yllapito/termit/uusi								controllers.Terms.crud.fresh
 POST	/yllapito/termit/uusi								controllers.Terms.crud.create
 POST	/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.update(termId: Long)
 GET		/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.edit(termId: Long)
 
 # Ingredient management
-GET		/yllapito/raaka-aine								controllers.Ingredients.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")
+GET		/yllapito/raaka-aine								controllers.Ingredients.crud.page(sivu: Int ?= 1)
 GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.crud.fresh
 POST	/yllapito/raaka-aine/uusi							controllers.Ingredients.crud.create
 POST	/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.update(ingredientId: Long)
 GET		/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.edit(ingredientId: Long)
 
 # Product management
-GET		/yllapito/tuote										controllers.Products.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")
+GET		/yllapito/tuote										controllers.Products.crud.page(sivu: Int ?= 1)
 GET		/yllapito/tuote/uusi								controllers.Products.crud.fresh
 POST	/yllapito/tuote/uusi								controllers.Products.crud.create
 GET		/yllapito/tuote/:productId/muokkaa					controllers.Products.crud.edit(productId: Long)
 POST	/yllapito/tuote/:productId/muokkaa					controllers.Products.crud.update(productId: Long)
 
 # Fieldset management
-GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")
+GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.page(sivu: Int ?= 1)
 POST	/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.create
 GET		/yllapito/lomakkeet/kentat/uusi						controllers.dynamicforms.Fieldsets.crud.fresh
 #GET		/yllapito/lomakkeet/kentat/:fieldsetId			controllers.dynamicforms.Fieldsets.show(fieldsetId: Long)
@@ -85,7 +85,7 @@ GET		/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa		controllers.dynamicforms.Fi
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/poista	controllers.dynamicforms.Fieldsets.destroy(fieldsetId: Long)
 
 # Form management
-GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.page(sivu: Int ?= 1, order: String ?= "desc", by: String ?="id")
+GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.page(sivu: Int ?= 1)
 GET		/yllapito/lomakkeet/uusi							controllers.dynamicforms.Forms.crud.fresh
 POST	/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.create
 #GET		/yllapito/lomake/:formId						controllers.dynamicforms.Forms.show(formId: Long)

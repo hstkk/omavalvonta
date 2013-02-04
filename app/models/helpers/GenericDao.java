@@ -19,9 +19,9 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	List<T> findAll(Integer pageNumber);
 
-	List<T> findAllBy(String query, Object[] params);
+	List<T> findAllBy(CriteriaQuery<T> query);
 
-	List<T> findAllBy(String query, Object[] params, Integer pageNumber);
+	List<T> findAllBy(CriteriaQuery<T> query, Integer pageNumber);
 
 	T findBy(CriteriaQuery<T> query);
 
@@ -29,7 +29,7 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	Map<String, String> options();
 
-	Page<T> page(int pageNumber, String order, String by);
+	Page<T> page(int pageNumber);
 
 	boolean update(T t);
 }

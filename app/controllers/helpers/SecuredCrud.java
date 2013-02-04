@@ -51,9 +51,9 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Result page(int pageNumber, String order, String by) {
+	public Result page(int pageNumber) {
 		if (Secured.isAdmin())
-			return super.page(pageNumber, order, by);
+			return super.page(pageNumber);
 		return forbidden();
 	}
 

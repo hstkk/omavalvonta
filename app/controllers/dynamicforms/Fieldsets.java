@@ -12,5 +12,5 @@ public class Fieldsets extends Controller {
 			create.ref(),
 			page.ref(),
 			null,
-			routes.Fieldsets.crud.page(1, "", ""));
+			routes.Fieldsets.crud.page(1));
 }

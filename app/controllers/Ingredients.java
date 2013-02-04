@@ -13,5 +13,5 @@ public class Ingredients extends Controller {
 			create.ref(),
 			page.ref(),
 			null,
-			routes.Ingredients.crud.page(1, "", ""));
+			routes.Ingredients.crud.page(1));
 }
