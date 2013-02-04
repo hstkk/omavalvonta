@@ -8,8 +8,6 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import models.User;
-
 import play.db.jpa.JPA;
 
 public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
@@ -81,7 +79,7 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 		try {
 			CriteriaBuilder criteriaBuilder = getCriteriaBuilder();
 			CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
-System.out.println(query.toString());
+			query.from(clazz);
 			Query q = createQuery(query);
 			q = setPage(q, pageNumber);
 			return q.getResultList();
@@ -143,8 +141,9 @@ System.out.println(query.toString());
 	public java.util.Map<String, String> options() {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		List<T> list = findAll();
-		for (T t : list)
-			map.put(t.id.toString(), t.toString());
+		if (list != null)
+			for (T t : list)
+				map.put(t.id.toString(), t.toString());
 		return map;
 	};
 
