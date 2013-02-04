@@ -11,6 +11,7 @@ import play.db.jpa.Transactional;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
+import models.User;
 import models.helpers.Page;
 import models.helpers.UserModel;
 
@@ -31,6 +32,8 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	@Override
 	@Transactional
 	public Result create() {
+		String username = ctx().request().username();
+		User user = User.findByEmail(username);
 		// TODO Auto-generated method stub
 		return super.create();
 	}
@@ -38,6 +41,8 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	@Override
 	@Transactional
 	public Result update(Long id) {
+		String username = ctx().request().username();
+		User user = User.findByEmail(username);
 		// TODO Auto-generated method stub
 		return super.update(id);
 	}

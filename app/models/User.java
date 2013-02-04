@@ -1,5 +1,8 @@
 package models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -19,7 +22,6 @@ public class User extends Model {
 	public String lastName;
 
 	@Required
-	@Email
 	@NotNull
 	@Lob
 	public String email;
@@ -33,5 +35,14 @@ public class User extends Model {
 		if (firstName != null && lastName != null)
 			return firstName + " " + lastName;
 		return email;
+	}
+
+	public static User findByEmail(String email) {
+		if (email == null)
+			return null;
+		String query = "from User where email = ?1";
+		String[] params = new String[1];
+		params[1] = email;
+		return crud.findBy(query, params);
 	}
 }
