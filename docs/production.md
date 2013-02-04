@@ -172,6 +172,7 @@
 - Aktivoidaan Apachen proxy-moduuli
 
     a2enmod proxy
+    a2enmod proxy_http
 
 ### Konfigurointi
 
@@ -238,6 +239,12 @@
 - Käynnistetään Apache uudelleen
 
     systemctl restart apache2.service
+
+- shibboleth2.xml
+
+- attribute-map.xml
+
+- Metadata
 
 ## Java
 
