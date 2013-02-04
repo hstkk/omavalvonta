@@ -24,10 +24,6 @@ public class Page<T> {
 	/** The list. */
 	private final List<T> list;
 
-	private final String order;
-
-	private final String by;
-
 	/**
 	 * Instantiates a new page.
 	 * 
@@ -45,18 +41,6 @@ public class Page<T> {
 		this.pageSize = pageSize;
 		this.rows = rows;
 		this.list = list;
-		this.order = "";
-		this.by = "";
-	}
-
-	public Page(int pageNumber, int pageSize, long rows, List<T> list,
-			String order, String by) {
-		this.pageNumber = (pageNumber < 1) ? 1 : pageNumber;
-		this.pageSize = pageSize;
-		this.rows = rows;
-		this.list = list;
-		this.order = order;
-		this.by = by;
 	}
 
 	/**
@@ -110,13 +94,5 @@ public class Page<T> {
 	 */
 	public List<T> getList() {
 		return list;
-	}
-
-	public String getOrder() {
-		return order;
-	}
-
-	public String getBy() {
-		return by;
 	}
 }

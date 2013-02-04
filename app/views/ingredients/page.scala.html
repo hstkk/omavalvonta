@@ -24,7 +24,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page, routes.Ingredients.crud.page(page.getPrevious, page.getOrder, page.getBy), routes.Ingredients.crud.page(page.getNext, page.getOrder, page.getBy))
+		@pagination(page, routes.Ingredients.crud.page(page.getPrevious), routes.Ingredients.crud.page(page.getNext))
 	} else {
 		@warning() {
 			@Messages.get("ingredient.page.empty")

@@ -14,7 +14,7 @@ public class Products extends Controller {
 			create.ref(),
 			page.ref(),
 			null,
-			routes.Products.crud.page(1, "", ""));
+			routes.Products.crud.page(1));
 //TODO
 /*	@Transactional
 	public static Result save() {

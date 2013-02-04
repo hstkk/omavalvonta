@@ -87,10 +87,10 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Result page(int pageNumber, String order, String by) {
+	public Result page(int pageNumber) {
 		if (PAGE == null)
 			return notFound();
-		return ok(PAGE.render(CRUD.page(pageNumber, order, by)));
+		return ok(PAGE.render(CRUD.page(pageNumber)));
 	}
 
 	@Override

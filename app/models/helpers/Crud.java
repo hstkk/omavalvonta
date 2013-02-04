@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import models.User;
@@ -40,7 +41,6 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 					.createQuery("select count(*) from " + entity + " e")
 					.getSingleResult();
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		return 0;
 	};
@@ -79,7 +79,10 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 	@Override
 	public List<T> findAll(Integer pageNumber) {
 		try {
-			Query q = JPA.em().createQuery("select e from " + entity + " e");
+			CriteriaBuilder criteriaBuilder = getCriteriaBuilder();
+			CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+System.out.println(query.toString());
+			Query q = createQuery(query);
 			q = setPage(q, pageNumber);
 			return q.getResultList();
 		} catch (Exception e) {
@@ -87,14 +90,15 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 		return null;
 	}
 
-	public List<T> findAllBy(String query, Object[] params) {
-		return findAllBy(query, params, null);
+	public List<T> findAllBy(CriteriaQuery<T> query) {
+		return findAllBy(query, null);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> findAllBy(String query, Object[] params, Integer pageNumber) {
+	@Override
+	public List<T> findAllBy(CriteriaQuery<T> query, Integer pageNumber) {
 		try {
-			Query q = createQuery(query, params);
+			Query q = createQuery(query);
 			q = setPage(q, pageNumber);
 			return q.getResultList();
 		} catch (Exception e) {
@@ -102,9 +106,12 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
 	public T findBy(CriteriaQuery<T> query) {
 		try {
-			return JPA.em().createQuery(query).getSingleResult();
+			Query q = createQuery(query);
+			return (T) q.getSingleResult();
 		} catch (Exception e) {
 		}
 		return null;
@@ -121,7 +128,7 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 	}
 
 	@Override
-	public Page<T> page(int pageNumber, String order, String by) {
+	public Page<T> page(int pageNumber) {
 		List<T> list = null;
 		long rows = count();
 		try {
@@ -129,7 +136,7 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 				list = findAll(pageNumber);
 		} catch (Exception e) {
 		}
-		return new Page<T>(pageNumber, pageSize, rows, list, order, by);
+		return new Page<T>(pageNumber, pageSize, rows, list);
 	}
 
 	@Override

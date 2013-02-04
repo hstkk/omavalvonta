@@ -12,5 +12,5 @@ public class Terms extends Controller{
 			create.ref(),
 			page.ref(),
 			null,
-			routes.Terms.crud.page(1, "", ""));
+			routes.Terms.crud.page(1));
 }

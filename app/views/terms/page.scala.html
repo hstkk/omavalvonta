@@ -22,7 +22,7 @@
 				}
 			</tbody>
 		}
-		@pagination(page, routes.Terms.crud.page(page.getPrevious, page.getOrder, page.getBy), routes.Terms.crud.page(page.getNext, page.getOrder, page.getBy))
+		@pagination(page, routes.Terms.crud.page(page.getPrevious), routes.Terms.crud.page(page.getNext))
 	} else {
 		@warning() {
 			@Messages.get("term.page.empty")

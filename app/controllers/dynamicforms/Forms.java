@@ -12,5 +12,5 @@ public class Forms extends Controller {
 			create.ref(),
 			page.ref(),
 			null,
-			routes.Forms.crud.page(1, "", ""));
+			routes.Forms.crud.page(1));
 }
