@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+
+import models.User;
 
 import play.db.jpa.JPA;
 
@@ -99,11 +102,9 @@ public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public T findBy(String query, Object[] params) {
+	public T findBy(CriteriaQuery<T> query) {
 		try {
-			Query q = createQuery(query, params);
-			return (T) q.getSingleResult();
+			return JPA.em().createQuery(query).getSingleResult();
 		} catch (Exception e) {
 		}
 		return null;
