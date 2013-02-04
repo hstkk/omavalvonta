@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.criteria.CriteriaQuery;
+
 public interface GenericDao<T, ID extends Serializable> {
 	boolean create(T t);
 
@@ -21,7 +23,7 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	List<T> findAllBy(String query, Object[] params, Integer pageNumber);
 
-	T findBy(String query, Object[] params);
+	T findBy(CriteriaQuery<T> query);
 
 	T findById(ID id);
 
