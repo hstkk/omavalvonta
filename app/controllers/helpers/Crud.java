@@ -50,7 +50,8 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (REDIRECT == null || CREATE == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
-		if (filledForm.field("action").value().equals("peruuta")) {
+		if (filledForm.field("action").value()
+				.equals(Messages.get("crud.action.cancel"))) {
 			flash("warning", Messages.get("crud.cancel"));
 			return redirect(REDIRECT);
 		} else if (!filledForm.hasErrors()) {
@@ -109,7 +110,8 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (REDIRECT == null || UPDATE == null || !CRUD.exists(id))
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
-		if (filledForm.field("action").value().equals("peruuta")) {
+		if (filledForm.field("action").value()
+				.equals(Messages.get("crud.action.cancel"))) {
 			flash("warning", Messages.get("crud.cancel"));
 			return redirect(REDIRECT);
 		} else if (!filledForm.hasErrors()) {
