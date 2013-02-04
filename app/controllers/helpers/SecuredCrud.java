@@ -1,6 +1,7 @@
 package controllers.helpers;
 
 import controllers.shib.Secured;
+import models.User;
 import models.helpers.Page;
 import models.helpers.UserModel;
 import play.api.mvc.Call;
@@ -23,42 +24,56 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	@Override
 	@Transactional
 	public Result create() {
-		// TODO Auto-generated method stub
-		return super.create();
+		String username = ctx().request().username();
+		User user = User.findByEmail(username);
+		if (Secured.isAdmin(user)) {
+			// TODO Auto-generated method stub
+			return super.create();
+		}
+		return forbidden();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result edit(Long id) {
-		// TODO Auto-generated method stub
-		return super.edit(id);
+		if (Secured.isAdmin())
+			return super.edit(id);
+		return forbidden();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
-		// TODO Auto-generated method stub
-		return super.fresh();
+		if (Secured.isAdmin())
+			return super.fresh();
+		return forbidden();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result page(int pageNumber, String order, String by) {
-		// TODO Auto-generated method stub
-		return super.page(pageNumber, order, by);
+		if (Secured.isAdmin())
+			return super.page(pageNumber, order, by);
+		return forbidden();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result show(Long id) {
-		// TODO Auto-generated method stub
-		return super.show(id);
+		if (Secured.isAdmin())
+			return super.show(id);
+		return forbidden();
 	}
 
 	@Override
 	@Transactional
 	public Result update(Long id) {
-		// TODO Auto-generated method stub
-		return super.update(id);
+		String username = ctx().request().username();
+		User user = User.findByEmail(username);
+		if (Secured.isAdmin(user)) {
+			// TODO Auto-generated method stub
+			return super.update(id);
+		}
+		return forbidden();
 	}
 }

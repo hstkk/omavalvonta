@@ -19,8 +19,14 @@ public class Secured extends Security.Authenticator {
 		return Shibboleth.login(ctx.request().uri().toString());
 	}
 
+	public static boolean isAdmin() {
+		String username = Context.current().request().username();
+		User user = User.findByEmail(username);
+		return isAdmin(user);
+	}
+
 	public static boolean isAdmin(User user) {
-		if (user.role != null) {
+		if (user != null && user.role != null) {
 			String adminRole = ShibbolethHelper.getOrElse(
 					"shibboleth.adminRole", ShibbolethDefaults.ROLE);
 			return user.role.equals(adminRole);
