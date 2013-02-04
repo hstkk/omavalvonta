@@ -20,7 +20,7 @@ public class ShibbolethHelper {
 		ctx.session().put("t", String.valueOf(System.currentTimeMillis()));
 	}
 
-	public static String getLoginUrl(String returnUrl)
+	public static String getLoginUrl(Context ctx, String returnUrl)
 			throws UnsupportedEncodingException {
 		StringBuilder url = new StringBuilder();
 
@@ -37,12 +37,11 @@ public class ShibbolethHelper {
 		}
 
 		// The URL to return the user to after authenticating
-		Boolean secure = true;
 		url.append("?target=");
-		url.append(URLEncoder.encode(
-				getOrElse("shibboleth.login.url", ShibbolethDefaults.LOGIN_URL)
-						+ controllers.shib.routes.Shibboleth.authenticate()
-								.toString(), ShibbolethDefaults.URL_ENCODING));
+		Boolean secure = true;
+		url.append(URLEncoder.encode(controllers.shib.routes.Shibboleth
+				.authenticate().absoluteURL(ctx.request(), secure).toString(),
+				ShibbolethDefaults.URL_ENCODING));
 
 		// Url redirect
 		if (returnUrl == null)

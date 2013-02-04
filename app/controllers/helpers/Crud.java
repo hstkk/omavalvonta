@@ -21,9 +21,6 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	private final Template2<Long, Form<T>, Html> UPDATE;
 	private final Call REDIRECT;
 
-	Result notFound = notFound(views.html.error.render(
-			Messages.get("http.404"), Messages.get("http.404.description")));
-
 	/**
 	 * 
 	 * @param CRUD
