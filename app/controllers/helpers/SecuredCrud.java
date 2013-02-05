@@ -27,7 +27,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 		String username = ctx().request().username();
 		User user = User.findByEmail(username);
 		if (Secured.isAdmin(user)) {
-			// TODO Auto-generated method stub
+			setUser(user);
 			return super.create();
 		}
 		return forbidden();
@@ -71,9 +71,31 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 		String username = ctx().request().username();
 		User user = User.findByEmail(username);
 		if (Secured.isAdmin(user)) {
-			// TODO Auto-generated method stub
+			setUser(user);
 			return super.update(id);
 		}
 		return forbidden();
+	}
+
+	@Override
+	protected Result onCreate(T t) {
+		t.user = getUser();
+		return super.onCreate(t);
+	}
+
+	@Override
+	protected Result onUpdate(T t, Long id) {
+		t.user = getUser();
+		return super.onUpdate(t, id);
+	}
+
+	private User getUser() {
+		User user = (User) ctx().args.get("user");
+		ctx().args.remove("user");
+		return user;
+	}
+
+	private void setUser(User user) {
+		ctx().args.put("user", user);
 	}
 }
