@@ -56,10 +56,9 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			return redirect(REDIRECT);
 		} else if (!filledForm.hasErrors()) {
 			T t = filledForm.get();
-			if (CRUD.create(t)) {
-				flash("success", Messages.get("crud.success"));
-				return redirect(REDIRECT);
-			}
+			Result result = onCreate(t);
+			if (result != null)
+				return result;
 		}
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(CREATE.render(filledForm));
@@ -116,13 +115,28 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			return redirect(REDIRECT);
 		} else if (!filledForm.hasErrors()) {
 			T fresh = filledForm.get();
-			fresh.id = id;
-			if (CRUD.update(fresh)) {
-				flash("success", Messages.get("crud.success"));
-				return redirect(REDIRECT);
-			}
+			Result result = onUpdate(fresh, id);
+			if (result != null)
+				return result;
 		}
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(UPDATE.render(id, filledForm));
+	}
+
+	protected Result onCreate(T t) {
+		if (CRUD.create(t)) {
+			flash("success", Messages.get("crud.success"));
+			return redirect(REDIRECT);
+		}
+		return null;
+	}
+
+	protected Result onUpdate(T t, Long id) {
+		t.id = id;
+		if (CRUD.update(t)) {
+			flash("success", Messages.get("crud.success"));
+			return redirect(REDIRECT);
+		}
+		return null;
 	}
 }

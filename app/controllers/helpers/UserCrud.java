@@ -7,7 +7,6 @@ import play.api.templates.Html;
 import play.api.templates.Template1;
 import play.api.templates.Template2;
 import play.data.Form;
-import play.db.jpa.Transactional;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
@@ -30,20 +29,27 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	}
 
 	@Override
-	@Transactional
-	public Result create() {
-		String username = ctx().request().username();
-		User user = User.findByEmail(username);
-		// TODO Auto-generated method stub
-		return super.create();
+	protected Result onCreate(T t) {
+		User user = getUser();
+		t.user = user;
+		Result result = super.onCreate(t);
+		if (user == null && result != null)
+			return ack(false);
+		return result;
 	}
 
 	@Override
-	@Transactional
-	public Result update(Long id) {
+	protected Result onUpdate(T t, Long id) {
+		User user = getUser();
+		t.user = user;
+		Result result = super.onUpdate(t, id);
+		if (user == null && result != null)
+			return ack(false);
+		return result;
+	}
+
+	private User getUser() {
 		String username = ctx().request().username();
-		User user = User.findByEmail(username);
-		// TODO Auto-generated method stub
-		return super.update(id);
+		return User.findByEmail(username);
 	}
 }
