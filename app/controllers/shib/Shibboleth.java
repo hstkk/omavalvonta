@@ -41,7 +41,7 @@ public class Shibboleth extends Controller {
 		ShibbolethHelper.clearSession(ctx());
 		try {
 			String logoutUrl = ShibbolethHelper.getLogoutUrl(ctx());
-			flash().put("success", Messages.get("session.logout"));
+			flash().put("success", Messages.get("shib.flash.logout"));
 			return temporaryRedirect(logoutUrl);
 		} catch (UnsupportedEncodingException e) {
 		}
