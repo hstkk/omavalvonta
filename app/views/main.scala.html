@@ -1,4 +1,5 @@
 @(title: String)(content: Html)
+@import play.i18n._
 @import tags.alerts._
 
 @navigation = {
@@ -6,9 +7,9 @@
 		@defining(request.username) { user =>
 			@if(user != null) {
 				<p>@user</p>
-				<a class="btn btn-success" href="@controllers.shib.routes.Shibboleth.logout">Kirjaudu ulos</a>
+				<a class="btn btn-success" href="@controllers.shib.routes.Shibboleth.logout">@Messages.get("shib.logout")</a>
 			} else {
-				<a class="btn btn-success" href="@controllers.shib.routes.Shibboleth.login">Kirjaudu</a>
+				<a class="btn btn-success" href="@controllers.shib.routes.Shibboleth.login">@Messages.get("shib.login")</a>
 			}
 		}
 	</div>

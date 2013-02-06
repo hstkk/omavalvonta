@@ -82,5 +82,8 @@ product.page=Tuotteet
 product.page.empty=Tuotteita ei löytynyt
 product.update=Muokkaa tuotetta
 
-# --- Session
-session.logout=Uloskirjautuminen onnistui!
+# --- Shibboleth
+shib.logout=Kirjaudu ulos
+shib.login=Kirjaudu
+shib.flash.logout=Uloskirjautuminen onnistui!
+shib.flash.login=Tervetuloa {0}!
