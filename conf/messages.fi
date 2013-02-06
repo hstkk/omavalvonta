@@ -81,3 +81,6 @@ product.create=Uusi tuote
 product.page=Tuotteet
 product.page.empty=Tuotteita ei löytynyt
 product.update=Muokkaa tuotetta
+
+# --- Session
+session.logout=Uloskirjautuminen onnistui!
