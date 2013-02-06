@@ -21,3 +21,7 @@ h2 {
 table a {
 	display: block;
 }
+
+.nav-header a {
+	color: #999999;
+}

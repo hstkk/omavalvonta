@@ -1,4 +1,4 @@
-@(title: String, navigation: Html = Html(""))(content: Html)
+@(title: String, navigation: Html = Html(""), sidebar: Html = Html(""))(content: Html)
 
 <!DOCTYPE html>
 <html>
@@ -19,19 +19,16 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</a>
 					<a class="brand" href="@routes.Application.index">Omavalvonta</a>
 					@navigation
 				</div>
 			</div>
 	    </div>
-		<div class="container">
-			<h1>@title</h1>
-			@content
+		<div class="container-fluid">
+			<div class="row-fluid">
+				@sidebar
+				@content
+			</div>
 	    </div>
     </body>
 </html>

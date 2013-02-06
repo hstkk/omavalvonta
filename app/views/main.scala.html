@@ -2,40 +2,59 @@
 @import tags.alerts._
 
 @navigation = {
-	<div class="nav-collapse">
-		<ul class="nav">
-			<li><a href="@routes.Application.index">Ohjeet</a></li>
-			<li><a href="@routes.IngredientSupplies.index">Raaka-aineen vastaanotto</a></li>
-			<li><a href="@routes.Batches.index">Erät</a></li>
+	<div class="pull-right">
+		@defining(request.username) { user =>
+			@if(user != null) {
+				<p>@user</p>
+				<a class="btn btn-success" href="@routes.Application.management">Kirjaudu ulos</a>
+			} else {
+				<a class="btn btn-success" href="@routes.Application.management">Kirjaudu</a>
+			}
+		}
+	</div>
+}
+
+@sidebar = {
+	<div class="span3 well">
+		<ul class="nav nav-list">
+			<li class="nav-header"><a href="@routes.Application.index">Ohjeet</a></li>
+			<li class="nav-header"><a href="@routes.IngredientSupplies.index">Raaka-aineet</a></li>
+			<li><a href="@routes.IngredientSupplies.index">Vastaanota</a></li>
+			<li class="divider"></li>
+			<li class="nav-header"><a href="@routes.Batches.index">Erät</a></li>
+			<li><a href="@routes.Batches.index">Uusi</a></li>
+			<li class="divider"></li>
+			<li class="nav-header">Tulokset</li>
 			<li><a href="@controllers.dynamicforms.routes.Results.index">Tulokset</a></li>
-			<li><a href="@routes.FinalProducts.index">Myyntihyväksynnät</a></li>
-		</ul>
-		<ul class="nav pull-right">
-			<li><a href="@routes.Application.management">Ylläpito</a></li>
+			<li class="divider"></li>
+			<li class="nav-header"><a href="@routes.Application.management">Ylläpito</a></li>
 		</ul>
 	</div>
 }
 
-@base(title, navigation) {
-	@if(flash.containsKey("success")){
-		@success(){
-			@flash.get("success")
+@base(title, navigation, sidebar) {
+	<div class="span9">
+		@if(flash.containsKey("success")){
+			@success(){
+				@flash.get("success")
+			}
 		}
-	}
-	@if(flash.containsKey("info")){
-		@info(){
-			@flash.get("info")
+		@if(flash.containsKey("info")){
+			@info(){
+				@flash.get("info")
+			}
 		}
-	}
-	@if(flash.containsKey("error")){
-		@error(){
-			@flash.get("error")
+		@if(flash.containsKey("error")){
+			@error(){
+				@flash.get("error")
+			}
 		}
-	}
-	@if(flash.containsKey("warning")){
-		@warning(){
-			@flash.get("warning")
+		@if(flash.containsKey("warning")){
+			@warning(){
+				@flash.get("warning")
+			}
 		}
-	}
-	@content
+		<h1>@title</h1>
+		@content
+	</div>
 }
