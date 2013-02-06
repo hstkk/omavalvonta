@@ -62,11 +62,11 @@ POST	/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.update(termId: 
 GET		/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.edit(termId: Long)
 
 # Ingredient management
-GET		/yllapito/raaka-aine								controllers.Ingredients.getCrud.page(sivu: Int ?= 1)
-GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.getCrud.fresh
-POST	/yllapito/raaka-aine/uusi							controllers.Ingredients.getCrud.create
-POST	/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.getCrud.update(ingredientId: Long)
-GET		/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.getCrud.edit(ingredientId: Long)
+GET		/yllapito/raaka-aine								controllers.Ingredients.crud.page(sivu: Int ?= 1)
+GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.crud.fresh
+POST	/yllapito/raaka-aine/uusi							controllers.Ingredients.crud.create
+POST	/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.update(ingredientId: Long)
+GET		/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.edit(ingredientId: Long)
 
 # Product management
 GET		/yllapito/tuote										controllers.Products.crud.page(sivu: Int ?= 1)
