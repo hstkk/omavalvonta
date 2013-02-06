@@ -6,9 +6,9 @@
 		@defining(request.username) { user =>
 			@if(user != null) {
 				<p>@user</p>
-				<a class="btn btn-success" href="@routes.Application.management">Kirjaudu ulos</a>
+				<a class="btn btn-success" href="@controllers.shib.routes.Shibboleth.logout">Kirjaudu ulos</a>
 			} else {
-				<a class="btn btn-success" href="@routes.Application.management">Kirjaudu</a>
+				<a class="btn btn-success" href="@controllers.shib.routes.Shibboleth.login">Kirjaudu</a>
 			}
 		}
 	</div>
