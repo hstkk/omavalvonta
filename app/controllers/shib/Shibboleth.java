@@ -1,5 +1,7 @@
 package controllers.shib;
 
+import static play.mvc.Results.internalServerError;
+
 import java.io.UnsupportedEncodingException;
 
 import models.User;
@@ -33,7 +35,7 @@ public class Shibboleth extends Controller {
 			return temporaryRedirect(loginUrl);
 		} catch (UnsupportedEncodingException e) {
 		}*/
-		return internalServerError();
+		return getInternalServerError();
 	}
 
 	// 3.
@@ -45,6 +47,12 @@ public class Shibboleth extends Controller {
 			return temporaryRedirect(logoutUrl);
 		} catch (UnsupportedEncodingException e) {
 		}
-		return internalServerError();
+		return getInternalServerError();
+	}
+
+	private static Result getInternalServerError() {
+		String title = Messages.get("http.500");
+		String description = Messages.get("http.500.description");
+		return internalServerError(views.html.error.render(title, description));
 	}
 }
