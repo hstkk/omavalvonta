@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import models.User;
 
 import play.*;
+import play.i18n.Messages;
 import play.mvc.*;
 import play.db.jpa.*;
 import utils.ShibbolethHelper;
@@ -37,11 +38,10 @@ public class Shibboleth extends Controller {
 
 	// 3.
 	public static Result logout() {
-		// TODO
 		ShibbolethHelper.clearSession(ctx());
 		try {
 			String logoutUrl = ShibbolethHelper.getLogoutUrl(ctx());
-			// ctx.flash().put("info", Messages.get("session.timeout"));
+			flash().put("success", Messages.get("session.logout"));
 			return temporaryRedirect(logoutUrl);
 		} catch (UnsupportedEncodingException e) {
 		}
