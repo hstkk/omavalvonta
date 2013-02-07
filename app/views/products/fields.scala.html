@@ -1,20 +1,22 @@
-@(FORM: play.data.Form[models.Product])
+@(FORM: play.data.Form[models.Product], action: play.api.mvc.Call)
 
 @import play.i18n._
 @import helper._
 @import helper.twitterBootstrap._
 @import tags.forms._
 
-@helper.inputText(FORM("no"), '_label -> Messages.get("label.productNo"), '_class -> "control-group")
-@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
-@helper.textarea(FORM("description"), '_label -> Messages.get("label.description"))
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
-		<fieldset>
-			<legend>Raaka-aineet</legend>
-			@Html(models.Ingredient.checkboxes(FORM("id").value))
-		</fieldset>
-		<fieldset>
-			<legend>Lomakkeet</legend>
-			@Html(models.dynamicforms.Form.checkboxes(FORM("id").value))
-		</fieldset>
-@actions()
+@tags.forms.form(FORM, action) {
+	@helper.inputText(FORM("no"), '_label -> Messages.get("label.productNo"), '_class -> "control-group")
+	@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
+	@helper.textarea(FORM("description"), '_label -> Messages.get("label.description"))
+	<fieldset>
+		<legend>Raaka-aineet</legend>
+		@Html(models.Ingredient.checkboxes(FORM("id").value))
+	</fieldset>
+	<fieldset>
+		<legend>Lomakkeet</legend>
+		@Html(models.dynamicforms.Form.checkboxes(FORM("id").value))
+	</fieldset>
+}

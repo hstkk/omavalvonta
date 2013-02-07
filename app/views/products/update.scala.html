@@ -1,23 +1,7 @@
 @(id: Long, FORM: play.data.Form[models.Product])
 
 @import play.i18n._
-@import helper._
-@import helper.twitterBootstrap._
-@import tags._
-@import tags.alerts._
-@import tags.forms._
-@import tags.navs._
 
-@main(Messages.get("product.update")){
-	@navigation()
-
-	@if(FORM.hasGlobalErrors) {
-		@error() {
-			@FORM.globalError.message
-		}
-	}
-	
-	@helper.form(action = routes.Products.crud.update(id), 'class -> "form-horizontal"){
-		@fields(FORM)
-	}
+@main(Messages.get("product.update")) {
+	@fields(FORM, routes.Products.crud.update(id))
 }
