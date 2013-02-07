@@ -6,7 +6,7 @@
 	<div class="pull-right">
 		@defining(request.username) { user =>
 			@if(user != null) {
-				<ul class="nav">
+				<ul class="nav hidden-phone">
 					<li><a href="#">@user</a></li>
 				</ul>
 				<a class="btn btn-primary" href="@controllers.shib.routes.Shibboleth.logout">@Messages.get("shib.logout")</a>
