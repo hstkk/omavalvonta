@@ -64,6 +64,10 @@ fieldset.update=Muokkaa kenttäryhmää
 field.create=Uusi kenttä
 field.update=Muokkaa kenttää
 
+# --- Form
+form.create=Uusi lomake
+form.update=Muokkaa lomaketta
+
 # --- Ingredient
 ingredient.create=Uusi raaka-aine
 ingredient.page=Raaka-aineet
