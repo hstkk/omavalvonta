@@ -2,11 +2,13 @@
 @import play.i18n._
 @import tags.alerts._
 
-@navigation = {
+@navigation = {	
 	<div class="pull-right">
 		@defining(request.username) { user =>
 			@if(user != null) {
-				<p>@user</p>
+				<ul class="nav">
+					<li><a href="#">@user</a></li>
+				</ul>
 				<a class="btn btn-primary" href="@controllers.shib.routes.Shibboleth.logout">@Messages.get("shib.logout")</a>
 			} else {
 				<a class="btn btn-primary" href="@controllers.shib.routes.Shibboleth.login">@Messages.get("shib.login")</a>
