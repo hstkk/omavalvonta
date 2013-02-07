@@ -1,23 +1,7 @@
 @(FORM: play.data.Form[models.dynamicforms.Fieldset])
 
 @import play.i18n._
-@import helper._
-@import helper.twitterBootstrap._
-@import tags._
-@import tags.alerts._
-@import tags.forms._
-@import tags.navs._
 
-@main(Messages.get("fieldset.create")){
-	@views.html.dynamicforms.forms.navigation()
-
-	@if(FORM.hasGlobalErrors) {
-		@error() {
-			@FORM.globalError.message
-		}
-	}
-	
-	@helper.form(action = controllers.dynamicforms.routes.Fieldsets.crud.create, 'class -> "form-horizontal"){
-		@fields(FORM)
-	}
+@main(Messages.get("fieldset.create")) {
+	@fields(FORM, controllers.dynamicforms.routes.Fieldsets.crud.create)
 }

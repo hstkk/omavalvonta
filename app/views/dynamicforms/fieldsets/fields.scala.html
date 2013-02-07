@@ -1,11 +1,14 @@
-@(FORM: play.data.Form[models.dynamicforms.Fieldset])
+@(FORM: play.data.Form[models.dynamicforms.Fieldset], action: play.api.mvc.Call)
 
 @import play.i18n._
 @import helper._
 @import helper.twitterBootstrap._
 @import tags.forms._
 
-@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
-@helper.textarea(FORM("description"), '_label -> Messages.get("label.description"))
-@helper.checkbox(FORM("isActive"), '_label -> None, '_text -> Messages.get("label.isActive"), '_showConstraints -> false)
-@actions()
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@tags.forms.form(FORM, action) {
+	@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
+	@helper.textarea(FORM("description"), '_label -> Messages.get("label.description"))
+	@helper.checkbox(FORM("isActive"), '_label -> None, '_text -> Messages.get("label.isActive"), '_showConstraints -> false)
+}

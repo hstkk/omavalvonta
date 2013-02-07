@@ -1,25 +1,9 @@
 @(id: Long, FORM: play.data.Form[models.dynamicforms.Fieldset])
 
 @import play.i18n._
-@import helper._
-@import helper.twitterBootstrap._
-@import tags._
-@import tags.alerts._
-@import tags.forms._
-@import tags.navs._
 
-@main(Messages.get("fieldset.update")){
-	@views.html.dynamicforms.forms.navigation()
-
-	@if(FORM.hasGlobalErrors) {
-		@error() {
-			@FORM.globalError.message
-		}
-	}
-	
-	@helper.form(action = controllers.dynamicforms.routes.Fieldsets.crud.update(id), 'class -> "form-horizontal"){
-		@fields(FORM)
-	}
+@main(Messages.get("fieldset.update")) {
+	@fields(FORM, controllers.dynamicforms.routes.Fieldsets.crud.update(id))
 
 	<h2>Kentät</h2>
 	<a class="btn btn-primary" href="@controllers.dynamicforms.routes.Fields.fresh(id)" title="Lisää uusi kenttä">Lisää uusi kenttä</a>
