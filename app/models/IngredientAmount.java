@@ -36,6 +36,11 @@ public class IngredientAmount extends JpaModel {
 
 	@Required
 	@NotNull
+	@ManyToOne(cascade = CascadeType.ALL)
+	public Batch batch;
+
+	@Required
+	@NotNull
 	@Min(0)
 	public Double amount;
 

@@ -22,12 +22,12 @@ public class Api extends Controller {
 			return ok("Tuotteen raaka-aineita ei löytynyt");
 		StringBuilder stringBuilder = new StringBuilder();
 		int index = 0;
-		for (Ingredient ingredient : product.ingredients) {
+		/*for (Ingredient ingredient : product.ingredients) {
 			KeyValue<String, Integer> keyvalue = IngredientSupply
 					.findAliveByIngredient(ingredient, index);
 			index = keyvalue.value;
 			stringBuilder.append(keyvalue.key);
-		}
+		}*/
 		return ok(stringBuilder.toString());
 	}
 
