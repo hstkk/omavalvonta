@@ -2,23 +2,13 @@
 
 @import helper._
 @import helper.twitterBootstrap._
-@import tags._
-@import tags.alerts._
 @import tags.forms._
-@import tags.navs._
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
-@main("Vastaanota raaka-aine"){
-	@tabs() {
-		<li><a href="@routes.IngredientSupplies.index">Vastaanotetut raaka-aineet</a></li>
-		<li class="active"><a href="#">Vastaanota</a></li>
-	}
-
-	@tags.forms.form(FORM, routes.IngredientSupplies.save()) {
-		@helper.select(FORM("ingredient.id"), options = options(models.Ingredient.crud.options), '_default -> "", '_label -> "raaka-aine")
-		@helper.inputText(FORM("amount"), '_label -> "määrä", '_class -> "control-group")
-		@helper.select(FORM("unit.id"), options = options(models.Term.options(models.TermCategory.UNIT)), '_default -> "", '_label -> "mittayksikkö")
-		@helper.inputText(FORM("received"), '_label -> "vastaanottopäivä", '_class -> "control-group")
-		@helper.inputText(FORM("bestBefore"), '_label -> "parasta ennen", '_class -> "control-group")
-	}
+@tags.forms.form(FORM, routes.IngredientSupplies.save()) {
+	@helper.select(FORM("ingredient.id"), options = options(models.Ingredient.crud.options), '_default -> "", '_label -> "raaka-aine")
+	@helper.inputText(FORM("amount"), '_label -> "määrä", '_class -> "control-group")
+	@helper.select(FORM("unit.id"), options = options(models.Term.options(models.TermCategory.UNIT)), '_default -> "", '_label -> "mittayksikkö")
+	@helper.inputText(FORM("received"), '_label -> "vastaanottopäivä", '_class -> "control-group")
+	@helper.inputText(FORM("bestBefore"), '_label -> "parasta ennen", '_class -> "control-group")
 }

@@ -25,6 +25,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	@Security.Authenticated(Secured.class)
 	@With(SessionTimeout.class)
 	public Result ack(Boolean bool) {
+		//TODO update only user
 		return TODO;
 	}
 

@@ -1,33 +1,22 @@
 package models;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKey;
-import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Target;
-
-import models.dynamicforms.Form;
-import models.helpers.JpaModel;
-import models.helpers.KeyValue;
-import models.helpers.Page;
-
-import play.Play;
+import models.helpers.Crud;
+import models.helpers.UserModel;
 import play.data.format.*;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import play.db.jpa.JPA;
+import utils.Converter;
 
 @Entity
-public class IngredientSupply extends JpaModel {
+public class IngredientSupply extends UserModel {
+	public final static Crud<IngredientSupply, Long> crud = new Crud<IngredientSupply, Long>(IngredientSupply.class);
 
 	@Required
 	@NotNull
@@ -47,61 +36,42 @@ public class IngredientSupply extends JpaModel {
 	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date received;
 
-	// TODO bestbefore
-	//@Required
-	//@NotNull
-	@Formats.DateTime(pattern = "dd.MM.yyyy")
-	public Date bestBefore;
-
 	@Required
 	@NotNull
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term unit;
 
-	private void set() {
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(ingredient);
+		sb.append(" ");
+		sb.append(amount);
+		sb.append(" ");
+		sb.append(unit);
+		sb.append(" (");
+		sb.append(Converter.dateToString(received));
+		sb.append(")");
+		return sb.toString();
+	}
+
+	@Override
+	@PrePersist
+	public void onCreate() {
+		super.onCreate();
+
 		if (this.ingredient.id == null)
 			this.ingredient = null;
 		else
-			this.ingredient = Ingredient.crud.findById(this.ingredient.id);
+			this.ingredient = JPA.em().getReference(Ingredient.class,
+					this.ingredient.id);
 		if (this.unit.id == null)
 			this.unit = null;
 		else
-			this.unit = Term.crud.findById(this.unit.id);
+			this.unit = JPA.em().getReference(Term.class, this.unit.id);
 	}
 
-	public boolean save() {
-		try {
-			this.amountAvailable = this.amount;
-			set();
-			JPA.em().persist(this);
-			return true;
-		} catch (Exception e) {
-			System.out.print(e);
-			return false;
-		}
-	}
-
-	public boolean update() {
-		try {
-			set();
-			JPA.em().merge(this);
-			return true;
-		} catch (Exception e) {
-			System.out.print(e);
-			return false;
-		}
-	}
-
-	public static IngredientSupply findById(Long id) {
-		try {
-			if (id != null)
-				return JPA.em().find(IngredientSupply.class, id);
-		} catch (Exception e) {
-		}
-		return null;
-	}
-
-	public static KeyValue<String, Integer> findAliveByIngredient(Ingredient ingredient, int index) {
+	/*public static KeyValue<String, Integer> findAliveByIngredient(
+			Ingredient ingredient, int index) {
 		StringBuilder stringBuilder = new StringBuilder();
 		try {
 			if (ingredient != null) {
@@ -120,7 +90,8 @@ public class IngredientSupply extends JpaModel {
 					for (IngredientSupply i : list) {
 						stringBuilder
 								.append("<div><div class=\"input-append\">");
-						stringBuilder.append("<input type=\"hidden\" name=\"values[");
+						stringBuilder
+								.append("<input type=\"hidden\" name=\"values[");
 						stringBuilder.append(index);
 						stringBuilder.append("].id\" value=\"");
 						stringBuilder.append(i.id);
@@ -156,33 +127,5 @@ public class IngredientSupply extends JpaModel {
 			e.printStackTrace();
 		}
 		return new KeyValue<String, Integer>(stringBuilder.toString(), index);
-	}
-
-	/**
-	 * Page.
-	 * 
-	 * @param index
-	 *            the index
-	 * @return the page
-	 */
-	public static Page page(int index) {
-		try {
-			int size = Play.application().configuration().getInt("page.size");
-			if (index < 1)
-				index = 1;
-			long rows = (long) JPA.em()
-					.createQuery("select count(*) from IngredientSupply")
-					.getSingleResult();
-			List<IngredientSupply> list = JPA
-					.em()
-					.createQuery(
-							"from IngredientSupply i order by i.received asc")
-					.setFirstResult((index - 1) * size).setMaxResults(size)
-					.getResultList();
-			if (rows > 0 && list != null && !list.isEmpty())
-				return new Page(index, size, rows, list);
-		} catch (Exception e) {
-		}
-		return new Page(index, 0, 0, null);
-	}
+	}*/
 }

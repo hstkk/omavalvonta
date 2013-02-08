@@ -1,59 +1,20 @@
 package controllers;
 
-import java.util.List;
-
-import play.*;
-import play.mvc.*;
-import play.data.*;
-import static play.data.Form.*;
-import play.db.jpa.*;
-
-import models.Batch;
 import models.IngredientSupply;
-
-import views.html.*;
+import controllers.helpers.SecuredCrud;
+import play.mvc.Controller;
+import views.html.ingredientsupplies.*;
 
 public class IngredientSupplies extends Controller {
+	public final static SecuredCrud<IngredientSupply> crud = new SecuredCrud<IngredientSupply>(IngredientSupply.crud,
+			form(IngredientSupply.class),
+			null,
+			create.ref(),
+			page.ref(),
+			show.ref(),
+			routes.Terms.crud.page(1));
 
-	final static Form<IngredientSupply> FORM = form(IngredientSupply.class);
-
-	@Transactional(readOnly = true)
-	public static Result create() {
-		return ok(views.html.ingredientsupplies.manage.render(FORM));
-	}
-
-	@Transactional(readOnly = true)
-	public static Result index() {
-		return page(1);
-	}
-
-	@Transactional(readOnly = true)
-	public static Result page(int index) {
-		return ok(views.html.ingredientsupplies.page.render(IngredientSupply
-				.page(index)));
-	}
-
-	@Transactional
-	public static Result save() {
-		Form<IngredientSupply> filledForm = FORM.bindFromRequest();
-		if (filledForm.field("action").value().equals("peruuta")) {
-			flash("warning", "Raaka-aineen vastaanoton tallennus peruutettu!");
-			return redirect(routes.IngredientSupplies.index());
-		} else if (!filledForm.hasErrors()) {
-			IngredientSupply ingredientSupply = filledForm.get();
-			// TODO smarter save/update
-			if (ingredientSupply.save()) {
-				flash("success",
-						"Raaka-aineen vastaanotto on tallennettu onnistuneesti!");
-				return redirect(routes.IngredientSupplies.index());
-			}
-		}
-		flash("error", "Raaka-aineen vastaanoton tallennus ei onnistunut!");
-		return badRequest(views.html.ingredientsupplies.manage
-				.render(filledForm));
-	}
-
-	@Transactional(readOnly = true)
+	/*@Transactional(readOnly = true)
 	public static Result read(Long ingredientId) {
 		IngredientSupply ingredientSupply = IngredientSupply
 				.findById(ingredientId);
@@ -62,5 +23,5 @@ public class IngredientSupplies extends Controller {
 		List<Batch> batches = Batch.findByIngredientSupply(ingredientId);
 		return ok(views.html.ingredientsupplies.read.render(ingredientSupply,
 				batches));
-	}
+	}*/
 }
