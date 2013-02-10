@@ -4,12 +4,19 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.ListJoin;
+import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
 import models.dynamicforms.Results;
+import models.helpers.Crud;
 import models.helpers.JpaModel;
 import models.helpers.Page;
+import models.helpers.UserModel;
 
 import org.hibernate.annotations.Target;
 import org.hibernate.envers.Audited;
@@ -25,7 +32,10 @@ import utils.Helper;
 
 @Entity
 @Audited
-public class Batch extends JpaModel {
+public class Batch extends UserModel {
+	public final static Crud<Batch, Long> crud = new Crud<Batch, Long>(
+			Batch.class);
+
 	@Required
 	@NotNull
 	public Date created = new Date();
@@ -57,22 +67,14 @@ public class Batch extends JpaModel {
 			}
 	}
 
-	private void set() {
+	@Override
+	@PrePersist
+	public void onCreate() {
+		super.onCreate();
 		if (this.product.id == null)
 			this.product = null;
 		else
 			this.product = Product.crud.getReference(this.product.id);
-	}
-
-	// TODO remove
-	public boolean save() {
-		try {
-			set();
-			JPA.em().persist(this);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 	public String toString() {
@@ -87,26 +89,15 @@ public class Batch extends JpaModel {
 		return stringBuilder.toString();
 	}
 
-	// TODO remove
-	public String createdToString() {
-		return new SimpleDateFormat("HH:mm dd.MM.yyyy").format(this.created)
-				.toString();
-	}
-
-	// TODO remove
-	public static Batch findById(Long id) {
-		if (id == null)
-			return null;
-		try {
-			return JPA.em().find(Batch.class, id);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	// TODO remove
 	public static List<Batch> findByIngredientSupply(Long id) {
-		try {
+		CriteriaBuilder criteriaBuilder = crud.getCriteriaBuilder();
+		CriteriaQuery<Batch> query = criteriaBuilder.createQuery(Batch.class);
+		Root<Batch> root = query.from(Batch.class);
+		Join<Batch, IngredientAmount> join = root.join(Batch_.ingredientAmounts);
+		query.where(criteriaBuilder.equal(root.get(Batch_.ingredientAmounts),
+				categoryEnum));
+		return crud.findAllBy(query);
+		/*try {
 			if (id != null) {
 				List<Batch> list = JPA
 						.em()
@@ -118,41 +109,7 @@ public class Batch extends JpaModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
-	}
-
-	// TODO remove
-	public static Page page(int index) {
-		try {
-			int size = Play.application().configuration().getInt("page.size");
-			if (index < 1)
-				index = 1;
-			long rows = (long) JPA.em()
-					.createQuery("select count(*) from Batch")
-					.getSingleResult();
-			List<Batch> list = JPA.em()
-					.createQuery("from Batch b order by b.created desc")
-					.setFirstResult((index - 1) * size).setMaxResults(size)
-					.getResultList();
-			if (rows > 0 && list != null && !list.isEmpty())
-				return new Page(index, size, rows, list);
-		} catch (Exception e) {
-		}
-		return new Page(index, 0, 0, null);
-	}
-
-	// TODO remove
-	public static List<Batch> findNotDone() {
-		try {
-			List<Batch> list = JPA
-					.em()
-					.createQuery(
-							"from Batch b where b.isReady = false order by created")
-					.getResultList();
-			return list;
-		} catch (Exception e) {
-		}
-		return null;
+		return null;*/
 	}
 
 	// TODO remove
