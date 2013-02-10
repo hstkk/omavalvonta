@@ -75,6 +75,7 @@ public class Batch extends JpaModel {
 
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
+		//TODO use formatter
 		stringBuilder.append(new SimpleDateFormat("yyyyMMdd").format(
 				this.created).toString());
 		stringBuilder.append("-");
