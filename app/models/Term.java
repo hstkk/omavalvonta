@@ -3,6 +3,9 @@ package models;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import models.helpers.Crud;
 import models.helpers.UserModel;
@@ -23,13 +26,13 @@ public class Term extends UserModel {
 	public final static Crud<Term, Long> crud = new Crud<Term, Long>(Term.class);
 
 	@Column(name = "name")
-	//@Required
-	//@NotNull
+	// @Required
+	// @NotNull
 	public String name;
 
 	@Column(name = "category")
-	//@Required
-	//@NotNull
+	// @Required
+	// @NotNull
 	public int category;
 
 	@Transient
@@ -50,23 +53,13 @@ public class Term extends UserModel {
 		return name;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static Map<String, String> options(TermCategory categoryEnum) {
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		try {
-			if (categoryEnum != null) {
-				List<Term> terms = JPA
-						.em()
-						.createQuery(
-								"from Term where category=? order by name ")
-						.setParameter(1, categoryEnum.getValue())
-						.getResultList();
-				for (Term term : terms)
-					map.put(term.id.toString(), term.toString());
-			}
-		} catch (Exception e) {
-		}
-		return map;
+		CriteriaBuilder criteriaBuilder = crud.getCriteriaBuilder();
+		CriteriaQuery<Term> query = criteriaBuilder.createQuery(Term.class);
+		Root<Term> root = query.from(Term.class);
+		query.where(criteriaBuilder.equal(root.get(Term_.category),
+				categoryEnum));
+		return crud.options(query);
 	}
 
 	public static List<Term> findByCategory(TermCategory categoryEnum) {

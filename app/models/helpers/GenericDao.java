@@ -7,9 +7,9 @@ import java.util.Map;
 import javax.persistence.criteria.CriteriaQuery;
 
 public interface GenericDao<T, ID extends Serializable> {
-	boolean create(T t);
-
 	long count();
+
+	boolean create(T t);
 
 	boolean delete(T t);
 
@@ -28,6 +28,8 @@ public interface GenericDao<T, ID extends Serializable> {
 	T findById(ID id);
 
 	Map<String, String> options();
+
+	Map<String, String> options(CriteriaQuery<T> query);
 
 	Page<T> page(int pageNumber);
 
