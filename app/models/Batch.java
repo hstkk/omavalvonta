@@ -46,7 +46,7 @@ public class Batch extends JpaModel {
 		this.product = form.product;
 		for (Ingredients i : form.values)
 			if (i.amount != null) {
-				IngredientSupply ingredientSupply = IngredientSupply
+				IngredientSupply ingredientSupply = IngredientSupply.crud
 						.findById(i.id);
 				if (ingredientSupply != null)
 					ingredientAmounts.add(new IngredientAmount(
