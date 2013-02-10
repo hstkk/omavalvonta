@@ -1,8 +1,13 @@
 package models;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
+import javax.persistence.Transient;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -11,8 +16,6 @@ import models.helpers.Crud;
 import models.helpers.UserModel;
 
 import org.hibernate.envers.Audited;
-
-import play.db.jpa.*;
 
 /**
  * 
@@ -38,6 +41,10 @@ public class Term extends UserModel {
 	@Transient
 	public TermCategory categoryEnum;
 
+	public String toString() {
+		return name;
+	}
+
 	@PrePersist
 	private void enumToInt() {
 		if (categoryEnum != null)
@@ -49,33 +56,20 @@ public class Term extends UserModel {
 		categoryEnum = TermCategory.setValue(this.category);
 	}
 
-	public String toString() {
-		return name;
+	public static List<Term> findByCategory(TermCategory categoryEnum) {
+		return crud.findAllBy(getByCategory(categoryEnum));
 	}
 
-	public static Map<String, String> options(TermCategory categoryEnum) {
+	private static CriteriaQuery<Term> getByCategory(TermCategory categoryEnum) {
 		CriteriaBuilder criteriaBuilder = crud.getCriteriaBuilder();
 		CriteriaQuery<Term> query = criteriaBuilder.createQuery(Term.class);
 		Root<Term> root = query.from(Term.class);
 		query.where(criteriaBuilder.equal(root.get(Term_.category),
 				categoryEnum));
-		return crud.options(query);
+		return query;
 	}
 
-	public static List<Term> findByCategory(TermCategory categoryEnum) {
-		try {
-			if (categoryEnum != null) {
-				List<Term> terms = JPA
-						.em()
-						.createQuery(
-								"from Term where category=? order by name ")
-						.setParameter(1, categoryEnum.getValue())
-						.getResultList();
-				return terms;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public static Map<String, String> options(TermCategory categoryEnum) {
+		return crud.options(getByCategory(categoryEnum));
 	}
 }
