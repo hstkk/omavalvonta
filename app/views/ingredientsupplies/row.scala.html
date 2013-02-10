@@ -1,0 +1,9 @@
+@(ingredientSupply: IngredientSupply)
+
+@import tags.tables._
+
+@tr() { @ingredientSupply.ingredient.name
+        @ingredientSupply.received.format
+        @ingredientSupply.bestBefore.format
+        @ingredientSupply.amount @ingredient.unit
+        @if(ingredientSupply.amountAvailable > 0) { <span class="label label-success">@ingredientSupply.amountAvailable</span> } else { @ingredientSupply.amountAvailable } @ingredientSupply.unit }

@@ -79,6 +79,7 @@ term.create=Uusi termi
 term.page=Termit
 term.page.empty=Termejä ei löytynyt!
 term.update=Muokkaa termiä
+term.unit=Mittayksikkö
 
 # --- Product
 product.create=Uusi tuote
@@ -91,3 +92,15 @@ shib.logout=Kirjaudu ulos
 shib.login=Kirjaudu
 shib.flash.logout=Uloskirjautuminen onnistui!
 shib.flash.login=Tervetuloa {0}!
+
+# --- IngredientSupply
+ingredientsupply.create=Vastaanota raaka-aine-erä
+ingredientsupply.page=Raaka-aine-erät
+ingredientsupply.page.empty=Raaka-aine-eriä ei löytynyt!
+ingredientsupply.show=Raaka-aine-erä
+ingredientsupply.ingredient=Raaka-aine
+ingredientsupply.received=Vastaanottopäivä
+ingredientsupply.bestBefore=Parasta ennen
+ingredientsupply.amount=Määrä
+ingredientsupply.amountAvailable=Jäljellä
+		

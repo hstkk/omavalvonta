@@ -1,0 +1,9 @@
+@(ingredientSupply: IngredientSupply)
+
+@import utils._
+
+@main(Helper.getMessage("ingredientsupply.show")) {
+	@table() {
+		@row(ingredientSupply)
+	}
+}

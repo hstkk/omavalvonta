@@ -1,38 +1,19 @@
-@(page: models.helpers.Page[IngredientSupply])
+@(page: models.helpers.Page[models.IngredientSupply])
 
-@import tags._
 @import tags.alerts._
-@import tags.navs._
-@import tags.tables._
+@import utils._
 
-@main("Vastaanotetut raaka-aineet") {
-	@tabs() {
-		<li class="active"><a href="#">Vastaanotetut raaka-aineet</a></li>
-		<li><a href="@routes.IngredientSupplies.create">Vastaanota</a></li>
-	}
-	@if(!page.isEmpty) {
+@main(Helper.getMessage("ingredient.page")) {
+	@if(!page.isEmpty){
 		@table() {
-			@thead() {
-				Raaka-aine
-				Vastaanottopäivä
-				Parasta ennen
-				Määrä
-				Jäljellä
+			@for(ingredientSupply <- page.getList) {
+				@row(ingredientSupply)
 			}
-			<tbody>
-				@for(ingredient <- page.getList) {
-					@tr() { <a href="@routes.IngredientSupplies.read(ingredient.id)">@ingredient.ingredient.name</a>
-						@ingredient.received.format("dd.MM.yyyy")
-						@ingredient.bestBefore.format("dd.MM.yyyy")
-						@ingredient.amount @ingredient.unit
-						@if(ingredient.amountAvailable > 0) { <span class="label label-success">@ingredient.amountAvailable</span> } else { @ingredient.amountAvailable } @ingredient.unit }
-				}
-			</tbody>
 		}
-		@pagination(page, routes.IngredientSupplies.page(page.getIndex - 1), routes.IngredientSupplies.page(page.getIndex + 1))
+		@pagination(page, routes.IngredientSupplies.crud.page(page.getPrevious), routes.IngredientSupplies.crud.page(page.getNext))
 	} else {
 		@warning() {
-			Vastaanotettuja raaka-aineita ei löytynyt, voit kuitenkin <a href="@routes.IngredientSupplies.create">lisätä</a> uusia.
+			@Helper.getMessage("ingredientsupply.page.empty")
 		}
 	}
 }
