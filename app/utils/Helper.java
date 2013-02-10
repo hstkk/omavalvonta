@@ -19,4 +19,15 @@ public class Helper {
 		}
 		return Messages.get(getLang(), key);
 	}
+
+	public static String getOrElse(String key) {
+		return getOrElse(key, "");
+	}
+
+	public static String getOrElse(String key, String defaultValue) {
+		String value = getOrElse(key);
+		if (value == null)
+			return defaultValue;
+		return value;
+	}
 }
