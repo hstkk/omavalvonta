@@ -1,0 +1,15 @@
+@(FORM: play.data.Form[models.IngredientSupply], action: play.api.mvc.Call)
+
+@import helper._
+@import helper.twitterBootstrap._
+@import tags.forms._
+@import utils._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@tags.forms.form(FORM, action) {
+	@helper.select(FORM("ingredient.id"), options = options(models.Ingredient.crud.options), '_default -> "", '_label -> Helper.getMessage("ingredientsupply.ingredient"))
+	@helper.inputText(FORM("amount"), '_label -> Helper.getMessage("ingredientsupply.amount"), '_class -> "control-group")
+	@helper.select(FORM("unit.id"), options = options(models.Term.options(models.TermCategory.UNIT)), '_default -> "", '_label -> Helper.getMessage("term.unit"))
+	@helper.inputText(FORM("received"), '_label -> Helper.getMessage("ingredientsupply.received"), '_class -> "control-group")
+}
