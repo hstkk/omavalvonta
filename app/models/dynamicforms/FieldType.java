@@ -8,7 +8,6 @@ import java.util.Map;
  * @author Sami Hostikka <dev@01.fi>
  * 
  */
-// TODO
 public enum FieldType {
 	TEXT(0, "Teksti"), INT(1, "Kokonaisluku"), DOUBLE(2, "Desimaaliluku"), DATE(
 			3, "Päivämäärä"), CHECKBOX(4, "Kyllä/Ei"), TEXTAREA(5,

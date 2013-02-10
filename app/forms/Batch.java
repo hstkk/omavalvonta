@@ -10,7 +10,6 @@ import forms.dynamicforms.Fieldset;
 import models.helpers.KeyValue;
 import play.data.validation.Constraints.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * 
  * @author Sami Hostikka <dev@01.fi>

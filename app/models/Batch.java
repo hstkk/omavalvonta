@@ -42,6 +42,7 @@ public class Batch extends JpaModel {
 	public Batch() {
 	}
 
+	// TODO JPA multisave?
 	public Batch(forms.Batch form) {
 		this.product = form.product;
 		for (Ingredients i : form.values)
@@ -61,6 +62,7 @@ public class Batch extends JpaModel {
 			this.product = Product.crud.getReference(this.product.id);
 	}
 
+	// TODO remove
 	public boolean save() {
 		try {
 			set();
@@ -82,11 +84,13 @@ public class Batch extends JpaModel {
 		return stringBuilder.toString();
 	}
 
+	// TODO remove
 	public String createdToString() {
 		return new SimpleDateFormat("HH:mm dd.MM.yyyy").format(this.created)
 				.toString();
 	}
 
+	// TODO remove
 	public static Batch findById(Long id) {
 		if (id == null)
 			return null;
@@ -97,6 +101,7 @@ public class Batch extends JpaModel {
 		}
 	}
 
+	// TODO remove
 	public static List<Batch> findByIngredientSupply(Long id) {
 		try {
 			if (id != null) {
@@ -113,6 +118,7 @@ public class Batch extends JpaModel {
 		return null;
 	}
 
+	// TODO remove
 	public static Page page(int index) {
 		try {
 			int size = Play.application().configuration().getInt("page.size");
@@ -132,7 +138,7 @@ public class Batch extends JpaModel {
 		return new Page(index, 0, 0, null);
 	}
 
-	// TODO
+	// TODO remove
 	public static List<Batch> findNotDone() {
 		try {
 			List<Batch> list = JPA
@@ -146,6 +152,7 @@ public class Batch extends JpaModel {
 		return null;
 	}
 
+	// TODO remove
 	public static String checkboxify() {
 		StringBuilder stringBuilder = new StringBuilder();
 		try {

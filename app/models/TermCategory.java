@@ -10,7 +10,6 @@ import models.dynamicforms.FieldType;
  * @author Sami Hostikka <dev@01.fi>
  * 
  */
-// TODO documentation
 // TODO localization
 public enum TermCategory {
 	FORMTYPE(0, "Lomaketyyppi"), REASON(1, "Muutoksen syy"), UNIT(2,

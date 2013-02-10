@@ -42,7 +42,6 @@ public class Results extends JpaModel {
 	@OneToMany(cascade = CascadeType.ALL)
 	public List<Result> results;
 
-	// TODO 1.11
 	@Required
 	@ManyToMany(cascade = CascadeType.ALL)
 	@NotNull
