@@ -1,7 +1,10 @@
 package utils;
 
+import java.util.Arrays;
+
 import play.i18n.Lang;
 import play.i18n.Messages;
+import scala.collection.mutable.Buffer;
 
 public class Helper {
 	private static Lang lang;
@@ -12,12 +15,14 @@ public class Helper {
 		return lang;
 	}
 
-	public static String getMessage(String key) {
+	public static String getMessage(String key, Object... args) {
+		Buffer<Object> scalaArgs = scala.collection.JavaConverters
+				.asScalaBufferConverter(Arrays.asList(args)).asScala();
 		try {
-			return Messages.get(key);
+			return Messages.get(key, scalaArgs);
 		} catch (Exception e) {
 		}
-		return Messages.get(getLang(), key);
+		return Messages.get(getLang(), key, scalaArgs);
 	}
 
 	public static String getOrElse(String key) {
