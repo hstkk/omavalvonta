@@ -25,12 +25,12 @@ public class ShibbolethHelper {
 		StringBuilder url = new StringBuilder();
 
 		// Shibboleth login url
-		url.append(getOrElse("shibboleth.login.url",
+		url.append(Helper.getOrElse("shibboleth.login.url",
 				ShibbolethDefaults.LOGIN_URL));
 
 		// The IdP to request authentication from
-		String entity = getOrElse("shibboleth.entityID");
-		if (entity != null) {
+		String entity = Helper.getOrElse("shibboleth.entityID");
+		if (entity != null && !entity.isEmpty()) {
 			url.append("?entityID=");
 			url.append(URLEncoder.encode(entity,
 					ShibbolethDefaults.URL_ENCODING));
@@ -58,7 +58,7 @@ public class ShibbolethHelper {
 		StringBuilder url = new StringBuilder();
 
 		// Shibboleth logout url
-		url.append(getOrElse("shibboleth.logout.url",
+		url.append(Helper.getOrElse("shibboleth.logout.url",
 				ShibbolethDefaults.LOGOUT_URL));
 
 		url.append("?return=");
@@ -67,17 +67,6 @@ public class ShibbolethHelper {
 				routes.Application.index().absoluteURL(ctx.request(), secure)
 						.toString(), ShibbolethDefaults.URL_ENCODING));
 		return url.toString();
-	}
-
-	public static String getOrElse(String key) {
-		return Play.application().configuration().getString(key);
-	}
-
-	public static String getOrElse(String key, String defaultValue) {
-		String value = getOrElse(key);
-		if (value == null)
-			return defaultValue;
-		return value;
 	}
 
 	public static String getRedirectUrl(Context ctx, User user) {
