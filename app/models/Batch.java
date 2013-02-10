@@ -20,6 +20,7 @@ import forms.Ingredients;
 import play.Play;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
+import utils.Converter;
 
 @Entity
 @Audited
@@ -75,11 +76,9 @@ public class Batch extends JpaModel {
 
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();
-		//TODO use formatter
-		stringBuilder.append(new SimpleDateFormat("yyyyMMdd").format(
-				this.created).toString());
+		stringBuilder.append(Converter.dateToString(this.created, "yyyyMMdd"));
 		stringBuilder.append("-");
-		stringBuilder.append(product.id);
+		stringBuilder.append(this.product.id);
 		stringBuilder.append("-");
 		stringBuilder.append(this.id);
 		return stringBuilder.toString();

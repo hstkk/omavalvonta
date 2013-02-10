@@ -44,7 +44,8 @@ public class Converter {
 
 	public static Date stringToDate(String value) {
 		try {
-			String format = Play.application().configuration().getString("date.format");
+			String format = Play.application().configuration()
+					.getString("date.format");
 			return new SimpleDateFormat(format).parse(value);
 		} catch (Exception e) {
 			return null;
@@ -52,7 +53,13 @@ public class Converter {
 	}
 
 	public static String dateToString(Date date) {
-		String format = Play.application().configuration().getString("date.format");
+		return dateToString(date, null);
+	}
+
+	public static String dateToString(Date date, String format) {
+		if (format == null)
+			format = Play.application().configuration()
+					.getString("date.format");
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 		return simpleDateFormat.format(date);
 	}
