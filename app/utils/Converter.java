@@ -57,7 +57,7 @@ public class Converter {
 	}
 
 	public static String dateToString(Date date, String format) {
-		if (format == null)
+		if (format == null || format.isEmpty())
 			format = Play.application().configuration()
 					.getString("date.format");
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
