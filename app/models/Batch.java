@@ -29,12 +29,11 @@ public class Batch extends JpaModel {
 	public Date created = new Date();
 
 	@Required
-	// @Valid
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Product product;
 
 	@Required
-	public Boolean isReady = false;
+	public Boolean isDone = false;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@NotAudited
@@ -59,7 +58,7 @@ public class Batch extends JpaModel {
 		if (this.product.id == null)
 			this.product = null;
 		else
-			this.product = Product.crud.findById(this.product.id);
+			this.product = Product.crud.getReference(this.product.id);
 	}
 
 	public boolean save() {
