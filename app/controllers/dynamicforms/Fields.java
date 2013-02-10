@@ -12,7 +12,6 @@ import play.db.jpa.*;
 import models.dynamicforms.Field;
 import models.dynamicforms.Fieldset;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FormTypes.
  * 

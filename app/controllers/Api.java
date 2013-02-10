@@ -11,7 +11,6 @@ import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-//TODO API
 public class Api extends Controller {
 	@Transactional(readOnly = true)
 	public static Result batchIngredients(Long productId) {

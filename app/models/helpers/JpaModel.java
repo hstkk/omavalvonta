@@ -3,7 +3,6 @@ package models.helpers;
 import javax.persistence.*;
 import play.db.jpa.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class JpaModel.
  * 

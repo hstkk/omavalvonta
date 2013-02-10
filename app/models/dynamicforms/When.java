@@ -8,7 +8,6 @@ import java.util.Map;
  * @author Sami Hostikka <dev@01.fi>
  * 
  */
-// TODO
 public enum When {
 	AINA(0, "joka erä"), JOSKUS(1, "kerran lukukaudessa");
 

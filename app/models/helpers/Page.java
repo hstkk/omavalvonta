@@ -2,7 +2,6 @@ package models.helpers;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Page.
  * 
