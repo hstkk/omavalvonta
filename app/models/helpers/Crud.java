@@ -10,14 +10,13 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import play.db.jpa.JPA;
 
-public class Crud<T extends Model, ID extends Serializable> extends JpaHelper
+public class Crud<T extends Model, ID extends Serializable> extends JpaHelper<T, ID>
 		implements GenericDao<T, ID> {
 
-	private final Class<T> clazz;
 	private final String entity;
 
 	public Crud(Class<T> clazz) {
-		this.clazz = clazz;
+		super(clazz);
 		this.entity = clazz.getName();
 	}
 

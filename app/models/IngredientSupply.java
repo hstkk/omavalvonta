@@ -11,7 +11,6 @@ import models.helpers.UserModel;
 import play.data.format.*;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
-import play.db.jpa.JPA;
 import utils.Converter;
 
 @Entity
@@ -62,12 +61,11 @@ public class IngredientSupply extends UserModel {
 		if (this.ingredient.id == null)
 			this.ingredient = null;
 		else
-			this.ingredient = JPA.em().getReference(Ingredient.class,
-					this.ingredient.id);
+			this.ingredient = Ingredient.crud.getReference(this.ingredient.id);
 		if (this.unit.id == null)
 			this.unit = null;
 		else
-			this.unit = JPA.em().getReference(Term.class, this.unit.id);
+			this.unit = Term.crud.getReference(this.unit.id);
 	}
 
 	/*public static KeyValue<String, Integer> findAliveByIngredient(
