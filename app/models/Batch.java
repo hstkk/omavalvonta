@@ -21,6 +21,7 @@ import play.Play;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
 import utils.Converter;
+import utils.Helper;
 
 @Entity
 @Audited
@@ -75,11 +76,13 @@ public class Batch extends JpaModel {
 	}
 
 	public String toString() {
+		String separator = Helper.getOrElse("batch.separator");
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(Converter.dateToString(this.created, "yyyyMMdd"));
-		stringBuilder.append("-");
+		stringBuilder.append(Converter.dateToString(this.created,
+				Helper.getOrElse("batch.date")));
+		stringBuilder.append(separator);
 		stringBuilder.append(this.product.id);
-		stringBuilder.append("-");
+		stringBuilder.append(separator);
 		stringBuilder.append(this.id);
 		return stringBuilder.toString();
 	}
