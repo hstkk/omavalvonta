@@ -97,10 +97,12 @@ shib.flash.login=Tervetuloa {0}!
 ingredientsupply.create=Vastaanota raaka-aine-erä
 ingredientsupply.page=Raaka-aine-erät
 ingredientsupply.page.empty=Raaka-aine-eriä ei löytynyt!
-ingredientsupply.show=Raaka-aine-erä
+ingredientsupply.show=Raaka-aine-erä {0}
 ingredientsupply.ingredient=Raaka-aine
 ingredientsupply.received=Vastaanottopäivä
 ingredientsupply.bestBefore=Parasta ennen
 ingredientsupply.amount=Määrä
 ingredientsupply.amountAvailable=Jäljellä
-		
+
+# --- Etc
+model.id="#"

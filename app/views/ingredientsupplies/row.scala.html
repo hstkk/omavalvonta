@@ -2,7 +2,8 @@
 
 @import tags.tables._
 
-@tr() { @ingredientSupply.ingredient.name
+@tr() { <a href="@routes.Ingredientsupplies.crud.show(ingredientSupply.id)">@ingredientSupply</a>
+        @ingredientSupply.ingredient.name
         @ingredientSupply.received.format
         @ingredientSupply.bestBefore.format
         @ingredientSupply.amount @ingredient.unit

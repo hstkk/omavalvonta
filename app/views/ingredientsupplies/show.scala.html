@@ -2,7 +2,7 @@
 
 @import utils._
 
-@main(Helper.getMessage("ingredientsupply.show")) {
+@main(Helper.getMessage("ingredientsupply.show", ingredientSupply.id)) {
 	@table() {
 		@row(ingredientSupply)
 	}
