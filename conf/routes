@@ -29,13 +29,10 @@ GET		/api/reitit											controllers.Api.javascriptRoutes
 GET		/api/raaka-aineet									controllers.Api.batchIngredients(tuote: Long)
 
 # Batches
-GET		/erat												controllers.Batches.index
-GET		/erat/sivu/:index									controllers.Batches.page(index: Int)
-
-# Batch management
-GET		/era/uusi											controllers.Batches.create
-POST	/era/uusi											controllers.Batches.save
-GET		/era/:batchId										controllers.Batches.read(batchId: Long)
+GET		/erat												controllers.Batches.crud.page(sivu: Int ?= 1)
+GET		/erat/uusi											controllers.Batches.crud.fresh
+POST	/erat/uusi											controllers.Batches.crud.create
+GET		/era/:batchId										controllers.Batches.crud.show(batchId: Long)
 
 # Results
 GET		/tulos												controllers.dynamicforms.Results.index
@@ -48,11 +45,10 @@ GET		/tulokset/:productId/:resultsId/historia			controllers.dynamicforms.Results
 #GET		/tulokset/:productId/:resultsId/pdf					controllers.dynamicforms.Results.pdfify(productId: Long, resultsId: Long)
 
 # Ingredient supply
-GET		/raaka-aine											controllers.IngredientSupplies.index
-GET		/raaka-aine/vastaanotto								controllers.IngredientSupplies.create
-POST	/raaka-aine/vastaanotto								controllers.IngredientSupplies.save
-GET		/raaka-aine/sivu/:index								controllers.IngredientSupplies.page(index: Int)
-GET		/raaka-aine/:ingredientId							controllers.IngredientSupplies.read(ingredientId: Long)
+GET		/raaka-aine											controllers.IngredientSupplies.crud.page(sivu: Int ?= 1)
+GET		/raaka-aine/vastaanota								controllers.IngredientSupplies.crud.fresh
+POST	/raaka-aine/vastaanota								controllers.IngredientSupplies.crud.create
+GET		/raaka-aine/:ingredientId							controllers.IngredientSupplies.crud.show(ingredientId: Long)
 
 # Term management
 GET		/yllapito/termit									controllers.Terms.crud.page(sivu: Int ?= 1)
