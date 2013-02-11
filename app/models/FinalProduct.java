@@ -3,6 +3,9 @@ package models;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 
 import models.helpers.Crud;
@@ -54,35 +57,11 @@ public class FinalProduct extends UserModel {
 	public String comment;
 
 	public static FinalProduct findByBatch(Batch batch) {
-		try {
-			if (batch != null) {
-				Long id = batch.id;
-				return (FinalProduct) JPA
-						.em()
-						.createQuery(
-								"from FinalProduct " + "where batch.id = ?")
-						.setParameter(1, id).getSingleResult();
-			}
-		} catch (Exception e) {
-		}
-		return null;
-	}
-
-	public static Page<FinalProduct> page(int index) {
-		try {
-			int size = Play.application().configuration().getInt("page.size");
-			if (index < 1)
-				index = 1;
-			long rows = (long) JPA.em()
-					.createQuery("select count(*) from FinalProduct")
-					.getSingleResult();
-			List<FinalProduct> list = JPA.em().createQuery("from FinalProduct")
-					.setFirstResult((index - 1) * size).setMaxResults(size)
-					.getResultList();
-			if (rows > 0 && list != null && !list.isEmpty())
-				return new Page(index, size, rows, list);
-		} catch (Exception e) {
-		}
-		return new Page(index, 0, 0, null);
+		CriteriaBuilder criteriaBuilder = crud.getCriteriaBuilder();
+		CriteriaQuery<FinalProduct> query = criteriaBuilder
+				.createQuery(FinalProduct.class);
+		Root<FinalProduct> root = query.from(FinalProduct.class);
+		query.where(criteriaBuilder.equal(root.get(FinalProduct_.batch), batch));
+		return crud.findBy(query);
 	}
 }
