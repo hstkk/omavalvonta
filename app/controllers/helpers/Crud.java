@@ -50,13 +50,12 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (REDIRECT == null || CREATE == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
-		if (filledForm.field("action").value()
-				.equals(Messages.get("crud.action.cancel"))) {
-			flash("warning", Messages.get("crud.cancel"));
-			return redirect(REDIRECT);
-		} else if (!filledForm.hasErrors()) {
+		Result result = onCancel(filledForm);
+		if (result != null)
+			return result;
+		if (!filledForm.hasErrors()) {
 			T t = filledForm.get();
-			Result result = onCreate(t);
+			result = onCreate(t);
 			if (result != null)
 				return result;
 		}
@@ -109,18 +108,26 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (REDIRECT == null || UPDATE == null || !CRUD.exists(id))
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
-		if (filledForm.field("action").value()
-				.equals(Messages.get("crud.action.cancel"))) {
-			flash("warning", Messages.get("crud.cancel"));
-			return redirect(REDIRECT);
-		} else if (!filledForm.hasErrors()) {
+		Result result = onCancel(filledForm);
+		if (result != null)
+			return result;
+		if (!filledForm.hasErrors()) {
 			T fresh = filledForm.get();
-			Result result = onUpdate(fresh, id);
+			result = onUpdate(fresh, id);
 			if (result != null)
 				return result;
 		}
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(UPDATE.render(id, filledForm));
+	}
+
+	protected Result onCancel(Form<T> filledForm) {
+		if (filledForm.field("action").value()
+				.equals(Messages.get("crud.action.cancel"))) {
+			flash("warning", Messages.get("crud.cancel"));
+			return redirect(REDIRECT);
+		}
+		return null;
 	}
 
 	protected Result onCreate(T t) {
