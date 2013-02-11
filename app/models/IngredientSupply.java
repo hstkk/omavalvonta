@@ -1,14 +1,18 @@
 package models;
 
+import java.util.Calendar;
 import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
+
 import models.helpers.Crud;
 import models.helpers.UserModel;
-import play.data.format.*;
+
+import play.data.format.Formats;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import utils.Converter;
@@ -66,6 +70,13 @@ public class IngredientSupply extends UserModel {
 			this.unit = null;
 		else
 			this.unit = Term.crud.getReference(this.unit.id);
+	}
+
+	public Date getBestBefore() {
+		Calendar bestBefore = Calendar.getInstance();
+		bestBefore.setTime(this.received);
+		bestBefore.add(Calendar.DATE, this.ingredient.bestBefore);
+		return bestBefore.getTime();
 	}
 
 	/*public static KeyValue<String, Integer> findAliveByIngredient(
