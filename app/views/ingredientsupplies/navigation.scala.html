@@ -2,6 +2,6 @@
 @import utils._
 
 @tabs() {
-		<li><a href="@routes.IngredientSupplies.index">@Helper.getMessage("ingredientsupply.page")</a></li>
-		<li><a href="@routes.IngredientSupplies.create">@Helper.getMessage("ingredientsupply.crate")</a></li>
+		<li><a href="@routes.IngredientSupplies.crud.page()">@Helper.getMessage("ingredientsupply.page")</a></li>
+		<li><a href="@routes.IngredientSupplies.crud.fresh">@Helper.getMessage("ingredientsupply.create")</a></li>
 }
