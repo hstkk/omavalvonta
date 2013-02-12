@@ -62,11 +62,6 @@ public class Field extends UserModel {
 
 	public Boolean targetValue;
 
-	//@Required
-	//@NotNull
-	@ManyToOne(cascade = CascadeType.ALL)
-	public Fieldset fieldset;
-
 	@PrePersist
 	private void enumToInt() {
 		if (whenEnum != null)

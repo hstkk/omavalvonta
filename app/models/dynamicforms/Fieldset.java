@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.IndexColumn;
 import org.hibernate.envers.Audited;
 
 import models.helpers.Crud;
@@ -33,6 +34,10 @@ public class Fieldset extends UserModel {
 	@Required
 	@NotNull
 	public boolean isActive;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@IndexColumn(name="position ", base = 1)
+	public List<Field> fields = new ArrayList<Field>();
 
 	public String toString() {
 		return name;
