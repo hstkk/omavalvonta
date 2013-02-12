@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.IndexColumn;
 import org.hibernate.envers.Audited;
 
 import models.Product;
@@ -44,7 +45,8 @@ public class Form extends UserModel {
 	@NotNull
 	public boolean isActive;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
+	@IndexColumn(name="position ", base = 1)
 	public List<Fieldset> fieldsets = new ArrayList<Fieldset>();
 
 	@Transient
