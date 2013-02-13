@@ -73,6 +73,7 @@ ingredient.create=Uusi raaka-aine
 ingredient.page=Raaka-aineet
 ingredient.page.empty=Raaka-aineita ei löytynyt!
 ingredient.update=Muokkaa raaka-ainetta
+ingredient.form=Raaka-aineen eräkortti
 
 # --- Term
 term.create=Uusi termi

@@ -35,10 +35,10 @@ POST	/erat/uusi											controllers.Batches.crud.create
 GET		/era/:batchId										controllers.Batches.crud.show(batchId: Long)
 
 # Final product
-GET		/era/:batchId/myyntihyvaksynta/uusi					controllers.FinalProducts.fresh(batchId: Long)
-POST	/era/:batchId/myyntihyvaksynta/uusi					controllers.FinalProducts.create(batchId: Long)
-GET		/era/:batchId/myyntihyvaksynta/muokkaa				controllers.FinalProducts.edit(batchId: Long)
-POST	/era/:batchId/myyntihyvaksynta/muokkaa				controllers.FinalProducts.update(batchId: Long)
+#GET		/era/:batchId/myyntihyvaksynta/uusi					controllers.FinalProducts.fresh(batchId: Long)
+#POST	/era/:batchId/myyntihyvaksynta/uusi					controllers.FinalProducts.create(batchId: Long)
+#GET		/era/:batchId/myyntihyvaksynta/muokkaa				controllers.FinalProducts.edit(batchId: Long)
+#POST	/era/:batchId/myyntihyvaksynta/muokkaa				controllers.FinalProducts.update(batchId: Long)
 
 # Results
 GET		/tulos												controllers.dynamicforms.Results.index

@@ -3,6 +3,9 @@ package models.dynamicforms;
 import java.util.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.IndexColumn;
@@ -11,6 +14,7 @@ import org.hibernate.envers.Audited;
 import models.Product;
 import models.Term;
 import models.TermCategory;
+import models.Term_;
 import models.helpers.Crud;
 import models.helpers.UserModel;
 import utils.*;
@@ -52,23 +56,6 @@ public class Form extends UserModel {
 		this.fieldsets = Fieldset.crud.getReference(this.fieldsets);
 	}
 
-	public static List<Form> findByType(Term category) {
-		try {
-			Long i = category.id;
-			System.out.println("\n\n" + category.id + "\n\n");
-			List<Form> list = JPA
-					.em()
-					.createQuery(
-							"from Form f where f.category.id=? order by name")
-					.setParameter(1, i).getResultList();
-			return list;
-		} catch (Exception e) {
-			System.out.println("\n\n" + e + "\n\n");
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	// TODO Remove
 	public static String checkboxes(String id) {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -106,5 +93,15 @@ public class Form extends UserModel {
 		} catch (Exception e) {
 		}
 		return stringBuilder.toString();
+	}
+
+	// TODO Finetune vars
+	public static Map<String, String> options(TermCategory categoryEnum) {
+		CriteriaBuilder criteriaBuilder = crud.getCriteriaBuilder();
+		CriteriaQuery<Form> query = criteriaBuilder.createQuery(Form.class);
+		Root<Form> root = query.from(Form.class);
+		query.where(criteriaBuilder.equal(root.get(Form_.category),
+				categoryEnum));
+		return crud.options(query);
 	}
 }
