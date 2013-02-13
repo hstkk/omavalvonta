@@ -9,7 +9,7 @@ import java.util.Map;
  * 
  */
 public enum FormType {
-	INGREDIENT(0, "Raaka-aineen eräkortti"), INT(1, "Puhtaustarkkailu"), DOUBLE(2, "Pesuohjelma"), DATE(
+	INGREDIENT(0, "Raaka-aineen vastaanottotiedot"), INT(1, "Puhtaustarkkailu"), DOUBLE(2, "Pesuohjelma"), DATE(
 			3, "Tuotekortti");
 
 	private FormType(int ordinal, String name) {
