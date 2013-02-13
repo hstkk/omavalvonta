@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 
+import models.dynamicforms.Form;
 import models.helpers.Crud;
 import models.helpers.UserModel;
 
@@ -37,6 +38,7 @@ public class Ingredient extends UserModel {
 	@Min(0)
 	public Integer bestBefore;
 
+	public Form form;
 
 	public String toString() {
 		return name;
