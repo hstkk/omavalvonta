@@ -34,23 +34,13 @@ public class Form extends UserModel {
 	@Lob
 	public String description = "";
 
-	@Transient
-	public Long categoryId;
-
-	// @Required
-	@ManyToOne(cascade = CascadeType.ALL)
-	public Term category;
-
 	@Required
 	@NotNull
 	public boolean isActive;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@IndexColumn(name="position ", base = 1)
+	@IndexColumn(name = "position ", base = 1)
 	public List<Fieldset> fieldsets = new ArrayList<Fieldset>();
-
-	@Transient
-	public List<Long> fieldsetIds = new ArrayList<Long>();
 
 	public String toString() {
 		return name;
@@ -58,21 +48,11 @@ public class Form extends UserModel {
 
 	@PrePersist
 	@PreUpdate
-	private void prePersist() {
-		System.out.println("OK");
-		System.out.println(categoryId);
-		this.category = Term.crud.findById(categoryId);
-		/*if (this.category.id == null)
-			this.category = null;*/
-		//else
-		//	this.category = Term.crud.findById(this.category.id);
-		for(Long fieldsetId : fieldsetIds){
-			System.out.println(fieldsetId);
-			fieldsets.add(Fieldset.crud.findById(fieldsetId));
-		}
+	private void onPre() {
+		this.fieldsets = Fieldset.crud.getReference(this.fieldsets);
 	}
 
-	public static List<Form> findByTerm(Term category) {
+	public static List<Form> findByType(Term category) {
 		try {
 			Long i = category.id;
 			System.out.println("\n\n" + category.id + "\n\n");
@@ -89,31 +69,7 @@ public class Form extends UserModel {
 		return null;
 	}
 
-	public static Map<String, String> options(String formId) {
-		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		try {
-			Long id = Converter.stringToLong(formId);
-			List<Form> forms;
-			if (id == null)
-				forms = JPA.em().createQuery("from Form order by name")
-						.getResultList();
-			else
-				forms = JPA
-						.em()
-						.createQuery(
-								"from Form f where f.id != ? order by name")
-						.setParameter(1, id).getResultList();
-			for (Form form : forms)
-				map.put(form.id.toString(), form.toString());
-		} catch (Exception e) {
-		}
-		return map;
-	}
-
-	public static Map<String, String> options() {
-		return options(null);
-	}
-
+	// TODO Remove
 	public static String checkboxes(String id) {
 		StringBuilder stringBuilder = new StringBuilder();
 		List<Form> checked = null;
