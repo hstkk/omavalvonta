@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.envers.Audited;
 
+import models.dynamicforms.Fieldset;
 import models.dynamicforms.Form;
 import models.helpers.Crud;
 import models.helpers.UserModel;
@@ -25,7 +28,8 @@ import play.db.jpa.JPA;
 @Audited
 public class Ingredient extends UserModel {
 
-	public final static Crud<Ingredient, Long> crud = new Crud<Ingredient, Long>(Ingredient.class);
+	public final static Crud<Ingredient, Long> crud = new Crud<Ingredient, Long>(
+			Ingredient.class);
 
 	@Required
 	@NotNull
@@ -44,7 +48,13 @@ public class Ingredient extends UserModel {
 		return name;
 	}
 
-	//TODO checkboxes
+	@PrePersist
+	@PreUpdate
+	private void onPre() {
+		this.form = Form.crud.getReference(this.form.id);
+	}
+
+	// TODO checkboxes
 	public static String checkboxes(String id) {
 		StringBuilder stringBuilder = new StringBuilder();
 		List<Ingredient> checked = null;
