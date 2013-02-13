@@ -1,45 +1,25 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-import play.data.*;
-import static play.data.Form.*;
-import play.db.jpa.*;
-
-import models.Batch;
 import models.FinalProduct;
-import models.Term;
-import models.helpers.Page;
+import controllers.helpers.UserCrud;
+import static play.data.Form.*;
+import play.mvc.Controller;
+import views.html.finalproducts.*;
 
 import views.html.*;
 
 public class FinalProducts extends Controller {
+	public final static UserCrud<FinalProduct> crud = new UserCrud<FinalProduct>(
+			FinalProduct.crud,
+			form(FinalProduct.class),
+			update.ref(),
+			create.ref(),
+			null,
+			null,
+			null);
 
-	final static Form<forms.FinalProduct> FORM = form(forms.FinalProduct.class);
-
-	@Transactional(readOnly = true)
-	public static Result index() {
-		return page(1);
-	}
-
-	@Transactional(readOnly = true)
-	public static Result page(int index) {
-		Page<FinalProduct> page = FinalProduct.page(index);
-		return ok(views.html.finalproducts.page.render(page));
-	}
-
-	@Transactional(readOnly = true)
-	public static Result read(Long batchId) {
-		Batch batch = Batch.findById(batchId);
-		if (batch == null)
-			return notFound();
-		FinalProduct result = FinalProduct.findByBatch(batch);
-		if (result == null)
-			return redirect(routes.FinalProducts.edit(batchId));
-		return ok(views.html.finalproducts.read.render(result));
-	}
-
-	@Transactional()
+	// TODO Remove
+	/*@Transactional()
 	public static Result save(Long batchId) {
 		Batch batch = Batch.findById(batchId);
 		if (batch == null)
@@ -64,17 +44,5 @@ public class FinalProducts extends Controller {
 		}
 		flash("error", "Tallennus epäonnistui!");
 		return ok(views.html.finalproducts.edit.render(batch, filledForm));
-	}
-
-	@Transactional(readOnly = true)
-	public static Result edit(Long batchId) {
-		Batch batch = Batch.findById(batchId);
-		if (batch == null)
-			return notFound();
-		FinalProduct result = FinalProduct.findByBatch(batch);
-		if (result != null)
-			return ok(views.html.finalproducts.edit.render(batch,
-					FORM.fill(new forms.FinalProduct(result))));
-		return ok(views.html.finalproducts.edit.render(batch, FORM));
-	}
+	}*/
 }

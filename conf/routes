@@ -34,6 +34,12 @@ GET		/erat/uusi											controllers.Batches.crud.fresh
 POST	/erat/uusi											controllers.Batches.crud.create
 GET		/era/:batchId										controllers.Batches.crud.show(batchId: Long)
 
+# Final product
+GET		/era/:batchId/myyntihyvaksynta/uusi					controllers.FinalProducts.fresh(batchId: Long)
+POST	/era/:batchId/myyntihyvaksynta/uusi					controllers.FinalProducts.create(batchId: Long)
+GET		/era/:batchId/myyntihyvaksynta/muokkaa				controllers.FinalProducts.edit(batchId: Long)
+POST	/era/:batchId/myyntihyvaksynta/muokkaa				controllers.FinalProducts.update(batchId: Long)
+
 # Results
 GET		/tulos												controllers.dynamicforms.Results.index
 GET		/tulos/:productId/sivu/:index						controllers.dynamicforms.Results.page(productId: Long, index: Int)
@@ -96,12 +102,6 @@ POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.
 GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.dynamicforms.Fields.edit(fieldsetId: Long, fieldId: Long)
 #POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/poista	controllers.dynamicforms.Fields.destroy(fieldsetId: Long, fieldId: Long)
 
-# Final product
-GET		/myyntihyvaksynnat									controllers.FinalProducts.index
-GET		/myyntihyvaksynnat/sivu/:index						controllers.FinalProducts.page(index: Int)
-GET		/myyntihyvaksynta/:batchId							controllers.FinalProducts.read(batchId: Long)
-POST	/myyntihyvaksynta/:batchId							controllers.FinalProducts.save(batchId: Long)
-GET		/myyntihyvaksynta/:batchId/muokkaa					controllers.FinalProducts.edit(batchId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

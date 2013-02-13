@@ -104,5 +104,8 @@ ingredientsupply.bestBefore=Parasta ennen
 ingredientsupply.amount=Määrä
 ingredientsupply.amountAvailable=Jäljellä
 
+# --- Batch
+batch.create=Uusi erä
+
 # --- Etc
 model.id="#"

@@ -1,6 +1,8 @@
 package models.helpers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -32,6 +34,18 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		} catch (Exception e) {
 		}
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> getReference(List<T> list) {
+		ArrayList<T> references = new ArrayList<T>();
+		try {
+			for (T t : list)
+				if (t.id != null)
+					references.add(getReference((ID) t.id));
+		} catch (Exception e) {
+		}
+		return references;
 	}
 
 	protected Query setPage(Query q, Integer pageNumber) {

@@ -101,4 +101,8 @@ public class Batch extends UserModel {
 		}
 		return null;
 	}
+
+	public FinalProduct getFinalProduct() {
+		return FinalProduct.findByBatch(this);
+	}
 }
