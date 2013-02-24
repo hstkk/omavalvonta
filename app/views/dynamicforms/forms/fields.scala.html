@@ -6,40 +6,6 @@
 
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
-	<script>
-		$(document).ready(function() {
-			function magic() {
-				$("input:checkbox[name=fieldsetIds]").each(function() {
-				});
-			}
-			
-			$('#_fieldset').change(function () {
-				var option = $("#_fieldset option:selected");
-				var text = option.text();
-				var val = option.val();
-				option.remove();
-				var id = $("#sortable").children().size();
-				$('#sortable').append(
-					'<label class="checkbox">' +
-					'<input type="checkbox" disabled="disabled" checked="checked" id="fieldsetIds[' + id + ']_'+val+'" style="cursor:move;" value="'+ val +'"> ' + 
-					text + ' &#x25B2;&#x25BC;</label>');
-			});
-
-			$("#sortable" ).sortable({
-				update: function(event, ui) {
-				}
-			});
-        	$( "#sortable" ).disableSelection();
-        	$(".btn-primary").bind("click", function() {
-				var i = 0;
-				$("#fieldsets").each(function() {
-					$(this).attr('id', 'fieldsetIds[' + i + ']');
-					i++;
-				});
-			});
-		});
-	</script>
-
 @tags.forms.form(FORM, action) {
 	@helper.inputText(FORM("name"), '_label -> "nimi", '_class -> "control-group")
 	@helper.select(FORM("categoryId"), options = options(models.Term.options(models.TermCategory.FORMTYPE)), '_default -> "", '_label -> "tyyppi")
@@ -53,3 +19,5 @@
 		<div id="sortable"></div>
 	</fieldset>
 }
+
+<script src="@routes.Assets.at("javascripts/forms.js")"></script>
