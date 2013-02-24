@@ -7,34 +7,6 @@
 
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
-	<script>
-		$(document).ready(function() {
-			$('#fieldType').change(function () {
-				var min = '#min_field';
-				var max = '#max_field';
-				var target = '#targetValue_field';
-
-				switch($('#fieldType').val()){
-					case "1":
-					case "2":
-						$(min).show();
-						$(max).show();
-						$(target).hide();
-						break;
-					case "4":
-						$(min).hide();
-						$(max).hide();
-						$(target).show();
-						break;
-					default:
-						$(min).hide();
-						$(max).hide();
-						$(target).hide();
-				}
-			});
-		});
-	</script>
-
 @tags.forms.form(FORM, action) {
 	@helper.inputText(FORM("name"), '_label -> "määritys", '_class -> "control-group")
 	@helper.select(FORM("when"), options = options(models.dynamicforms.When.map), '_default -> "", '_label -> "määritystiheys")
@@ -47,3 +19,5 @@
 	@helper.inputText(FORM("max"), '_label -> "maksimiarvo", '_class -> "control-group hide")
 	@helper.select(FORM("targetValue"), options = options(models.dynamicforms.Field.targetOptions), '_default -> "", '_label -> "kyllä/ei kentän tavoite tulos", '_class -> "hide")
 }
+
+<script src="@routes.Assets.at("javascripts/fields.js")"></script>
