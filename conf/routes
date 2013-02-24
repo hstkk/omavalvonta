@@ -24,10 +24,6 @@ GET		/kirjaudu-ulos										controllers.shib.Shibboleth.logout
 # Management
 GET     /yllapito											controllers.Application.management
 
-# API
-GET		/api/reitit											controllers.Api.javascriptRoutes
-GET		/api/raaka-aineet									controllers.Api.batchIngredients(tuote: Long)
-
 # Batches
 GET		/erat												controllers.Batches.crud.page(sivu: Int ?= 1)
 GET		/erat/uusi											controllers.Batches.crud.fresh
