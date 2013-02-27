@@ -28,29 +28,29 @@ GET     /yllapito											controllers.Application.management
 GET		/erat												controllers.Batches.crud.page(sivu: Int ?= 1)
 GET		/erat/uusi											controllers.Batches.crud.fresh
 POST	/erat/uusi											controllers.Batches.crud.create
-GET		/era/:batchId										controllers.Batches.crud.show(batchId: Long)
+GET		/erat/:batchId										controllers.Batches.crud.show(batchId: Long)
 
 # Final product
-#GET		/era/:batchId/myyntihyvaksynta/uusi					controllers.FinalProducts.fresh(batchId: Long)
-#POST	/era/:batchId/myyntihyvaksynta/uusi					controllers.FinalProducts.create(batchId: Long)
-#GET		/era/:batchId/myyntihyvaksynta/muokkaa				controllers.FinalProducts.edit(batchId: Long)
-#POST	/era/:batchId/myyntihyvaksynta/muokkaa				controllers.FinalProducts.update(batchId: Long)
+#GET		/erat/:batchId/myyntihyvaksynta/uusi			controllers.FinalProducts.fresh(batchId: Long)
+#POST	/erat/:batchId/myyntihyvaksynta/uusi				controllers.FinalProducts.create(batchId: Long)
+#GET		/erat/:batchId/myyntihyvaksynta/muokkaa			controllers.FinalProducts.edit(batchId: Long)
+#POST	/erat/:batchId/myyntihyvaksynta/muokkaa				controllers.FinalProducts.update(batchId: Long)
 
 # Results
-GET		/tulos												controllers.dynamicforms.Results.index
-GET		/tulos/:productId/sivu/:index						controllers.dynamicforms.Results.page(productId: Long, index: Int)
-GET		/tulos/:productId/:formId							controllers.dynamicforms.Results.create(productId: Long, formId: Long)
-POST	/tulos/:productId/:formId							controllers.dynamicforms.Results.save(productId: Long, formId: Long)
+GET		/tulokset											controllers.dynamicforms.Results.index
+GET		/tulokset/:productId/sivu/:index					controllers.dynamicforms.Results.page(productId: Long, index: Int)
+GET		/tulokset/:productId/:formId						controllers.dynamicforms.Results.create(productId: Long, formId: Long)
+POST	/tulokset/:productId/:formId						controllers.dynamicforms.Results.save(productId: Long, formId: Long)
 GET		/tulokset/:productId/:resultsId						controllers.dynamicforms.Results.read(productId: Long, resultsId: Long)
 GET		/tulokset/:productId/:resultsId/muokkaa				controllers.dynamicforms.Results.update(productId: Long, resultsId: Long)
 GET		/tulokset/:productId/:resultsId/historia			controllers.dynamicforms.Results.history(productId: Long, resultsId: Long)
-#GET		/tulokset/:productId/:resultsId/pdf					controllers.dynamicforms.Results.pdfify(productId: Long, resultsId: Long)
+#GET		/tulokset/:productId/:resultsId/pdf				controllers.dynamicforms.Results.pdfify(productId: Long, resultsId: Long)
 
 # Ingredient supply
-GET		/raaka-aine											controllers.IngredientSupplies.crud.page(sivu: Int ?= 1)
-GET		/raaka-aine/vastaanota								controllers.IngredientSupplies.crud.fresh
-POST	/raaka-aine/vastaanota								controllers.IngredientSupplies.crud.create
-GET		/raaka-aine/:ingredientId							controllers.IngredientSupplies.crud.show(ingredientId: Long)
+GET		/raaka-aineet										controllers.IngredientSupplies.crud.page(sivu: Int ?= 1)
+GET		/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.fresh
+POST	/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.create
+GET		/raaka-aineet/:ingredientId							controllers.IngredientSupplies.crud.show(ingredientId: Long)
 
 # Term management
 GET		/yllapito/termit									controllers.Terms.crud.page(sivu: Int ?= 1)
@@ -60,18 +60,18 @@ POST	/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.update(termId: 
 GET		/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.edit(termId: Long)
 
 # Ingredient management
-GET		/yllapito/raaka-aine								controllers.Ingredients.crud.page(sivu: Int ?= 1)
-GET		/yllapito/raaka-aine/uusi							controllers.Ingredients.crud.fresh
-POST	/yllapito/raaka-aine/uusi							controllers.Ingredients.crud.create
-POST	/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.update(ingredientId: Long)
-GET		/yllapito/raaka-aine/:ingredientId/muokkaa			controllers.Ingredients.crud.edit(ingredientId: Long)
+GET		/yllapito/raaka-aineet								controllers.Ingredients.crud.page(sivu: Int ?= 1)
+GET		/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.fresh
+POST	/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.create
+POST	/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.update(ingredientId: Long)
+GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.edit(ingredientId: Long)
 
 # Product management
-GET		/yllapito/tuote										controllers.Products.crud.page(sivu: Int ?= 1)
-GET		/yllapito/tuote/uusi								controllers.Products.crud.fresh
-POST	/yllapito/tuote/uusi								controllers.Products.crud.create
-GET		/yllapito/tuote/:productId/muokkaa					controllers.Products.crud.edit(productId: Long)
-POST	/yllapito/tuote/:productId/muokkaa					controllers.Products.crud.update(productId: Long)
+GET		/yllapito/tuotteet									controllers.Products.crud.page(sivu: Int ?= 1)
+GET		/yllapito/tuotteet/uusi								controllers.Products.crud.fresh
+POST	/yllapito/tuotteet/uusi								controllers.Products.crud.create
+GET		/yllapito/tuotteet/:productId/muokkaa				controllers.Products.crud.edit(productId: Long)
+POST	/yllapito/tuotteet/:productId/muokkaa				controllers.Products.crud.update(productId: Long)
 
 # Fieldset management
 GET		/yllapito/lomakkeet/kentat							controllers.dynamicforms.Fieldsets.crud.page(sivu: Int ?= 1)
@@ -80,24 +80,20 @@ GET		/yllapito/lomakkeet/kentat/uusi						controllers.dynamicforms.Fieldsets.cru
 #GET		/yllapito/lomakkeet/kentat/:fieldsetId			controllers.dynamicforms.Fieldsets.show(fieldsetId: Long)
 POST	/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa		controllers.dynamicforms.Fieldsets.crud.update(fieldsetId: Long)
 GET		/yllapito/lomakkeet/kentat/:fieldsetId/muokkaa		controllers.dynamicforms.Fieldsets.crud.edit(fieldsetId: Long)
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/poista	controllers.dynamicforms.Fieldsets.destroy(fieldsetId: Long)
 
 # Form management
 GET		/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.page(sivu: Int ?= 1)
 GET		/yllapito/lomakkeet/uusi							controllers.dynamicforms.Forms.crud.fresh
 POST	/yllapito/lomakkeet									controllers.dynamicforms.Forms.crud.create
-#GET		/yllapito/lomake/:formId						controllers.dynamicforms.Forms.show(formId: Long)
-POST	/yllapito/lomake/:formId/muokkaa					controllers.dynamicforms.Forms.crud.update(formId: Long)
-GET		/yllapito/lomake/:formId/muokkaa					controllers.dynamicforms.Forms.crud.edit(formId: Long)
-#GET		/yllapito/lomake/:formId/poista					controllers.dynamicforms.Forms.destroy(formId: Long)
+#GET		/yllapito/lomakkeet/:formId						controllers.dynamicforms.Forms.show(formId: Long)
+POST	/yllapito/lomakkeet/:formId/muokkaa					controllers.dynamicforms.Forms.crud.update(formId: Long)
+GET		/yllapito/lomakkeet/:formId/muokkaa					controllers.dynamicforms.Forms.crud.edit(formId: Long)
 
 # Field management
-POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentta					controllers.dynamicforms.Fields.create(fieldsetId: Long)
-GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/uusi				controllers.dynamicforms.Fields.fresh(fieldsetId: Long)
-POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.dynamicforms.Fields.update(fieldsetId: Long, fieldId: Long)
-GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/muokkaa	controllers.dynamicforms.Fields.edit(fieldsetId: Long, fieldId: Long)
-#POST		/yllapito/lomakkeet/kentat/:fieldsetId/kentta/:fieldId/poista	controllers.dynamicforms.Fields.destroy(fieldsetId: Long, fieldId: Long)
-
+POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentat					controllers.dynamicforms.Fields.create(fieldsetId: Long)
+GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentat/uusi				controllers.dynamicforms.Fields.fresh(fieldsetId: Long)
+POST	/yllapito/lomakkeet/kentat/:fieldsetId/kentat/:fieldId/muokkaa	controllers.dynamicforms.Fields.update(fieldsetId: Long, fieldId: Long)
+GET		/yllapito/lomakkeet/kentat/:fieldsetId/kentat/:fieldId/muokkaa	controllers.dynamicforms.Fields.edit(fieldsetId: Long, fieldId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
