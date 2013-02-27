@@ -28,6 +28,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 					.createQuery("select count(*) from " + entity + " e")
 					.getSingleResult();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return 0;
 	}
@@ -49,6 +50,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 			JPA.em().remove(t);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -64,6 +66,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 										+ " where e.id = ?")
 						.setParameter(1, id).getSingleResult()) == 1;
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	};
@@ -95,6 +98,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 			q = setPage(q, pageNumber);
 			return q.getResultList();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -106,6 +110,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 			Query q = createQuery(query);
 			return (T) q.getSingleResult();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -116,6 +121,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 			if (id != null)
 				return JPA.em().find(clazz, id);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -143,6 +149,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 			if (rows > 0)
 				list = findAll(pageNumber);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return new Page<T>(pageNumber, pageSize, rows, list);
 	};
@@ -153,6 +160,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 			JPA.em().merge(t);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

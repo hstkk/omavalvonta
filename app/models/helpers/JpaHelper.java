@@ -32,6 +32,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		try {
 			return JPA.em().getReference(clazz, id);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -44,6 +45,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 				if (t.id != null)
 					references.add(getReference((ID) t.id));
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return references;
 	}

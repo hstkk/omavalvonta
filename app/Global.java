@@ -18,6 +18,7 @@ public class Global extends GlobalSettings {
 		return badRequest(views.html.error.render(title, description));
 	}
 
+	// TODO print stack trace?
 	@Override
 	public Result onError(RequestHeader request, Throwable t) {
 		String title = Helper.getMessage("http.500");
@@ -25,6 +26,7 @@ public class Global extends GlobalSettings {
 		return internalServerError(views.html.error.render(title, description));
 	}
 
+	// TODO print stack trace?
 	@Override
 	public Result onHandlerNotFound(RequestHeader request) {
 		String title = Helper.getMessage("http.404");

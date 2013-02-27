@@ -61,6 +61,7 @@ public class Ingredient extends UserModel {
 		try {
 			checked = Product.crud.findById(Long.parseLong(id)).ingredients;
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		try {
 			List<Ingredient> ingredients = JPA.em()
@@ -83,6 +84,7 @@ public class Ingredient extends UserModel {
 				i++;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return stringBuilder.toString();
 	}
