@@ -1,0 +1,17 @@
+@()(content: Html)
+
+@import utils._
+
+@tags.tables.table() {
+	@tags.tables.thead() {
+		Helper.getMessage("model.id")
+		Helper.getMessage("ingredientsupply.ingredient")
+		Helper.getMessage("ingredientsupply.received")
+		Helper.getMessage("ingredientsupply.bestBefore")
+		Helper.getMessage("ingredientsupply.amount")
+		Helper.getMessage("ingredientsupply.amountAvailable")
+	}
+	<tbody>
+		@content
+	</tbody>
+}
