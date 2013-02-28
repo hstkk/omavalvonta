@@ -1,7 +1,0 @@
-@(FORM: play.data.Form[models.Batch])
-
-@import utils._
-
-@main(Helper.getMessage("batch.create")) {
-	@fields(FORM, routes.Batches.crud.create)
-}

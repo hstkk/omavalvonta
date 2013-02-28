@@ -1,7 +1,0 @@
-@(FORM: play.data.Form[models.dynamicforms.Form])
-
-@import play.i18n._
-
-@main(Messages.get("form.create")){
-	@fields(FORM, controllers.dynamicforms.routes.Forms.crud.create)
-}

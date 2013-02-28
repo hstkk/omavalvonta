@@ -3,8 +3,6 @@ package models;
 import java.util.HashMap;
 import java.util.Map;
 
-import models.dynamicforms.FieldType;
-
 /**
  * 
  * @author Sami Hostikka <dev@01.fi>

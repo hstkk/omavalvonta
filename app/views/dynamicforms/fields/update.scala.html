@@ -1,7 +1,0 @@
-@(FORM: play.data.Form[models.dynamicforms.Field], fieldsetId: Long, fieldId: Long)
-
-@import play.i18n._
-
-@main(Messages.get("field.update")){
-	@fields(FORM, controllers.dynamicforms.routes.Fields.update(fieldsetId, fieldId))
-}

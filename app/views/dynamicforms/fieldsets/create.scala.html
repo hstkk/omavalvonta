@@ -1,7 +1,0 @@
-@(FORM: play.data.Form[models.dynamicforms.Fieldset])
-
-@import play.i18n._
-
-@main(Messages.get("fieldset.create")) {
-	@fields(FORM, controllers.dynamicforms.routes.Fieldsets.crud.create)
-}
