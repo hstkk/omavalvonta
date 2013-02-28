@@ -1,0 +1,10 @@
+@(ingredientSupply: IngredientSupply)
+
+@import tags.tables._
+
+@tr() { <a href="@routes.IngredientSupplies.crud.show(ingredientSupply.id)">@ingredientSupply</a>
+        @ingredientSupply.ingredient.name
+        @ingredientSupply.received
+        @ingredientSupply.getBestBefore
+        @ingredientSupply.amount @ingredientSupply.unit
+        @if(ingredientSupply.amountAvailable > 0) { <span class="label label-success">@ingredientSupply.amountAvailable</span> } else { @ingredientSupply.amountAvailable } @ingredientSupply.unit }
