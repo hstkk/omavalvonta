@@ -22,21 +22,24 @@
 		<ul class="nav nav-list">
 			<li class="nav-header"><a href="@routes.Application.index">Ohjeet</a></li>
 			<li class="divider"></li>
-			<li class="nav-header"><a href="@routes.IngredientSupplies.index">Raaka-aineet</a></li>
-			<li><a href="@routes.IngredientSupplies.index">Vastaanota</a></li>
+			<li class="nav-header"><a href="@routes.IngredientSupplies.crud.page()">Raaka-aineet</a></li>
+			<li><a href="@routes.IngredientSupplies.crud.fresh">Vastaanota</a></li>
 			<li class="divider"></li>
-			<li class="nav-header"><a href="@routes.Batches.index">Erät</a></li>
-			<li><a href="@routes.Batches.index">Uusi</a></li>
+			// TODO
+			<li class="nav-header"><a href="routes.Batches.index">Erät</a></li>
+			// TODO
+			<li><a href="routes.Batches.index">Uusi</a></li>
 			<li class="divider"></li>
 			<li class="nav-header">Tulokset</li>
-			<li><a href="@controllers.dynamicforms.routes.Results.index">Tulokset</a></li>
+			//TODO
+			<li><a href="controllers.dynamicforms.routes.Results.index">Tulokset</a></li>
 			<li class="divider"></li>
 			<li class="nav-header"><a href="@routes.Application.management">Ylläpito</a></li>
 		</ul>
 	</div>
 }
 
-@base(title, navigation, sidebar) {
+@template(title, navigation, sidebar) {
 	<div class="span9">
 		@if(flash.containsKey("success")){
 			@success(){

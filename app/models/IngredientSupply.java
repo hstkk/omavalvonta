@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 
 import models.helpers.Crud;
 import models.helpers.UserModel;
-
 import play.data.format.Formats;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
@@ -31,8 +30,7 @@ public class IngredientSupply extends UserModel {
 	@Min(0)
 	public Double amount;
 
-	@Min(0)
-	public Double amountAvailable;
+	public Double used;
 
 	@Required
 	@NotNull
@@ -44,6 +42,7 @@ public class IngredientSupply extends UserModel {
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term unit;
 
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(ingredient);
@@ -57,6 +56,10 @@ public class IngredientSupply extends UserModel {
 		return sb.toString();
 	}
 
+	public boolean isUsed() {
+		return this.used >= this.amount;
+	}
+	
 	@Override
 	@PrePersist
 	public void onCreate() {
@@ -78,63 +81,4 @@ public class IngredientSupply extends UserModel {
 		bestBefore.add(Calendar.DATE, this.ingredient.bestBefore);
 		return bestBefore.getTime();
 	}
-
-	/*public static KeyValue<String, Integer> findAliveByIngredient(
-			Ingredient ingredient, int index) {
-		StringBuilder stringBuilder = new StringBuilder();
-		try {
-			if (ingredient != null) {
-				List<IngredientSupply> list = JPA
-						.em()
-						.createQuery(
-								"from IngredientSupply i where i.amountAvailable > 0 and i.ingredient.id = ? and current_date() < i.bestBefore order by i.received asc ")
-						.setParameter(1, ingredient.id).getResultList();
-				if (!list.isEmpty()) {
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-							"dd.MM.yyyy");
-					stringBuilder.append("<fieldset>");
-					stringBuilder.append("<legend>");
-					stringBuilder.append(ingredient.toString());
-					stringBuilder.append("</legend>");
-					for (IngredientSupply i : list) {
-						stringBuilder
-								.append("<div><div class=\"input-append\">");
-						stringBuilder
-								.append("<input type=\"hidden\" name=\"values[");
-						stringBuilder.append(index);
-						stringBuilder.append("].id\" value=\"");
-						stringBuilder.append(i.id);
-						stringBuilder.append("\"/>");
-						stringBuilder
-								.append("<input class=\"span2\" name=\"values[");
-						stringBuilder.append(index);
-						stringBuilder
-								.append("].amount\" size=\"16\" type=\"text\" placeholder=\"");
-						stringBuilder.append(i.amountAvailable);
-						stringBuilder.append(" ");
-						stringBuilder.append(i.unit);
-						stringBuilder.append("\" max=\"");
-						stringBuilder.append(i.amountAvailable);
-						stringBuilder.append("\"><span class=\"add-on\">");
-						stringBuilder.append(i.unit);
-						stringBuilder.append("</span>");
-						stringBuilder.append("</div>");
-						stringBuilder.append("<span class=\"help-inline\">");
-						stringBuilder.append("Vastaanottopäivä ");
-						stringBuilder.append(simpleDateFormat
-								.format(i.received));
-						stringBuilder.append(". Parasta ennen ");
-						stringBuilder.append(simpleDateFormat
-								.format(i.bestBefore));
-						stringBuilder.append(".</span></div><br/>");
-						index++;
-					}
-					stringBuilder.append("</fieldset>");
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new KeyValue<String, Integer>(stringBuilder.toString(), index);
-	}*/
 }

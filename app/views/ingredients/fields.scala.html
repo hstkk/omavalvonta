@@ -11,5 +11,7 @@
 	@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
 	@helper.textarea(FORM("description"), '_label -> Messages.get("label.description"))
 	@helper.inputText(FORM("bestBefore"), '_label -> Messages.get("label.bestBefore"), '_class -> "control-group")
-	@select(FORM("form.id"), options = options(models.dynamicforms.FormType.INGREDIENT), '_default -> "", '_label -> Messages.get("ingredient.form"))
+	
+	// TODO
+	select(FORM("form.id"), options = options(models.dynamicforms.FormType.INGREDIENT), '_default -> "", '_label -> Messages.get("ingredient.form"))
 }

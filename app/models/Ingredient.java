@@ -4,16 +4,16 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.envers.Audited;
-
-import models.dynamicforms.Fieldset;
 import models.dynamicforms.Form;
 import models.helpers.Crud;
 import models.helpers.UserModel;
+
+import org.hibernate.envers.Audited;
 
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
@@ -42,6 +42,7 @@ public class Ingredient extends UserModel {
 	@Min(0)
 	public Integer bestBefore;
 
+	@ManyToOne
 	public Form form;
 
 	public String toString() {

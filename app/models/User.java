@@ -1,16 +1,18 @@
 package models;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.envers.Audited;
-
 import models.helpers.Crud;
 import models.helpers.Model;
-import play.data.validation.Constraints.*;
+
+import org.hibernate.envers.Audited;
+
+import play.data.validation.Constraints.Required;
 
 @Entity
 @Audited
