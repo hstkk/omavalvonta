@@ -5,12 +5,16 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import models.helpers.JpaModel;
+import models.helpers.Crud;
+import models.helpers.Model;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 
+//TODO embed to Batch?
 @Entity
-public class IngredientAmount extends JpaModel {
+public class IngredientAmount extends Model {
+	public final static Crud<IngredientAmount, Long> crud = new Crud<IngredientAmount, Long>(
+			IngredientAmount.class);
 
 	@Required
 	@NotNull
@@ -38,7 +42,7 @@ public class IngredientAmount extends JpaModel {
 		if (used < ingredientSupply.amount) {
 			ingredientSupply.used = used;
 			IngredientSupply.crud.update(ingredientSupply);
-			this.save();
+			crud.create(this);
 		}
 		// TODO Rollback
 	}
