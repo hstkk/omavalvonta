@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -30,7 +31,9 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 
 	public T getReference(ID id) {
 		try {
-			return JPA.em().getReference(clazz, id);
+			if (id != null)
+				return JPA.em().getReference(clazz, id);
+		} catch (EntityNotFoundException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,8 +45,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		ArrayList<T> references = new ArrayList<T>();
 		try {
 			for (T t : list)
-				if (t.id != null)
-					references.add(getReference((ID) t.id));
+				references.add(getReference((ID) t.id));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
