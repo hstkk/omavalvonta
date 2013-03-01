@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -77,7 +77,6 @@ public class Crud<T extends Model, ID extends Serializable> extends
 		return findAllBy(query, null);
 	}
 
-	// @SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAllBy(CriteriaQuery<T> query, Integer pageNumber) {
 		try {
@@ -86,7 +85,8 @@ public class Crud<T extends Model, ID extends Serializable> extends
 				query = criteriaBuilder.createQuery(clazz);
 				query.from(clazz);
 			}
-			Query q = createQuery(query);
+
+			TypedQuery<T> q = createQuery(query);
 			q = setPage(q, pageNumber);
 			return q.getResultList();
 		} catch (Exception e) {
@@ -95,12 +95,12 @@ public class Crud<T extends Model, ID extends Serializable> extends
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public T findBy(CriteriaQuery<T> query) {
 		try {
-			Query q = createQuery(query);
-			return (T) q.getSingleResult();
+			TypedQuery<T> q = createQuery(query);
+			return q.getSingleResult();
+		} catch (NoResultException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -137,12 +137,8 @@ public class Crud<T extends Model, ID extends Serializable> extends
 	public Page<T> page(int pageNumber) {
 		List<T> list = null;
 		long rows = count();
-		try {
-			if (rows > 0)
-				list = findAll(pageNumber);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		if (rows > 0)
+			list = findAll(pageNumber);
 		return new Page<T>(pageNumber, pageSize, rows, list);
 	};
 
