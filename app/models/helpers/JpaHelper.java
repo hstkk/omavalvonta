@@ -40,16 +40,26 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<T> getReference(List<T> list) {
 		ArrayList<T> references = new ArrayList<T>();
 		try {
 			for (T t : list)
-				references.add(getReference((ID) t.id));
+				references.add(getReference(t));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return references;
+	}
+
+	public T getReference(T t) {
+		try {
+			if (t.id != null)
+				return JPA.em().getReference(clazz, t.id);
+		} catch (EntityNotFoundException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	protected TypedQuery<T> setPage(TypedQuery<T> q, Integer pageNumber) {
