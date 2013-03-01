@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -27,6 +28,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 			return (long) JPA.em()
 					.createQuery("select count(*) from " + entity + " e")
 					.getSingleResult();
+		} catch (NoResultException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,20 +57,10 @@ public class Crud<T extends Model, ID extends Serializable> extends
 		return false;
 	}
 
+	// TODO test
 	@Override
 	public boolean exists(ID id) {
-		try {
-			if (id != null)
-				return ((long) JPA
-						.em()
-						.createQuery(
-								"select count(*) from " + entity + " e"
-										+ " where e.id = ?")
-						.setParameter(1, id).getSingleResult()) == 1;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
+		return getReference(id) != null;
 	};
 
 	@Override
@@ -85,7 +77,7 @@ public class Crud<T extends Model, ID extends Serializable> extends
 		return findAllBy(query, null);
 	}
 
-	@SuppressWarnings("unchecked")
+	// @SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAllBy(CriteriaQuery<T> query, Integer pageNumber) {
 		try {

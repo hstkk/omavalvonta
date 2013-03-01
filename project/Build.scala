@@ -16,7 +16,7 @@ object ApplicationBuild extends Build {
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
 		ebeanEnabled := false,
-		javacOptions ++= Seq("-s", "metamodel")//,
-		//javacOptions ++= Seq("-Xlint", "unchecked")
+		javacOptions ++= Seq("-s", "metamodel"),
+		javacOptions ++= Seq("-Xlint", "unchecked")
     )
 }

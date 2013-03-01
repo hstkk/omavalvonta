@@ -65,9 +65,7 @@ public class Ingredient extends UserModel {
 			e.printStackTrace();
 		}
 		try {
-			List<Ingredient> ingredients = JPA.em()
-					.createQuery("from Ingredient order by name")
-					.getResultList();
+			List<Ingredient> ingredients = crud.findAll();
 			int i = 0;
 			for (Ingredient ingredient : ingredients) {
 				stringBuilder.append("<label class=\"checkbox\">");
