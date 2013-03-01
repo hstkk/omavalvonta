@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -21,7 +21,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		this.pageSize = Play.application().configuration().getInt("page.size");
 	}
 
-	protected Query createQuery(CriteriaQuery<T> query) {
+	protected TypedQuery<T> createQuery(CriteriaQuery<T> query) {
 		return JPA.em().createQuery(query);
 	}
 
@@ -52,7 +52,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		return references;
 	}
 
-	protected Query setPage(Query q, Integer pageNumber) {
+	protected TypedQuery<T> setPage(TypedQuery<T> q, Integer pageNumber) {
 		if (pageNumber != null) {
 			if (pageNumber < 1)
 				pageNumber = 1;
