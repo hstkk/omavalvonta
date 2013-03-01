@@ -17,7 +17,6 @@ import org.hibernate.envers.Audited;
 
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
-import play.db.jpa.JPA;
 
 /**
  * The Class Ingredient.
