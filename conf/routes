@@ -65,6 +65,11 @@ POST	/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.
 GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.edit(ingredientId: Long)
 
 # Product management
+# Form
+# Ingredient multiselect
+# TEST
+# COMMENT
+# DELETE
 GET		/yllapito/tuotteet									controllers.Products.crud.page(sivu: Int ?= 1)
 GET		/yllapito/tuotteet/uusi								controllers.Products.crud.fresh
 POST	/yllapito/tuotteet/uusi								controllers.Products.crud.create
