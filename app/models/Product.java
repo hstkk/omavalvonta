@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
@@ -41,16 +41,24 @@ public class Product extends UserModel {
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-	@Transient
-	public List<Long> ingredientIds = new ArrayList<Long>();
+	@ManyToOne(cascade = CascadeType.ALL)
+	public Form form1;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	public List<Form> forms = new ArrayList<Form>();
+	@ManyToOne(cascade = CascadeType.ALL)
+	public Form form2;
 
-	@Transient
-	public List<Long> formIds = new ArrayList<Long>();
+	@ManyToOne(cascade = CascadeType.ALL)
+	public Form form3;
 
 	public String toString() {
 		return name + " (" + no.toString() + ")";
+	}
+
+	@Override
+	public void set() {
+		ingredients = Ingredient.crud.getReference(ingredients);
+		form1 = Form.crud.getReference(form1);
+		form2 = Form.crud.getReference(form2);
+		form3 = Form.crud.getReference(form3);
 	}
 }

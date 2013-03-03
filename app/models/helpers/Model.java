@@ -35,4 +35,7 @@ public class Model implements ModelInterface {
 
 	public void set() {
 	}
+
+	public void get() {
+	}
 }
