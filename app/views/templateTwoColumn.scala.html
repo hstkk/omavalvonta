@@ -1,0 +1,53 @@
+@(title: String, links: Html)(content: Html)
+@import play.i18n._
+@import tags.alerts._
+
+@navigation = {	
+	<div class="pull-right">
+		@defining(request.username) { user =>
+			@if(user != null) {
+				<ul class="nav hidden-phone">
+					<li><a href="#">@user</a></li>
+				</ul>
+				<a class="btn btn-primary" href="@controllers.shib.routes.Shibboleth.logout">@Messages.get("shib.logout")</a>
+			} else {
+				<a class="btn btn-primary" href="@controllers.shib.routes.Shibboleth.login">@Messages.get("shib.login")</a>
+			}
+		}
+	</div>
+}
+
+@sidebar = {
+	<div class="span3 well">
+		<ul class="nav nav-list">
+			@links
+		</ul>
+	</div>
+}
+
+@template(title, navigation, sidebar) {
+	<div class="span9">
+		@if(flash.containsKey("success")){
+			@success(){
+				@flash.get("success")
+			}
+		}
+		@if(flash.containsKey("info")){
+			@info(){
+				@flash.get("info")
+			}
+		}
+		@if(flash.containsKey("error")){
+			@error(){
+				@flash.get("error")
+			}
+		}
+		@if(flash.containsKey("warning")){
+			@warning(){
+				@flash.get("warning")
+			}
+		}
+		<h1>@title</h1>
+		@content
+	</div>
+}

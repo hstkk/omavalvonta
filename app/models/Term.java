@@ -11,11 +11,14 @@ import javax.persistence.Transient;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.validation.constraints.NotNull;
 
 import models.helpers.Crud;
 import models.helpers.UserModel;
 
 import org.hibernate.envers.Audited;
+
+import play.data.validation.Constraints.Required;
 
 /**
  * 
@@ -29,16 +32,17 @@ public class Term extends UserModel {
 	public final static Crud<Term, Long> crud = new Crud<Term, Long>(Term.class);
 
 	@Column(name = "name")
-	// @Required
-	// @NotNull
+	@Required
+	@NotNull
 	public String name;
 
-	@Column(name = "category")
-	// @Required
-	// @NotNull
+	@Column(name = "category", nullable = false)
 	public int category;
 
+	// TODO test
 	@Transient
+	@Required
+	@NotNull
 	public TermCategory categoryEnum;
 
 	public String toString() {
@@ -53,7 +57,7 @@ public class Term extends UserModel {
 
 	@PostLoad
 	private void intToEnum() {
-		categoryEnum = TermCategory.setValue(this.category);
+		categoryEnum = TermCategory.setValue(category);
 	}
 
 	public static List<Term> findByCategory(TermCategory categoryEnum) {

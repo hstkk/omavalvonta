@@ -110,3 +110,9 @@ batch.create=Uusi erä
 
 # --- Etc
 model.id="#"
+
+# --- Term category enum
+enum.FORMTYPE=Lomaketyyppi
+enum.REASON=Muutoksen syy
+enum.UNIT=Mittayksikkö
+enum.DESTINY=Erän Kohtalo myyntihyväksynnässä

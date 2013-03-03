@@ -1,10 +1,13 @@
-@(FORM: play.data.Form[models.Term])
+@(FORM: play.data.Form[models.Term], action: play.api.mvc.Call)
 
-@import play.i18n._
 @import helper._
 @import helper.twitterBootstrap._
 @import tags.forms._
+@import utils._
 
-@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
-@select(FORM("category"), options = options(models.TermCategory.options), '_default -> "", '_label ->  Messages.get("label.category"))
-@actions()
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@tags.forms.form(FORM, action) {
+	@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
+	@select(FORM("category"), options = options(models.TermCategory.options), '_default -> "", '_label ->  Messages.get("label.category"))
+}
