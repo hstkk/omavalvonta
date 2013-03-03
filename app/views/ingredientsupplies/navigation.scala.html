@@ -1,7 +1,4 @@
-@import tags.navs._
 @import utils._
 
-@tabs() {
-		<li><a href="@routes.IngredientSupplies.crud.page()">@Helper.getMessage("ingredientsupply.page")</a></li>
-		<li><a href="@routes.IngredientSupplies.crud.fresh">@Helper.getMessage("ingredientsupply.create")</a></li>
-}
+<li class="nav-header"><a href="@routes.IngredientSupplies.crud.page()">@Helper.getMessage("ingredientsupply.page")</a></li>
+<li><a href="@routes.IngredientSupplies.crud.fresh">@Helper.getMessage("ingredientsupply.create")</a></li>

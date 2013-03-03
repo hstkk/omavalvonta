@@ -18,7 +18,8 @@ import utils.Converter;
 
 @Entity
 public class IngredientSupply extends UserModel {
-	public final static Crud<IngredientSupply, Long> crud = new Crud<IngredientSupply, Long>(IngredientSupply.class);
+	public final static Crud<IngredientSupply, Long> crud = new Crud<IngredientSupply, Long>(
+			IngredientSupply.class);
 
 	@Required
 	@NotNull
@@ -42,7 +43,6 @@ public class IngredientSupply extends UserModel {
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term unit;
 
-	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(ingredient);
@@ -59,20 +59,14 @@ public class IngredientSupply extends UserModel {
 	public boolean isUsed() {
 		return this.used >= this.amount;
 	}
-	
+
 	@Override
 	@PrePersist
 	public void onCreate() {
 		super.onCreate();
 
-		if (this.ingredient.id == null)
-			this.ingredient = null;
-		else
-			this.ingredient = Ingredient.crud.getReference(this.ingredient.id);
-		if (this.unit.id == null)
-			this.unit = null;
-		else
-			this.unit = Term.crud.getReference(this.unit.id);
+		this.ingredient = Ingredient.crud.getReference(this.ingredient);
+		this.unit = Term.crud.getReference(this.unit);
 	}
 
 	public Date getBestBefore() {
