@@ -24,10 +24,15 @@ public class Model implements ModelInterface {
 	@PrePersist
 	public void onCreate() {
 		lastModified = new Date();
+		set();
 	}
 
 	@PreUpdate
 	public void onUpdate() {
 		lastModified = new Date();
+		set();
+	}
+
+	public void set() {
 	}
 }
