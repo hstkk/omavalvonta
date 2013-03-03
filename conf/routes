@@ -53,6 +53,11 @@ POST	/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.update(termId: 
 GET		/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.edit(termId: Long)
 
 # Ingredient management
+# Checkboxes
+# Form
+# TEST
+# COMMENT
+# DELETE
 GET		/yllapito/raaka-aineet								controllers.Ingredients.crud.page(sivu: Int ?= 1)
 GET		/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.fresh
 POST	/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.create

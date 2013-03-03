@@ -26,7 +26,6 @@ import play.data.validation.Constraints.Required;
 @Entity
 @Audited
 public class Ingredient extends UserModel {
-
 	public final static Crud<Ingredient, Long> crud = new Crud<Ingredient, Long>(
 			Ingredient.class);
 
@@ -51,7 +50,7 @@ public class Ingredient extends UserModel {
 	@PrePersist
 	@PreUpdate
 	private void onPre() {
-		this.form = Form.crud.getReference(this.form.id);
+		this.form = Form.crud.getReference(this.form);
 	}
 
 	// TODO checkboxes
