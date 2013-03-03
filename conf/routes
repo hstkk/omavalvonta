@@ -34,15 +34,18 @@ GET     /yllapito											controllers.Application.management
 # TODO
 
 # Ingredient supply
+# Where used
+# TEST
+# COMMENT
 GET		/raaka-aineet										controllers.IngredientSupplies.crud.page(sivu: Int ?= 1)
 GET		/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.fresh
 POST	/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.create
 GET		/raaka-aineet/:ingredientId							controllers.IngredientSupplies.crud.show(ingredientId: Long)
 
 # Term management
-# DONE
 # TEST
 # COMMENT
+# DELETE
 GET		/yllapito/termit									controllers.Terms.crud.page(sivu: Int ?= 1)
 GET		/yllapito/termit/uusi								controllers.Terms.crud.fresh
 POST	/yllapito/termit/uusi								controllers.Terms.crud.create
