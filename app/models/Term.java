@@ -69,7 +69,7 @@ public class Term extends UserModel {
 		CriteriaQuery<Term> query = criteriaBuilder.createQuery(Term.class);
 		Root<Term> root = query.from(Term.class);
 		query.where(criteriaBuilder.equal(root.get(Term_.category),
-				categoryEnum));
+				categoryEnum.getValue()));
 		return query;
 	}
 
