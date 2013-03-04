@@ -11,6 +11,7 @@ import play.api.templates.Template2;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.*;
+import utils.Helper;
 
 @Security.Authenticated(Secured.class)
 public class SecuredCrud<T extends UserModel> extends Crud<T> {
@@ -21,6 +22,10 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 		super(CRUD, FORM, UPDATE, CREATE, PAGE, SHOW, REDIRECT);
 	}
 
+	Result unauthorized = unauthorized(views.html.error.render(
+			Helper.getMessage("http.401"),
+			Helper.getMessage("http.401.description")));
+
 	@Override
 	@Transactional
 	public Result create() {
@@ -30,7 +35,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 			setUser(user);
 			return super.create();
 		}
-		return forbidden();
+		return unauthorized;
 	}
 
 	@Override
@@ -38,7 +43,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	public Result edit(Long id) {
 		if (Secured.isAdmin())
 			return super.edit(id);
-		return forbidden();
+		return unauthorized;
 	}
 
 	@Override
@@ -46,7 +51,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	public Result fresh() {
 		if (Secured.isAdmin())
 			return super.fresh();
-		return forbidden();
+		return unauthorized;
 	}
 
 	@Override
@@ -54,7 +59,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	public Result page(int pageNumber) {
 		if (Secured.isAdmin())
 			return super.page(pageNumber);
-		return forbidden();
+		return unauthorized;
 	}
 
 	@Override
@@ -62,7 +67,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	public Result show(Long id) {
 		if (Secured.isAdmin())
 			return super.show(id);
-		return forbidden();
+		return unauthorized;
 	}
 
 	@Override
@@ -74,7 +79,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 			setUser(user);
 			return super.update(id);
 		}
-		return forbidden();
+		return unauthorized;
 	}
 
 	@Override

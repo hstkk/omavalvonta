@@ -30,6 +30,8 @@ error.pattern=Must satisfy {0}
 # --- HTTP errors
 http.400=400 Kelpaamaton pyyntö
 http.400.description=Pyynnön syntaksia ei ymmärretty.
+http.401=401 Ei käyttöoikeutta
+http.401.description=Kirjautuminen vaaditaan.
 http.404=404 Sivua ei löytynyt
 http.404.description=Yritä myöhemmin uudelleen. Tarkista, että osoite on oikea ja että osoite on kirjoitettu oikein.
 http.500=500 Sisäinen palvelinvirhe
