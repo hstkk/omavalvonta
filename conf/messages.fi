@@ -9,13 +9,13 @@ constraint.maxLength=Maksimipituus: {0}
 constraint.email=Sähköposti
 
 # --- Formats
-format.date=Päivämäärä (''{0}'')
+format.date=Päivämäärä {0}
 format.numeric=Numeric
 format.real=Real
 
 # --- Errors
 error.invalid=Invalid value
-error.required=This field is required
+error.required=Vaadittu
 error.number=Numeric value expected
 error.real=Real number value expected
 error.min=Tulee olla suurempi tai yhtä suuri kuin {0}
