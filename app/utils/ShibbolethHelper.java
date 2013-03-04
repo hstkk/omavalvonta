@@ -121,4 +121,17 @@ public class ShibbolethHelper {
 		}
 		return null;
 	}
+
+	// TODO document split regex
+	public static boolean verifyRole(String role, String adminRole) {
+		if (!adminRole.isEmpty()) {
+			String separator = Helper.getOrElse("shibboleth.separator");
+			if (separator.isEmpty())
+				return role.equals(adminRole);
+			for (String r : role.split(separator))
+				if (r.equals(adminRole))
+					return true;
+		}
+		return false;
+	}
 }
