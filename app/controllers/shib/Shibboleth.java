@@ -4,6 +4,8 @@ import static play.mvc.Results.internalServerError;
 
 import java.io.UnsupportedEncodingException;
 
+import akka.util.Helpers;
+
 import models.User;
 
 import play.*;
@@ -11,6 +13,7 @@ import play.i18n.Messages;
 import play.mvc.*;
 import play.db.jpa.*;
 import utils.ShibbolethHelper;
+import utils.Helper;
 
 public class Shibboleth extends Controller {
 	// 2.
@@ -51,8 +54,8 @@ public class Shibboleth extends Controller {
 	}
 
 	private static Result getInternalServerError() {
-		String title = Messages.get("http.500");
-		String description = Messages.get("http.500.description");
+		String title = Helper.getMessage("http.500");
+		String description = Helper.getMessage("http.500.description");
 		return internalServerError(views.html.error.render(title, description));
 	}
 }
