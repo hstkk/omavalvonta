@@ -1,18 +1,19 @@
 package controllers.helpers;
 
-import controllers.shib.Secured;
-import controllers.shib.SessionTimeout;
+import models.User;
+import models.helpers.Page;
+import models.helpers.UserModel;
 import play.api.mvc.Call;
 import play.api.templates.Html;
 import play.api.templates.Template1;
 import play.api.templates.Template2;
 import play.data.Form;
+import play.db.jpa.Transactional;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
-import models.User;
-import models.helpers.Page;
-import models.helpers.UserModel;
+import controllers.shib.Secured;
+import controllers.shib.SessionTimeout;
 
 public class UserCrud<T extends UserModel> extends Crud<T> {
 	public UserCrud(models.helpers.Crud<T, Long> CRUD, Form<T> FORM,
@@ -25,8 +26,31 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	@Security.Authenticated(Secured.class)
 	@With(SessionTimeout.class)
 	public Result ack(Boolean bool) {
-		//TODO update only user
+		// TODO update only user
 		return TODO;
+	}
+
+	@Override
+	@Transactional
+	public Result create() {
+		return super.create();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Result edit(Long id) {
+		return super.edit(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Result fresh() {
+		return super.fresh();
+	}
+
+	private User getUser() {
+		String username = ctx().request().username();
+		return User.findByEmail(username);
 	}
 
 	@Override
@@ -49,8 +73,21 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		return result;
 	}
 
-	private User getUser() {
-		String username = ctx().request().username();
-		return User.findByEmail(username);
+	@Override
+	@Transactional(readOnly = true)
+	public Result page(int pageNumber) {
+		return super.page(pageNumber);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Result show(Long id) {
+		return super.show(id);
+	}
+
+	@Override
+	@Transactional
+	public Result update(Long id) {
+		return super.update(id);
 	}
 }
