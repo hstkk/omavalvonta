@@ -5,8 +5,7 @@
 @links = {
 	<li class="nav-header"><a href="@routes.Application.index">Ohjeet</a></li>
 	<li class="divider"></li>
-	<li class="nav-header"><a href="@routes.IngredientSupplies.crud.page()">Raaka-aineet</a></li>
-	<li><a href="@routes.IngredientSupplies.crud.fresh">Vastaanota</a></li>
+	@ingredientsupplies.navigation()
 	<li class="divider"></li>
 	// TODO
 	<li class="nav-header"><a href="routes.Batches.index">Erät</a></li>
