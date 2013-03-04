@@ -27,9 +27,9 @@ public class Secured extends Security.Authenticator {
 
 	public static boolean isAdmin(User user) {
 		if (user != null && user.role != null) {
-			String adminRole = Helper.getOrElse(
-					"shibboleth.adminRole", ShibbolethDefaults.ROLE);
-			return user.role.equals(adminRole);
+			String adminRole = Helper.getOrElse("shibboleth.adminRole",
+					ShibbolethDefaults.ROLE);
+			return ShibbolethHelper.verifyRole(user.role, adminRole);
 		}
 		return false;
 	}
