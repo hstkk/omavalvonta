@@ -45,6 +45,7 @@ GET		/raaka-aineet/:ingredientId							controllers.IngredientSupplies.crud.show(
 # Term management
 # TEST
 # COMMENT
+# Archive
 # DELETE
 GET		/yllapito/termit									controllers.Terms.crud.page(sivu: Int ?= 1)
 GET		/yllapito/termit/uusi								controllers.Terms.crud.fresh
@@ -58,6 +59,7 @@ GET		/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.edit(termId: Lo
 # TEST
 # COMMENT
 # DELETE
+# Archive
 GET		/yllapito/raaka-aineet								controllers.Ingredients.crud.page(sivu: Int ?= 1)
 GET		/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.fresh
 POST	/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.create
@@ -70,6 +72,7 @@ GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.
 # TEST
 # COMMENT
 # DELETE
+# Archive
 GET		/yllapito/tuotteet									controllers.Products.crud.page(sivu: Int ?= 1)
 GET		/yllapito/tuotteet/uusi								controllers.Products.crud.fresh
 POST	/yllapito/tuotteet/uusi								controllers.Products.crud.create
