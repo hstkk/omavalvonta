@@ -9,11 +9,14 @@ import play.api.templates.Template1;
 import play.api.templates.Template2;
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.i18n.Messages;
 import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
+import utils.Helper;
 import controllers.shib.Secured;
 import controllers.shib.SessionTimeout;
+import controllers.shib.Shibboleth;
 
 public class UserCrud<T extends UserModel> extends Crud<T> {
 	public UserCrud(models.helpers.Crud<T, Long> CRUD, Form<T> FORM,
@@ -25,9 +28,22 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 
 	@Security.Authenticated(Secured.class)
 	@With(SessionTimeout.class)
-	public Result ack(Boolean bool) {
-		// TODO update only user
-		return TODO;
+	public Result ack(Long id) {
+		User user = getUser();
+		if (user != null) {
+			T t = CRUD.findById(id);
+			if (REDIRECT == null || t == null)
+				return notFound();
+			if (t.user != null)
+				return Helper.getInternalServerError();
+			t.user = user;
+			if (CRUD.update(t))
+				flash("success", Messages.get("crud.success"));
+			else
+				flash("error", Messages.get("crud.fail"));
+			return redirect(REDIRECT);
+		}
+		return Helper.getUnauthorized();
 	}
 
 	@Override
@@ -58,8 +74,10 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		User user = getUser();
 		t.user = user;
 		Result result = super.onCreate(t);
+		// TODO returnUrl
+		String returnUrl = "";
 		if (user == null && result != null)
-			return ack(false);
+			return Shibboleth.login(returnUrl);
 		return result;
 	}
 
@@ -68,8 +86,10 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		User user = getUser();
 		t.user = user;
 		Result result = super.onUpdate(t, id);
+		// TODO returnUrl
+		String returnUrl = "";
 		if (user == null && result != null)
-			return ack(false);
+			return Shibboleth.login(returnUrl);
 		return result;
 	}
 
