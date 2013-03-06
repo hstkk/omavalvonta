@@ -14,12 +14,12 @@ import play.db.jpa.*;
 @With(SessionTimeout.class)
 public class Crud<T extends Model> extends Controller implements CrudInterface {
 	private final Form<T> FORM;
-	private final models.helpers.Crud<T, Long> CRUD;
+	protected final models.helpers.Crud<T, Long> CRUD;
 	private final Template1<Form<T>, Html> CREATE;
 	private final Template1<Page<T>, Html> PAGE;
 	private final Template1<T, Html> SHOW;
 	private final Template2<Long, Form<T>, Html> UPDATE;
-	private final Call REDIRECT;
+	protected final Call REDIRECT;
 
 	/**
 	 * 
