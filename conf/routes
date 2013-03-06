@@ -14,6 +14,7 @@
 #POST	/foo/:id/kuittaa	ack(ack = true)
 
 # Home page
+# News
 GET     /													controllers.Application.index
 
 # Shibboleth
@@ -37,10 +38,12 @@ GET     /yllapito											controllers.Application.management
 # Where used
 # TEST
 # COMMENT
+# Ack
 GET		/raaka-aineet										controllers.IngredientSupplies.crud.page(sivu: Int ?= 1)
 GET		/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.fresh
 POST	/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.create
 GET		/raaka-aineet/:ingredientId							controllers.IngredientSupplies.crud.show(ingredientId: Long)
+POST	/raaka-aineet/:ingredientId/kuittaa					controllers.IngredientSupplies.crud.ack(ingredientId: Long)
 
 # Term management
 # TEST
