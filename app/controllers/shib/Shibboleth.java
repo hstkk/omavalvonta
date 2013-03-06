@@ -38,7 +38,7 @@ public class Shibboleth extends Controller {
 			return temporaryRedirect(loginUrl);
 		} catch (UnsupportedEncodingException e) {
 		}*/
-		return getInternalServerError();
+		return Helper.getInternalServerError();
 	}
 
 	// 3.
@@ -50,12 +50,6 @@ public class Shibboleth extends Controller {
 			return temporaryRedirect(logoutUrl);
 		} catch (UnsupportedEncodingException e) {
 		}
-		return getInternalServerError();
-	}
-
-	private static Result getInternalServerError() {
-		String title = Helper.getMessage("http.500");
-		String description = Helper.getMessage("http.500.description");
-		return internalServerError(views.html.error.render(title, description));
+		return Helper.getInternalServerError();
 	}
 }
