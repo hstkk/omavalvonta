@@ -1,21 +1,13 @@
 @import play.i18n._
-@import tags.navs._
+@import tags.alerts._
 
-@main("Ylläpito") {
-	@stacked() {
-		<li><a href="@routes.Terms.crud.page()">@Messages.get("term.page")</a></li>
-		<li><a href="@routes.Ingredients.crud.page()">@Messages.get("ingredient.page")</a></li>
-		<li><a href="@routes.Products.crud.page()">@Messages.get("product.page")</a></li>
-		// TODO
-		<li><a href="controllers.dynamicforms.routes.Forms.crud.page()">lomakkeet</a></li>
-	}
-	<h2>Ohjeet</h2>
-	<h3>Raaka-aineiden ja tuotteiden hallinta</h3>
-	<div class="flowplayer color-light">
-		<video src="@routes.Assets.at("video/yllapito1.flv").absoluteURL(request())"></video>
-	</div>
-	<h3>Lomakkeet</h3>
-	<div class="flowplayer color-light">
-		<video src="@routes.Assets.at("video/yllapito2.flv").absoluteURL(request())"></video>
-	</div>
+@links = {
+	@terms.navigation()
+	<li class="divider"></li>
+	@ingredients.navigation()
+	<li class="divider"></li>
+	@products.navigation()
+}
+
+@templateTwoColumn(Messages.get("management.title"), links) {
 }

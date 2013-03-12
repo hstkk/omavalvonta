@@ -15,12 +15,12 @@
 			}
 			<tbody>
 				@for(term <- page.getList) {
-					@tr() { <a href="@routes.Terms.crud.edit(term.id)">@term</a>
+					@tr() { <a href="@routes.App.terms.edit(term.id)">@term</a>
 						@term.categoryEnum }
 				}
 			</tbody>
 		}
-		@pagination(page, routes.Terms.crud.page(page.getPrevious), routes.Terms.crud.page(page.getNext))
+		@pagination(page, routes.App.terms.page(page.getPrevious), routes.App.terms.page(page.getNext))
 	} else {
 		@warning() {
 			@Messages.get("term.page.empty")

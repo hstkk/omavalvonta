@@ -1,4 +1,4 @@
-@import utils._
+@import play.i18n._
 
-<li class="nav-header"><a href="@routes.IngredientSupplies.crud.page()">@Helper.getMessage("ingredientsupply.page")</a></li>
-<li><a href="@routes.IngredientSupplies.crud.fresh">@Helper.getMessage("ingredientsupply.create")</a></li>
+<li class="nav-header"><a href="@routes.App.ingredientSupplies.page()">@Messages.get("ingredientsupply.page")</a></li>
+<li><a href="@routes.App.ingredientSupplies.fresh">@Messages.get("ingredientsupply.create")</a></li>

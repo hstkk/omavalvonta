@@ -110,6 +110,9 @@ ingredientsupply.amountAvailable=Jäljellä
 # --- Batch
 batch.create=Uusi erä
 
+# --- Management
+management.title=Ylläpito
+
 # --- Etc
 model.id="#"
 

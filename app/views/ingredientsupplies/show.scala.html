@@ -1,8 +1,8 @@
 @(ingredientSupply: IngredientSupply)
 
-@import utils._
+@import play.i18n._
 
-@main(Helper.getMessage("ingredientsupply.show", ingredientSupply.id)) {
+@main(Messages.get("ingredientsupply.show", ingredientSupply.id)) {
 	@table() {
 		@row(ingredientSupply)
 	}

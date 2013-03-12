@@ -2,19 +2,19 @@
 
 @import tags._
 @import tags.alerts._
-@import utils._
+@import play.i18n._
 
-@main(Helper.getMessage("ingredient.page")) {
+@main(Messages.get("ingredient.page")) {
 	@if(!page.isEmpty){
 		@table() {
 			@for(ingredientSupply <- page.getList) {
 				@row(ingredientSupply)
 			}
 		}
-		@pagination(page, routes.IngredientSupplies.crud.page(page.getPrevious), routes.IngredientSupplies.crud.page(page.getNext))
+		@pagination(page, routes.App.ingredientSupplies.page(page.getPrevious), routes.App.ingredientSupplies.page(page.getNext))
 	} else {
 		@warning() {
-			@Helper.getMessage("ingredientsupply.page.empty")
+			@Messages.get("ingredientsupply.page.empty")
 		}
 	}
 }
