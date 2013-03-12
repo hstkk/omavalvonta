@@ -9,8 +9,6 @@ import scala.collection.mutable.Buffer;
 
 public class Helper {
 	private static Lang lang;
-	private static Result unauthorized;
-	private static Result internalServerError;
 
 	private static Lang getLang() {
 		if (lang == null)
@@ -40,23 +38,16 @@ public class Helper {
 	}
 
 	public static Result getUnauthorized() {
-		if (unauthorized == null) {
-			String title = Helper.getMessage("http.401");
-			String description = Helper.getMessage("http.401.description");
-			unauthorized = play.mvc.Results.unauthorized(views.html.error
-					.render(title, description));
-		}
-		return unauthorized;
+		String title = Helper.getMessage("http.401");
+		String description = Helper.getMessage("http.401.description");
+		return play.mvc.Results.unauthorized(views.html.error.render(title,
+				description));
 	}
 
 	public static Result getInternalServerError() {
-		if (internalServerError != null) {
-			String title = Helper.getMessage("http.500");
-			String description = Helper.getMessage("http.500.description");
-			internalServerError = play.mvc.Results
-					.internalServerError(views.html.error.render(title,
-							description));
-		}
-		return internalServerError;
+		String title = Helper.getMessage("http.500");
+		String description = Helper.getMessage("http.500.description");
+		return play.mvc.Results.internalServerError(views.html.error.render(
+				title, description));
 	}
 }
