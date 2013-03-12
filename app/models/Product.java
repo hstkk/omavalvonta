@@ -25,11 +25,13 @@ import play.data.validation.Constraints.Required;
 public class Product extends UserModel {
 	public final static Crud<Product, Long> crud = new Crud<Product, Long>(Product.class);
 
+	// TODO check unique
 	@Required
 	@NotNull
 	@Column(unique = true)
 	public Long no;
 
+	// TODO check unique
 	@Required
 	@NotNull
 	@Column(unique = true)
