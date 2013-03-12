@@ -23,7 +23,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 			Template2<Long, Form<T>, Html> UPDATE,
 			Template1<Form<T>, Html> CREATE, Template1<Page<T>, Html> PAGE,
 			Template1<T, Html> SHOW, Call REDIRECT) {
-		super(CRUD, FORM, UPDATE, CREATE, PAGE, SHOW, REDIRECT);
+		super(CRUD, FORM, UPDATE, CREATE, PAGE, SHOW);
 	}
 
 	@Security.Authenticated(Secured.class)
@@ -32,7 +32,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		User user = getUser();
 		if (user != null) {
 			T t = CRUD.findById(id);
-			if (REDIRECT == null || t == null)
+			if (t == null)
 				return notFound();
 			if (t.user != null)
 				return Helper.getInternalServerError();
@@ -41,9 +41,14 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 				flash("success", Messages.get("crud.success"));
 			else
 				flash("error", Messages.get("crud.fail"));
-			return redirect(REDIRECT);
+			return redirect(callShow(id));
 		}
 		return Helper.getUnauthorized();
+	}
+
+	protected Call callAck(Long id) {
+		// Fallback
+		return callShow(id);
 	}
 
 	@Override
@@ -74,9 +79,10 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		User user = getUser();
 		t.user = user;
 		Result result = super.onCreateOrUpdate(t, id);
-		if (user == null && result != null)
-			// TODO return ack(id) url
-			return Shibboleth.login();
+		if (user == null && result != null) {
+			Call call = callAck(id);
+			return Shibboleth.login(call.url());
+		}
 		return result;
 	}
 
