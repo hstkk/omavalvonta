@@ -1,6 +1,5 @@
 package controllers.helpers;
 
-import controllers.shib.Secured;
 import models.User;
 import models.helpers.Page;
 import models.helpers.UserModel;
@@ -10,8 +9,10 @@ import play.api.templates.Template1;
 import play.api.templates.Template2;
 import play.data.Form;
 import play.db.jpa.Transactional;
-import play.mvc.*;
+import play.mvc.Result;
+import play.mvc.Security;
 import utils.Helper;
+import controllers.shib.Secured;
 
 @Security.Authenticated(Secured.class)
 public class SecuredCrud<T extends UserModel> extends Crud<T> {
@@ -50,12 +51,28 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 		return Helper.getUnauthorized();
 	}
 
+	private User getUser() {
+		User user = (User) ctx().args.get("user");
+		ctx().args.remove("user");
+		return user;
+	}
+
+	@Override
+	protected Result onCreateOrUpdate(T t, Long id) {
+		t.user = getUser();
+		return super.onCreateOrUpdate(t, id);
+	}
+
 	@Override
 	@Transactional(readOnly = true)
 	public Result page(int pageNumber) {
 		if (Secured.isAdmin())
 			return super.page(pageNumber);
 		return Helper.getUnauthorized();
+	}
+
+	private void setUser(User user) {
+		ctx().args.put("user", user);
 	}
 
 	@Override
@@ -76,27 +93,5 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 			return super.update(id);
 		}
 		return Helper.getUnauthorized();
-	}
-
-	@Override
-	protected Result onCreate(T t) {
-		t.user = getUser();
-		return super.onCreate(t);
-	}
-
-	@Override
-	protected Result onUpdate(T t, Long id) {
-		t.user = getUser();
-		return super.onUpdate(t, id);
-	}
-
-	private User getUser() {
-		User user = (User) ctx().args.get("user");
-		ctx().args.remove("user");
-		return user;
-	}
-
-	private void setUser(User user) {
-		ctx().args.put("user", user);
 	}
 }
