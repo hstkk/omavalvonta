@@ -55,7 +55,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			return result;
 		if (!filledForm.hasErrors()) {
 			T t = filledForm.get();
-			result = onCreate(t);
+			result = onCreateOrUpdate(t);
 			if (result != null)
 				return result;
 		}
@@ -113,7 +113,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			return result;
 		if (!filledForm.hasErrors()) {
 			T fresh = filledForm.get();
-			result = onUpdate(fresh, id);
+			result = onCreateOrUpdate(fresh, id);
 			if (result != null)
 				return result;
 		}
@@ -130,17 +130,19 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		return null;
 	}
 
-	protected Result onCreate(T t) {
-		if (CRUD.create(t)) {
-			flash("success", Messages.get("crud.success"));
-			return redirect(REDIRECT);
-		}
-		return null;
+	protected Result onCreateOrUpdate(T t) {
+		return onCreateOrUpdate(t, null);
 	}
 
-	protected Result onUpdate(T t, Long id) {
-		t.id = id;
-		if (CRUD.update(t)) {
+	protected Result onCreateOrUpdate(T t, Long id) {
+		boolean success = false;
+		if (id == null)
+			success = CRUD.create(t);
+		else {
+			t.id = id;
+			success = CRUD.update(t);
+		}
+		if (success) {
 			flash("success", Messages.get("crud.success"));
 			return redirect(REDIRECT);
 		}

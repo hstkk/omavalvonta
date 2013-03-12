@@ -70,26 +70,13 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	}
 
 	@Override
-	protected Result onCreate(T t) {
+	protected Result onCreateOrUpdate(T t, Long id) {
 		User user = getUser();
 		t.user = user;
-		Result result = super.onCreate(t);
-		// TODO returnUrl
-		String returnUrl = "";
+		Result result = super.onCreateOrUpdate(t, id);
 		if (user == null && result != null)
-			return Shibboleth.login(returnUrl);
-		return result;
-	}
-
-	@Override
-	protected Result onUpdate(T t, Long id) {
-		User user = getUser();
-		t.user = user;
-		Result result = super.onUpdate(t, id);
-		// TODO returnUrl
-		String returnUrl = "";
-		if (user == null && result != null)
-			return Shibboleth.login(returnUrl);
+			// TODO return ack(id) url
+			return Shibboleth.login();
 		return result;
 	}
 
