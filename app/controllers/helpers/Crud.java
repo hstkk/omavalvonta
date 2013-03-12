@@ -1,15 +1,18 @@
 package controllers.helpers;
 
-import controllers.shib.SessionTimeout;
 import models.helpers.Model;
 import models.helpers.Page;
-
-import play.i18n.Messages;
-import play.mvc.*;
 import play.api.mvc.Call;
-import play.api.templates.*;
-import play.data.*;
-import play.db.jpa.*;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
+import play.data.Form;
+import play.db.jpa.Transactional;
+import play.i18n.Messages;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.With;
+import controllers.shib.SessionTimeout;
 
 @With(SessionTimeout.class)
 public class Crud<T extends Model> extends Controller implements CrudInterface {
@@ -19,7 +22,6 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	private final Template1<Page<T>, Html> PAGE;
 	private final Template1<T, Html> SHOW;
 	private final Template2<Long, Form<T>, Html> UPDATE;
-	protected final Call REDIRECT;
 
 	/**
 	 * 
@@ -34,20 +36,29 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	public Crud(models.helpers.Crud<T, Long> CRUD, Form<T> FORM,
 			Template2<Long, Form<T>, Html> UPDATE,
 			Template1<Form<T>, Html> CREATE, Template1<Page<T>, Html> PAGE,
-			Template1<T, Html> SHOW, Call REDIRECT) {
+			Template1<T, Html> SHOW) {
 		this.CRUD = CRUD;
 		this.FORM = FORM;
 		this.UPDATE = UPDATE;
 		this.CREATE = CREATE;
 		this.PAGE = PAGE;
 		this.SHOW = SHOW;
-		this.REDIRECT = REDIRECT;
+	}
+
+	protected Call callPage() {
+		// Fallback
+		return controllers.routes.Application.index();
+	}
+
+	protected Call callShow(Long id) {
+		// Fallback
+		return callPage();
 	}
 
 	@Override
 	@Transactional
 	public Result create() {
-		if (REDIRECT == null || CREATE == null)
+		if (CREATE == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		Result result = onCancel(filledForm);
@@ -83,6 +94,40 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		return ok(CREATE.render(FORM));
 	}
 
+	protected Result onCancel(Form<T> filledForm) {
+		return onCancel(filledForm, null);
+	}
+
+	protected Result onCancel(Form<T> filledForm, Long id) {
+		if (filledForm.field("action").value()
+				.equals(Messages.get("crud.action.cancel"))) {
+			flash("warning", Messages.get("crud.cancel"));
+			Call call = (id != null) ? callShow(id) : callPage();
+			return redirect(call);
+		}
+		return null;
+	}
+
+	protected Result onCreateOrUpdate(T t) {
+		return onCreateOrUpdate(t, null);
+	}
+
+	protected Result onCreateOrUpdate(T t, Long id) {
+		boolean success = false;
+		if (id == null)
+			success = CRUD.create(t);
+		else {
+			t.id = id;
+			success = CRUD.update(t);
+		}
+		if (success) {
+			flash("success", Messages.get("crud.success"));
+			Call call = (id != null) ? callShow(id) : callPage();
+			return redirect(call);
+		}
+		return null;
+	}
+
 	@Override
 	@Transactional(readOnly = true)
 	public Result page(int pageNumber) {
@@ -105,10 +150,10 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional
 	public Result update(Long id) {
-		if (REDIRECT == null || UPDATE == null || !CRUD.exists(id))
+		if (UPDATE == null || !CRUD.exists(id))
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
-		Result result = onCancel(filledForm);
+		Result result = onCancel(filledForm, id);
 		if (result != null)
 			return result;
 		if (!filledForm.hasErrors()) {
@@ -119,33 +164,5 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		}
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(UPDATE.render(id, filledForm));
-	}
-
-	protected Result onCancel(Form<T> filledForm) {
-		if (filledForm.field("action").value()
-				.equals(Messages.get("crud.action.cancel"))) {
-			flash("warning", Messages.get("crud.cancel"));
-			return redirect(REDIRECT);
-		}
-		return null;
-	}
-
-	protected Result onCreateOrUpdate(T t) {
-		return onCreateOrUpdate(t, null);
-	}
-
-	protected Result onCreateOrUpdate(T t, Long id) {
-		boolean success = false;
-		if (id == null)
-			success = CRUD.create(t);
-		else {
-			t.id = id;
-			success = CRUD.update(t);
-		}
-		if (success) {
-			flash("success", Messages.get("crud.success"));
-			return redirect(REDIRECT);
-		}
-		return null;
 	}
 }
