@@ -1,15 +1,15 @@
 @()(content: Html)
 
-@import utils._
+@import play.i18n._
 
 @tags.tables.table() {
 	@tags.tables.thead() {
-		Helper.getMessage("model.id")
-		Helper.getMessage("ingredientsupply.ingredient")
-		Helper.getMessage("ingredientsupply.received")
-		Helper.getMessage("ingredientsupply.bestBefore")
-		Helper.getMessage("ingredientsupply.amount")
-		Helper.getMessage("ingredientsupply.amountAvailable")
+		Messages.get("model.id")
+		Messages.get("ingredientsupply.ingredient")
+		Messages.get("ingredientsupply.received")
+		Messages.get("ingredientsupply.bestBefore")
+		Messages.get("ingredientsupply.amount")
+		Messages.get("ingredientsupply.amountAvailable")
 	}
 	<tbody>
 		@content

@@ -1,7 +1,7 @@
 @(FORM: play.data.Form[models.IngredientSupply])
 
-@import utils._
+@import play.i18n._
 
-@main(Helper.getMessage("ingredientsupply.create")) {
-	@fields(FORM, routes.IngredientSupplies.crud.create)
+@main(Messages.get("ingredientsupply.create")) {
+	@fields(FORM, routes.App.ingredientSupplies.create)
 }
