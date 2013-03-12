@@ -1,16 +1,24 @@
 package controllers;
 
 import models.Term;
-import controllers.helpers.SecuredCrud;
-import play.mvc.Controller;
+import play.api.mvc.Call;
 import views.html.terms.*;
+import controllers.helpers.SecuredCrud;
 
-public class Terms extends Controller{
-	public final static SecuredCrud<Term> crud = new SecuredCrud<Term>(Term.crud,
-			form(Term.class),
-			update.ref(),
-			create.ref(),
-			page.ref(),
-			null,
-			routes.Terms.crud.page(1));
+public class Terms extends SecuredCrud<Term> {
+	public Terms() {
+		super(
+				Term.crud,
+				form(Term.class),
+				update.ref(),
+				create.ref(),
+				page.ref(),
+				null // show
+		);
+	}
+
+	@Override
+	protected Call callPage() {
+		return controllers.routes.App.terms.page(1);
+	}
 }
