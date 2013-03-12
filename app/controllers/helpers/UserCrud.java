@@ -22,7 +22,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	public UserCrud(models.helpers.Crud<T, Long> CRUD, Form<T> FORM,
 			Template2<Long, Form<T>, Html> UPDATE,
 			Template1<Form<T>, Html> CREATE, Template1<Page<T>, Html> PAGE,
-			Template1<T, Html> SHOW, Call REDIRECT) {
+			Template1<T, Html> SHOW) {
 		super(CRUD, FORM, UPDATE, CREATE, PAGE, SHOW);
 	}
 
