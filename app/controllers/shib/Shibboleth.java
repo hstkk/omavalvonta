@@ -1,14 +1,9 @@
 package controllers.shib;
 
-import static play.mvc.Results.internalServerError;
-
 import java.io.UnsupportedEncodingException;
-
-import akka.util.Helpers;
 
 import models.User;
 
-import play.*;
 import play.i18n.Messages;
 import play.mvc.*;
 import play.db.jpa.*;
