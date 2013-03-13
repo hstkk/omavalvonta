@@ -2,7 +2,7 @@ package controllers.helpers;
 
 import models.helpers.Model;
 import models.helpers.Page;
-import play.api.mvc.Call;
+import play.mvc.Call;
 import play.api.templates.Html;
 import play.api.templates.Template1;
 import play.api.templates.Template2;
@@ -18,6 +18,7 @@ import controllers.shib.SessionTimeout;
 public class Crud<T extends Model> extends Controller implements CrudInterface {
 	private final Form<T> FORM;
 	protected final models.helpers.Crud<T, Long> CRUD;
+	private final Router ROUTER;
 	private final Template1<Form<T>, Html> CREATE;
 	private final Template1<Page<T>, Html> PAGE;
 	private final Template1<T, Html> SHOW;
@@ -33,26 +34,22 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	 * @param SHOW
 	 * @param REDIRECT
 	 */
-	public Crud(models.helpers.Crud<T, Long> CRUD, Form<T> FORM,
-			Template2<Long, Form<T>, Html> UPDATE,
-			Template1<Form<T>, Html> CREATE, Template1<Page<T>, Html> PAGE,
-			Template1<T, Html> SHOW) {
+	public Crud(
+			models.helpers.Crud<T, Long> CRUD,
+			Form<T> FORM,
+			Router ROUTER,
+			Template1<Form<T>, Html> CREATE,
+			Template1<Page<T>, Html> PAGE,
+			Template1<T, Html> SHOW,
+			Template2<Long, Form<T>, Html> UPDATE
+		) {
 		this.CRUD = CRUD;
 		this.FORM = FORM;
-		this.UPDATE = UPDATE;
+		this.ROUTER = ROUTER;
 		this.CREATE = CREATE;
 		this.PAGE = PAGE;
 		this.SHOW = SHOW;
-	}
-
-	protected Call callPage() {
-		// Fallback
-		return controllers.routes.Application.index();
-	}
-
-	protected Call callShow(Long id) {
-		// Fallback
-		return callPage();
+		this.UPDATE = UPDATE;
 	}
 
 	@Override
@@ -102,7 +99,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (filledForm.field("action").value()
 				.equals(Messages.get("crud.action.cancel"))) {
 			flash("warning", Messages.get("crud.cancel"));
-			Call call = (id != null) ? callShow(id) : callPage();
+			Call call = (id != null) ? ROUTER.show(id) : ROUTER.page();
 			return redirect(call);
 		}
 		return null;
@@ -122,7 +119,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		}
 		if (success) {
 			flash("success", Messages.get("crud.success"));
-			Call call = (id != null) ? callShow(id) : callPage();
+			Call call = (id != null) ? ROUTER.show(id) : ROUTER.page();
 			return redirect(call);
 		}
 		return null;
