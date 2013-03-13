@@ -37,9 +37,10 @@ GET     /yllapito											controllers.Application.management
 
 # Ingredient supply
 # Where used
+# Ack
+#
 # TEST
 # COMMENT
-# Ack
 GET		/raaka-aineet										controllers.IngredientSupplies.crud.page(sivu: Int ?= 1)
 GET		/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.fresh
 POST	/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.create
@@ -47,10 +48,11 @@ GET		/raaka-aineet/:ingredientId							controllers.IngredientSupplies.crud.show(
 POST	/raaka-aineet/:ingredientId/kuittaa					controllers.IngredientSupplies.crud.ack(ingredientId: Long)
 
 # Term management
-# TEST
-# COMMENT
+#
 # Archive
 # DELETE
+# TEST
+# COMMENT
 GET		/yllapito/termit									controllers.Terms.crud.page(sivu: Int ?= 1)
 GET		/yllapito/termit/uusi								controllers.Terms.crud.fresh
 POST	/yllapito/termit/uusi								controllers.Terms.crud.create
@@ -60,10 +62,11 @@ GET		/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.edit(termId: Lo
 # Ingredient management
 # Checkboxes
 # Form
+#
+# Archive
 # TEST
 # COMMENT
 # DELETE
-# Archive
 GET		/yllapito/raaka-aineet								controllers.Ingredients.crud.page(sivu: Int ?= 1)
 GET		/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.fresh
 POST	/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.create
@@ -73,10 +76,11 @@ GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.
 # Product management
 # Form
 # Ingredient multiselect
+#
+# Archive
 # TEST
 # COMMENT
 # DELETE
-# Archive
 GET		/yllapito/tuotteet									controllers.Products.crud.page(sivu: Int ?= 1)
 GET		/yllapito/tuotteet/uusi								controllers.Products.crud.fresh
 POST	/yllapito/tuotteet/uusi								controllers.Products.crud.create
