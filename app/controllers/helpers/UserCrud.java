@@ -3,7 +3,7 @@ package controllers.helpers;
 import models.User;
 import models.helpers.Page;
 import models.helpers.UserModel;
-import play.api.mvc.Call;
+import play.mvc.Call;
 import play.api.templates.Html;
 import play.api.templates.Template1;
 import play.api.templates.Template2;
@@ -19,11 +19,19 @@ import controllers.shib.SessionTimeout;
 import controllers.shib.Shibboleth;
 
 public class UserCrud<T extends UserModel> extends Crud<T> {
-	public UserCrud(models.helpers.Crud<T, Long> CRUD, Form<T> FORM,
-			Template2<Long, Form<T>, Html> UPDATE,
-			Template1<Form<T>, Html> CREATE, Template1<Page<T>, Html> PAGE,
-			Template1<T, Html> SHOW) {
-		super(CRUD, FORM, UPDATE, CREATE, PAGE, SHOW);
+	private final UserRouter ROUTER;
+
+	public UserCrud(
+			models.helpers.Crud<T, Long> CRUD,
+			Form<T> FORM,
+			UserRouter ROUTER,
+			Template1<Form<T>, Html> CREATE,
+			Template1<Page<T>, Html> PAGE,
+			Template1<T, Html> SHOW,
+			Template2<Long, Form<T>, Html> UPDATE
+		) {
+		super(CRUD, FORM, ROUTER, CREATE, PAGE, SHOW, UPDATE);
+		this.ROUTER = ROUTER;
 	}
 
 	@Security.Authenticated(Secured.class)
@@ -41,14 +49,9 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 				flash("success", Messages.get("crud.success"));
 			else
 				flash("error", Messages.get("crud.fail"));
-			return redirect(callShow(id));
+			return redirect(ROUTER.show(id));
 		}
 		return Helper.getUnauthorized();
-	}
-
-	protected Call callAck(Long id) {
-		// Fallback
-		return callShow(id);
 	}
 
 	@Override
@@ -80,7 +83,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		t.user = user;
 		Result result = super.onCreateOrUpdate(t, id);
 		if (user == null && result != null) {
-			Call call = callAck(id);
+			Call call = ROUTER.ack(id);
 			return Shibboleth.login(call.url());
 		}
 		return result;

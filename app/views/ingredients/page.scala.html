@@ -18,13 +18,13 @@
 			}
 			<tbody>
 				@for(ingredient <- page.getList) {
-					@tr() { <a href="@routes.App.ingredients.edit(ingredient.id)">@ingredient</a>
+					@tr() { <a href="@routes.Ingredients.crud.edit(ingredient.id)">@ingredient</a>
 						@ingredient.description
 						@ingredient.bestBefore }
 				}
 			</tbody>
 		}
-		@pagination(page, routes.App.ingredients.page(page.getPrevious), routes.App.ingredients.page(page.getNext))
+		@pagination(page, routes.Ingredients.crud.page(page.getPrevious), routes.Ingredients.crud.page(page.getNext))
 	} else {
 		@warning() {
 			@Messages.get("ingredient.page.empty")

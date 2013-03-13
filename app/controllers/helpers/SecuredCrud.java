@@ -15,11 +15,16 @@ import controllers.shib.Secured;
 
 @Security.Authenticated(Secured.class)
 public class SecuredCrud<T extends UserModel> extends Crud<T> {
-	public SecuredCrud(models.helpers.Crud<T, Long> CRUD, Form<T> FORM,
-			Template2<Long, Form<T>, Html> UPDATE,
-			Template1<Form<T>, Html> CREATE, Template1<Page<T>, Html> PAGE,
-			Template1<T, Html> SHOW) {
-		super(CRUD, FORM, UPDATE, CREATE, PAGE, SHOW);
+	public SecuredCrud(
+			models.helpers.Crud<T, Long> CRUD,
+			Form<T> FORM,
+			Router ROUTER,
+			Template1<Form<T>, Html> CREATE,
+			Template1<Page<T>, Html> PAGE,
+			Template1<T, Html> SHOW,
+			Template2<Long, Form<T>, Html> UPDATE
+		) {
+		super(CRUD, FORM, ROUTER, CREATE, PAGE, SHOW, UPDATE);
 	}
 
 	@Override

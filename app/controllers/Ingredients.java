@@ -1,24 +1,26 @@
 package controllers;
 
 import models.Ingredient;
-import play.api.mvc.Call;
+import play.mvc.Call;
+import play.mvc.Controller;
 import views.html.ingredients.*;
 import controllers.helpers.SecuredCrud;
 
-public class Ingredients extends SecuredCrud<Ingredient> {
-	public Ingredients() {
-		super(
-				Ingredient.crud,
-				form(Ingredient.class),
-				update.ref(),
-				create.ref(),
-				page.ref(),
-				null // show
+public class Ingredients extends Controller {
+	public final static SecuredCrud<Ingredient> crud = new SecuredCrud<Ingredient>(
+			Ingredient.crud,
+			form(Ingredient.class),
+			new Router(),
+			create.ref(),
+			page.ref(),
+			null,
+			update.ref()
 		);
-	}
 
-	@Override
-	protected Call callPage() {
-		return controllers.routes.App.ingredients.page(1);
+	public static class Router extends controllers.helpers.Router {
+		@Override
+		public Call page() {
+			return controllers.routes.Ingredients.crud.page(1);
+		}
 	}
 }
