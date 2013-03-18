@@ -113,6 +113,9 @@ batch.create=Uusi erä
 # --- Management
 management.title=Ylläpito
 
+# --- Links
+links.frontPage=Etusivulle
+
 # --- Etc
 model.id="#"
 
