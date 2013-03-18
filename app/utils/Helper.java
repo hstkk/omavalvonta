@@ -2,6 +2,7 @@ package utils;
 
 import java.util.Arrays;
 
+import play.Play;
 import play.i18n.Lang;
 import play.i18n.Messages;
 import play.mvc.Result;
@@ -31,7 +32,7 @@ public class Helper {
 	}
 
 	public static String getOrElse(String key, String defaultValue) {
-		String value = getOrElse(key);
+		String value = Play.application().configuration().getString(key);
 		if (value == null)
 			return defaultValue;
 		return value;
