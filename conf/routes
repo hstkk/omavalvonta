@@ -26,6 +26,11 @@ GET		/kirjaudu-ulos										controllers.shib.Shibboleth.logout
 # News
 GET     /yllapito											controllers.Application.management
 
+# Users
+# TODO what user did
+GET		/kayttajat											controllers.Users.crud.page(sivu: Int ?= 1)
+GET		/kayttajat/:userId									controllers.Users.crud.show(userId: Long)
+
 # Batches
 # TODO
 

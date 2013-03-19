@@ -1,0 +1,9 @@
+@(user: User)
+
+@import play.i18n._
+
+@main(user.toString) {
+	<ul>
+		<li>@user.email</li>
+	</ul>
+}
