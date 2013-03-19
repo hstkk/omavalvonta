@@ -110,6 +110,11 @@ ingredientsupply.amountAvailable=Jäljellä
 # --- Batch
 batch.create=Uusi erä
 
+# --- User
+user.page=Käyttäjät
+user.page.empty=Käyttäjiä ei löytynyt!
+user.show=Käyttäjä
+
 # --- Management
 management.title=Ylläpito
 

@@ -1,0 +1,26 @@
+@(page: models.helpers.Page[models.User])
+
+@import tags._
+@import tags.alerts._
+@import tags.tables._
+@import play.i18n._
+
+@main(Messages.get("user.page")) {
+	@if(!page.isEmpty){
+		@table() {
+			@thead() {
+				@Messages.get("users.show")
+			}
+			<tbody>
+				@for(user <- page.getList) {
+					@tr() { <a href="@routes.Usrs.crud.show(user.id)">@user</a> }
+				}
+			</tbody>
+		}
+		@pagination(page, routes.Users.crud.page(page.getPrevious), routes.Users.crud.page(page.getNext))
+	} else {
+		@warning() {
+			@Messages.get("user.page.empty")
+		}
+	}
+}
