@@ -48,4 +48,8 @@ public class User extends Model {
 		query.where(criteriaBuilder.equal(root.get(User_.email), email));
 		return crud.findBy(query);
 	}
+
+	public static User findByEmail(User user) {
+		return findByEmail(user.email);
+	}
 }

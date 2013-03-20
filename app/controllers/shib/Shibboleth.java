@@ -14,25 +14,26 @@ public class Shibboleth extends Controller {
 	// 2.
 	@Transactional
 	public static Result authenticate() {
-		// verify required attributes
-		ShibbolethHelper.verifyAttributes(ctx());
-
-		// TODO user
-		User user = null;
-
-		String redirectUrl = ShibbolethHelper.getRedirectUrl(ctx(), user);
-		return temporaryRedirect(redirectUrl);
-
-		// return notFound();
+		User user = ShibbolethHelper.mapAttributes(ctx());
+		if (ShibbolethHelper.verifyAttributes(user)) {
+			user = ShibbolethHelper.createOrUpdateUser(user);
+			if (user != null) {
+				ShibbolethHelper.createSession(ctx(), user);
+				String redirectUrl = ShibbolethHelper.getRedirectUrl(ctx(),
+						user);
+				return temporaryRedirect(redirectUrl);
+			}
+		}
+		return Helper.getUnauthorized();
 	}
 
 	// 1.
 	public static Result login(String returnUrl) {
-		/*try {
+		try {
 			String loginUrl = ShibbolethHelper.getLoginUrl(ctx(), returnUrl);
 			return temporaryRedirect(loginUrl);
 		} catch (UnsupportedEncodingException e) {
-		}*/
+		}
 		return Helper.getInternalServerError();
 	}
 
