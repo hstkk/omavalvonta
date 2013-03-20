@@ -7,10 +7,12 @@ import views.html.users.*;
 import controllers.helpers.Crud;
 
 public class Users extends Controller {
+	public final static Router router = new Router();
+
 	public final static Crud<User> crud = new Crud<User>(
 			User.crud,
 			null,
-			new Router(),
+			router,
 			null,
 			page.ref(),
 			show.ref(),
@@ -26,6 +28,10 @@ public class Users extends Controller {
 		@Override
 		public play.mvc.Call show(Long id) {
 			return controllers.routes.Users.crud.show(id);
+		}
+
+		public play.mvc.Call show(User user) {
+			return show(user.id);
 		}
 	}
 }

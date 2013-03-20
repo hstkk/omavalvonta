@@ -2,17 +2,29 @@ package utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 import models.User;
-import controllers.routes;
-import controllers.shib.Shibboleth;
 import play.Play;
+import play.data.validation.Validation;
 import play.mvc.Http.Context;
-import play.mvc.Result;
+import controllers.Users;
+import controllers.routes;
 
 public class ShibbolethHelper {
 	public static void clearSession(Context ctx) {
 		ctx.session().clear();
+	}
+
+	public static User createOrUpdateUser(User user) {
+		User existingUser = User.findByEmail(user);
+		if (existingUser != null) {
+			user.id = existingUser.id;
+			if (User.crud.update(user))
+				return user;
+		} else if (User.crud.create(user))
+			return user;
+		return null;
 	}
 
 	public static void createSession(Context ctx, User user) {
@@ -29,7 +41,7 @@ public class ShibbolethHelper {
 				ShibbolethDefaults.LOGIN_URL));
 
 		// The IdP to request authentication from
-		String entity = Helper.getOrElse("shibboleth.entityID");
+		String entity = Helper.getString("shibboleth.entityID");
 		if (entity != null && !entity.isEmpty()) {
 			url.append("?entityID=");
 			url.append(URLEncoder.encode(entity,
@@ -73,16 +85,32 @@ public class ShibbolethHelper {
 		String url = ctx.flash().get("url");
 		if (url != null)
 			return url;
-		String[] urls = ctx.request().queryString().get("url");
+		String[] urls = ctx.request().queryString().get("return");
 		if (urls != null && urls.length > 0 && urls[0] != null)
 			return urls[0];
-		// if(user != null)
-		// return routes.Users.crud.show(user.id).toString();
+		if (user != null)
+			return Users.router.show(user).toString();
 		return ShibbolethDefaults.HOME;
+	}
+
+	public static Long getTimestamp(Context ctx) {
+		try {
+			return Long.parseLong(ctx.session().get("t"));
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	public static String getUsername(Context ctx) {
+		return ctx.session().get("u");
 	}
 
 	public static boolean isSession(Context ctx) {
 		return ctx.session().containsKey("u") && ctx.session().containsKey("t");
+	}
+
+	public static boolean isSessionValid(Context ctx) {
+		return isSessionValid(ctx, getUsername(ctx));
 	}
 
 	public static boolean isSessionValid(Context ctx, String user) {
@@ -101,31 +129,58 @@ public class ShibbolethHelper {
 		return false;
 	}
 
-	public static boolean isSessionValid(Context ctx) {
-		return isSessionValid(ctx, getUsername(ctx));
-	}
-
-	public static void verifyAttributes(Context ctx) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public static String getUsername(Context ctx) {
-		return ctx.session().get("u");
-	}
-
-	public static Long getTimestamp(Context ctx) {
-		try {
-			return Long.parseLong(ctx.session().get("t"));
-		} catch (Exception e) {
+	public static User mapAttributes(Context ctx) {
+		Map<String, String[]> headers = ctx.request().headers();
+		if (!verifyAttributes(headers)) {
+			User user = new User();
+			user.email = headers.get(Helper
+					.getString("shibboleth.attribute.email"))[0];
+			user.firstName = headers.get(Helper
+					.getString("shibboleth.attribute.firstName"))[0];
+			user.lastName = headers.get(Helper
+					.getString("shibboleth.attribute.lastName"))[0];
+			user.role = user.email = headers.get(Helper
+					.getString("shibboleth.attribute.role"))[0];
+			return user;
 		}
 		return null;
+	}
+
+	public static boolean verifyAttributes(Map<String, String[]> headers) {
+		if (headers.isEmpty()) {
+			System.out.println("Shibboleth: empty HTTP headers");
+			return false;
+		}
+		String[] keys = { "shibboleth.attribute.email",
+				"shibboleth.attribute.firstName",
+				"shibboleth.attribute.lastName", "shibboleth.attribute.role" };
+		for (String key : keys) {
+			String header = Helper.getString(key);
+			Boolean required = Helper.getBool(key + ".required");
+			if (!headers.containsKey(header)) {
+				System.out.print("Shibboleth: couldn't find ");
+				System.out.print(header);
+				System.out.println(" HTTP header");
+				return false;
+			} else if (required && headers.get(header)[0].isEmpty()) {
+				System.out.print("Shibboleth: ");
+				System.out.print(header);
+				System.out.println(" HTTP header is empty");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean verifyAttributes(User user) {
+		return (user != null && Validation.getValidator().validate(user)
+				.isEmpty());
 	}
 
 	// TODO document split regex
 	public static boolean verifyRole(String role, String adminRole) {
 		if (!adminRole.isEmpty()) {
-			String separator = Helper.getOrElse("shibboleth.separator");
+			String separator = Helper.getString("shibboleth.separator");
 			if (separator.isEmpty())
 				return role.equals(adminRole);
 			for (String r : role.split(separator))
