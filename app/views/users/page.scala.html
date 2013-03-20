@@ -13,7 +13,7 @@
 			}
 			<tbody>
 				@for(user <- page.getList) {
-					@tr() { <a href="@routes.Usrs.crud.show(user.id)">@user</a> }
+					@tr() { <a href="@routes.Users.crud.show(user.id)">@user</a> }
 				}
 			</tbody>
 		}
