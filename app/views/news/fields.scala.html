@@ -1,0 +1,13 @@
+@(FORM: play.data.Form[models.News], action: play.api.mvc.Call)
+
+@import play.i18n._
+@import helper._
+@import helper.twitterBootstrap._
+@import tags.forms._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@tags.forms.form(FORM, action) {
+	@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
+	@helper.textarea(FORM("story"), '_label -> Messages.get("label.story"), '_class -> "control-group")
+}

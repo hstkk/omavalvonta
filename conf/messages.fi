@@ -55,6 +55,8 @@ label.bestBefore=Parasta ennen (päivää)
 label.category=Kategoria
 label.term=Termi
 label.productNo=Tuotenumero
+label.date=Päivämäärä
+label.user=Käyttäjä
 
 # --- Fieldset
 fieldset.create=Uusi kenttäryhmä
@@ -114,6 +116,15 @@ batch.create=Uusi erä
 user.page=Käyttäjät
 user.page.empty=Käyttäjiä ei löytynyt!
 user.show=Käyttäjä
+
+# --- News
+news.create=Uusi uutinen
+news.page=Uutiset
+news.page.empty=Uutisia ei löytynyt!
+news.update=Muokkaa uutista
+
+# --- Application
+application.index=Uutiset
 
 # --- Management
 management.title=Ylläpito
