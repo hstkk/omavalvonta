@@ -16,6 +16,7 @@
 # Home page
 # News
 GET     /													controllers.Application.index
+GET		/													controllers.News.index(sivu: Int ?= 1)
 
 # Shibboleth
 GET		/autentikoi											controllers.shib.Shibboleth.authenticate
@@ -51,6 +52,14 @@ GET		/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.fresh
 POST	/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.create
 GET		/raaka-aineet/:ingredientId							controllers.IngredientSupplies.crud.show(ingredientId: Long)
 POST	/raaka-aineet/:ingredientId/kuittaa					controllers.IngredientSupplies.crud.ack(ingredientId: Long)
+
+# News
+GET		/yllapito/uutiset									controllers.News.crud.page(sivu: Int ?= 1)
+GET		/yllapito/uutiset/uusi								controllers.News.crud.fresh
+POST	/yllapito/uutiset/uusi								controllers.News.crud.create
+POST	/yllapito/uutiset/:newsId/muokkaa					controllers.News.crud.update(newsId: Long)
+GET		/yllapito/uutiset/:newsId/muokkaa					controllers.News.crud.edit(newsId: Long)
+#POST	/yllapito/uutiset/:newsId/poista					controllers.News.crud.delete(newsId: Long)
 
 # Term management
 #

@@ -1,0 +1,29 @@
+@(page: models.helpers.Page[models.News])
+
+@import play.i18n._
+@import tags._
+@import tags.alerts._
+@import tags.tables._
+@import tags.navs._
+
+@main(Messages.get("news.page")) {
+	@if(!page.isEmpty){
+		@table() {
+			@thead() {
+				@Messages.get("label.date")
+				@Messages.get("label.name")
+			}
+			<tbody>
+				@for(news <- page.getList) {
+					@tr() { <a href="@routes.News.crud.edit(news.id)">@news.lastModified</a>
+						@news }
+				}
+			</tbody>
+		}
+		@pagination(page, routes.News.crud.page(page.getPrevious), routes.News.crud.page(page.getNext))
+	} else {
+		@warning() {
+			@Messages.get("news.page.empty")
+		}
+	}
+}
