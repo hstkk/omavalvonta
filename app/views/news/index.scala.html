@@ -13,7 +13,7 @@
 				@news.story
 			</div>
 		}
-		@pagination(page, routes.News.crud.page(page.getPrevious), routes.News.crud.page(page.getNext))
+		@pagination(page, routes.News.index(page.getPrevious), routes.News.index(page.getNext))
 	} else {
 		@warning() {
 			@Messages.get("news.page.empty")
