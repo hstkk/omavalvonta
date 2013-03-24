@@ -24,7 +24,6 @@ GET		/kirjaudu											controllers.shib.Shibboleth.login(url = "/")
 GET		/kirjaudu-ulos										controllers.shib.Shibboleth.logout
 
 # Management
-# News
 GET     /yllapito											controllers.Application.management
 
 # Users
