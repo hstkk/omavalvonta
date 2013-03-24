@@ -1,22 +1,25 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
-
 import models.helpers.Crud;
 import models.helpers.UserModel;
+import org.hibernate.envers.Audited;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import utils.Converter;
 
 @Entity
+@Audited
 public class IngredientSupply extends UserModel {
 	public final static Crud<IngredientSupply, Long> crud = new Crud<IngredientSupply, Long>(
 			IngredientSupply.class);
@@ -43,6 +46,9 @@ public class IngredientSupply extends UserModel {
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term unit;
 
+	@OneToMany(mappedBy = "ingredientSupply")
+	public List<IngredientSupplyBatch> batches = new ArrayList<IngredientSupplyBatch>();
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(ingredient);
