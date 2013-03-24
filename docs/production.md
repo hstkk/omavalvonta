@@ -227,6 +227,8 @@
     <Location /Shibboleth.sso>
       SetHandler shib
     </Location>
+    
+    ShibUseHeaders On
 
 - Käynnistetään Shibd daemon automaattisesti
 
