@@ -97,6 +97,7 @@ shib.logout=Kirjaudu ulos
 shib.login=Kirjaudu
 shib.flash.logout=Uloskirjautuminen onnistui!
 shib.flash.login=Tervetuloa {0}!
+shib.flash.fail=Kirjautuminen epäonnistui!
 
 # --- IngredientSupply
 ingredientsupply.create=Vastaanota raaka-aine-erä
