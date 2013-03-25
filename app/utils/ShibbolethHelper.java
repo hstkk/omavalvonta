@@ -78,6 +78,7 @@ public class ShibbolethHelper {
 		url.append(URLEncoder.encode(
 				routes.Application.index().absoluteURL(ctx.request(), secure)
 						.toString(), ShibbolethDefaults.URL_ENCODING));
+
 		return url.toString();
 	}
 
@@ -131,7 +132,7 @@ public class ShibbolethHelper {
 
 	public static User mapAttributes(Context ctx) {
 		Map<String, String[]> headers = ctx.request().headers();
-		if (!verifyAttributes(headers)) {
+		if (verifyAttributes(headers)) {
 			User user = new User();
 			user.email = headers.get(Helper
 					.getString("shibboleth.attribute.email"))[0];
@@ -146,7 +147,15 @@ public class ShibbolethHelper {
 		return null;
 	}
 
+	public static void printHeaders(Map<String, String[]> headers) {
+		for (String key : headers.keySet())
+			System.out.println("Info: " + key + " - " + headers.get(key));
+	}
+
 	public static boolean verifyAttributes(Map<String, String[]> headers) {
+		// test
+		printHeaders(headers);
+		// test
 		if (headers.isEmpty()) {
 			System.out.println("Shibboleth: empty HTTP headers");
 			return false;
@@ -156,7 +165,7 @@ public class ShibbolethHelper {
 				"shibboleth.attribute.lastName", "shibboleth.attribute.role" };
 		for (String key : keys) {
 			String header = Helper.getString(key);
-			Boolean required = Helper.getBool(key + ".required");
+			Boolean required = Helper.getBool(key + "Required");
 			if (!headers.containsKey(header)) {
 				System.out.print("Shibboleth: couldn't find ");
 				System.out.print(header);
