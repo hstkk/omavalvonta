@@ -35,3 +35,8 @@ Staging Application 'omavalvonta': OK
 Starting Application 'omavalvonta': OK
 
 6. vmc update omavalvonta --path=dist/omavalvonta-1.0-SNAPSHOT.zip
+
+Standalone
+==========
+
+    play dist
