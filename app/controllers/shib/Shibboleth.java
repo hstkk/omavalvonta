@@ -1,9 +1,7 @@
 package controllers.shib;
 
 import java.io.UnsupportedEncodingException;
-
 import models.User;
-
 import play.i18n.Messages;
 import play.mvc.*;
 import play.db.jpa.*;
@@ -18,12 +16,14 @@ public class Shibboleth extends Controller {
 		if (ShibbolethHelper.verifyAttributes(user)) {
 			user = ShibbolethHelper.createOrUpdateUser(user);
 			if (user != null) {
+				flash().put("success", Messages.get("shib.flash.login", user.toString()));
 				ShibbolethHelper.createSession(ctx(), user);
 				String redirectUrl = ShibbolethHelper.getRedirectUrl(ctx(),
 						user);
 				return temporaryRedirect(redirectUrl);
 			}
 		}
+		flash().put("error", Messages.get("shib.flash.fail"));
 		return Helper.getUnauthorized();
 	}
 
