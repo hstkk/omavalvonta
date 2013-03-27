@@ -48,7 +48,7 @@ public class IngredientSupply extends UserModel {
 
 	@OneToMany(mappedBy = "ingredientSupply")
 	public List<IngredientSupplyBatch> batches = new ArrayList<IngredientSupplyBatch>();
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(ingredient);

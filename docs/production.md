@@ -226,9 +226,8 @@
     
     <Location /Shibboleth.sso>
       SetHandler shib
+      ShibUseHeaders On
     </Location>
-    
-    ShibUseHeaders On
 
 - Käynnistetään Shibd daemon automaattisesti
 
@@ -242,9 +241,8 @@
 
     systemctl restart apache2.service
 
-- shibboleth2.xml
-
-- attribute-map.xml
+- Kopioidaan shibboleth2.xml /etc/shibboleth/shibboleth2.xml
+- Kopioidaan attribute-map.xml /etc/shibboleth/attribute-map.xml
 
 - Metadata
 
