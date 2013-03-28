@@ -35,12 +35,12 @@ GET		/kayttajat/:userId									controllers.Users.crud.show(userId: Long)
 # TODO
 # Raaka-aine-erät
 # Tulokset
-#GET	/erat												controllers.Batches.crud.page(sivu: Int ?= 1)
-#GET	/erat/uusi											controllers.Batches.crud.fresh
+GET		/erat												controllers.Batches.crud.page(sivu: Int ?= 1)
+GET		/erat/uusi											controllers.Batches.fresh
+POST	/erat/uusi											controllers.Batches.create
 #GET	/erat/uusi/:productId								controllers.Batches.fresh(productId: Long)
-#POST	/erat/uusi											controllers.Batches.crud.create
 #POST	/erat/uusi/:productId								controllers.Batches.create(productId: Long)
-#GET	/erat/:batchId										controllers.Batches.crud.show(batchId: Long)
+GET		/erat/:batchId										controllers.Batches.crud.show(batchId: Long)
 #POST	/erat/:batchId/kuittaa
 
 # Final product

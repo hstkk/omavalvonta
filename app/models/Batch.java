@@ -21,6 +21,7 @@ import utils.Helper;
 @Audited
 @AttributeOverride(name = "lastModified", column = @Column(nullable = false, updatable = false, name = "created"))
 public class Batch extends UserModel {
+
 	public final static Crud<Batch, Long> crud = new Crud<Batch, Long>(
 			Batch.class);
 
@@ -48,5 +49,16 @@ public class Batch extends UserModel {
 		stringBuilder.append(separator);
 		stringBuilder.append(this.id);
 		return stringBuilder.toString();
+	}
+
+	public static class Step1 {
+		@Required
+		public Product product;
+	}
+
+	public static class Step2 {
+		@Required
+		@NotNull
+		public List<IngredientSupplyBatch> ingredientSupplies = new ArrayList<IngredientSupplyBatch>();
 	}
 }
