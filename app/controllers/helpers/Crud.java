@@ -74,7 +74,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result edit(Long id) {
-		if (UPDATE == null|| FORM == null)
+		if (UPDATE == null || CRUD == null || FORM == null)
 			return notFound();
 		T t = CRUD.findById(id);
 		if (t == null)
@@ -86,7 +86,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
-		if (CREATE == null|| FORM == null)
+		if (CREATE == null || FORM == null)
 			return notFound();
 		return ok(CREATE.render(FORM));
 	}
@@ -110,17 +110,19 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	}
 
 	protected Result onCreateOrUpdate(T t, Long id) {
-		boolean success = false;
-		if (id == null)
-			success = CRUD.create(t);
-		else {
-			t.id = id;
-			success = CRUD.update(t);
-		}
-		if (success) {
-			flash("success", Messages.get("crud.success"));
-			Call call = (id != null) ? ROUTER.show(id) : ROUTER.page();
-			return temporaryRedirect(call);
+		if (CRUD != null) {
+			boolean success = false;
+			if (id == null)
+				success = CRUD.create(t);
+			else {
+				t.id = id;
+				success = CRUD.update(t);
+			}
+			if (success) {
+				flash("success", Messages.get("crud.success"));
+				Call call = (id != null) ? ROUTER.show(id) : ROUTER.page();
+				return temporaryRedirect(call);
+			}
 		}
 		return null;
 	}
@@ -128,7 +130,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result page(int pageNumber) {
-		if (PAGE == null)
+		if (PAGE == null || CRUD == null)
 			return notFound();
 		return ok(PAGE.render(CRUD.page(pageNumber)));
 	}
@@ -136,7 +138,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result show(Long id) {
-		if (SHOW == null)
+		if (SHOW == null || CRUD == null)
 			return notFound();
 		T t = CRUD.findById(id);
 		if (t == null)
@@ -147,7 +149,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional
 	public Result update(Long id) {
-		if (UPDATE == null || !CRUD.exists(id) || FORM == null)
+		if (UPDATE == null || CRUD == null || !CRUD.exists(id) || FORM == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		Result result = onCancel(filledForm, id);
