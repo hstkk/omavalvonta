@@ -16,11 +16,6 @@ public class Model implements ModelInterface {
 	@Column(nullable = false)
 	public Date lastModified;
 
-	@Override
-	public boolean needAuthentication() {
-		return false;
-	}
-
 	@PrePersist
 	public void onCreate() {
 		lastModified = new Date();
