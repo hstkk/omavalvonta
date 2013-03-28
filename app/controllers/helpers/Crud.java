@@ -55,7 +55,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional
 	public Result create() {
-		if (CREATE == null)
+		if (CREATE == null || FORM == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		Result result = onCancel(filledForm);
@@ -74,7 +74,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result edit(Long id) {
-		if (UPDATE == null)
+		if (UPDATE == null|| FORM == null)
 			return notFound();
 		T t = CRUD.findById(id);
 		if (t == null)
@@ -86,7 +86,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
-		if (CREATE == null)
+		if (CREATE == null|| FORM == null)
 			return notFound();
 		return ok(CREATE.render(FORM));
 	}
@@ -100,7 +100,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 				.equals(Messages.get("crud.action.cancel"))) {
 			flash("warning", Messages.get("crud.cancel"));
 			Call call = (id != null) ? ROUTER.show(id) : ROUTER.page();
-			return redirect(call);
+			return temporaryRedirect(call);
 		}
 		return null;
 	}
@@ -120,7 +120,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (success) {
 			flash("success", Messages.get("crud.success"));
 			Call call = (id != null) ? ROUTER.show(id) : ROUTER.page();
-			return redirect(call);
+			return temporaryRedirect(call);
 		}
 		return null;
 	}
@@ -147,7 +147,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional
 	public Result update(Long id) {
-		if (UPDATE == null || !CRUD.exists(id))
+		if (UPDATE == null || !CRUD.exists(id) || FORM == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		Result result = onCancel(filledForm, id);

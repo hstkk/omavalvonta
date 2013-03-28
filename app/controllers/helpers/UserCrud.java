@@ -49,7 +49,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 				flash("success", Messages.get("crud.success"));
 			else
 				flash("error", Messages.get("crud.fail"));
-			return redirect(ROUTER.show(id));
+			return temporaryRedirect(ROUTER.show(id));
 		}
 		return Helper.getUnauthorized();
 	}
