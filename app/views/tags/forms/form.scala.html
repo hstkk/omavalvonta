@@ -1,4 +1,4 @@
-@(FORM: play.data.Form[_], action: play.api.mvc.Call)(content: Html)
+@(FORM: play.data.Form[_], action: play.api.mvc.Call, submitTitle: String = "")(content: Html)
 @import helper._
 @import helper.twitterBootstrap._
 @import tags._
@@ -15,5 +15,5 @@
 
 @helper.form(action, 'class -> "form-horizontal") {
 	@content
-	@actions()
+	@actions(submitTitle)
 }
