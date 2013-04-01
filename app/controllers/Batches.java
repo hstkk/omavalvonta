@@ -1,27 +1,32 @@
 package controllers;
 
 import models.Batch;
-import models.Batch.Step1;
 import models.Batch.Step2;
 import models.Ingredient;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
 import play.data.Form;
+import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.batches.*;
+import controllers.helpers.Crud;
 import controllers.helpers.UserCrud;
 import controllers.helpers.UserRouter;
 
 public class Batches extends Controller {
 	private final static Router ROUTER = new Router();
-	private final static Form<Step1> STEP1 = form(Step1.class);
 	private final static Form<Step2> STEP2 = form(Step2.class);
 
 	public final static UserCrud<Batch> crud = new UserCrud<Batch>(Batch.crud,
 			null, ROUTER, null, null, null, null);
+	public final static Step1 step1 = new Step1();
 
-	public static class Router extends UserRouter {
+	private static class Router extends UserRouter {
 		@Override
 		public Call ack(Long id) {
 			// TODO ack url
@@ -39,31 +44,36 @@ public class Batches extends Controller {
 		}
 	}
 
-	public static Result create() {
-		Form<Step1> filledForm = STEP1.bindFromRequest();
-		if (filledForm.field("action").value()
-				.equals(Messages.get("crud.action.cancel"))) {
-			flash("warning", Messages.get("crud.cancel"));
-			return temporaryRedirect(ROUTER.page());
+	private static class Step1 extends Crud<Batch.Step1> {
+		public Step1() {
+			super(
+					null,
+					form(Batch.Step1.class),
+					ROUTER,
+					views.html.batches.step1.ref(),
+					null,
+					null,
+					null
+				);
 		}
-		if (!filledForm.hasErrors()) {
-			Step1 step1 = filledForm.get();
-			temporaryRedirect(controllers.routes.Batches
-					.fresh(step1.product.id));
+
+		@Override
+		@Transactional(readOnly = true)
+		public Result create() {
+			return super.create();
 		}
-		flash("error", Messages.get("crud.fail"));
-		return badRequest(step1.render(filledForm));
-	}
 
-	public static Result fresh() {
-		return ok(step1.render(STEP1));
-	}
+		@Override
+		@Transactional(readOnly = true)
+		public Result fresh() {
+			return super.fresh();
+		}
 
-	public static Result create(Long productId) {
-		return null;
-	}
-
-	public static Result fresh(Long productId) {
-		return null;
+		@Override
+		public Result onCreateOrUpdate(Batch.Step1 t, Long id) {
+			//return temporaryRedirect(controllers.routes.Batches.step2
+			//		.fresh(t.product.id));
+			return TODO;
+		}
 	}
 }
