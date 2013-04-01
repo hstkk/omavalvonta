@@ -1,0 +1,12 @@
+@(FORM: play.data.Form[models.Batch.Step1])
+
+@import play.i18n._
+@import helper._
+@import helper.twitterBootstrap._
+@import tags.forms._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@tags.forms.form(FORM, routes.Batches.step1.create, Messages.get("label.next")) {
+	select(FORM("form.id"), options = options(models.Product.crud.options), '_default -> "", '_label -> Messages.get("label.product"))
+}

@@ -57,6 +57,8 @@ label.term=Termi
 label.productNo=Tuotenumero
 label.date=Päivämäärä
 label.user=Käyttäjä
+label.next=Seuraava
+label.product=Tuote
 
 # --- Fieldset
 fieldset.create=Uusi kenttäryhmä
