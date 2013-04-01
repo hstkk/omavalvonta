@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
@@ -42,6 +43,9 @@ public class Ingredient extends UserModel {
 
 	@ManyToOne
 	public Form form;
+
+	@OneToMany(mappedBy = "ingredient")
+	public List<IngredientSupply> ingredientSupllies;
 
 	public String toString() {
 		return name;
