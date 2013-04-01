@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 import models.helpers.Crud;
+import models.helpers.Model;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.Required;
@@ -51,12 +52,12 @@ public class Batch extends UserModel {
 		return stringBuilder.toString();
 	}
 
-	public static class Step1 {
+	public static class Step1 extends Model {
 		@Required
 		public Product product;
 	}
 
-	public static class Step2 {
+	public static class Step2 extends Model {
 		@Required
 		@NotNull
 		public List<IngredientSupplyBatch> ingredientSupplies = new ArrayList<IngredientSupplyBatch>();
