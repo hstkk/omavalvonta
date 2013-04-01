@@ -1,6 +1,15 @@
+@(submitTitle: String = "")
 @import play.i18n._
 
+@submitValue = {
+	@if(submitTitle.isEmpty) {
+		@Messages.get("crud.action.save")
+	} else {
+		@submitTitle
+	}
+}
+
 <fieldset class="form-actions">
-	<input type="submit" name="action" class="btn btn-primary" value="@Messages.get("crud.action.save")"/>
+	<input type="submit" name="action" class="btn btn-primary" value="@submitValue"/>
 	<input type="submit" name="action" class="btn btn-warning" value="@Messages.get("crud.action.cancel")"/>
 </fieldset>
