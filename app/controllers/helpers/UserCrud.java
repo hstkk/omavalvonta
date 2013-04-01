@@ -78,7 +78,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	}
 
 	@Override
-	protected Result onCreateOrUpdate(T t, Long id) {
+	public Result onCreateOrUpdate(T t, Long id) {
 		User user = getUser();
 		t.user = user;
 		Result result = super.onCreateOrUpdate(t, id);

@@ -62,7 +62,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	}
 
 	@Override
-	protected Result onCreateOrUpdate(T t, Long id) {
+	public Result onCreateOrUpdate(T t, Long id) {
 		t.user = getUser();
 		return super.onCreateOrUpdate(t, id);
 	}
