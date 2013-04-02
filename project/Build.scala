@@ -1,6 +1,6 @@
 import sbt._
 import Keys._
-import PlayProject._
+import play.Project._
 
 object ApplicationBuild extends Build {
 
@@ -8,16 +8,19 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0-SNAPSHOT"
 
     val appDependencies = Seq(
+		javaCore,
+		javaJdbc,
+		javaJpa,
+		filters,
 		"org.hibernate" % "hibernate-entitymanager" % "3.6.10.Final",
 		"org.hibernate" % "hibernate-envers" % "3.6.10.Final",
 		"mysql" % "mysql-connector-java" % "5.1.23",
-		"org.hibernate" % "hibernate-jpamodelgen" % "1.2.0.Final",
-		"commons-beanutils" % "commons-beanutils" % "1.8.3"
+		"org.hibernate" % "hibernate-jpamodelgen" % "1.2.0.Final"
     )
 
-    val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
+    val main = play.Project(appName, appVersion, appDependencies).settings(
 		ebeanEnabled := false,
 		javacOptions ++= Seq("-s", "metamodel")
-		,javacOptions += "-Xlint:all" 
+		,javacOptions += "-Xlint:all"
     )
 }
