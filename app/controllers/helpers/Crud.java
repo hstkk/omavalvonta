@@ -108,7 +108,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 				.equals(Messages.get("crud.action.cancel"))) {
 			flash("warning", Messages.get("crud.cancel"));
 			Call call = (id != null) ? callShow(id) : callPage();
-			return temporaryRedirect(call);
+			return redirect(call);
 		}
 		return null;
 	}
@@ -129,7 +129,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			if (success) {
 				flash("success", Messages.get("crud.success"));
 				Call call = (id != null) ? callShow(id) : callPage();
-				return temporaryRedirect(call);
+				return redirect(call);
 			}
 		}
 		return null;

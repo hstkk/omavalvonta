@@ -47,7 +47,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 				flash("success", Messages.get("crud.success"));
 			else
 				flash("error", Messages.get("crud.fail"));
-			return temporaryRedirect(callShow(id));
+			return redirect(callShow(id));
 		}
 		return Helper.getUnauthorized();
 	}
