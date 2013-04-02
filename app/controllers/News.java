@@ -1,6 +1,11 @@
 package controllers;
 
+import models.helpers.Dao;
 import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
+import static play.data.Form.*;
 import play.db.jpa.Transactional;
 import play.mvc.Call;
 import play.mvc.Controller;
@@ -8,27 +13,32 @@ import play.mvc.Result;
 import views.html.news.*;
 import controllers.helpers.SecuredCrud;
 
-public class News extends Controller {
-	public final static SecuredCrud<models.News> crud = new SecuredCrud<models.News>(
-			models.News.crud,
-			form(models.News.class),
-			new Router(),
-			create.ref(),
-			page.ref(),
-			null,
-			update.ref()
-		);
-
-	public static class Router extends controllers.helpers.Router {
-		@Override
-		public Call page() {
-			return controllers.routes.News.crud.page(1);
-		}
+public class News extends SecuredCrud<models.News> {
+	public News() {
+		super(models.News.dao, form(models.News.class), create.ref(), page
+				.ref(), null, update.ref());
 	}
 
+	@Override
+	public Call callPage() {
+		return controllers.routes.News.page(1);
+	}
+
+	@Override
+	@Transactional
+	public Result create() {
+		return super.create();
+	}
+
+	@Override
 	@Transactional(readOnly = true)
-	public static Result index(int pageNumber) {
-		Page<models.News> page = models.News.crud.page(pageNumber);
-		return ok(index.render(page));
+	public Result page(int pageNumber) {
+		return super.page(pageNumber);
+	}
+
+	@Override
+	@Transactional
+	public Result update(Long id) {
+		return super.update(id);
 	}
 }

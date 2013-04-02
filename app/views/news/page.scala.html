@@ -15,12 +15,12 @@
 			}
 			<tbody>
 				@for(news <- page.getList) {
-					@tr() { <a href="@routes.News.crud.edit(news.id)">@news.lastModified</a>
+					@tr() { <a href="@routes.News.edit(news.id)">@news.lastModified</a>
 						@news }
 				}
 			</tbody>
 		}
-		@pagination(page, routes.News.crud.page(page.getPrevious), routes.News.crud.page(page.getNext))
+		@pagination(page, routes.News.page(page.getPrevious), routes.News.page(page.getNext))
 	} else {
 		@warning() {
 			@Messages.get("news.page.empty")

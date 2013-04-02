@@ -2,7 +2,7 @@
 
 @import tags.tables._
 
-@tr() { <a href="@routes.IngredientSupplies.crud.show(ingredientSupply.id)">@ingredientSupply</a>
+@tr() { <a href="@routes.IngredientSupplies.show(ingredientSupply.id)">@ingredientSupply</a>
         @ingredientSupply.ingredient.name
         @ingredientSupply.received
         @ingredientSupply.getBestBefore

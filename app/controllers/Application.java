@@ -1,5 +1,6 @@
 package controllers;
 
+import models.helpers.Page;
 import controllers.shib.Secured;
 import controllers.shib.SessionTimeout;
 import play.db.jpa.Transactional;
@@ -11,9 +12,9 @@ import views.html.*;
 public class Application extends Controller {
 
 	@Transactional(readOnly = true)
-	public static Result index() {
-		int pageNumber = 0;
-		return News.index(pageNumber);
+	public static Result index(int pageNumber) {
+		Page<models.News> page = models.News.dao.page(pageNumber);
+		return ok(views.html.news.index.render(page));
 	}
 
 	@Security.Authenticated(Secured.class)

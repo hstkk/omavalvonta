@@ -11,7 +11,7 @@
 				@row(ingredientSupply)
 			}
 		}
-		@pagination(page, routes.IngredientSupplies.crud.page(page.getPrevious), routes.IngredientSupplies.crud.page(page.getNext))
+		@pagination(page, routes.IngredientSupplies.page(page.getPrevious), routes.IngredientSupplies.page(page.getNext))
 	} else {
 		@warning() {
 			@Messages.get("ingredientsupply.page.empty")

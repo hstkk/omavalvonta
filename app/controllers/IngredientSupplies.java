@@ -1,38 +1,57 @@
 package controllers;
 
 import models.IngredientSupply;
+import models.helpers.Dao;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
+import static play.data.Form.*;
+import play.db.jpa.Transactional;
 import play.mvc.Call;
 import play.mvc.Controller;
+import play.mvc.Result;
 import views.html.ingredientsupplies.*;
 import controllers.helpers.UserCrud;
-import controllers.helpers.UserRouter;
 
-public class IngredientSupplies extends Controller {
-	public final static UserCrud<IngredientSupply> crud = new UserCrud<IngredientSupply>(
-			IngredientSupply.crud,
-			form(IngredientSupply.class),
-			new Router(),
-			create.ref(),
-			page.ref(),
-			show.ref(),
-			null
-		);
+public class IngredientSupplies extends UserCrud<IngredientSupply> {
 
-	public static class Router extends UserRouter {
-		@Override
-		public Call ack(Long id) {
-			// TODO ack url
-			return super.ack(id);
-		}
+	public IngredientSupplies() {
+		super(IngredientSupply.dao, form(IngredientSupply.class), create.ref(),
+				page.ref(), show.ref(), null);
+	}
 
-		@Override
-		public play.mvc.Call page() {
-			return controllers.routes.IngredientSupplies.crud.page(1);
-		}
+	@Override
+	public Call callAck(Long id) {
+		// TODO Auto-generated method stub
+		return super.callAck(id);
+	}
 
-		@Override
-		public play.mvc.Call show(Long id) {
-			return controllers.routes.IngredientSupplies.crud.show(id);
-		}
+	@Override
+	public Call callPage() {
+		return controllers.routes.IngredientSupplies.page(1);
+	}
+
+	@Override
+	public Call callShow(Long id) {
+		return controllers.routes.IngredientSupplies.show(id);
+	}
+
+	@Override
+	@Transactional
+	public Result create() {
+		return super.create();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Result page(int pageNumber) {
+		return super.page(pageNumber);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Result show(Long id) {
+		return super.show(id);
 	}
 }

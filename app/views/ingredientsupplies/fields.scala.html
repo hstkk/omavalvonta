@@ -8,7 +8,7 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @tags.forms.form(FORM, action) {
-	@helper.select(FORM("ingredient.id"), options = options(models.Ingredient.crud.options), '_default -> "", '_label -> Messages.get("ingredientsupply.ingredient"))
+	@helper.select(FORM("ingredient.id"), options = options(models.Ingredient.dao.options), '_default -> "", '_label -> Messages.get("ingredientsupply.ingredient"))
 	@helper.inputText(FORM("amount"), '_label -> Messages.get("ingredientsupply.amount"), '_class -> "control-group")
 	@helper.select(FORM("unit.id"), options = options(models.Term.options(models.TermCategory.UNIT)), '_default -> "", '_label -> Messages.get("term.unit"))
 	@helper.inputText(FORM("received"), '_label -> Messages.get("ingredientsupply.received"), '_class -> "control-group")

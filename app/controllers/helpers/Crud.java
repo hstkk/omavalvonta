@@ -52,7 +52,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 
 	@Override
 	public Call callPage() {
-		return controllers.routes.Application.index();
+		return controllers.routes.Application.index(0);
 	}
 
 	@Override
