@@ -1,37 +1,40 @@
 package controllers;
 
 import models.User;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
+import play.data.Form;
+import play.db.jpa.Transactional;
 import play.mvc.Call;
 import play.mvc.Controller;
+import play.mvc.Result;
 import views.html.users.*;
 import controllers.helpers.Crud;
 
-public class Users extends Controller {
-	public final static Router router = new Router();
+public class Users extends Crud<User> {
+	public Users() {
+		super(User.crud, null, null, page.ref(), show.ref(), null);
+	}
 
-	public final static Crud<User> crud = new Crud<User>(
-			User.crud,
-			null,
-			router,
-			null,
-			page.ref(),
-			show.ref(),
-			null
-		);
+	@Override
+	public Call callPage() {
+		return controllers.routes.Users.crud.page(1);
+	}
 
-	public static class Router extends controllers.helpers.Router {
-		@Override
-		public play.mvc.Call page() {
-			return controllers.routes.Users.crud.page(1);
-		}
+	@Override
+	public Call callShow(Long id) {
+		return controllers.routes.Users.crud.show(id);
+	}
 
-		@Override
-		public play.mvc.Call show(Long id) {
-			return controllers.routes.Users.crud.show(id);
-		}
+	@Override
+	@Transactional(readOnly = true)
+	public Result page(int pageNumber) {
+		return super.page(pageNumber);
+	}
 
-		public play.mvc.Call show(User user) {
-			return show(user.id);
-		}
+	@Override
+	@Transactional(readOnly = true)
+	public Result show(Long id) {
+		return super.show(id);
 	}
 }

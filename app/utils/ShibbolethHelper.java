@@ -90,7 +90,7 @@ public class ShibbolethHelper {
 		if (urls != null && urls.length > 0 && urls[0] != null)
 			return urls[0];
 		if (user != null)
-			return Users.router.show(user).toString();
+			return Users.show(user).toString();
 		return ShibbolethDefaults.HOME;
 	}
 

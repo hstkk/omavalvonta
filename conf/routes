@@ -28,19 +28,19 @@ GET     /yllapito											controllers.Application.management
 
 # Users
 # TODO what user did
-GET		/kayttajat											controllers.Users.crud.page(sivu: Int ?= 1)
-GET		/kayttajat/:userId									controllers.Users.crud.show(userId: Long)
+GET		/kayttajat											@controllers.Users.page(sivu: Int ?= 1)
+GET		/kayttajat/:userId									@controllers.Users.show(userId: Long)
 
 # Batches
 # TODO
 # Raaka-aine-erät
 # Tulokset
-GET		/erat												controllers.Batches.crud.page(sivu: Int ?= 1)
-GET		/erat/uusi											controllers.Batches.step1.fresh
-POST	/erat/uusi											controllers.Batches.step1.create
+#GET		/erat												controllers.Batches.crud.page(sivu: Int ?= 1)
+#GET		/erat/uusi											controllers.Batches.step1.fresh
+#POST	/erat/uusi											controllers.Batches.step1.create
 #GET	/erat/uusi/:productId								controllers.Batches.step2.fresh(productId: Long)
 #POST	/erat/uusi/:productId								controllers.Batches.step2.create(productId: Long)
-GET		/erat/:batchId										controllers.Batches.crud.show(batchId: Long)
+#GET		/erat/:batchId										controllers.Batches.crud.show(batchId: Long)
 #POST	/erat/:batchId/kuittaa
 
 # Final product
@@ -55,18 +55,18 @@ GET		/erat/:batchId										controllers.Batches.crud.show(batchId: Long)
 #
 # TEST
 # COMMENT
-GET		/raaka-aineet										controllers.IngredientSupplies.crud.page(sivu: Int ?= 1)
-GET		/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.fresh
-POST	/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.create
-GET		/raaka-aineet/:ingredientId							controllers.IngredientSupplies.crud.show(ingredientId: Long)
-POST	/raaka-aineet/:ingredientId/kuittaa					controllers.IngredientSupplies.crud.ack(ingredientId: Long)
+#GET		/raaka-aineet										controllers.IngredientSupplies.crud.page(sivu: Int ?= 1)
+#GET		/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.fresh
+#POST	/raaka-aineet/vastaanota							controllers.IngredientSupplies.crud.create
+#GET		/raaka-aineet/:ingredientId							controllers.IngredientSupplies.crud.show(ingredientId: Long)
+#POST	/raaka-aineet/:ingredientId/kuittaa					controllers.IngredientSupplies.crud.ack(ingredientId: Long)
 
 # News
-GET		/yllapito/uutiset									controllers.News.crud.page(sivu: Int ?= 1)
-GET		/yllapito/uutiset/uusi								controllers.News.crud.fresh
-POST	/yllapito/uutiset/uusi								controllers.News.crud.create
-POST	/yllapito/uutiset/:newsId/muokkaa					controllers.News.crud.update(newsId: Long)
-GET		/yllapito/uutiset/:newsId/muokkaa					controllers.News.crud.edit(newsId: Long)
+#GET		/yllapito/uutiset									controllers.News.crud.page(sivu: Int ?= 1)
+#GET		/yllapito/uutiset/uusi								controllers.News.crud.fresh
+#POST	/yllapito/uutiset/uusi								controllers.News.crud.create
+#POST	/yllapito/uutiset/:newsId/muokkaa					controllers.News.crud.update(newsId: Long)
+#GET		/yllapito/uutiset/:newsId/muokkaa					controllers.News.crud.edit(newsId: Long)
 #POST	/yllapito/uutiset/:newsId/poista					controllers.News.crud.delete(newsId: Long)
 
 # Term management
@@ -75,11 +75,11 @@ GET		/yllapito/uutiset/:newsId/muokkaa					controllers.News.crud.edit(newsId: Lo
 # DELETE
 # TEST
 # COMMENT
-GET		/yllapito/termit									controllers.Terms.crud.page(sivu: Int ?= 1)
-GET		/yllapito/termit/uusi								controllers.Terms.crud.fresh
-POST	/yllapito/termit/uusi								controllers.Terms.crud.create
-POST	/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.update(termId: Long)
-GET		/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.edit(termId: Long)
+#GET		/yllapito/termit									controllers.Terms.crud.page(sivu: Int ?= 1)
+#GET		/yllapito/termit/uusi								controllers.Terms.crud.fresh
+#POST	/yllapito/termit/uusi								controllers.Terms.crud.create
+#POST	/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.update(termId: Long)
+#GET		/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.edit(termId: Long)
 
 # Ingredient management
 # Checkboxes
@@ -89,11 +89,11 @@ GET		/yllapito/termit/:termId/muokkaa					controllers.Terms.crud.edit(termId: Lo
 # TEST
 # COMMENT
 # DELETE
-GET		/yllapito/raaka-aineet								controllers.Ingredients.crud.page(sivu: Int ?= 1)
-GET		/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.fresh
-POST	/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.create
-POST	/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.update(ingredientId: Long)
-GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.edit(ingredientId: Long)
+#GET		/yllapito/raaka-aineet								controllers.Ingredients.crud.page(sivu: Int ?= 1)
+#GET		/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.fresh
+#POST	/yllapito/raaka-aineet/uusi							controllers.Ingredients.crud.create
+#POST	/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.update(ingredientId: Long)
+#GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.edit(ingredientId: Long)
 
 # Product management
 # Form
@@ -103,11 +103,11 @@ GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		controllers.Ingredients.crud.
 # TEST
 # COMMENT
 # DELETE
-GET		/yllapito/tuotteet									controllers.Products.crud.page(sivu: Int ?= 1)
-GET		/yllapito/tuotteet/uusi								controllers.Products.crud.fresh
-POST	/yllapito/tuotteet/uusi								controllers.Products.crud.create
-GET		/yllapito/tuotteet/:productId/muokkaa				controllers.Products.crud.edit(productId: Long)
-POST	/yllapito/tuotteet/:productId/muokkaa				controllers.Products.crud.update(productId: Long)
+#GET		/yllapito/tuotteet									controllers.Products.crud.page(sivu: Int ?= 1)
+#GET		/yllapito/tuotteet/uusi								controllers.Products.crud.fresh
+#POST	/yllapito/tuotteet/uusi								controllers.Products.crud.create
+#GET		/yllapito/tuotteet/:productId/muokkaa				controllers.Products.crud.edit(productId: Long)
+#POST	/yllapito/tuotteet/:productId/muokkaa				controllers.Products.crud.update(productId: Long)
 
 # Fieldset management
 # TODO

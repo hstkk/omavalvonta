@@ -13,11 +13,11 @@
 			}
 			<tbody>
 				@for(user <- page.getList) {
-					@tr() { <a href="@routes.Users.crud.show(user.id)">@user</a> }
+					@tr() { <a href="@routes.Users.show(user.id)">@user</a> }
 				}
 			</tbody>
 		}
-		@pagination(page, routes.Users.crud.page(page.getPrevious), routes.Users.crud.page(page.getNext))
+		@pagination(page, routes.Users.page(page.getPrevious), routes.Users.page(page.getNext))
 	} else {
 		@warning() {
 			@Messages.get("user.page.empty")
