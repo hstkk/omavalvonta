@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
-import models.helpers.Crud;
+import models.helpers.Dao;
 import models.helpers.Model;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
@@ -23,7 +23,7 @@ import utils.Helper;
 @AttributeOverride(name = "lastModified", column = @Column(nullable = false, updatable = false, name = "created"))
 public class Batch extends UserModel {
 
-	public final static Crud<Batch, Long> crud = new Crud<Batch, Long>(
+	public final static Dao<Batch, Long> dao = new Dao<Batch, Long>(
 			Batch.class);
 
 	@Required
@@ -37,7 +37,7 @@ public class Batch extends UserModel {
 
 	@PrePersist
 	private void onPre() {
-		this.product = Product.crud.getReference(this.product);
+		this.product = Product.dao.getReference(this.product);
 	}
 
 	public String toString() {

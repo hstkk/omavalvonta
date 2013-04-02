@@ -13,7 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 
-import models.helpers.Crud;
+import models.helpers.Dao;
 import models.helpers.UserModel;
 
 import org.hibernate.envers.Audited;
@@ -29,7 +29,7 @@ import play.data.validation.Constraints.Required;
 @Audited
 public class Term extends UserModel {
 
-	public final static Crud<Term, Long> crud = new Crud<Term, Long>(Term.class);
+	public final static Dao<Term, Long> dao = new Dao<Term, Long>(Term.class);
 
 	@Column(name = "name")
 	@Required
@@ -61,11 +61,11 @@ public class Term extends UserModel {
 	}
 
 	public static List<Term> findByCategory(TermCategory categoryEnum) {
-		return crud.findAllBy(getByCategory(categoryEnum));
+		return dao.findAllBy(getByCategory(categoryEnum));
 	}
 
 	private static CriteriaQuery<Term> getByCategory(TermCategory categoryEnum) {
-		CriteriaBuilder criteriaBuilder = crud.getCriteriaBuilder();
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<Term> query = criteriaBuilder.createQuery(Term.class);
 		Root<Term> root = query.from(Term.class);
 		query.where(criteriaBuilder.equal(root.get(Term_.category),
@@ -74,6 +74,6 @@ public class Term extends UserModel {
 	}
 
 	public static Map<String, String> options(TermCategory categoryEnum) {
-		return crud.options(getByCategory(categoryEnum));
+		return dao.options(getByCategory(categoryEnum));
 	}
 }

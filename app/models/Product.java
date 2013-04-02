@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
-import models.helpers.Crud;
+import models.helpers.Dao;
 import models.helpers.UserModel;
 
 import org.hibernate.envers.Audited;
@@ -23,7 +23,7 @@ import play.data.validation.Constraints.Required;
 @Entity
 @Audited
 public class Product extends UserModel {
-	public final static Crud<Product, Long> crud = new Crud<Product, Long>(Product.class);
+	public final static Dao<Product, Long> dao = new Dao<Product, Long>(Product.class);
 
 	// TODO check unique
 	@Required

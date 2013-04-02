@@ -1,5 +1,6 @@
 package controllers.helpers;
 
+import models.helpers.Dao;
 import models.helpers.Model;
 import models.helpers.Page;
 import play.mvc.Call;
@@ -17,7 +18,7 @@ import controllers.shib.SessionTimeout;
 @With(SessionTimeout.class)
 public class Crud<T extends Model> extends Controller implements CrudInterface {
 	private final Form<T> FORM;
-	protected final models.helpers.Crud<T, Long> CRUD;
+	protected final Dao<T, Long> DAO;
 	private final Template1<Form<T>, Html> CREATE;
 	private final Template1<Page<T>, Html> PAGE;
 	private final Template1<T, Html> SHOW;
@@ -34,14 +35,14 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	 * @param REDIRECT
 	 */
 	public Crud(
-			models.helpers.Crud<T, Long> CRUD,
+			models.helpers.Dao<T, Long> DAO,
 			Form<T> FORM,
 			Template1<Form<T>, Html> CREATE,
 			Template1<Page<T>, Html> PAGE,
 			Template1<T, Html> SHOW,
 			Template2<Long, Form<T>, Html> UPDATE
 		) {
-		this.CRUD = CRUD;
+		this.DAO = DAO;
 		this.FORM = FORM;
 		this.CREATE = CREATE;
 		this.PAGE = PAGE;
@@ -81,9 +82,9 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result edit(Long id) {
-		if (UPDATE == null || CRUD == null || FORM == null)
+		if (UPDATE == null || DAO == null || FORM == null)
 			return notFound();
-		T t = CRUD.findById(id);
+		T t = DAO.findById(id);
 		if (t == null)
 			return notFound();
 		Form<T> filledForm = FORM.fill(t);
@@ -117,13 +118,13 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	}
 
 	public Result onCreateOrUpdate(T t, Long id) {
-		if (CRUD != null) {
+		if (DAO != null) {
 			boolean success = false;
 			if (id == null)
-				success = CRUD.create(t);
+				success = DAO.create(t);
 			else {
 				t.id = id;
-				success = CRUD.update(t);
+				success = DAO.update(t);
 			}
 			if (success) {
 				flash("success", Messages.get("crud.success"));
@@ -137,17 +138,17 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result page(int pageNumber) {
-		if (PAGE == null || CRUD == null)
+		if (PAGE == null || DAO == null)
 			return notFound();
-		return ok(PAGE.render(CRUD.page(pageNumber)));
+		return ok(PAGE.render(DAO.page(pageNumber)));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result show(Long id) {
-		if (SHOW == null || CRUD == null)
+		if (SHOW == null || DAO == null)
 			return notFound();
-		T t = CRUD.findById(id);
+		T t = DAO.findById(id);
 		if (t == null)
 			return notFound();
 		return ok(SHOW.render(t));
@@ -156,7 +157,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional
 	public Result update(Long id) {
-		if (UPDATE == null || CRUD == null || !CRUD.exists(id) || FORM == null)
+		if (UPDATE == null || DAO == null || !DAO.exists(id) || FORM == null)
 			return notFound();
 		Form<T> filledForm = FORM.bindFromRequest();
 		Result result = onCancel(filledForm, id);

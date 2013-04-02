@@ -1,6 +1,7 @@
 package controllers.helpers;
 
 import models.User;
+import models.helpers.Dao;
 import models.helpers.Page;
 import models.helpers.UserModel;
 import play.mvc.Call;
@@ -19,19 +20,16 @@ import controllers.shib.SessionTimeout;
 import controllers.shib.Shibboleth;
 
 public class UserCrud<T extends UserModel> extends Crud<T> {
-	private final UserRouter ROUTER;
 
 	public UserCrud(
-			models.helpers.Crud<T, Long> CRUD,
+			Dao<T, Long> DAO,
 			Form<T> FORM,
-			UserRouter ROUTER,
 			Template1<Form<T>, Html> CREATE,
 			Template1<Page<T>, Html> PAGE,
 			Template1<T, Html> SHOW,
 			Template2<Long, Form<T>, Html> UPDATE
 		) {
-		super(CRUD, FORM, ROUTER, CREATE, PAGE, SHOW, UPDATE);
-		this.ROUTER = ROUTER;
+		super(DAO, FORM, CREATE, PAGE, SHOW, UPDATE);
 	}
 
 	@Security.Authenticated(Secured.class)
@@ -39,19 +37,23 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	public Result ack(Long id) {
 		User user = getUser();
 		if (user != null) {
-			T t = CRUD.findById(id);
+			T t = DAO.findById(id);
 			if (t == null)
 				return notFound();
 			if (t.user != null)
 				return Helper.getInternalServerError();
 			t.user = user;
-			if (CRUD.update(t))
+			if (DAO.update(t))
 				flash("success", Messages.get("crud.success"));
 			else
 				flash("error", Messages.get("crud.fail"));
-			return temporaryRedirect(ROUTER.show(id));
+			return temporaryRedirect(callShow(id));
 		}
 		return Helper.getUnauthorized();
+	}
+
+	public Call callAck(Long id) {
+		return callShow(id);
 	}
 
 	@Override
@@ -83,7 +85,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		t.user = user;
 		Result result = super.onCreateOrUpdate(t, id);
 		if (user == null && result != null) {
-			Call call = ROUTER.ack(id);
+			Call call = callAck(id);
 			return Shibboleth.login(call.url());
 		}
 		return result;

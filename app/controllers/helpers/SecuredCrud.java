@@ -1,6 +1,7 @@
 package controllers.helpers;
 
 import models.User;
+import models.helpers.Dao;
 import models.helpers.Page;
 import models.helpers.UserModel;
 import play.api.templates.Html;
@@ -16,15 +17,14 @@ import controllers.shib.Secured;
 @Security.Authenticated(Secured.class)
 public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	public SecuredCrud(
-			models.helpers.Crud<T, Long> CRUD,
+			Dao<T, Long> DAO,
 			Form<T> FORM,
-			Router ROUTER,
 			Template1<Form<T>, Html> CREATE,
 			Template1<Page<T>, Html> PAGE,
 			Template1<T, Html> SHOW,
 			Template2<Long, Form<T>, Html> UPDATE
 		) {
-		super(CRUD, FORM, ROUTER, CREATE, PAGE, SHOW, UPDATE);
+		super(DAO, FORM, CREATE, PAGE, SHOW, UPDATE);
 	}
 
 	@Override

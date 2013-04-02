@@ -11,7 +11,7 @@ import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
-import models.helpers.Crud;
+import models.helpers.Dao;
 import models.helpers.UserModel;
 
 import org.hibernate.envers.Audited;
@@ -27,7 +27,7 @@ import play.data.validation.Constraints.Required;
 @Entity
 @Audited
 public class Ingredient extends UserModel {
-	public final static Crud<Ingredient, Long> crud = new Crud<Ingredient, Long>(
+	public final static Dao<Ingredient, Long> dao = new Dao<Ingredient, Long>(
 			Ingredient.class);
 
 	@Required
@@ -54,7 +54,7 @@ public class Ingredient extends UserModel {
 	@PrePersist
 	@PreUpdate
 	private void onPre() {
-		this.form = Form.crud.getReference(this.form);
+		this.form = Form.dao.getReference(this.form);
 	}
 
 	// TODO checkboxes
@@ -62,12 +62,12 @@ public class Ingredient extends UserModel {
 		StringBuilder stringBuilder = new StringBuilder();
 		List<Ingredient> checked = null;
 		try {
-			checked = Product.crud.findById(Long.parseLong(id)).ingredients;
+			checked = Product.dao.findById(Long.parseLong(id)).ingredients;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
-			List<Ingredient> ingredients = crud.findAll();
+			List<Ingredient> ingredients = dao.findAll();
 			int i = 0;
 			for (Ingredient ingredient : ingredients) {
 				stringBuilder.append("<label class=\"checkbox\">");

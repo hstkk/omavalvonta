@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
-import models.helpers.Crud;
+import models.helpers.Dao;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
 import play.data.format.Formats;
@@ -21,7 +21,7 @@ import utils.Converter;
 @Entity
 @Audited
 public class IngredientSupply extends UserModel {
-	public final static Crud<IngredientSupply, Long> crud = new Crud<IngredientSupply, Long>(
+	public final static Dao<IngredientSupply, Long> dao = new Dao<IngredientSupply, Long>(
 			IngredientSupply.class);
 
 	@Required
@@ -71,8 +71,8 @@ public class IngredientSupply extends UserModel {
 	public void onCreate() {
 		super.onCreate();
 
-		this.ingredient = Ingredient.crud.getReference(this.ingredient);
-		this.unit = Term.crud.getReference(this.unit);
+		this.ingredient = Ingredient.dao.getReference(this.ingredient);
+		this.unit = Term.dao.getReference(this.unit);
 	}
 
 	public Date getBestBefore() {

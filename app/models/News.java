@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
-import models.helpers.Crud;
+import models.helpers.Dao;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.Required;
@@ -18,7 +18,7 @@ import play.data.validation.Constraints.Required;
 @Audited
 public class News extends UserModel {
 
-	public final static Crud<News, Long> crud = new Crud<News, Long>(News.class);
+	public final static Dao<News, Long> dao = new Dao<News, Long>(News.class);
 
 	@Column(name = "name")
 	@Required
