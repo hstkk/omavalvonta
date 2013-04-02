@@ -58,9 +58,9 @@ public class Product extends UserModel {
 
 	@Override
 	public void set() {
-		ingredients = Ingredient.crud.getReference(ingredients);
-		form1 = Form.crud.getReference(form1);
-		form2 = Form.crud.getReference(form2);
-		form3 = Form.crud.getReference(form3);
+		ingredients = Ingredient.dao.getReference(ingredients);
+		form1 = Form.dao.getReference(form1);
+		form2 = Form.dao.getReference(form2);
+		form3 = Form.dao.getReference(form3);
 	}
 }

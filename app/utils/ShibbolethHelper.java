@@ -20,9 +20,9 @@ public class ShibbolethHelper {
 		User existingUser = User.findByEmail(user);
 		if (existingUser != null) {
 			user.id = existingUser.id;
-			if (User.crud.update(user))
+			if (User.dao.update(user))
 				return user;
-		} else if (User.crud.create(user))
+		} else if (User.dao.create(user))
 			return user;
 		return null;
 	}
@@ -76,7 +76,7 @@ public class ShibbolethHelper {
 		url.append("?return=");
 		boolean secure = true;
 		url.append(URLEncoder.encode(
-				routes.Application.index().absoluteURL(ctx.request(), secure)
+				routes.Application.index(0).absoluteURL(ctx.request(), secure)
 						.toString(), ShibbolethDefaults.URL_ENCODING));
 
 		return url.toString();
@@ -90,7 +90,7 @@ public class ShibbolethHelper {
 		if (urls != null && urls.length > 0 && urls[0] != null)
 			return urls[0];
 		if (user != null)
-			return Users.show(user).toString();
+			return controllers.routes.Users.show(user.id).toString();
 		return ShibbolethDefaults.HOME;
 	}
 
