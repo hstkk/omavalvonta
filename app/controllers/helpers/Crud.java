@@ -18,7 +18,6 @@ import controllers.shib.SessionTimeout;
 public class Crud<T extends Model> extends Controller implements CrudInterface {
 	private final Form<T> FORM;
 	protected final models.helpers.Crud<T, Long> CRUD;
-	private final Router ROUTER;
 	private final Template1<Form<T>, Html> CREATE;
 	private final Template1<Page<T>, Html> PAGE;
 	private final Template1<T, Html> SHOW;
@@ -37,7 +36,6 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	public Crud(
 			models.helpers.Crud<T, Long> CRUD,
 			Form<T> FORM,
-			Router ROUTER,
 			Template1<Form<T>, Html> CREATE,
 			Template1<Page<T>, Html> PAGE,
 			Template1<T, Html> SHOW,
@@ -45,11 +43,20 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		) {
 		this.CRUD = CRUD;
 		this.FORM = FORM;
-		this.ROUTER = ROUTER;
 		this.CREATE = CREATE;
 		this.PAGE = PAGE;
 		this.SHOW = SHOW;
 		this.UPDATE = UPDATE;
+	}
+
+	@Override
+	public Call callPage() {
+		return controllers.routes.Application.index();
+	}
+
+	@Override
+	public Call callShow(Long id) {
+		return callPage();
 	}
 
 	@Override
@@ -99,7 +106,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (filledForm.field("action").value()
 				.equals(Messages.get("crud.action.cancel"))) {
 			flash("warning", Messages.get("crud.cancel"));
-			Call call = (id != null) ? ROUTER.show(id) : ROUTER.page();
+			Call call = (id != null) ? callShow(id) : callPage();
 			return temporaryRedirect(call);
 		}
 		return null;
@@ -120,7 +127,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			}
 			if (success) {
 				flash("success", Messages.get("crud.success"));
-				Call call = (id != null) ? ROUTER.show(id) : ROUTER.page();
+				Call call = (id != null) ? callShow(id) : callPage();
 				return temporaryRedirect(call);
 			}
 		}
