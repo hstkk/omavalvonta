@@ -1,10 +1,26 @@
-@(name: String, label: String, options: Map[String, String])
-<div class="control-group">
-	<label for="@name">@label</label>
-	<select multiple="multiple" name="@name">
-		<option></option>
-		@for((key, value) <- options) {
-			<option value="@key">@value</option>
+@**
+ * Generate an HTML multi-select.
+ *
+ * Example:
+ * {{{
+ * @select(field = myForm("categories"), options = options("A","B","C"))
+ * }}}
+ *
+ * @param field The form field.
+ * @param args Set of extra attributes.
+ * @param handler The field constructor.
+ *@
+@(field: play.api.data.Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: play.api.i18n.Lang)
+
+@values = @{ field.indexes.map { v => field("[" + v + "]").value } }
+
+@input(field, args:_*) { (id, name, value, htmlArgs) =>
+	<select id="@id" name="@name" @toHtmlArgs(htmlArgs) multiple="multiple">
+		@args.toMap.get('_default).map { defaultValue =>
+			<option class="blank" value="">@defaultValue</option>
+		}
+		@options.map { v =>
+			<option value="@v._1" @{if(values.contains(Some(v._1))) "selected" else ""}>@v._2</option>
 		}
 	</select>
-</div>
+}
