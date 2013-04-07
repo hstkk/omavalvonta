@@ -44,13 +44,7 @@ public class Product extends UserModel {
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	public Form form1;
-
-	@ManyToOne(cascade = CascadeType.ALL)
-	public Form form2;
-
-	@ManyToOne(cascade = CascadeType.ALL)
-	public Form form3;
+	public List<Form> forms = new ArrayList<Form>();
 
 	public String toString() {
 		return name + " (" + no.toString() + ")";
@@ -59,8 +53,6 @@ public class Product extends UserModel {
 	@Override
 	public void set() {
 		ingredients = Ingredient.dao.getReference(ingredients);
-		form1 = Form.dao.getReference(form1);
-		form2 = Form.dao.getReference(form2);
-		form3 = Form.dao.getReference(form3);
+		forms = Form.dao.getReference(forms);
 	}
 }
