@@ -7,16 +7,32 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @tags.forms.form(FORM, action) {
-	@helper.inputText(FORM("no"), '_label -> Messages.get("label.productNo"), '_class -> "control-group")
-	@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
-	@helper.textarea(FORM("description"), '_label -> Messages.get("label.description"))
-	<fieldset>
-		<legend>Raaka-aineet</legend>
-		@Html(models.Ingredient.checkboxes(FORM("id").value))
-	</fieldset>
-	<fieldset>
-		<legend>Lomakkeet</legend>
-		// TODO
-		Html(models.dynamicforms.Form.checkboxes(FORM("id").value))
-	</fieldset>
+	@helper.inputText(
+		FORM("no"),
+		'_label -> Messages.get("label.productNo"),
+		'_class -> "control-group"
+	)
+
+	@helper.inputText(
+		FORM("name"),
+		'_label -> Messages.get("label.name"),
+		'_class -> "control-group"
+	)
+
+	@helper.textarea(
+		FORM("description"),
+		'_label -> Messages.get("label.description")
+	)
+
+	@multiselect(
+		FORM("ingredients"),
+		options = options(models.Ingredient.dao.options),
+		'_label ->  Messages.get("label.ingredients")
+	)
+
+	@multiselect(
+		FORM("forms"),
+		options = options(models.Form.dao.options),
+		'_label ->  Messages.get("label.forms")
+	)
 }

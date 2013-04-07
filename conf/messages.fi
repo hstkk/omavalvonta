@@ -59,6 +59,8 @@ label.date=Päivämäärä
 label.user=Käyttäjä
 label.next=Seuraava
 label.product=Tuote
+label.ingredients=Raaka-aineet
+label.forms=Lomakkeet
 
 # --- Fieldset
 fieldset.create=Uusi kenttäryhmä
