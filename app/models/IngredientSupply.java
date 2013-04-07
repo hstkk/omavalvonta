@@ -66,6 +66,12 @@ public class IngredientSupply extends UserModel {
 		return this.used >= this.amount;
 	}
 
+	public Double amountAvailable() {
+		if (isUsed())
+			return 0.0;
+		return this.amount - this.used;
+	}
+
 	@Override
 	@PrePersist
 	public void onCreate() {
