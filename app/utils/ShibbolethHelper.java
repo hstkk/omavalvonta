@@ -28,8 +28,9 @@ public class ShibbolethHelper {
 	}
 
 	public static void createSession(Context ctx, User user) {
-		ctx.session().put("u", user.email);
-		ctx.session().put("t", String.valueOf(System.currentTimeMillis()));
+		ctx.session().put(ShibbolethDefaults.SESSION_USER, user.email);
+		ctx.session().put(ShibbolethDefaults.SESSION_TIMESTAMP,
+				String.valueOf(System.currentTimeMillis()));
 	}
 
 	public static String getLoginUrl(Context ctx, String returnUrl)
@@ -94,20 +95,36 @@ public class ShibbolethHelper {
 		return ShibbolethDefaults.HOME;
 	}
 
+	public static User getSessionUser(Context ctx) {
+		String username = getSessionUserEmail(ctx);
+		User user = User.findByEmail(username);
+		return user;
+	}
+
+	public static String getSessionUserEmail(Context ctx) {
+		String username = getUsername(ctx);
+		if (isSessionValid(ctx, username))
+			return username;
+		return null;
+	}
+
 	public static Long getTimestamp(Context ctx) {
 		try {
-			return Long.parseLong(ctx.session().get("t"));
+			return Long.parseLong(ctx.session().get(
+					ShibbolethDefaults.SESSION_TIMESTAMP));
 		} catch (Exception e) {
 		}
 		return null;
 	}
 
 	public static String getUsername(Context ctx) {
-		return ctx.session().get("u");
+		return ctx.session().get(ShibbolethDefaults.SESSION_USER);
 	}
 
 	public static boolean isSession(Context ctx) {
-		return ctx.session().containsKey("u") && ctx.session().containsKey("t");
+		return ctx.session().containsKey(ShibbolethDefaults.SESSION_USER)
+				&& ctx.session().containsKey(
+						ShibbolethDefaults.SESSION_TIMESTAMP);
 	}
 
 	public static boolean isSessionValid(Context ctx) {
