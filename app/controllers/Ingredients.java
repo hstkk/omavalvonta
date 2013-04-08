@@ -12,11 +12,14 @@ import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
+import play.mvc.Security.Authenticated;
 import views.html.ingredients.*;
 import controllers.helpers.SecuredCrud;
+import controllers.shib.Secured;
 import controllers.shib.Session;
 
 @With(Session.class)
+@Authenticated(Secured.class)
 public class Ingredients extends SecuredCrud<Ingredient> {
 	public Ingredients() {
 		super(Ingredient.dao, form(Ingredient.class), create.ref(), page.ref(),

@@ -12,11 +12,14 @@ import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
+import play.mvc.Security.Authenticated;
 import views.html.products.*;
 import controllers.helpers.SecuredCrud;
+import controllers.shib.Secured;
 import controllers.shib.Session;
 
 @With(Session.class)
+@Authenticated(Secured.class)
 public class Products extends SecuredCrud<Product> {
 	public Products() {
 		super(Product.dao, form(Product.class), create.ref(), page.ref(), null,

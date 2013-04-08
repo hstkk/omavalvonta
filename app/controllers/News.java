@@ -11,11 +11,14 @@ import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
+import play.mvc.Security.Authenticated;
 import views.html.news.*;
 import controllers.helpers.SecuredCrud;
+import controllers.shib.Secured;
 import controllers.shib.Session;
 
 @With(Session.class)
+@Authenticated(Secured.class)
 public class News extends SecuredCrud<models.News> {
 	public News() {
 		super(models.News.dao, form(models.News.class), create.ref(), page

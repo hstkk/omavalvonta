@@ -9,9 +9,11 @@ import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
+import play.mvc.Security.Authenticated;
 import utils.Helper;
 import views.html.users.*;
 import controllers.helpers.Crud;
+import controllers.shib.Secured;
 import controllers.shib.Session;
 
 @With(Session.class)
@@ -31,6 +33,7 @@ public class Users extends Crud<User> {
 	}
 
 	@Transactional(readOnly = true)
+	@Authenticated(Secured.class)
 	public Result home() {
 		User user = Session.user();
 		if (user != null)

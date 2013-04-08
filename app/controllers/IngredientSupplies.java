@@ -12,8 +12,10 @@ import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
+import play.mvc.Security.Authenticated;
 import views.html.ingredientsupplies.*;
 import controllers.helpers.UserCrud;
+import controllers.shib.Secured;
 import controllers.shib.Session;
 
 @With(Session.class)
@@ -22,6 +24,13 @@ public class IngredientSupplies extends UserCrud<IngredientSupply> {
 	public IngredientSupplies() {
 		super(IngredientSupply.dao, form(IngredientSupply.class), create.ref(),
 				page.ref(), show.ref(), null);
+	}
+
+	@Override
+	@Authenticated(Secured.class)
+	public Result ack(Long id) {
+		// TODO Auto-generated method stub
+		return super.ack(id);
 	}
 
 	@Override

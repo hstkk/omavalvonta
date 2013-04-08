@@ -12,11 +12,14 @@ import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
+import play.mvc.Security.Authenticated;
 import views.html.terms.*;
 import controllers.helpers.SecuredCrud;
+import controllers.shib.Secured;
 import controllers.shib.Session;
 
 @With(Session.class)
+@Authenticated(Secured.class)
 public class Terms extends SecuredCrud<Term> {
 	public Terms() {
 		super(Term.dao, form(Term.class), create.ref(), page.ref(), null,

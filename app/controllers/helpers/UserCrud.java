@@ -13,6 +13,7 @@ import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.Result;
 import play.mvc.Security;
+import play.mvc.Security.Authenticated;
 import play.mvc.With;
 import utils.Helper;
 import controllers.shib.Secured;
@@ -33,7 +34,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		super(DAO, FORM, CREATE, PAGE, SHOW, UPDATE);
 	}
 
-	@Security.Authenticated(Secured.class)
+	@Authenticated(Secured.class)
 	public Result ack(Long id) {
 		User user = Session.user();
 		if (user != null) {
