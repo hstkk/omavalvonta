@@ -43,7 +43,7 @@ public class Product extends UserModel {
 	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	public List<Form> forms = new ArrayList<Form>();
 
 	public String toString() {
