@@ -20,8 +20,9 @@ import views.html.batches.*;
 import controllers.helpers.Crud;
 import controllers.helpers.UserCrud;
 import controllers.shib.Secured;
-import controllers.shib.SessionTimeout;
+import controllers.shib.Session;
 
+@With(Session.class)
 public class Batches extends UserCrud<Batch> {
 
 	public Batches() {
@@ -30,19 +31,16 @@ public class Batches extends UserCrud<Batch> {
 
 	@Override
 	public Call callPage() {
-		// return controllers.routes.Batches.page(1);
-		return super.callPage();
+		return controllers.routes.Batches.page(1);
 	}
 
 	@Override
 	public Call callShow(Long id) {
-		// return controllers.routes.Batches.show(id);
-		return super.callShow(id);
+		return controllers.routes.Batches.show(id);
 	}
 
 	@Override
 	@Authenticated(Secured.class)
-	@With(SessionTimeout.class)
 	public Result ack(Long id) {
 		// TODO Auto-generated method stub
 		return super.ack(id);

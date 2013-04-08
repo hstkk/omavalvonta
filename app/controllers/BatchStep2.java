@@ -23,8 +23,9 @@ import views.html.batches.*;
 import controllers.helpers.Crud;
 import controllers.helpers.UserCrud;
 import controllers.shib.Secured;
-import controllers.shib.SessionTimeout;
+import controllers.shib.Session;
 
+@With(Session.class)
 public class BatchStep2 extends UserCrud<Batch> {
 	public BatchStep2() {
 		super(null, form(Batch.class), null, null, null, null);
@@ -50,7 +51,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 			return result;
 		if (!filledForm.hasErrors()) {
 			Batch batch = filledForm.get();
-			User user = getUser();
+			User user = Session.user();
 			boolean success = batch.bind(user, product);
 			if (success) {
 				success = Batch.dao.create(batch);

@@ -11,9 +11,12 @@ import play.db.jpa.Transactional;
 import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.With;
 import views.html.ingredientsupplies.*;
 import controllers.helpers.UserCrud;
+import controllers.shib.Session;
 
+@With(Session.class)
 public class IngredientSupplies extends UserCrud<IngredientSupply> {
 
 	public IngredientSupplies() {

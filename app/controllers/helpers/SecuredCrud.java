@@ -11,9 +11,12 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 import play.mvc.Security;
+import play.mvc.With;
 import utils.Helper;
 import controllers.shib.Secured;
+import controllers.shib.Session;
 
+@With(Session.class)
 @Security.Authenticated(Secured.class)
 public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	public SecuredCrud(
@@ -30,8 +33,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	@Override
 	@Transactional
 	public Result create() {
-		String username = ctx().request().username();
-		User user = User.findByEmail(username);
+		User user = Session.user();
 		if (Secured.isAdmin(user)) {
 			setUser(user);
 			return super.create();
@@ -90,8 +92,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	@Override
 	@Transactional
 	public Result update(Long id) {
-		String username = ctx().request().username();
-		User user = User.findByEmail(username);
+		User user = Session.user();
 		if (Secured.isAdmin(user)) {
 			setUser(user);
 			return super.update(id);

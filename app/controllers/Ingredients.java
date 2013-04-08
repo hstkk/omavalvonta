@@ -11,9 +11,12 @@ import play.db.jpa.Transactional;
 import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.With;
 import views.html.ingredients.*;
 import controllers.helpers.SecuredCrud;
+import controllers.shib.Session;
 
+@With(Session.class)
 public class Ingredients extends SecuredCrud<Ingredient> {
 	public Ingredients() {
 		super(Ingredient.dao, form(Ingredient.class), create.ref(), page.ref(),

@@ -11,9 +11,12 @@ import play.db.jpa.Transactional;
 import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.With;
 import views.html.products.*;
 import controllers.helpers.SecuredCrud;
+import controllers.shib.Session;
 
+@With(Session.class)
 public class Products extends SecuredCrud<Product> {
 	public Products() {
 		super(Product.dao, form(Product.class), create.ref(), page.ref(), null,

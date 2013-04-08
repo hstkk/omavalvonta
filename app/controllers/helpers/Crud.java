@@ -13,9 +13,9 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
-import controllers.shib.SessionTimeout;
+import controllers.shib.Session;
 
-@With(SessionTimeout.class)
+@With(Session.class)
 public class Crud<T extends Model> extends Controller implements CrudInterface {
 	protected final Form<T> FORM;
 	protected final Dao<T, Long> DAO;

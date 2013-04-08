@@ -21,8 +21,9 @@ import views.html.batches.*;
 import controllers.helpers.Crud;
 import controllers.helpers.UserCrud;
 import controllers.shib.Secured;
-import controllers.shib.SessionTimeout;
+import controllers.shib.Session;
 
+@With(Session.class)
 public class BatchStep1 extends Crud<Batch> {
 	public BatchStep1() {
 		super(null, form(Batch.class), views.html.batches.step1.ref(), null,

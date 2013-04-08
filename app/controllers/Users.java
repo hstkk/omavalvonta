@@ -8,9 +8,13 @@ import play.db.jpa.Transactional;
 import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.With;
+import utils.Helper;
 import views.html.users.*;
 import controllers.helpers.Crud;
+import controllers.shib.Session;
 
+@With(Session.class)
 public class Users extends Crud<User> {
 	public Users() {
 		super(User.dao, null, null, page.ref(), show.ref(), null);
@@ -24,6 +28,11 @@ public class Users extends Crud<User> {
 	@Override
 	public Call callShow(Long id) {
 		return controllers.routes.Users.show(id);
+	}
+
+	@Transactional(readOnly = true)
+	public Result home() {
+		return Helper.getUnauthorized();
 	}
 
 	@Override

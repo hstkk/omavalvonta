@@ -2,13 +2,13 @@ package controllers;
 
 import models.helpers.Page;
 import controllers.shib.Secured;
-import controllers.shib.SessionTimeout;
+import controllers.shib.Session;
 import play.db.jpa.Transactional;
 import play.mvc.*;
 import utils.Helper;
 import views.html.*;
 
-@With(SessionTimeout.class)
+@With(Session.class)
 public class Application extends Controller {
 
 	@Transactional(readOnly = true)

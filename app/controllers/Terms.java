@@ -11,9 +11,12 @@ import play.db.jpa.Transactional;
 import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.With;
 import views.html.terms.*;
 import controllers.helpers.SecuredCrud;
+import controllers.shib.Session;
 
+@With(Session.class)
 public class Terms extends SecuredCrud<Term> {
 	public Terms() {
 		super(Term.dao, form(Term.class), create.ref(), page.ref(), null,
