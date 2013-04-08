@@ -32,7 +32,7 @@
 
 	@multiselect(
 		FORM("forms"),
-		options = options(models.Form.dao.options),
+		options = options(models.dynamicforms.Form.dao.options),
 		'_label ->  Messages.get("label.forms")
 	)
 }
