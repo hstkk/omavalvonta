@@ -8,10 +8,7 @@ import utils.*;
 public class Secured extends Security.Authenticator {
 	@Override
 	public String getUsername(Context ctx) {
-		String user = ShibbolethHelper.getUsername(ctx);
-		if (ShibbolethHelper.isSessionValid(ctx, user))
-			return user;
-		return null;
+		return ShibbolethHelper.getSessionUserEmail(ctx);
 	}
 
 	@Override
@@ -20,8 +17,7 @@ public class Secured extends Security.Authenticator {
 	}
 
 	public static boolean isAdmin() {
-		String username = Context.current().request().username();
-		User user = User.findByEmail(username);
+		User user = ShibbolethHelper.getSessionUser(Context.current());
 		return isAdmin(user);
 	}
 
