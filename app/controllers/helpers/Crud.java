@@ -132,7 +132,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			}
 			if (success) {
 				flash("success", Messages.get("crud.success"));
-				Call call = (id != null) ? callShow(id) : callPage();
+				Call call = callShow(t.id);
 				return redirect(call);
 			}
 		}
