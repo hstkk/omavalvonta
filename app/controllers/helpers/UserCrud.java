@@ -74,7 +74,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		return super.fresh();
 	}
 
-	private User getUser() {
+	protected User getUser() {
 		String username = ctx().request().username();
 		return User.findByEmail(username);
 	}

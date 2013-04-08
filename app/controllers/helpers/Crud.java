@@ -17,7 +17,7 @@ import controllers.shib.SessionTimeout;
 
 @With(SessionTimeout.class)
 public class Crud<T extends Model> extends Controller implements CrudInterface {
-	private final Form<T> FORM;
+	protected final Form<T> FORM;
 	protected final Dao<T, Long> DAO;
 	private final Template1<Form<T>, Html> CREATE;
 	private final Template1<Page<T>, Html> PAGE;
@@ -50,6 +50,10 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		this.UPDATE = UPDATE;
 	}
 
+	protected Form<T> bindForm() {
+		return FORM.bindFromRequest();
+	}
+
 	@Override
 	public Call callPage() {
 		return controllers.routes.Application.index(0);
@@ -65,7 +69,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	public Result create() {
 		if (CREATE == null || FORM == null)
 			return notFound();
-		Form<T> filledForm = FORM.bindFromRequest();
+		Form<T> filledForm = bindForm();
 		Result result = onCancel(filledForm);
 		if (result != null)
 			return result;
