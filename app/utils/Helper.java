@@ -6,6 +6,7 @@ import play.Play;
 import play.i18n.Lang;
 import play.i18n.Messages;
 import play.mvc.Result;
+import static play.mvc.Results.*;
 import scala.collection.mutable.Buffer;
 
 public class Helper {
@@ -15,6 +16,12 @@ public class Helper {
 		return Play.application().configuration().getBoolean(key.trim());
 	}
 
+	public static Result getBadRequest() {
+		String title = getMessage("http.400");
+		String description = getMessage("http.400.description");
+		return badRequest(views.html.error.render(title, description));
+	}
+
 	public static String getString(String key) {
 		return Play.application().configuration().getString(key.trim());
 	}
@@ -22,8 +29,7 @@ public class Helper {
 	public static Result getInternalServerError() {
 		String title = getMessage("http.500");
 		String description = getMessage("http.500.description");
-		return play.mvc.Results.internalServerError(views.html.error.render(
-				title, description));
+		return internalServerError(views.html.error.render(title, description));
 	}
 
 	private static Lang getLang() {
@@ -53,10 +59,15 @@ public class Helper {
 		return value;
 	}
 
+	public static Result getNotFound() {
+		String title = getMessage("http.404");
+		String description = getMessage("http.404.description");
+		return notFound(views.html.error.render(title, description));
+	}
+
 	public static Result getUnauthorized() {
 		String title = getMessage("http.401");
 		String description = getMessage("http.401.description");
-		return play.mvc.Results.unauthorized(views.html.error.render(title,
-				description));
+		return unauthorized(views.html.error.render(title, description));
 	}
 }

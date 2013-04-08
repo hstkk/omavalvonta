@@ -19,6 +19,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
 import play.mvc.Security.Authenticated;
+import utils.Helper;
 import views.html.batches.*;
 import controllers.helpers.Crud;
 import controllers.helpers.UserCrud;
@@ -43,7 +44,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 	public Result create(Long productId) {
 		Product product = Product.dao.findById(productId);
 		if (product == null)
-			return notFound();
+			return Helper.getNotFound();
 		Form<Batch> filledForm = form(Batch.class, Batch.Step2.class)
 				.bindFromRequest();
 		Result result = onCancel(filledForm);
@@ -69,7 +70,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 	public Result fresh(Long productId) {
 		Product product = Product.dao.findById(productId);
 		if (product == null)
-			return notFound();
+			return Helper.getNotFound();
 		return ok(CREATE.render(product.id, FORM));
 	}
 }

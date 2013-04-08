@@ -40,7 +40,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		if (user != null) {
 			T t = DAO.findById(id);
 			if (t == null)
-				return notFound();
+				return Helper.getNotFound();
 			if (t.user != null)
 				return Helper.getInternalServerError();
 			t.user = user;

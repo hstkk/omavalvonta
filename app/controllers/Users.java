@@ -33,12 +33,12 @@ public class Users extends Crud<User> {
 	}
 
 	@Transactional(readOnly = true)
-	@Authenticated(Secured.class)
+	//@Authenticated(Secured.class)
 	public Result home() {
 		User user = Session.user();
 		if (user != null)
 			return show(user.id);
-		return Helper.getUnauthorized();
+		return Helper.getNotFound();
 	}
 
 	@Override
