@@ -29,6 +29,7 @@ GET     /yllapito											controllers.Application.management
 # TODO what user did
 GET		/kayttajat											@controllers.Users.page(sivu: Int ?= 1)
 GET		/kayttajat/:userId									@controllers.Users.show(userId: Long)
+GET		/profiili											@controllers.Users.home
 
 # Batches
 # TODO

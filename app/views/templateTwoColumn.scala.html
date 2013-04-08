@@ -1,18 +1,17 @@
 @(title: String, links: Html)(content: Html)
 @import play.i18n._
 @import tags.alerts._
+@import controllers.shib.Session
 
 @navigation = {	
 	<div class="pull-right">
-		@defining(request.username) { user =>
-			@if(user != null) {
-				<ul class="nav hidden-phone">
-					<li><a href="#">@user</a></li>
-				</ul>
-				<a class="btn btn-primary" href="@controllers.shib.routes.Shibboleth.logout">@Messages.get("shib.logout")</a>
-			} else {
-				<a class="btn btn-primary" href="@controllers.shib.routes.Shibboleth.login">@Messages.get("shib.login")</a>
-			}
+		@if(Session.user != null) {
+			<ul class="nav">
+				<li><a href="@routes.Users.home">@Session.user</a></li>
+			</ul>
+			<a class="btn btn-primary" href="@controllers.shib.routes.Shibboleth.logout">@Messages.get("shib.logout")</a>
+		} else {
+			<a class="btn btn-primary" href="@controllers.shib.routes.Shibboleth.login">@Messages.get("shib.login")</a>
 		}
 	</div>
 }
