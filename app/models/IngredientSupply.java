@@ -62,14 +62,25 @@ public class IngredientSupply extends UserModel {
 		return sb.toString();
 	}
 
+	public boolean isAvailable(Double _amount) {
+		if (_amount > 0 && !isUsed()) {
+			return amountAvailable() >= _amount;
+		}
+		return false;
+	}
+
 	public boolean isUsed() {
 		return this.used >= this.amount;
 	}
 
 	public Double amountAvailable() {
 		if (isUsed())
-			return 0.0;
+			return (double) 0;
 		return this.amount - this.used;
+	}
+
+	public void use(Double _amount) {
+		this.used = this.used + _amount;
 	}
 
 	@Override
