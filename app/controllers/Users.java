@@ -32,6 +32,9 @@ public class Users extends Crud<User> {
 
 	@Transactional(readOnly = true)
 	public Result home() {
+		User user = Session.user();
+		if (user != null)
+			return show(user.id);
 		return Helper.getUnauthorized();
 	}
 
