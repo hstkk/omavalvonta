@@ -1,0 +1,29 @@
+@(id: Long, FORM: play.data.Form[models.Batch])
+
+@import play.i18n._
+@import helper._
+@import helper.twitterBootstrap._
+@import tags.forms._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@amount(field: Field) = {
+	@inputHidden(field("ingredientSupply.id"))
+
+	@helper.input(
+		field("amount"),
+		'_label -> field("ingredientSupply.ingredient").value.getOrElse(""),
+		'_placeholder -> field("ingredientSupply.amountAvailable").value.getOrElse("")
+	) { (id, name, value, args) =>
+		<div class="input-append">
+			<input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(args)>
+			<span class="add-on">field("ingredientSupply.unit").value.getOrElse("")</span>
+		</div>
+	}
+}
+
+@tags.forms.form(FORM, routes.BatchStep2.create(id)) {
+	@repeat(FORM("ingredientSupplies")) { ingredientSupply =>
+		@amount(ingredientSupply)
+	}
+}

@@ -34,12 +34,12 @@ GET		/kayttajat/:userId									@controllers.Users.show(userId: Long)
 # TODO
 # Raaka-aine-erät
 # Tulokset
-#GET		/erat												controllers.Batches.page(sivu: Int ?= 1)
-#GET		/erat/uusi											controllers.Batches.step1.fresh
-#POST	/erat/uusi											controllers.Batches.step1.create
-#GET	/erat/uusi/:productId								controllers.Batches.step2.fresh(productId: Long)
-#POST	/erat/uusi/:productId								controllers.Batches.step2.create(productId: Long)
-#GET		/erat/:batchId										controllers.Batches.show(batchId: Long)
+GET		/erat												@controllers.Batches.page(sivu: Int ?= 1)
+GET		/erat/uusi											@controllers.BatchStep1.fresh
+POST	/erat/uusi											@controllers.BatchStep1.create
+GET		/erat/uusi/:productId								@controllers.BatchStep2.fresh(productId: Long)
+POST	/erat/uusi/:productId								@controllers.BatchStep2.create(productId: Long)
+GET		/erat/:batchId										@controllers.Batches.show(batchId: Long)
 #POST	/erat/:batchId/kuittaa
 
 # Final product
@@ -81,7 +81,6 @@ POST	/yllapito/termit/:termId/muokkaa					@controllers.Terms.update(termId: Long
 GET		/yllapito/termit/:termId/muokkaa					@controllers.Terms.edit(termId: Long)
 
 # Ingredient management
-# Checkboxes
 # Form
 #
 # Archive
@@ -95,8 +94,6 @@ POST	/yllapito/raaka-aineet/:ingredientId/muokkaa		@controllers.Ingredients.upda
 GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		@controllers.Ingredients.edit(ingredientId: Long)
 
 # Product management
-# Form
-# Ingredient multiselect
 #
 # Archive
 # TEST
