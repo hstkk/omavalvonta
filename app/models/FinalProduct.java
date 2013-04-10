@@ -27,31 +27,37 @@ import play.db.jpa.*;
 @Entity(name = "FinalProduct")
 @Audited
 public class FinalProduct extends UserModel {
+	public interface All {
+	}
+
+	public interface Partial {
+	}
+
 	public final static Dao<FinalProduct, Long> dao = new Dao<FinalProduct, Long>(
 			FinalProduct.class);
 
-	@Required
-	@NotNull
+	@Required(groups = { All.class, Partial.class })
+	@NotNull(groups = { All.class, Partial.class })
 	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date date;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@Required
-	@NotNull
+	@Required(groups = { All.class, Partial.class })
+	@NotNull(groups = { All.class, Partial.class })
 	public Term destiny;
 
-	@Required
-	@NotNull
+	@Required(groups = { All.class, Partial.class })
+	@NotNull(groups = { All.class, Partial.class })
 	public Double amount;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@Required
-	@NotNull
+	@Required(groups = { All.class, Partial.class })
+	@NotNull(groups = { All.class, Partial.class })
 	public Term unit;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@Required
-	@NotNull
+	@Required(groups = { All.class })
+	@NotNull(groups = { All.class })
 	public Batch batch;
 
 	@Lob
