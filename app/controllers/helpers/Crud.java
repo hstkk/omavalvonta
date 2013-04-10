@@ -164,7 +164,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	public Result update(Long id) {
 		if (UPDATE == null || DAO == null || !DAO.exists(id) || FORM == null)
 			return Helper.getNotFound();
-		Form<T> filledForm = FORM.bindFromRequest();
+		Form<T> filledForm = bindForm();
 		Result result = onCancel(filledForm, id);
 		if (result != null)
 			return result;
