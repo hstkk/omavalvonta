@@ -1,9 +1,9 @@
-import static play.mvc.Results.badRequest;
-import static play.mvc.Results.internalServerError;
-import static play.mvc.Results.notFound;
+import play.Application;
 import play.GlobalSettings;
+import play.data.format.Formatters;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
+import utils.Formats.*;
 import utils.Helper;
 
 /**
@@ -25,5 +25,11 @@ public class Global extends GlobalSettings {
 	@Override
 	public Result onHandlerNotFound(RequestHeader request) {
 		return Helper.getNotFound();
+	}
+
+	@Override
+	public void onStart(Application app) {
+		Formatters.register(Double.class, new DoubleFormatter());
+		super.onStart(app);
 	}
 }
