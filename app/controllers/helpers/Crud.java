@@ -122,7 +122,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		return onCreateOrUpdate(t, null);
 	}
 
-	public Result onCreateOrUpdate(T t, Long id) {
+	protected Result onCreateOrUpdate(T t, Long id) {
 		if (DAO != null) {
 			boolean success = false;
 			if (id == null)
