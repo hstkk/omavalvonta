@@ -5,6 +5,7 @@ import controllers.shib.Secured;
 import controllers.shib.Session;
 import play.db.jpa.Transactional;
 import play.mvc.*;
+import play.mvc.Security.Authenticated;
 import utils.Helper;
 import views.html.*;
 
@@ -17,7 +18,8 @@ public class Application extends Controller {
 		return ok(views.html.news.index.render(page));
 	}
 
-	@Security.Authenticated(Secured.class)
+	@Authenticated(Secured.class)
+	@Transactional(readOnly = true)
 	public static Result management() {
 		if (Secured.isAdmin())
 			return ok(management.render());

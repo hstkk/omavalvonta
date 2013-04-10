@@ -205,13 +205,14 @@ public class ShibbolethHelper {
 
 	// TODO document split regex
 	public static boolean verifyRole(String role, String adminRole) {
-		if (!adminRole.isEmpty()) {
+		if (adminRole != null && !adminRole.isEmpty()) {
 			String separator = Helper.getString("shibboleth.separator");
-			if (separator.isEmpty())
+			if (separator != null && !separator.isEmpty()) {
+				for (String r : role.split(separator))
+					if (r.equals(adminRole))
+						return true;
+			} else
 				return role.equals(adminRole);
-			for (String r : role.split(separator))
-				if (r.equals(adminRole))
-					return true;
 		}
 		return false;
 	}
