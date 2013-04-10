@@ -2,7 +2,6 @@
 
 @import play.i18n._
 @import helper._
-@import helper.twitterBootstrap._
 @import tags.forms._
 
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
@@ -23,6 +22,12 @@
 }
 
 @tags.forms.form(FORM, routes.BatchStep2.create(id)) {
+	@helper.inputDate(
+		FORM("date"),
+		'_label -> Messages.get("label.date"),
+		'_placeholder -> Messages.get("label.ddMMyyyy")
+	)
+
 	@repeat(FORM("ingredientSupplies")) { ingredientSupply =>
 		@amount(ingredientSupply)
 	}
