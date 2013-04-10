@@ -18,8 +18,9 @@ import play.data.validation.Constraints.*;
 
 @Entity
 @Audited
-public class Form extends UserModel {
-	public final static Dao<Form, Long> dao = new Dao<Form, Long>(Form.class);
+public class Fieldset extends UserModel {
+	public final static Dao<Fieldset, Long> dao = new Dao<Fieldset, Long>(
+			Fieldset.class);
 
 	@Required
 	@NotNull
@@ -33,9 +34,9 @@ public class Form extends UserModel {
 	public boolean isActive;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@IndexColumn(name = "position", base = 1)
 	@JoinColumn(name = "fieldset_id")
-	public List<Fieldset> fieldsets = new ArrayList<Fieldset>();
+	@IndexColumn(name = "position", base = 1)
+	public List<Field> fields = new ArrayList<Field>();
 
 	public String toString() {
 		return name;
@@ -44,6 +45,7 @@ public class Form extends UserModel {
 	@PrePersist
 	@PreUpdate
 	private void onPre() {
-		this.fieldsets = Fieldset.dao.getReference(this.fieldsets);
+		this.fields = Field.dao.getReference(this.fields);
 	}
+
 }
