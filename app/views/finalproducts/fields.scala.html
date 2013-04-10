@@ -1,0 +1,53 @@
+@(FORM: play.data.Form[models.FinalProduct], batch: Batch)
+
+@import play.i18n._
+@import helper._
+@import tags.forms._
+@import batches._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@main(Messages.get("finalproduct.title", batch.toString)) {
+	@info(batch)
+	@results(batch)
+	@ingredients(batch)
+
+	@tags.forms.form(FORM, routes.FinalProducts.save(batch.id)) {
+		<fieldset>
+			<legend>Lopputuotteen punnitus</legend>
+	
+			@helper.inputText(
+				FORM("amount"),
+				'_label -> "paino"
+			)
+	
+			@helper.select(
+				FORM("unit.id"),
+				options = options(models.Term.options(models.TermCategory.UNIT)),
+				'_default -> "",
+				'_label -> "mittayksikkÃ¶"
+			)
+		</fieldset>
+		<fieldset>
+			<legend>MyyntihyvÃ¤ksyntÃ¤</legend>
+	
+			@helper.inputDate(
+				FORM("date"),
+				'_label -> Messages.get("label.date"),
+				'_class -> "control-group"
+			)
+	
+			@helper.select(
+				FORM("destiny.id"),
+				options = options(models.Term.options(models.TermCategory.DESTINY)),
+				'_default -> "",
+				'_label -> "erÃ¤n kohtalo"
+			)
+	
+			@helper.textarea(
+				FORM("comment"),
+				'_label -> "huomioita"
+			)
+		</fieldset>
+	}
+}

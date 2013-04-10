@@ -122,6 +122,9 @@ batch.create=Uusi erä
 batch.page=Erät
 ingredient.page.empty=Eriä ei löytynyt!
 
+# --- Final product
+finalproduct.title=Erän {0} lopputuote
+
 # --- User
 user.page=Käyttäjät
 user.page.empty=Käyttäjiä ei löytynyt!

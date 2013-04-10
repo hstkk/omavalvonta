@@ -44,7 +44,9 @@ GET		/erat/:batchId										@controllers.Batches.show(batchId: Long)
 #POST	/erat/:batchId/kuittaa
 
 # Final product
-# TODO
+GET		/erat/:batchId/lopputuote							@controllers.FinalProducts.edit(batchId: Long)
+POST	/erat/:batchId/lopputuote							@controllers.FinalProducts.save(batchId: Long)
+POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchId: Long)
 
 # Results
 # TODO
