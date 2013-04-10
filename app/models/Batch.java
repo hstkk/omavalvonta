@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.persistence.AttributeOverride;
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -17,15 +19,17 @@ import models.helpers.Dao;
 import models.helpers.Model;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
+import play.data.format.Formats;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
+import play.i18n.Messages;
 import utils.Converter;
 import utils.Helper;
 
 @Entity
 @Audited
-@AttributeOverride(name = "lastModified", column = @Column(nullable = false, updatable = false, name = "created"))
 public class Batch extends UserModel {
 
 	public interface All {
@@ -45,8 +49,17 @@ public class Batch extends UserModel {
 
 	@Required(groups = { All.class, Step2.class })
 	@NotNull(groups = { All.class, Step2.class })
+	@Formats.DateTime(pattern = "dd.MM.yyyy")
+	public Date date;
+
+	@Required(groups = { All.class, Step2.class })
+	@NotNull(groups = { All.class, Step2.class })
 	@OneToMany(mappedBy = "batch")
 	public List<IngredientSupplyBatch> ingredientSupplies = new ArrayList<IngredientSupplyBatch>();
+
+	//todo fetchtype
+	@OneToOne(mappedBy="batch")
+	public FinalProduct finalProduct;
 
 	@PrePersist
 	private void onPre() {
@@ -56,7 +69,7 @@ public class Batch extends UserModel {
 	public String toString() {
 		String separator = Helper.getOrElse("batch.separator");
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(Converter.dateToString(this.lastModified,
+		stringBuilder.append(Converter.dateToString(this.date,
 				Helper.getOrElse("batch.date")));
 		stringBuilder.append(separator);
 		stringBuilder.append(this.product.id);
@@ -83,5 +96,11 @@ public class Batch extends UserModel {
 				return false;
 		}
 		return true;
+	}
+
+	public String getStatus() {
+		if(this.finalProduct != null)
+			return this.finalProduct.toString();
+		return Messages.get("status.wip");
 	}
 }
