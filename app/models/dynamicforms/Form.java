@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -34,7 +35,7 @@ public class Form extends UserModel {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@IndexColumn(name = "position", base = 1)
-	@JoinColumn(name = "fieldset_id")
+	@JoinTable(joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "fieldset_id"))
 	public List<Fieldset> fieldsets = new ArrayList<Fieldset>();
 
 	public String toString() {
