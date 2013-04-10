@@ -1,29 +1,30 @@
 # Default messages
 
 # --- Constraints
-constraint.required=Vaadittu
-constraint.min=Minimiarvo: {0}
-constraint.max=Maksimiarvo: {0}
-constraint.minLength=Minimipituus: {0}
-constraint.maxLength=Maksimipituus: {0}
-constraint.email=Sähköposti
+constraint.required=vaadittu
+constraint.min=minimiarvo {0}
+constraint.max=maksimiarvo {0}
+constraint.minLength=minimipituus {0}
+constraint.maxLength=maksimipituus {0}
+constraint.email=sähköposti
 
 # --- Formats
-format.date=Päivämäärä {0}
-format.numeric=Numeric
-format.real=Real
+format.date=päivämäärä
+format.numeric=numero
+format.real=reaaliluku
+format.localizedDouble=
 
 # --- Errors
-error.invalid=Invalid value
-error.required=Vaadittu
-error.number=Numeric value expected
-error.real=Real number value expected
+error.invalid=virheellinen arvo
+error.required=vaadittu
+error.number=numeerista arvoa odotetaan
+error.real=reaalilukua odotetaan
 error.min=Tulee olla suurempi tai yhtä suuri kuin {0}
 error.max=Tulee olla pienempi tai yhtä suuri kuin {0}
 error.minLength=Minimipituus on {0}
 error.maxLength=Maksimipituus on {0}
-error.email=Valid email required
-error.pattern=Must satisfy {0}
+error.email=kelvollinen sähköpostiosoite vaaditaan
+error.pattern=on täytettävä {0}
 
 # Custom messages
 
@@ -63,7 +64,6 @@ label.ingredients=Raaka-aineet
 label.forms=Lomakkeet
 label.status=Tila
 label.batch=Erä
-label.ddMMyyyy=pp.kk.vvvv
 
 # --- Fieldset
 fieldset.create=Uusi kenttäryhmä
@@ -120,7 +120,7 @@ ingredientsupply.amountAvailable=Jäljellä
 # --- Batch
 batch.create=Uusi erä
 batch.page=Erät
-ingredient.page.empty=Eriä ei löytynyt!
+batch.page.empty=Eriä ei löytynyt!
 
 # --- Final product
 finalproduct.title=Erän {0} lopputuote
@@ -144,6 +144,11 @@ management.title=Ylläpito
 
 # --- Links
 links.frontPage=Etusivulle
+
+# --- Placeholder
+placeholder.int=0
+placeholder.double=0,0
+placeholder.date=pp.kk.vvvv
 
 # --- Etc
 model.id="#"
