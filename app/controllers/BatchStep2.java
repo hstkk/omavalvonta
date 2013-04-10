@@ -68,7 +68,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 
 	@Transactional(readOnly = true)
 	public Result fresh(Long productId) {
-		Product product = Product.dao.findById(productId);
+		Product product = Product.dao.getReference(productId);
 		if (product == null)
 			return Helper.getNotFound();
 		return ok(CREATE.render(product.id, FORM));
