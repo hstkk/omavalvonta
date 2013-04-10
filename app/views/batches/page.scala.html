@@ -1,0 +1,30 @@
+@(page: models.helpers.Page[Batch])
+
+@import play.i18n._
+@import tags._
+@import tags.alerts._
+@import tags.tables._
+
+@main(Messages.get("batch.page")) {
+	@if(!page.isEmpty){
+		@table() {
+			@thead() {
+				@Messages.get("label.batch")
+				@Messages.get("label.product")
+				@Messages.get("label.status")
+			}
+			<tbody>
+				@for(batch <- page.getList) {
+					@tr() { <a href="@routes.Batches.show(batch.id)">@batch</a>
+						@batch.product
+						@batch.getStatus }
+				}
+			</tbody>
+		}
+		@pagination(page, routes.Batches.page(page.getPrevious), routes.Batches.page(page.getNext))
+	} else {
+		@warning() {
+			@Messages.get("batch.page.empty")
+		}
+	}
+}

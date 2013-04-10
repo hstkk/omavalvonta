@@ -61,6 +61,9 @@ label.next=Seuraava
 label.product=Tuote
 label.ingredients=Raaka-aineet
 label.forms=Lomakkeet
+label.status=Tila
+label.batch=Erä
+label.ddMMyyyy=pp.kk.vvvv
 
 # --- Fieldset
 fieldset.create=Uusi kenttäryhmä
@@ -116,6 +119,8 @@ ingredientsupply.amountAvailable=Jäljellä
 
 # --- Batch
 batch.create=Uusi erä
+batch.page=Erät
+ingredient.page.empty=Eriä ei löytynyt!
 
 # --- User
 user.page=Käyttäjät
@@ -139,9 +144,9 @@ links.frontPage=Etusivulle
 
 # --- Etc
 model.id="#"
+status.wip=Kesken
 
 # --- Term category enum
-enum.FORMTYPE=Lomaketyyppi
 enum.REASON=Muutoksen syy
 enum.UNIT=Mittayksikkö
 enum.DESTINY=Erän Kohtalo myyntihyväksynnässä
