@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
@@ -42,9 +43,11 @@ public class Ingredient extends UserModel {
 	public Integer bestBefore;
 
 	@ManyToOne
+	@Valid
 	public Form form;
 
 	@OneToMany(mappedBy = "ingredient")
+	@Valid
 	public List<IngredientSupply> ingredientSupllies;
 
 	public String toString() {
@@ -55,38 +58,5 @@ public class Ingredient extends UserModel {
 	@PreUpdate
 	private void onPre() {
 		this.form = Form.dao.getReference(this.form);
-	}
-
-	// TODO checkboxes
-	public static String checkboxes(String id) {
-		StringBuilder stringBuilder = new StringBuilder();
-		List<Ingredient> checked = null;
-		try {
-			checked = Product.dao.findById(Long.parseLong(id)).ingredients;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try {
-			List<Ingredient> ingredients = dao.findAll();
-			int i = 0;
-			for (Ingredient ingredient : ingredients) {
-				stringBuilder.append("<label class=\"checkbox\">");
-				stringBuilder
-						.append("<input type=\"checkbox\" name=\"ingredientIds[");
-				stringBuilder.append(i);
-				stringBuilder.append("]\" value=\"");
-				stringBuilder.append(ingredient.id);
-				stringBuilder.append("\"");
-				if (checked != null && checked.contains(ingredient))
-					stringBuilder.append(" checked=\"checked\"");
-				stringBuilder.append(">");
-				stringBuilder.append(ingredient.toString());
-				stringBuilder.append("</label>");
-				i++;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return stringBuilder.toString();
 	}
 }

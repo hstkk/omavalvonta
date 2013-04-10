@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
@@ -19,17 +20,17 @@ import org.hibernate.envers.Audited;
 
 import play.data.validation.Constraints.Required;
 
-
 @Entity
 @Audited
 public class Product extends UserModel {
-	public final static Dao<Product, Long> dao = new Dao<Product, Long>(Product.class);
+	public final static Dao<Product, Long> dao = new Dao<Product, Long>(
+			Product.class);
 
 	// TODO check unique
 	@Required
 	@NotNull
 	@Column(unique = true)
-	public Long no;
+	public int no;
 
 	// TODO check unique
 	@Required
@@ -41,13 +42,15 @@ public class Product extends UserModel {
 	public String description;
 
 	@ManyToMany(cascade = CascadeType.ALL)
+	@Valid
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
+	@Valid
 	public List<Form> forms = new ArrayList<Form>();
 
 	public String toString() {
-		return name + " (" + no.toString() + ")";
+		return name + " (" + no + ")";
 	}
 
 	@Override

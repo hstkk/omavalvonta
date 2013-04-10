@@ -44,6 +44,7 @@ public class Batch extends UserModel {
 	public final static Dao<Batch, Long> dao = new Dao<Batch, Long>(Batch.class);
 
 	@Required(groups = { All.class, Step1.class })
+	@Valid
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Product product;
 
@@ -54,6 +55,7 @@ public class Batch extends UserModel {
 
 	@Required(groups = { All.class, Step2.class })
 	@NotNull(groups = { All.class, Step2.class })
+	@Valid
 	@OneToMany(mappedBy = "batch")
 	public List<IngredientSupplyBatch> ingredientSupplies = new ArrayList<IngredientSupplyBatch>();
 

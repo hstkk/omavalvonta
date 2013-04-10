@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.UserModel;
@@ -17,6 +18,7 @@ import play.data.format.Formats;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import utils.Converter;
+import utils.Formats.*;
 
 @Entity
 @Audited
@@ -26,14 +28,17 @@ public class IngredientSupply extends UserModel {
 
 	@Required
 	@NotNull
+	@Valid
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Ingredient ingredient;
 
 	@Required
 	@NotNull
 	@Min(0)
+	@LocalizedDouble
 	public Double amount;
 
+	@LocalizedDouble
 	public Double used;
 
 	@Required
@@ -43,6 +48,7 @@ public class IngredientSupply extends UserModel {
 
 	@Required
 	@NotNull
+	@Valid
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term unit;
 

@@ -5,14 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import models.Batch.All;
-import models.Batch.Step2;
 import models.helpers.Model;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
+import utils.Formats.LocalizedDouble;
 
 @Entity
 @Table(name = "IngredientSupply_Batch")
@@ -22,18 +23,21 @@ public class IngredientSupplyBatch extends Model {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "ingredientSupply_id", updatable = false)
+	@Valid
 	public IngredientSupply ingredientSupply;
 
 	@Required(groups = { All.class })
 	@NotNull(groups = { All.class })
 	@ManyToOne
 	@JoinColumn(name = "batch_id", updatable = false)
+	@Valid
 	public Batch batch;
 
 	@Required
 	@NotNull(groups = { All.class })
 	@Min(0)
 	@Column(updatable = false)
+	@LocalizedDouble
 	public Double amount;
 
 	public boolean bind(Batch batch) {

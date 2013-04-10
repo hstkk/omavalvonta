@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import models.helpers.Dao;
@@ -18,6 +19,7 @@ import play.Play;
 import play.data.format.Formats;
 import play.data.validation.Constraints.*;
 import play.db.jpa.*;
+import utils.Formats.LocalizedDouble;
 
 /**
  * 
@@ -44,20 +46,24 @@ public class FinalProduct extends UserModel {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Required(groups = { All.class, Partial.class })
 	@NotNull(groups = { All.class, Partial.class })
+	@Valid
 	public Term destiny;
 
 	@Required(groups = { All.class, Partial.class })
 	@NotNull(groups = { All.class, Partial.class })
+	@LocalizedDouble
 	public Double amount;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Required(groups = { All.class, Partial.class })
 	@NotNull(groups = { All.class, Partial.class })
+	@Valid
 	public Term unit;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@Required(groups = { All.class })
 	@NotNull(groups = { All.class })
+	@Valid
 	public Batch batch;
 
 	@Lob
