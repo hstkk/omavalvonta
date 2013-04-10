@@ -153,8 +153,18 @@ placeholder.date=pp.kk.vvvv
 # --- Etc
 model.id="#"
 status.wip=Kesken
+boolean.true=Kyllä
+boolean.false=Ei
 
 # --- Term category enum
 enum.REASON=Muutoksen syy
 enum.UNIT=Mittayksikkö
 enum.DESTINY=Erän Kohtalo myyntihyväksynnässä
+
+# --- Field type enum
+enum.TEXT=Teksti
+enum.INT=Kokonaisluku
+enum.DOUBLE=Desimaaliluku
+enum.DATE=Päivämäärä
+enum.CHECKBOX=Kyllä/Ei
+enum.TEXTAREA=Tekstikenttä
