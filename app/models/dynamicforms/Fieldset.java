@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -51,17 +50,23 @@ public class Fieldset extends UserModel {
 		this.fields = Field.dao.getReference(this.fields);
 	}
 
-	public static Map<String, String> options(List<Fieldset> fieldsets) {
+	public static Map<String, String> options(String formId) {
 		Map<String, String> options = dao.options();
-		if (fieldsets != null && !fieldsets.isEmpty()) {
-			Map<String, String> map = new HashMap<String, String>();
-			for (Fieldset fieldset : fieldsets) {
-				String id = fieldset.id.toString();
-				map.put(id, fieldset.toString());
-				options.remove(id);
+		try {
+			Long id = Long.parseLong(formId);
+			Form form = Form.dao.findById(id);
+			if (form != null && form.fieldsets != null
+					&& !form.fieldsets.isEmpty()) {
+				Map<String, String> map = new HashMap<String, String>();
+				for (Fieldset fieldset : form.fieldsets) {
+					String key = fieldset.id.toString();
+					map.put(key, fieldset.toString());
+					options.remove(key);
+				}
+				map.putAll(options);
+				return map;
 			}
-			map.putAll(options);
-			return map;
+		} catch (Exception e) {
 		}
 		return options;
 	}
