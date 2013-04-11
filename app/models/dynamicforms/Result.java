@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -36,15 +37,25 @@ public class Result extends UserModel {
 	@JoinColumn(name = "id", insertable = false, updatable = false, nullable = false)
 	public Results results;
 
-	@Lob
-	public String valueString;
+	@Required
+	@NotNull
+	@Valid
+	@ManyToOne
+	public Field field;
 
+	@Lob
+	public String value;
+
+	@Transient
 	public Integer valueInt;
 
+	@Transient
 	public Double valueDouble;
 
+	@Transient
 	public Boolean valueBoolean;
 
+	@Transient
 	public Date valueDate;
 
 	@Lob
