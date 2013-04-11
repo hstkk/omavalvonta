@@ -65,8 +65,10 @@ label.forms=Lomakkeet
 label.status=Tila
 label.batch=Erä
 label.fieldsets=Kenttäryhmät
+label.fields=Kentät
 
 # --- Fieldset
+fieldset.create=Kenttäryhmän esikatselu
 fieldset.create=Uusi kenttäryhmä
 fieldset.page=Kenttäryhmät
 fieldset.page.empty=Kenttäryhmiä ei löytynyt!

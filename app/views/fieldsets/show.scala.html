@@ -1,0 +1,9 @@
+@(fieldset: models.dynamicforms.Fieldset)
+
+@import play.i18n._
+
+@main(Messages.get("fieldset.show")) {
+	@preview(fieldset)
+
+	<p><a class="btn btn-primary" href="@routes.Fieldsets.edit(fieldset.id)">@Messages.get("fieldset.update")</a></p>
+}

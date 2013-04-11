@@ -1,0 +1,12 @@
+@(fieldset: models.dynamicforms.Fieldset)
+
+@import play.i18n._
+
+<fieldset>
+	<legend>@fieldset</legend>
+	<p>@fieldset.description</p>
+
+	@for(field <- fieldset.fields) {
+		@fields.preview(field)
+	}
+</fieldset>
