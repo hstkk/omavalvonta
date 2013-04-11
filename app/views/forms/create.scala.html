@@ -1,0 +1,7 @@
+@(FORM: play.data.Form[models.dynamicforms.Form])
+
+@import play.i18n._
+
+@main(Messages.get("form.create")) {
+	@fields(FORM, routes.Forms.create)
+}

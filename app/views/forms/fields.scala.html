@@ -1,0 +1,26 @@
+@(FORM: play.data.Form[models.dynamicforms.Form], action: play.api.mvc.Call)
+
+@import play.i18n._
+@import helper._
+@import tags.forms._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@tags.forms.form(FORM, action) {
+	@helper.inputText(
+		FORM("name"),
+		'_label -> Messages.get("label.name")
+	)
+
+	@helper.textarea(
+		FORM("description"),
+		'_label -> Messages.get("label.description")
+	)
+
+	@multiselect(
+		FORM("fieldsets"),
+		options = options(models.dynamicforms.Fieldset.options(FORM("id").value)),
+		'_label ->  Messages.get("label.fieldsets"),
+		'_class -> "multiselect"
+	)
+}

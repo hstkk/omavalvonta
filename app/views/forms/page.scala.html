@@ -1,0 +1,31 @@
+@(page: models.helpers.Page[models.dynamicforms.Form])
+
+@import play.i18n._
+@import tags._
+@import tags.alerts._
+@import tags.tables._
+@import tags.navs._
+
+@main(Messages.get("form.page")) {
+	@navigation()
+
+	@if(!page.isEmpty){
+		@table() {
+			@thead() {
+				@Messages.get("label.name")
+				@Messages.get("label.description")
+			}
+			<tbody>
+				@for(form <- page.getList) {
+					@tr() { <a href="@routes.Forms.show(form.id)">@form</a> 
+						@form.description }
+				}
+			</tbody>
+		}
+		@pagination(page, routes.Forms.page(page.getPrevious), routes.Forms.page(page.getNext))
+	} else {
+		@warning() {
+			@Messages.get("form.page.empty")
+		}
+	}
+}

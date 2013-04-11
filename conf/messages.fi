@@ -64,6 +64,7 @@ label.ingredients=Raaka-aineet
 label.forms=Lomakkeet
 label.status=Tila
 label.batch=Erä
+label.fieldsets=Kenttäryhmät
 
 # --- Fieldset
 fieldset.create=Uusi kenttäryhmä
@@ -76,6 +77,7 @@ field.create=Uusi kenttä
 field.update=Muokkaa kenttää
 
 # --- Form
+form.show=Lomakkeen esikatselu
 form.create=Uusi lomake
 form.update=Muokkaa lomaketta
 
@@ -135,6 +137,18 @@ news.create=Uusi uutinen
 news.page=Uutiset
 news.page.empty=Uutisia ei löytynyt!
 news.update=Muokkaa uutista
+
+# --- Results
+results.create=Uusi tulos
+results.page=Tulokset
+results.page.empty=Tuloksia ei löytynyt!
+results.update=Muokkaa tulosta
+
+# --- Form
+form.create=Uusi lomake
+form.page=Lomakkeet
+form.page.empty=Lomakkeita ei löytynyt!
+form.update=Muokkaa lomaketta
 
 # --- Application
 application.index=Uutiset
