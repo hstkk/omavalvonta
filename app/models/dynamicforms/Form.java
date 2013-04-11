@@ -29,10 +29,6 @@ public class Form extends UserModel {
 	@Lob
 	public String description;
 
-	@Required
-	@NotNull
-	public boolean isActive;
-
 	@OneToMany(cascade = CascadeType.ALL)
 	@IndexColumn(name = "position", base = 1)
 	@JoinTable(joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "fieldset_id"))
