@@ -31,10 +31,6 @@ public class Fieldset extends UserModel {
 	@Lob
 	public String description;
 
-	@Required
-	@NotNull
-	public boolean isActive;
-
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fieldset_id")
 	@IndexColumn(name = "position", base = 1)
