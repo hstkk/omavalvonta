@@ -1,6 +1,7 @@
 package models.dynamicforms;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -80,5 +81,20 @@ public class Field extends UserModel {
 		map.put("true", Messages.get("boolean.true"));
 		map.put("false", Messages.get("boolean.false"));
 		return map;
+	}
+
+	public static Map<String, String> options(List<Field> fields) {
+		Map<String, String> options = dao.options();
+		if (fields != null && !fields.isEmpty()) {
+			Map<String, String> map = new HashMap<String, String>();
+			for (Field field : fields) {
+				String id = field.id.toString();
+				map.put(id, field.toString());
+				options.remove(id);
+			}
+			map.putAll(options);
+			return map;
+		}
+		return options;
 	}
 }
