@@ -17,6 +17,12 @@
 # News
 GET		/													controllers.Application.index(sivu: Int ?= 1)
 
+#
+#
+GET		/test												controllers.Application.test
+#
+#
+
 # Shibboleth
 GET		/autentikoi											controllers.shib.Shibboleth.authenticate
 GET		/kirjaudu											controllers.shib.Shibboleth.login(url = "/")
@@ -108,14 +114,27 @@ POST	/yllapito/tuotteet/uusi								@controllers.Products.create
 GET		/yllapito/tuotteet/:productId/muokkaa				@controllers.Products.edit(productId: Long)
 POST	/yllapito/tuotteet/:productId/muokkaa				@controllers.Products.update(productId: Long)
 
-# Fieldset management
-# TODO
+# Fieldset
+GET		/yllapito/kenttaryhmat								@controllers.Fieldsets.page(sivu: Int ?= 1)
+GET		/yllapito/kenttaryhmat/uusi							@controllers.Fieldsets.fresh
+POST	/yllapito/kenttaryhmat/uusi							@controllers.Fieldsets.create
+GET		/yllapito/kenttaryhmat/:fieldsetId					@controllers.Fieldsets.show(fieldsetId: Long)
+GET		/yllapito/kenttaryhmat/:fieldsetId/muokkaa			@controllers.Fieldsets.edit(fieldsetId: Long)
+POST	/yllapito/kenttaryhmat/:fieldsetId/muokkaa			@controllers.Fieldsets.update(fieldsetId: Long)
 
-# Form management
-# TODO
+# Form
+GET		/yllapito/lomakkeet									@controllers.Forms.page(sivu: Int ?= 1)
+GET		/yllapito/lomakkeet/uusi							@controllers.Forms.fresh
+POST	/yllapito/lomakkeet/uusi							@controllers.Forms.create
+GET		/yllapito/lomakkeet/:formId							@controllers.Forms.show(formId: Long)
+GET		/yllapito/lomakkeet/:formId/muokkaa					@controllers.Forms.edit(formId: Long)
+POST	/yllapito/lomakkeet/:formId/muokkaa					@controllers.Forms.update(formId: Long)
 
 # Field management
-# TODO
+GET		/yllapito/kenttaryhmat/:fieldsetId/kentat/uusi								@controllers.Fields.fresh(fieldsetId: Long)
+POST	/yllapito/kenttaryhmat/:fieldsetId/kentat/uusi								@controllers.Fields.create(fieldsetId: Long)
+GET		/yllapito/kenttaryhmat/:fieldsetId/kentat/:fieldId/muokkaa					@controllers.Fields.edit(fieldsetId: Long, fieldId: Long)
+POST	/yllapito/kenttaryhmat/:fieldsetId/kentat/:fieldId/muokkaa					@controllers.Fields.update(fieldsetId: Long, fieldId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
