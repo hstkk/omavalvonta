@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
@@ -38,5 +39,6 @@ public class Results extends Model {
 	@JoinColumn(name = "results_id")
 	@Valid
 	@NotNull
+	@OrderBy("field.fieldset.position, field.position")
 	public List<Result> results = new ArrayList<Result>();
 }
