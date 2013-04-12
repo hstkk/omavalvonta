@@ -1,0 +1,36 @@
+@(FORM: play.data.Form[models.dynamicforms.Results], t: models.dynamicforms.Form)
+
+@import play.i18n._
+@import helper._
+@import scala.collection.mutable.HashSet
+
+@printedFieldsets = @{ new HashSet[String] }
+
+<h3>@t</h3>
+<p>@t.description</p>
+
+@repeat(FORM("results")) { result =>
+	@FIELDSET(result)
+	@FIELD(result)
+}
+
+@FIELDSET(field: Field) = {
+	@defining(field("field.fieldset.id").value.getOrElse("")) { fieldsetId => 
+		@if(!fieldsetId.isEmpty && !printedFieldsets.contains(fieldsetId)) {
+			@printedFieldsets += fieldsetId
+			@defining(t.fieldMap().get(fieldsetId)) { _fieldset =>
+				@if(_fieldset != null) {
+					@fieldsets.fieldset(field, _fieldset)
+				}
+			}
+		}
+	}
+}
+
+@FIELD(field: Field) = {
+	@defining(t.fieldMap().get(field("field.id").value.getOrElse(""))) { _field =>
+		@if(_field != null) {
+			fields.field(field, _field)
+		}
+	}
+}

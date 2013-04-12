@@ -1,7 +1,10 @@
 package models.dynamicforms;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -42,5 +45,31 @@ public class Form extends UserModel {
 	@PreUpdate
 	private void onPre() {
 		this.fieldsets = Fieldset.dao.getReference(this.fieldsets);
+	}
+
+	private Map<String, Field> fieldMap;
+
+	public Map<String, Field> fieldMap() {
+		if (fieldMap == null) {
+			fieldMap = new LinkedHashMap<String, Field>();
+			if (fieldsets != null)
+				for (Fieldset fieldset : fieldsets)
+					if (fieldset.fields != null)
+						for (Field field : fieldset.fields)
+							fieldMap.put(field.id.toString(), field);
+		}
+		return fieldMap;
+	}
+
+	private Map<String, Fieldset> fieldsetMap;
+
+	public Map<String, Fieldset> fieldsetMap() {
+		if (fieldsetMap == null) {
+			fieldsetMap = new LinkedHashMap<String, Fieldset>();
+			if (fieldsets != null)
+				for (Fieldset fieldset : fieldsets)
+					fieldsetMap.put(fieldset.id.toString(), fieldset);
+		}
+		return fieldsetMap;
 	}
 }

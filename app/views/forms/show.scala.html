@@ -3,12 +3,7 @@
 @import play.i18n._
 
 @main(Messages.get("form.show")) {
-	<h3>@form</h3>
-	<p>@form.description</p>
-
-	@for(fieldset <- form.fieldsets) {
-		@fieldsets.preview(fieldset)
-	}
+	@forms.form(form)
 
 	<p><a class="btn btn-primary" href="@routes.Forms.edit(form.id)">@Messages.get("form.update")</a></p>
 }
