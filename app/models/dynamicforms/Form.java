@@ -1,10 +1,10 @@
 package models.dynamicforms;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -19,6 +19,7 @@ import models.helpers.UserModel;
 import org.hibernate.annotations.IndexColumn;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.*;
+import scala.Int;
 
 @Entity
 @Audited
@@ -49,7 +50,7 @@ public class Form extends UserModel {
 
 	private Map<String, Field> fieldMap;
 
-	public Map<String, Field> fieldMap() {
+	public Field getField(String key) {
 		if (fieldMap == null) {
 			fieldMap = new LinkedHashMap<String, Field>();
 			if (fieldsets != null)
@@ -58,18 +59,42 @@ public class Form extends UserModel {
 						for (Field field : fieldset.fields)
 							fieldMap.put(field.id.toString(), field);
 		}
-		return fieldMap;
+		return fieldMap.get(key);
 	}
 
 	private Map<String, Fieldset> fieldsetMap;
 
-	public Map<String, Fieldset> fieldsetMap() {
+	public Fieldset getFieldset(String key) {
 		if (fieldsetMap == null) {
 			fieldsetMap = new LinkedHashMap<String, Fieldset>();
 			if (fieldsets != null)
 				for (Fieldset fieldset : fieldsets)
 					fieldsetMap.put(fieldset.id.toString(), fieldset);
 		}
-		return fieldsetMap;
+		return fieldsetMap.get(key);
+	}
+
+	public play.data.Form<Results> getForm() {
+		Results results = new Results();
+		results.form = this;
+		for (Fieldset fieldset : fieldsets) {
+			for (Field field : fieldset.fields) {
+				Result result = new Result();
+				result.field = field;
+				results.results.add(result);
+			}
+		}
+		play.data.Form<Results> form = new play.data.Form<Results>(
+				Results.class);
+		return form.fill(results);
+	}
+
+	private List<String> printedFieldsets = new ArrayList<String>();
+
+	public boolean isFieldsetPrinted(String key) {
+		boolean printed = printedFieldsets.contains(key);
+		if (!printed)
+			printedFieldsets.add(key);
+		return printed;
 	}
 }
