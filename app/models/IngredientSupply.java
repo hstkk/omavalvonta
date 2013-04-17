@@ -85,6 +85,10 @@ public class IngredientSupply extends UserModel {
 		return this.amount - this.used;
 	}
 
+	public String amountAvailableToString() {
+		return utils.Converter.doubleToString(amountAvailable());
+	}
+
 	public void use(Double _amount) {
 		this.used = this.used + _amount;
 	}
