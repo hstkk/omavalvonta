@@ -23,21 +23,18 @@ public class Application extends Controller {
 	public static Result management() {
 		if (Secured.isAdmin())
 			return ok(management.render());
-		return unauthorized(views.html.error.render(
-				Helper.getMessage("http.401"),
-				Helper.getMessage("http.401.description")));
+		return Helper.getUnauthorized();
 	}
 
 	@Transactional
 	public static Result test() {
-		if(models.User.dao.count() == 0){
+		if (models.User.dao.count() == 0) {
 			models.User user = new models.User();
 			user.email = "foo@bar.com";
 			user.role = "stuff";
 			models.User.dao.create(user);
 			utils.ShibbolethHelper.createSession(ctx(), user);
-		}
-		else {
+		} else {
 			models.User user = models.User.dao.findById((long) 1);
 			utils.ShibbolethHelper.createSession(ctx(), user);
 		}
