@@ -3,7 +3,10 @@ package models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +18,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import models.dynamicforms.Fieldset;
 import models.helpers.Dao;
 import models.helpers.Model;
 import models.helpers.UserModel;
@@ -59,8 +64,8 @@ public class Batch extends UserModel {
 	@OneToMany(mappedBy = "batch")
 	public List<IngredientSupplyBatch> ingredientSupplies = new ArrayList<IngredientSupplyBatch>();
 
-	//todo fetchtype
-	@OneToOne(mappedBy="batch")
+	// todo fetchtype
+	@OneToOne(mappedBy = "batch")
 	public FinalProduct finalProduct;
 
 	@PrePersist
@@ -100,8 +105,33 @@ public class Batch extends UserModel {
 		return true;
 	}
 
+	private Map<String, IngredientSupply> ingredientSupplyMap;
+
+	public IngredientSupply getIngredientSupply(String ingredientSupplyId) {
+		if (ingredientSupplyMap == null) {
+			ingredientSupplyMap = new LinkedHashMap<String, IngredientSupply>();
+			if (this.product.ingredients != null)
+				for (Ingredient ingredient : this.product.ingredients)
+					for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies)
+						ingredientSupplyMap.put(ingredientSupply.id.toString(),
+								ingredientSupply);
+		}
+		return ingredientSupplyMap.get(ingredientSupplyId);
+	}
+
+	public play.data.Form<Batch> getForm() {
+		for (Ingredient ingredient : this.product.ingredients)
+			for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies) {
+				IngredientSupplyBatch ingredientSupplyBatch = new IngredientSupplyBatch(
+						ingredientSupply, this);
+				this.ingredientSupplies.add(ingredientSupplyBatch);
+			}
+		play.data.Form<Batch> form = new play.data.Form<Batch>(Batch.class);
+		return form.fill(this);
+	}
+
 	public String getStatus() {
-		if(this.finalProduct != null)
+		if (this.finalProduct != null)
 			return this.finalProduct.toString();
 		return Messages.get("status.wip");
 	}

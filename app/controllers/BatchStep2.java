@@ -32,7 +32,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 		super(null, form(Batch.class), null, null, null, null);
 	}
 
-	private final Template2<Long, Form<Batch>, Html> CREATE = views.html.batches.step2
+	private final Template2<Batch, Form<Batch>, Html> CREATE = views.html.batches.step2
 			.ref();
 
 	@Override
@@ -62,15 +62,20 @@ public class BatchStep2 extends UserCrud<Batch> {
 				}
 			}
 		}
+		Batch batch = new Batch();
+		batch.product = product;
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(CREATE.render(product.id, filledForm));
+		return badRequest(CREATE.render(batch, filledForm));
 	}
 
 	@Transactional(readOnly = true)
 	public Result fresh(Long productId) {
-		Product product = Product.dao.getReference(productId);
+		Product product = Product.dao.findById(productId);
 		if (product == null)
 			return Helper.getNotFound();
-		return ok(CREATE.render(product.id, FORM));
+		Batch batch = new Batch();
+		batch.product = product;
+		Form<Batch> preFilledForm = batch.getForm();
+		return ok(CREATE.render(batch, preFilledForm));
 	}
 }

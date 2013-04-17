@@ -1,4 +1,4 @@
-@(id: Long, FORM: play.data.Form[models.Batch])
+@(t: models.Batch, FORM: play.data.Form[models.Batch])
 
 @import play.i18n._
 @import helper._
@@ -7,21 +7,25 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @amount(field: Field) = {
-	@inputHidden(field("ingredientSupply.id"))
+	@defining(t.getIngredientSupply(field("ingredientSupply.id").value.getOrElse(""))) { ingredientSupply =>
+		@if(ingredientSupply != null) {
+			@inputHidden(field("ingredientSupply.id"))
 
-	@helper.input(
-		field("amount"),
-		'_label -> field("ingredientSupply.ingredient").value.getOrElse(""),
-		'_placeholder -> field("ingredientSupply.amountAvailable").value.getOrElse("")
-	) { (id, name, value, args) =>
-		<div class="input-append">
-			<input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(args)>
-			<span class="add-on">field("ingredientSupply.unit").value.getOrElse("")</span>
-		</div>
+			@helper.input(
+				field("amount"),
+				'_label -> ingredientSupply.ingredient,
+				'_placeholder -> ingredientSupply.amountAvailableToString
+			) { (id, name, value, args) =>
+				<div class="input-append">
+					<input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(args)>
+					<span class="add-on">@ingredientSupply.unit</span>
+				</div>
+			}
+		}
 	}
 }
 
-@tags.forms.form(FORM, routes.BatchStep2.create(id)) {
+@tags.forms.form(FORM, routes.BatchStep2.create(t.id)) {
 	@helper.inputDate(
 		FORM("date"),
 		'_label -> Messages.get("label.date"),
