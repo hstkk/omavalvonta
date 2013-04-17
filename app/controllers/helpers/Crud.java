@@ -23,7 +23,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	private final Template1<Form<T>, Html> CREATE;
 	private final Template1<Page<T>, Html> PAGE;
 	private final Template1<T, Html> SHOW;
-	private final Template2<Long, Form<T>, Html> UPDATE;
+	private final Template2<T, Form<T>, Html> UPDATE;
 
 	/**
 	 * 
@@ -41,8 +41,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			Template1<Form<T>, Html> CREATE,
 			Template1<Page<T>, Html> PAGE,
 			Template1<T, Html> SHOW,
-			Template2<Long, Form<T>, Html> UPDATE
-		) {
+			Template2<T, Form<T>, Html> UPDATE) {
 		this.DAO = DAO;
 		this.FORM = FORM;
 		this.CREATE = CREATE;
@@ -93,7 +92,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (t == null)
 			return Helper.getNotFound();
 		Form<T> filledForm = FORM.fill(t);
-		return ok(UPDATE.render(id, filledForm));
+		return ok(UPDATE.render(t, filledForm));
 	}
 
 	@Override
@@ -174,7 +173,8 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			if (result != null)
 				return result;
 		}
+		T t = DAO.findById(id);
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(UPDATE.render(id, filledForm));
+		return badRequest(UPDATE.render(t, filledForm));
 	}
 }

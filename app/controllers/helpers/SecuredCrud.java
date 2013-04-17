@@ -25,7 +25,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 			Template1<Form<T>, Html> CREATE,
 			Template1<Page<T>, Html> PAGE,
 			Template1<T, Html> SHOW,
-			Template2<Long, Form<T>, Html> UPDATE
+			Template2<T, Form<T>, Html> UPDATE
 		) {
 		super(DAO, FORM, CREATE, PAGE, SHOW, UPDATE);
 	}

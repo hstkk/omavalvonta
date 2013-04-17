@@ -1,7 +1,7 @@
-@(id: Long, FORM: play.data.Form[models.Product])
+@(t: models.Product, FORM: play.data.Form[models.Product])
 
 @import play.i18n._
 
 @main(Messages.get("product.update")) {
-	@fields(FORM, routes.Products.update(id))
+	@fields(FORM, routes.Products.update(t.id))
 }
