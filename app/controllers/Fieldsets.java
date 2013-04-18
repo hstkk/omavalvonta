@@ -1,5 +1,6 @@
 package controllers;
 
+import models.dynamicforms.Fieldset;
 import models.helpers.Dao;
 import models.helpers.Page;
 import play.api.templates.Html;
@@ -12,18 +13,17 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
 import play.mvc.Security.Authenticated;
-import views.html.forms.*;
+import views.html.fieldsets.*;
 import controllers.helpers.SecuredCrud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
 
 @With(Session.class)
 @Authenticated(Secured.class)
-public class Fieldsets extends SecuredCrud<models.dynamicforms.Fieldset> {
+public class Fieldsets extends SecuredCrud<Fieldset> {
 	public Fieldsets() {
-		super(models.dynamicforms.Fieldset.dao,
-				form(models.dynamicforms.Fieldset.class), create.ref(), page
-						.ref(), show.ref(), update.ref());
+		super(Fieldset.dao, form(Fieldset.class), create.ref(), page.ref(),
+				show.ref(), update.ref());
 	}
 
 	@Override
