@@ -92,6 +92,7 @@ public class Form extends UserModel {
 		return form.fill(results);
 	}
 
+	@Transient
 	private List<String> printedFieldsets = new ArrayList<String>();
 
 	public boolean isFieldsetPrinted(String key) {
