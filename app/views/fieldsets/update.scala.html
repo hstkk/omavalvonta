@@ -1,7 +1,7 @@
-@(id: Long, FORM: play.data.Form[models.dynamicforms.Fieldset])
+@(t: models.dynamicforms.Fieldset, FORM: play.data.Form[models.dynamicforms.Fieldset])
 
 @import play.i18n._
 
 @main(Messages.get("fieldset.update")) {
-	@fields(FORM, routes.Fieldsets.update(id))
+	@fields(FORM, routes.Fieldsets.update(t.id))
 }
