@@ -2,9 +2,6 @@
 
 @import play.i18n._
 @import helper._
-@import scala.collection.mutable.HashSet
-
-@printedFieldsets = @{ new HashSet[String] }
 
 <h3>@t</h3>
 <p>@t.description</p>
@@ -16,11 +13,10 @@
 
 @FIELDSET(field: Field) = {
 	@defining(field("field.fieldset.id").value.getOrElse("")) { fieldsetId => 
-		@if(!fieldsetId.isEmpty && !printedFieldsets.contains(fieldsetId)) {
-			@printedFieldsets += fieldsetId
-			@defining(t.fieldMap().get(fieldsetId)) { _fieldset =>
+		@if(!fieldsetId.isEmpty && t.isFieldsetPrinted(fieldsetId)) {
+			@defining(t.getFieldset(fieldsetId)) { _fieldset =>
 				@if(_fieldset != null) {
-					@fieldsets.fieldset(field, _fieldset)
+					@fieldsets.fieldset(_fieldset)
 				}
 			}
 		}
@@ -28,9 +24,9 @@
 }
 
 @FIELD(field: Field) = {
-	@defining(t.fieldMap().get(field("field.id").value.getOrElse(""))) { _field =>
+	@defining(t.getField(field("field.id").value.getOrElse(""))) { _field =>
 		@if(_field != null) {
-			fields.field(field, _field)
+			@views.html.fields.field(field, _field)
 		}
 	}
 }

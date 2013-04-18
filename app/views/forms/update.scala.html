@@ -1,7 +1,7 @@
-@(id: Long, FORM: play.data.Form[models.dynamicforms.Form])
+@(t: models.dynamicforms.Form, FORM: play.data.Form[models.dynamicforms.Form])
 
 @import play.i18n._
 
 @main(Messages.get("form.update")) {
-	@fields(FORM, routes.Forms.update(id))
+	@fields(FORM, routes.Forms.update(t.id))
 }
