@@ -44,18 +44,14 @@ public class Result extends UserModel {
 	public Field field;
 
 	@Lob
-	public String value;
+	public String valueString;
 
-	@Transient
 	public Integer valueInt;
 
-	@Transient
 	public Double valueDouble;
 
-	@Transient
 	public Boolean valueBoolean;
 
-	@Transient
 	public Date valueDate;
 
 	@Lob

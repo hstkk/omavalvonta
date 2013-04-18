@@ -1,0 +1,89 @@
+@(field: Field, t: models.dynamicforms.Field)
+
+@import play.i18n._
+@import helper._
+@import models.dynamicforms.FieldType
+@import tags.forms._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@reason(field: Field) = {
+	@defining(field.value.getOrElse("")) { value =>
+		@if(!value.isEmpty) {
+			@select(
+				field("reason.id"),
+				options = options(models.Term.options(models.TermCategory.REASON)),
+				'_default -> "",
+				'_label -> Messages.get("result.reason")
+			)
+		}
+	}
+}
+
+@inputHidden(field("id"))
+
+@inputHidden(field("field.id"))
+
+@t.fieldTypeEnum match {
+	case FieldType.TEXT => {
+		@reason(field("valueString"))
+		@inputText(
+			field("valueString"),
+			'_label -> t.name,
+			'_help -> t.help
+		)
+	}
+
+	case FieldType.INT => {
+		@reason(field("valueInt"))
+		@inputText(
+			field("valueInt"),
+			'_label -> t.name,
+			'_help -> t.help,
+			'_placeholder -> Messages.get("placeholder.int")
+		)
+	}
+
+	case FieldType.DOUBLE => {
+		@reason(field("valueDouble"))
+		@inputText(
+			field("valueDouble"),
+			'_label -> t.name,
+			'_help -> t.help,
+			'_placeholder -> Messages.get("placeholder.double")
+		)
+	}
+
+	case FieldType.DATE => {
+		@reason(field("valueDate"))
+		@inputDate(
+			field("valueDate"),
+			'_label -> t.name,
+			'_help -> t.help,
+			'_placeholder -> Messages.get("placeholder.date")
+		)
+	}
+
+	case FieldType.CHECKBOX => {
+		@reason(field("valueBoolean"))
+		@radiobox(
+			field("valueBoolean"),
+			'_label -> t.name,
+			'_help -> t.help
+		)
+	}
+
+	case FieldType.TEXTAREA => {
+		@reason(field("valueString"))
+		@textarea(
+			field("valueString"),
+			'_label -> t.name,
+			'_help -> t.help
+		)
+	}
+}
+
+@textarea(
+	field("comment"),
+	'_label -> Messages.get("label.comment")
+)

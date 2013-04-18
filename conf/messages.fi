@@ -66,6 +66,7 @@ label.status=Tila
 label.batch=Erä
 label.fieldsets=Kenttäryhmät
 label.fields=Kentät
+label.comment=Huomioita
 
 # --- Fieldset
 fieldset.create=Kenttäryhmän esikatselu
@@ -145,6 +146,9 @@ results.create=Uusi tulos
 results.page=Tulokset
 results.page.empty=Tuloksia ei löytynyt!
 results.update=Muokkaa tulosta
+
+# --- Result
+results.reason=Muutoksen syy
 
 # --- Form
 form.create=Uusi lomake
