@@ -13,6 +13,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.UserModel;
@@ -48,6 +49,7 @@ public class Form extends UserModel {
 		this.fieldsets = Fieldset.dao.getReference(this.fieldsets);
 	}
 
+	@Transient
 	private Map<String, Field> fieldMap;
 
 	public Field getField(String key) {
@@ -62,6 +64,7 @@ public class Form extends UserModel {
 		return fieldMap.get(key);
 	}
 
+	@Transient
 	private Map<String, Fieldset> fieldsetMap;
 
 	public Fieldset getFieldset(String key) {
