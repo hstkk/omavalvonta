@@ -60,9 +60,6 @@ POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchI
 # Ingredient supply
 # Where used
 # Ack
-#
-# TEST
-# COMMENT
 GET		/raaka-aineet										@controllers.IngredientSupplies.page(sivu: Int ?= 1)
 GET		/raaka-aineet/vastaanota							@controllers.IngredientSupplies.fresh
 POST	/raaka-aineet/vastaanota							@controllers.IngredientSupplies.create
@@ -81,8 +78,6 @@ GET		/yllapito/uutiset/:newsId/muokkaa					@controllers.News.edit(newsId: Long)
 #
 # Archive
 # DELETE
-# TEST
-# COMMENT
 GET		/yllapito/termit									@controllers.Terms.page(sivu: Int ?= 1)
 GET		/yllapito/termit/uusi								@controllers.Terms.fresh
 POST	/yllapito/termit/uusi								@controllers.Terms.create
@@ -93,8 +88,6 @@ GET		/yllapito/termit/:termId/muokkaa					@controllers.Terms.edit(termId: Long)
 # Form
 #
 # Archive
-# TEST
-# COMMENT
 # DELETE
 GET		/yllapito/raaka-aineet								@controllers.Ingredients.page(sivu: Int ?= 1)
 GET		/yllapito/raaka-aineet/uusi							@controllers.Ingredients.fresh
@@ -105,8 +98,6 @@ GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		@controllers.Ingredients.edit
 # Product management
 #
 # Archive
-# TEST
-# COMMENT
 # DELETE
 GET		/yllapito/tuotteet									@controllers.Products.page(sivu: Int ?= 1)
 GET		/yllapito/tuotteet/uusi								@controllers.Products.fresh
