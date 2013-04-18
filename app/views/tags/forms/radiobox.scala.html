@@ -1,0 +1,32 @@
+@**
+ * Generate an HTML radio group
+ *
+ * Example:
+ * {{{
+ * @radiobox(
+ *           contactForm("gender"),
+ *           '_label -> "Gender",
+ *           '_error -> contactForm("gender").error.map(_.withMessage("select gender")))
+ *
+ * }}}
+ *
+ * @param field The form field.
+ * @param args Set of extra HTML attributes.
+ * @param handler The field constructor.
+ *@
+@(field: play.api.data.Field,  args: (Symbol,Any)*)(implicit handler: helper.FieldConstructor, lang: play.api.i18n.Lang)
+
+@import play.i18n._
+
+@options = @{ Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false"),""->Messages.get("radiobox.default")) }
+
+@helper.input(field, args:_*) { (id, name, value, htmlArgs) =>
+	<span class="buttonset" id="@id">
+		@options.map { v =>
+			<label class="checkbox inline" for="@(id)_@v._1">
+				<input type="radio" id="@(id)_@v._1" name="@name" value="@v._1" @(if(value == Some(v._1)) "checked" else "") @toHtmlArgs(htmlArgs)>
+				@v._2
+			</label>
+    }
+  </span>
+}
