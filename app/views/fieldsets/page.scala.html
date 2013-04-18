@@ -1,0 +1,28 @@
+@(page: models.helpers.Page[models.dynamicforms.Fieldset])
+
+@import play.i18n._
+@import tags._
+@import tags.alerts._
+@import tags.tables._
+
+@main(Messages.get("fieldset.page")) {
+	@if(!page.isEmpty){
+		@table() {
+			@thead() {
+				@Messages.get("label.name")
+				@Messages.get("label.description")
+			}
+			<tbody>
+				@for(fieldset <- page.getList) {
+					@tr() { <a href="@routes.Fieldsets.show(fieldset.id)">@fieldset</a> 
+						@fieldset.description }
+				}
+			</tbody>
+		}
+		@pagination(page, routes.Fieldsets.page(page.getPrevious), routes.Fieldsets.page(page.getNext))
+	} else {
+		@warning() {
+			@Messages.get("fieldset.page.empty")
+		}
+	}
+}
