@@ -1,12 +1,6 @@
-@(fieldset: models.dynamicforms.Fieldset, results: Map[String, models.dynamicforms.Result] = null)
-
-@import play.i18n._
+@(fieldset: models.dynamicforms.Fieldset)
 
 <fieldset>
 	<legend>@fieldset</legend>
 	<p>@fieldset.description</p>
-
-	@for(field <- fieldset.fields) {
-		@fields.field(field, results)
-	}
 </fieldset>
