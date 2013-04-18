@@ -39,6 +39,6 @@ public class Results extends Model {
 	@JoinColumn(name = "results_id")
 	@Valid
 	@NotNull
-	@OrderBy("field.fieldset.position, field.position")
+	//@OrderBy("field.fieldset.position, field.position")
 	public List<Result> results = new ArrayList<Result>();
 }
