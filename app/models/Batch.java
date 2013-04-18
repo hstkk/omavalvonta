@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -105,6 +106,7 @@ public class Batch extends UserModel {
 		return true;
 	}
 
+	@Transient
 	private Map<String, IngredientSupply> ingredientSupplyMap;
 
 	public IngredientSupply getIngredientSupply(String ingredientSupplyId) {
