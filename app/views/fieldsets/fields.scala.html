@@ -7,6 +7,7 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @tags.forms.form(FORM, action) {
+	<fieldset>
 	@helper.inputText(
 		FORM("name"),
 		'_label -> Messages.get("label.name")
@@ -16,6 +17,7 @@
 		FORM("description"),
 		'_label -> Messages.get("label.description")
 	)
+	</fieldset>
 
 	<div id="sortable">
 		@repeat(
@@ -25,13 +27,14 @@
 			@views.html.fields.fields(field)
 		}
 	</div>
+
+	<p>
+		 <a class="addField btn success">@Messages.get("field.create")</a>
+	</p>
 }
 
 <div class="hide field_template">
 	@views.html.fields.fields(FORM("fields[]"))
 </div>
-<p>
-	 <a class="addField btn success">Messages.get("field.create")</a>
-</p>
 
 <script src="@routes.Assets.at("javascripts/fields.js")"></script>
