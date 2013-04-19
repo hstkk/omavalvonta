@@ -165,9 +165,6 @@ form.update=Muokkaa lomaketta
 # --- Application
 application.index=Uutiset
 
-# --- Management
-management.title=Ylläpito
-
 # --- Links
 links.frontPage=Etusivulle
 
