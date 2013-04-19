@@ -67,6 +67,13 @@ label.batch=Erä
 label.fieldsets=Kenttäryhmät
 label.fields=Kentät
 label.comment=Huomioita
+label.help=Ohje
+label.required=Vaadittu
+label.fieldType=Tietotyyppi
+label.isSigned=Kuitattava
+label.min=minimiarvo
+label.max=maksimiarvo
+label.targetValue=kyllä/ei kentän tavoitetulos
 
 # --- Fieldset
 fieldset.create=Kenttäryhmän esikatselu
@@ -76,8 +83,7 @@ fieldset.page.empty=Kenttäryhmiä ei löytynyt!
 fieldset.update=Muokkaa kenttäryhmää
 
 # --- Field
-field.create=Uusi kenttä
-field.update=Muokkaa kenttää
+field.create=Lisää uusi kenttä
 
 # --- Form
 form.show=Lomakkeen esikatselu

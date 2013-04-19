@@ -1,0 +1,58 @@
+@(FIELD: Field)
+
+@import play.i18n._
+@import helper._
+@import tags.forms._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@inputHidden(
+	FIELD("id")
+)
+
+@inputText(
+	FIELD("name"),
+	'_label -> Messages.get("label.name")
+)
+
+@textarea(
+	FIELD("help"),
+	'_label -> Messages.get("label.help")
+)
+
+@checkbox(
+	FIELD("isRequired"),
+	'_label -> Messages.get("label.required")
+)
+
+@checkbox(
+	FIELD("isSigned"),
+	'_text -> Messages.get("label.isSigned"),
+	'_showConstraints -> false
+)
+
+@select(
+	FIELD("fieldType"),
+	options = options(models.dynamicforms.FieldType.map),
+	'_default -> "",
+	'_label -> Messages.get("label.fieldType")
+)
+
+@inputText(
+	FIELD("min"),
+	'_label -> Messages.get("label.min"),
+	'_placeholder -> Messages.get("placeholder.double")
+)
+
+@inputText(
+	FIELD("max"),
+	'_label -> Messages.get("label.max"),
+	'_placeholder -> Messages.get("placeholder.double")
+)
+
+@select(
+	FIELD("targetValue"),
+	options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false")),
+	'_default -> "",
+	'_label -> Messages.get("label.targetValue")
+)

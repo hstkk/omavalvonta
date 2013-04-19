@@ -81,13 +81,6 @@ public class Field extends UserModel {
 			fieldTypeEnum = FieldType.setValue(this.fieldType);
 	}
 
-	public static Map<String, String> targetOptions() {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("true", Messages.get("boolean.true"));
-		map.put("false", Messages.get("boolean.false"));
-		return map;
-	}
-
 	public static List<Field> findByFieldset(String fieldsetId) {
 		try {
 			Long id = Long.parseLong(fieldsetId);

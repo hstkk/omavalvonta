@@ -17,10 +17,21 @@
 		'_label -> Messages.get("label.description")
 	)
 
-	@multiselect(
-		FORM("fields"),
-		options = options(models.dynamicforms.Field.options(FORM("id").value)),
-		'_label ->  Messages.get("label.fields"),
-		'_class -> "multiselect"
-	)
+	<div id="sortable">
+		@repeat(
+			FORM("fields"),
+			min = 1
+		) { field =>
+			@views.html.fields.fields(field)
+		}
+	</div>
 }
+
+<div class="hide field_template">
+	@views.html.fields.fields(FORM("fields[]"))
+</div>
+<p>
+	 <a class="addField btn success">Messages.get("field.create")</a>
+</p>
+
+<script src="@routes.Assets.at("javascripts/fields.js")"></script>

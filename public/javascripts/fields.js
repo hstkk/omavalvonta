@@ -1,25 +1,12 @@
-$(document).ready(function() {
-	$('#fieldType').change(function () {
-		var min = '#min_field';
-		var max = '#max_field';
-		var target = '#targetValue_field';
+$(function() {
+	$( "#sortable" ).sortable({
+		placeholder: "ui-state-highlight"
+	});
+	$( "#sortable" ).disableSelection();
 
-		switch($('#fieldType').val()){
-			case "1":
-			case "2":
-				$(min).show();
-				$(max).show();
-				$(target).hide();
-				break;
-			case "4":
-				$(min).hide();
-				$(max).hide();
-				$(target).show();
-				break;
-			default:
-				$(min).hide();
-				$(max).hide();
-				$(target).hide();
-		}
+	$('.addField').live('click', function(e) {
+		var template = $('.field_template');
+		var actions = $(.'form-actions');
+		actions.before(template.html());
 	});
 });
