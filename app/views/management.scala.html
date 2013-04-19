@@ -1,13 +1,21 @@
+@(title: String)(content: Html)
+
 @import play.i18n._
-@import tags.alerts._
 
 @links = {
+	@news.navigation()
+	<li class="divider"></li>
 	@terms.navigation()
 	<li class="divider"></li>
 	@ingredients.navigation()
 	<li class="divider"></li>
 	@products.navigation()
+	<li class="divider"></li>
+	@forms.navigation()
+	<li class="divider"></li>
+	@fieldsets.navigation()
 }
 
-@templateTwoColumn(Messages.get("management.title"), links) {
+@templateTwoColumn(title, links) {
+	@content
 }

@@ -2,6 +2,6 @@
 
 @import play.i18n._
 
-@main(Messages.get("form.create")) {
+@views.html.management(Messages.get("form.create")) {
 	@fields(FORM, routes.Forms.create)
 }

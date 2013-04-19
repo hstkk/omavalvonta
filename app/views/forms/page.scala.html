@@ -6,7 +6,7 @@
 @import tags.tables._
 @import tags.navs._
 
-@main(Messages.get("form.page")) {
+@views.html.management(Messages.get("form.page")) {
 	@navigation()
 
 	@if(!page.isEmpty){

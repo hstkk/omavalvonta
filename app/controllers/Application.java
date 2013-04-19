@@ -4,6 +4,7 @@ import models.helpers.Page;
 import controllers.shib.Secured;
 import controllers.shib.Session;
 import play.db.jpa.Transactional;
+import play.i18n.Messages;
 import play.mvc.*;
 import play.mvc.Security.Authenticated;
 import utils.Helper;
@@ -22,7 +23,7 @@ public class Application extends Controller {
 	@Transactional(readOnly = true)
 	public static Result management() {
 		if (Secured.isAdmin())
-			return ok(management.render());
+			return redirect(routes.News.page(0));
 		return Helper.getUnauthorized();
 	}
 

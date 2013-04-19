@@ -5,7 +5,7 @@
 @import tags.alerts._
 @import tags.tables._
 
-@main(Messages.get("fieldset.page")) {
+@views.html.management(Messages.get("fieldset.page")) {
 	@if(!page.isEmpty){
 		@table() {
 			@thead() {

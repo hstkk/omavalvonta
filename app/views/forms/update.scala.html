@@ -2,6 +2,6 @@
 
 @import play.i18n._
 
-@main(Messages.get("form.update")) {
+@views.html.management(Messages.get("form.update")) {
 	@fields(FORM, routes.Forms.update(t.id))
 }

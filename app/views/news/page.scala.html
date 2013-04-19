@@ -6,7 +6,7 @@
 @import tags.tables._
 @import tags.navs._
 
-@main(Messages.get("news.page")) {
+@views.html.management(Messages.get("news.page")) {
 	@if(!page.isEmpty){
 		@table() {
 			@thead() {
