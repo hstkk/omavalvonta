@@ -66,8 +66,9 @@
 
 	case FieldType.CHECKBOX => {
 		@reason(field("valueBoolean"))
-		@radiobox(
+		@inputRadioGroupInline(
 			field("valueBoolean"),
+			options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false"),""->Messages.get("radiobox.default")),
 			'_label -> t.name,
 			'_help -> t.help
 		)
