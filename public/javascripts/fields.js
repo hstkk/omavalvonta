@@ -5,7 +5,9 @@ $(function() {
 		cursor: 'move',
 		forcePlaceholderSize: true,
 		handle: 'h3',
-		update: renumber
+		update: function( event, ui ) {
+			renumber();
+		}
 	});
 	sortable.disableSelection();
 
@@ -25,7 +27,11 @@ $(function() {
 
 	// renumber form fields
 	var renumber = function(){
-	
+		$('#sortable fieldset').each(function(i) {
+			$('input', this).each(function() {
+				$(this).attr('name', $(this).attr('name').replace(/fields\[.+?\]/g, 'fields[' + i + ']'));
+			});
+		});
 	};
 
 	// update field header
