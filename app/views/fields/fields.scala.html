@@ -7,55 +7,59 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 <fieldset>
-	@inputHidden(
-		FIELD("id")
-	)
+	<h3><span class="field_header"></span></h3>
+	<div>
+		@inputHidden(
+			FIELD("id")
+		)
 
-	@inputText(
-		FIELD("name"),
-		'_label -> Messages.get("label.name")
-	)
+		@inputText(
+			FIELD("name"),
+			'_label -> Messages.get("label.name"),
+			'class -> "field_name"
+		)
 
-	@textarea(
-		FIELD("help"),
-		'_label -> Messages.get("label.help")
-	)
+		@textarea(
+			FIELD("help"),
+			'_label -> Messages.get("label.help")
+		)
 
-	@inputRadioGroup(
-		FIELD("isRequired"),
-		options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false")),
-		'_label -> Messages.get("label.required")
-	)
+		@inputRadioGroup(
+			FIELD("isRequired"),
+			options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false")),
+			'_label -> Messages.get("label.required")
+		)
 
-	@inputRadioGroup(
-		FIELD("isSigned"),
-		options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false")),
-		'_label -> Messages.get("label.isSigned")
-	)
+		@inputRadioGroup(
+			FIELD("isSigned"),
+			options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false")),
+			'_label -> Messages.get("label.isSigned")
+		)
 
-	@select(
-		FIELD("fieldType"),
-		options = options(models.dynamicforms.FieldType.map),
-		'_default -> "",
-		'_label -> Messages.get("label.fieldType")
-	)
+		@select(
+			FIELD("fieldType"),
+			options = options(models.dynamicforms.FieldType.map),
+			'_default -> "",
+			'_label -> Messages.get("label.fieldType")
+		)
 
-	@inputText(
-		FIELD("min"),
-		'_label -> Messages.get("label.min"),
-		'_placeholder -> Messages.get("placeholder.double")
-	)
+		@inputText(
+			FIELD("min"),
+			'_label -> Messages.get("label.min"),
+			'_placeholder -> Messages.get("placeholder.double")
+		)
 
-	@inputText(
-		FIELD("max"),
-		'_label -> Messages.get("label.max"),
-		'_placeholder -> Messages.get("placeholder.double")
-	)
+		@inputText(
+			FIELD("max"),
+			'_label -> Messages.get("label.max"),
+			'_placeholder -> Messages.get("placeholder.double")
+		)
 
-	@select(
-		FIELD("targetValue"),
-		options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false")),
-		'_default -> "",
-		'_label -> Messages.get("label.targetValue")
-	)
+		@select(
+			FIELD("targetValue"),
+			options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false")),
+			'_default -> "",
+			'_label -> Messages.get("label.targetValue")
+		)
+	</div>
 </fieldset>

@@ -6,6 +6,10 @@ fieldset {
 	padding-top: 18px;
 }
 
+#sortable fieldset {
+	padding-top: 0;
+}
+
 fieldset:nth-child(odd), .zebra:nth-of-type(odd) {
 	background-color: #f9f9f9;
 }
