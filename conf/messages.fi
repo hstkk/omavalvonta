@@ -84,6 +84,7 @@ fieldset.update=Muokkaa kenttäryhmää
 
 # --- Field
 field.create=Lisää uusi kenttä
+field.fields=Kentät
 
 # --- Form
 form.show=Lomakkeen esikatselu
