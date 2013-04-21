@@ -7,7 +7,7 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 <fieldset>
-	<h3><span class="field_header"></span></h3>
+	<h3><span class="field_header">@FIELD("name").value.getOrElse("")</span></h3>
 	<div>
 		@inputHidden(
 			FIELD("id")
