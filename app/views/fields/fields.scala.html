@@ -9,9 +9,12 @@
 <fieldset>
 	<h3><span class="field_header">@FIELD("name").value.getOrElse("")</span></h3>
 	<div>
-		@inputHidden(
-			FIELD("id")
-		)
+
+		@if(!FIELD("id").value.getOrElse("").isEmpty) {
+			@inputHidden(
+				FIELD("id")
+			)
+		}
 
 		@inputText(
 			FIELD("name"),
