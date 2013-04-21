@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -26,6 +27,7 @@ public class User extends Model {
 	@Required
 	@NotNull
 	@Lob
+	@Column(unique = true)
 	public String email;
 
 	public String role;
