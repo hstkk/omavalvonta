@@ -28,7 +28,7 @@ $(function() {
 	// renumber form fields
 	var renumber = function(){
 		$('#sortable fieldset').each(function(i) {
-			$('input', this).each(function() {
+			$(this).find('input, textarea, select').each(function() {
 				$(this).attr('name', $(this).attr('name').replace(/fields\[.+?\]/g, 'fields[' + i + ']'));
 			});
 		});
