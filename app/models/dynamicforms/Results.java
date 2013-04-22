@@ -8,7 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
@@ -36,9 +35,14 @@ public class Results extends Model {
 	public List<Batch> baches = new ArrayList<Batch>();
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "results_id")
+	@JoinColumn(name = "results_id", nullable = false)
 	@Valid
 	@NotNull
-	//@OrderBy("field.fieldset.position, field.position")
 	public List<Result> results = new ArrayList<Result>();
+
+	public static play.data.Form<Results> getEmptyForm() {
+		play.data.Form<Results> form = new play.data.Form<Results>(
+				Results.class);
+		return form;
+	}
 }

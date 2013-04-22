@@ -9,17 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.Audited;
-
 import play.data.validation.Constraints.Required;
 import play.db.jpa.JPA;
-
 import models.Term;
 import models.helpers.Dao;
 import models.helpers.UserModel;
@@ -30,11 +26,8 @@ public class Result extends UserModel {
 	public final static Dao<Result, Long> dao = new Dao<Result, Long>(
 			Result.class);
 
-	@Required
-	@NotNull
-	@Valid
 	@ManyToOne
-	@JoinColumn(name = "id", insertable = false, updatable = false, nullable = false)
+	@JoinColumn(name = "results_id", insertable = false, updatable = false, nullable = false)
 	public Results results;
 
 	@Required
