@@ -1,28 +1,20 @@
-$(document).ready(function() {
+$(function() {
+	$('head').append('<link rel="stylesheet" href="/assets/stylesheets/jquery.uix.multiselect.css" type="text/css" />');
 
-	var $sortable = $("#sortable");
-	
-	$('#_fieldset').change(function () {
-		var option = $("#_fieldset option:selected");
-   		addToSortable(option);
-		option.remove();
+$.uix.multiselect.i18n['fi'] = {
+    itemsSelected_nil: 'Valitut',
+    itemsSelected: 'Valitut',
+    itemsSelected_plural: 'Valitut',
+    itemsAvailable_nil: 'Valitsemattomat',
+    itemsAvailable: 'Valitsemattomat',
+    itemsAvailable_plural: 'Valitsemattomat',
+    selectAll: 'Valitse kaikki',
+    deselectAll: 'Poista valinnat'
+};
+	$('.multiselect').multiselect({
+		collapsableGroups: false,
+		locale: 'fi',
+		searchField: false,
+		sortable: true
 	});
-
-	$sortable
-		.sortable()
-		.disableSelection();
-
-	var addToSortable function(option) {
-		var text = option.text(),
-		    val = option.val();
-
-		$sortable.append(
-			'<label class="checkbox">' +
-			'<input type="checkbox" disabled="disabled" checked="checked" value="' +
-			val +
-			'"> ' +
-			text +
-			' &#x25B2;&#x25BC;</label>'
-		);
-	}
 });
