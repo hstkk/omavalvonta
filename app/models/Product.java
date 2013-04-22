@@ -3,13 +3,15 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.validation.Valid;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
@@ -42,12 +44,16 @@ public class Product extends UserModel {
 	public String description;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@Valid
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
+	@Transient
+	public List<Long> ingredientIds = new ArrayList<Long>();
+
 	@ManyToMany(cascade = CascadeType.ALL)
-	@Valid
 	public List<Form> forms = new ArrayList<Form>();
+
+	@Transient
+	public List<Long> formIds = new ArrayList<Long>();
 
 	public String toString() {
 		return name + " (" + no + ")";
@@ -55,7 +61,15 @@ public class Product extends UserModel {
 
 	@Override
 	public void set() {
-		ingredients = Ingredient.dao.getReference(ingredients);
-		forms = Form.dao.getReference(forms);
+		this.ingredients = Ingredient.dao.getReferences(this.ingredientIds);
+		this.forms = Form.dao.getReferences(this.formIds);
+	}
+
+	@PostLoad
+	private void onPost() {
+		for (Ingredient ingredient : this.ingredients)
+			this.ingredientIds.add(ingredient.id);
+		for (Form form : this.forms)
+			this.formIds.add(form.id);
 	}
 }

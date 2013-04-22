@@ -25,13 +25,13 @@
 	)
 
 	@multiselect(
-		FORM("ingredients"),
+		FORM("ingredientIds"),
 		options = options(models.Ingredient.dao.options),
 		'_label ->  Messages.get("label.ingredients")
 	)
 
 	@multiselect(
-		FORM("forms"),
+		FORM("formIds"),
 		options = options(models.dynamicforms.Form.dao.options),
 		'_label ->  Messages.get("label.forms")
 	)

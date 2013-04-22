@@ -1,9 +1,11 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -48,7 +50,10 @@ public class Ingredient extends UserModel {
 
 	@OneToMany(mappedBy = "ingredient")
 	@Valid
-	public List<IngredientSupply> ingredientSupllies;
+	public List<IngredientSupply> ingredientSupllies = new ArrayList<IngredientSupply>();;
+
+	@ManyToMany(mappedBy = "ingredients")
+	public List<Product> products = new ArrayList<Product>();
 
 	public String toString() {
 		return name;
