@@ -12,7 +12,7 @@
 }
 
 @FIELDSET(field: Field) = {
-	@defining(field("field.fieldset.id").value.getOrElse("")) { fieldsetId => 
+	@defining(field("field.fieldset.id").value.getOrElse("")) { fieldsetId =>
 		@if(!fieldsetId.isEmpty && t.isFieldsetPrinted(fieldsetId)) {
 			@defining(t.getFieldset(fieldsetId)) { _fieldset =>
 				@if(_fieldset != null) {
