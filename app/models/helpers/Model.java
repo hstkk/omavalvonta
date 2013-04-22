@@ -8,7 +8,7 @@ import org.hibernate.envers.NotAudited;
 @MappedSuperclass
 public class Model implements ModelInterface {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false)
 	public Long id;
 
