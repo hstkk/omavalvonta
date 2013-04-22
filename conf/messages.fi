@@ -81,6 +81,7 @@ fieldset.create=Uusi kenttäryhmä
 fieldset.page=Kenttäryhmät
 fieldset.page.empty=Kenttäryhmiä ei löytynyt!
 fieldset.update=Muokkaa kenttäryhmää
+fieldset.show=Kenttäryhmän esikatselu
 
 # --- Field
 field.create=Lisää uusi kenttä
