@@ -31,10 +31,10 @@ public class Field extends Model {
 	public boolean isRequired;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fieldset_id")
+	@JoinColumn(name = "fieldset_id", insertable = false, updatable = false, nullable = false)
 	public Fieldset fieldset;
 
-	@Column(name = "fields_index")
+	@Column(name = "fields_index", insertable = false, updatable = false)
 	public Integer index;
 
 	@Required
@@ -62,11 +62,5 @@ public class Field extends Model {
 	private void onPost() {
 		if (this.fieldType != null)
 			fieldTypeEnum = FieldType.setValue(this.fieldType);
-	}
-
-	public void setFieldset(Fieldset fieldset) {
-		this.fieldset = fieldset;
-		if (this.fieldset != null)
-			this.index = this.fieldset.fields.indexOf(this);
 	}
 }

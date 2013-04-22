@@ -9,12 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.UserModel;
+
+import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.*;
 
@@ -31,20 +31,15 @@ public class Fieldset extends UserModel {
 	@Lob
 	public String description;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "fieldset")
+	@OneToMany(cascade = CascadeType.ALL)
 	@OrderColumn(name = "fields_index")
+	@javax.persistence.JoinColumn(name = "fieldset_id", nullable = false)
+	@AuditMappedBy(mappedBy = "fieldset", positionMappedBy = "index")
 	@Valid
 	public List<Field> fields = new ArrayList<Field>();
 
 	public String toString() {
 		return name;
-	}
-
-	@PrePersist
-	@PreUpdate
-	private void onPre() {
-		for (Field field : this.fields)
-			field.setFieldset(this);
 	}
 
 	public static Map<String, String> options(String formId) {
