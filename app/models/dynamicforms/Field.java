@@ -2,6 +2,7 @@ package models.dynamicforms;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -29,12 +30,12 @@ public class Field extends Model {
 	@NotNull
 	public boolean isRequired;
 
-	@ManyToOne
-	@JoinColumn(name = "fieldset_id", insertable = false, updatable = false, nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fieldset_id")
 	public Fieldset fieldset;
 
-	@Column(name = "fields_index", insertable = false, updatable = false, nullable = false)
-	Integer index;
+	@Column(name = "fields_index")
+	public Integer index;
 
 	@Required
 	@NotNull
@@ -61,5 +62,11 @@ public class Field extends Model {
 	private void onPost() {
 		if (this.fieldType != null)
 			fieldTypeEnum = FieldType.setValue(this.fieldType);
+	}
+
+	public void setFieldset(Fieldset fieldset) {
+		this.fieldset = fieldset;
+		if (this.fieldset != null)
+			this.index = this.fieldset.fields.indexOf(this);
 	}
 }

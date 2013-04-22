@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
@@ -30,14 +31,20 @@ public class Fieldset extends UserModel {
 	@Lob
 	public String description;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fieldset_id", nullable = false)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "fieldset")
 	@OrderColumn(name = "fields_index")
 	@Valid
 	public List<Field> fields = new ArrayList<Field>();
 
 	public String toString() {
 		return name;
+	}
+
+	@PrePersist
+	@PreUpdate
+	private void onPre() {
+		for (Field field : this.fields)
+			field.setFieldset(this);
 	}
 
 	public static Map<String, String> options(String formId) {
