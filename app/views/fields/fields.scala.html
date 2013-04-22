@@ -27,15 +27,13 @@
 			'_label -> Messages.get("label.help")
 		)
 
-		@inputRadioGroupInline(
+		@checkbox(
 			FIELD("isRequired"),
-			options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false")),
 			'_label -> Messages.get("label.required")
 		)
 
-		@inputRadioGroupInline(
+		@checkbox(
 			FIELD("isSigned"),
-			options = Seq("true"->Messages.get("radiobox.true"),"false"->Messages.get("radiobox.false")),
 			'_label -> Messages.get("label.isSigned")
 		)
 
