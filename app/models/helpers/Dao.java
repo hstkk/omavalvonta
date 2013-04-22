@@ -1,6 +1,8 @@
 package models.helpers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 
 import play.db.jpa.JPA;
 
@@ -114,6 +119,37 @@ public class Dao<T extends Model, ID extends Serializable> extends
 				return JPA.em().find(clazz, id);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public T getVersion(ID id, Date date) {
+		try {
+			if (id != null) {
+				AuditReader auditReader = AuditReaderFactory.get(JPA.em());
+				Number revision = auditReader.getRevisionNumberForDate(date);
+				return auditReader.find(clazz, id, revision);
+			}
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	@Override
+	public List<T> getVersions(ID id) {
+		try {
+			if (id != null) {
+				List<T> versions = new ArrayList<T>();
+				AuditReader auditReader = AuditReaderFactory.get(JPA.em());
+				List<Number> revisions = auditReader.getRevisions(clazz, id);
+				for (Number revision : revisions) {
+					T t = auditReader.find(clazz, id, revision);
+					versions.add(t);
+				}
+				return versions;
+			}
+		} catch (Exception e) {
 		}
 		return null;
 	}

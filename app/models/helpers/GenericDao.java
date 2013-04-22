@@ -1,6 +1,7 @@
 package models.helpers;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,10 @@ public interface GenericDao<T, ID extends Serializable> {
 	T findBy(CriteriaQuery<T> query);
 
 	T findById(ID id);
+
+	T getVersion(ID id, Date date);
+
+	List<T> getVersions(ID id);
 
 	Map<String, String> options();
 
