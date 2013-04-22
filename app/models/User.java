@@ -26,7 +26,8 @@ public class User extends Model {
 
 	@Required
 	@NotNull
-	@Lob
+	// ToDO email length
+	// @Lob
 	@Column(unique = true)
 	public String email;
 
