@@ -106,6 +106,9 @@ GET		/yllapito/tuotteet/:productId/muokkaa				@controllers.Products.edit(product
 POST	/yllapito/tuotteet/:productId/muokkaa				@controllers.Products.update(productId: Long)
 
 # Fieldset
+# DONE:
+# Comment
+# Archive?
 GET		/yllapito/kenttaryhmat								@controllers.Fieldsets.page(sivu: Int ?= 1)
 GET		/yllapito/kenttaryhmat/uusi							@controllers.Fieldsets.fresh
 POST	/yllapito/kenttaryhmat/uusi							@controllers.Fieldsets.create
