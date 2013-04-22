@@ -126,7 +126,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	@Override
 	public T getVersion(ID id, Date date) {
 		try {
-			if (id != null) {
+			if (id != null && date != null) {
 				AuditReader auditReader = AuditReaderFactory.get(JPA.em());
 				Number revision = auditReader.getRevisionNumberForDate(date);
 				return auditReader.find(clazz, id, revision);
