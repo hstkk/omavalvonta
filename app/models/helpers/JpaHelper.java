@@ -62,6 +62,17 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		return null;
 	}
 
+	public List<T> getReferences(List<ID> list) {
+		ArrayList<T> references = new ArrayList<T>();
+		try {
+			for (ID id : list)
+				references.add(getReference(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return references;
+	}
+
 	protected TypedQuery<T> setPage(TypedQuery<T> q, Integer pageNumber) {
 		if (pageNumber != null) {
 			if (pageNumber < 1)
