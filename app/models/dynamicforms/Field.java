@@ -1,5 +1,6 @@
 package models.dynamicforms;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -31,6 +32,9 @@ public class Field extends Model {
 	@ManyToOne
 	@JoinColumn(name = "fieldset_id", insertable = false, updatable = false, nullable = false)
 	public Fieldset fieldset;
+
+	@Column(name = "fields_index", insertable = false, updatable = false, nullable = false)
+	Integer index;
 
 	@Required
 	@NotNull
