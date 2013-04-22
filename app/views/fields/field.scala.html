@@ -56,10 +56,11 @@
 
 	case FieldType.DATE => {
 		@reason(field("valueDate"))
-		@inputDate(
+		@inputText(
 			field("valueDate"),
 			'_label -> t.name,
 			'_help -> t.help,
+			'class -> "datepicker",
 			'placeholder -> Messages.get("placeholder.date")
 		)
 	}
