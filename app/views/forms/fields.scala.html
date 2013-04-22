@@ -18,7 +18,7 @@
 	)
 
 	@multiselect(
-		FORM("fieldsets"),
+		FORM("fieldsets.id"),
 		options = options(models.dynamicforms.Fieldset.options(FORM("id").value)),
 		'_label ->  Messages.get("label.fieldsets"),
 		'_class -> "multiselect"

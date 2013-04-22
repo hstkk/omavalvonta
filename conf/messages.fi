@@ -172,7 +172,7 @@ links.frontPage=Etusivulle
 
 # --- Placeholder
 placeholder.int=0
-placeholder.double=0,0
+placeholder.double=0,00
 placeholder.date=pp.kk.vvvv
 
 # --- Radiobox

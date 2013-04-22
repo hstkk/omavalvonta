@@ -14,7 +14,7 @@
 			@helper.input(
 				field("amount"),
 				'_label -> ingredientSupply.ingredient,
-				'_placeholder -> ingredientSupply.amountAvailableToString
+				'placeholder -> ingredientSupply.amountAvailableToString
 			) { (id, name, value, args) =>
 				<div class="input-append">
 					<input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(args)>
@@ -29,7 +29,7 @@
 	@helper.inputDate(
 		FORM("date"),
 		'_label -> Messages.get("label.date"),
-		'_placeholder -> Messages.get("placeholder.date")
+		'placeholder -> Messages.get("placeholder.date")
 	)
 
 	@repeat(FORM("ingredientSupplies")) { ingredientSupply =>
