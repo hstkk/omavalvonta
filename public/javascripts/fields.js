@@ -23,6 +23,7 @@ $(function() {
 		sortable.accordion('refresh');
 		sortable.accordion('option', 'active', -1);
 		renumber();
+		rename();
 	});
 
 	// renumber form fields
@@ -31,6 +32,18 @@ $(function() {
 			$(this).find('input, textarea, select').each(function() {
 				$(this).attr('name', $(this).attr('name').replace(/fields\[.+?\]/g, 'fields[' + i + ']'));
 			});
+		});
+	};
+
+	// rename form fields
+	var rename = function(){
+		var item = $('#sortable fieldset:last'),
+		    index = $('#sortable fieldset').length;
+		item.find('input, textarea, select').each(function() {
+				$(this).attr('id', $(this).attr('id').replace('fields_x__', 'fields_' + index + '__'));
+		});
+		item.find('label').each(function() {
+				$(this).attr('for', $(this).attr('for').replace('fields_x__', 'fields_' + index + '__'));
 		});
 	};
 
