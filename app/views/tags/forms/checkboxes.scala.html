@@ -17,7 +17,7 @@
 @helper.input(field, args:_*) { (id, name, value, htmlArgs) =>
 	@for((option, index) <- options.zipWithIndex) {
 		<label class="checkbox">
-			<input type="checkbox" id="@(id)_@(option._1)" name="@(name)[@(index)]" value="@option._1" @{if(values.contains(Some(option._1))) "checked" else ""} @toHtmlArgs(htmlArgs)>
+			<input type="checkbox" id="@(id)_@(option._1)" name="@(name)[@(index)].id" value="@option._1" @{if(values.contains(Some(option._1))) "checked" else ""} @toHtmlArgs(htmlArgs)>
 			@option._2
 		</label>
 	}
