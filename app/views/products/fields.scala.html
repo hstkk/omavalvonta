@@ -24,14 +24,14 @@
 		'_label -> Messages.get("label.description")
 	)
 
-	@multiselect(
-		FORM("ingredientIds"),
+	@checkboxes(
+		FORM("ingredients"),
 		options = options(models.Ingredient.dao.options),
 		'_label ->  Messages.get("label.ingredients")
 	)
 
-	@multiselect(
-		FORM("formIds"),
+	@checkboxes(
+		FORM("forms"),
 		options = options(models.dynamicforms.Form.dao.options),
 		'_label ->  Messages.get("label.forms")
 	)

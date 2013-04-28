@@ -185,6 +185,7 @@ model.id="#"
 status.wip=Kesken
 boolean.true=Kyllä
 boolean.false=Ei
+management=Ylläpito
 
 # --- Term category enum
 enum.REASON=Muutoksen syy

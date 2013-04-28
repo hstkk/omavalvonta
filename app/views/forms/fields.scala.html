@@ -1,4 +1,4 @@
-@(FORM: play.data.Form[models.dynamicforms.Form], action: play.api.mvc.Call)
+@(FORM: play.data.Form[models.dynamicforms.Form], action: play.api.mvc.Call, t: models.dynamicforms.Form)
 
 @import play.i18n._
 @import helper._
@@ -17,11 +17,10 @@
 		'_label -> Messages.get("label.description")
 	)
 
-	@multiselect(
-		FORM("fieldsetIds"),
-		options = options(models.dynamicforms.Fieldset.options(FORM("id").value)),
-		'_label ->  Messages.get("label.fieldsets"),
-		'class -> "multiselect input-xxlarge"
+	@checkboxes(
+		FORM("fieldsets"),
+		options = options(models.dynamicforms.Fieldset.options(t)),
+		'_label ->  Messages.get("label.fieldsets")
 	)
 }
 

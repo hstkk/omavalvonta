@@ -1,4 +1,4 @@
-@(title: String, links: Html)(content: Html)
+@(title: String, links: Html, brand: String = "")(content: Html)
 @import play.i18n._
 @import tags.alerts._
 @import controllers.shib.Session
@@ -24,7 +24,7 @@
 	</div>
 }
 
-@template(title, navigation, sidebar) {
+@template(title, navigation, sidebar, brand) {
 	<div class="span9">
 		@if(flash.containsKey("success")){
 			@success(){

@@ -1,4 +1,4 @@
-@(title: String, navigation: Html = Html(""), sidebar: Html = Html(""))(content: Html)
+@(title: String, navigation: Html = Html(""), sidebar: Html = Html(""), brand: String = "")(content: Html)
 
 <!DOCTYPE html>
 <html>
@@ -15,10 +15,13 @@
 		<script src="@routes.Assets.at("javascripts/datepicker.js")"></script>
 	</head>
 	<body>
-		<div class="navbar navbar navbar-fixed-top">
+		<div class="navbar navbar-fixed-top @{if(brand.isEmpty) "" else "navbar-inverse"}">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="@routes.Application.index()">Omavalvonta</a>
+					<a class="brand" href="@routes.Application.index()">
+						Omavalvonta
+						@brand
+					</a>
 					@navigation
 				</div>
 			</div>

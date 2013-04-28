@@ -3,5 +3,5 @@
 @import play.i18n._
 
 @views.html.management(Messages.get("form.update")) {
-	@fields(FORM, routes.Forms.update(t.id))
+	@fields(FORM, routes.Forms.update(t.id), t)
 }
