@@ -30,9 +30,10 @@ public class Results extends Model {
 
 	@Required
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinColumn(updatable = false)
 	@NotNull
 	@Valid
-	public List<Batch> baches = new ArrayList<Batch>();
+	public List<Batch> batches = new ArrayList<Batch>();
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "results_id", nullable = false)

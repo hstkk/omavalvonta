@@ -4,23 +4,17 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.PostLoad;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
-import models.Ingredient;
-import models.Product;
 import models.helpers.Dao;
 import models.helpers.UserModel;
-import org.hibernate.annotations.IndexColumn;
+import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.*;
 
@@ -36,17 +30,10 @@ public class Form extends UserModel {
 	@Lob
 	public String description;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	// @IndexColumn(name = "position", base = 1)
-	// @JoinTable(joinColumns = @JoinColumn(name = "form_id"),
-	// inverseJoinColumns = @JoinColumn(name = "fieldset_id", unique = true))
-	public List<Fieldset> fieldsets = new ArrayList<Fieldset>();
-
-	@Transient
-	public List<Long> fieldsetIds = new ArrayList<Long>();
-
-	@ManyToMany(mappedBy = "forms")
-	public List<Product> products = new ArrayList<Product>();
+	@OneToMany(mappedBy = "form", orphanRemoval = true)
+	@OrderColumn(name = "form_index")
+	@AuditMappedBy(mappedBy = "form", positionMappedBy = "index")
+	public List<FormFieldset> fieldsets = new ArrayList<FormFieldset>();
 
 	public String toString() {
 		return name;
@@ -55,13 +42,7 @@ public class Form extends UserModel {
 	@PrePersist
 	@PreUpdate
 	private void onPre() {
-		this.fieldsets = Fieldset.dao.getReferences(this.fieldsetIds);
-	}
-
-	@PostLoad
-	private void onPost() {
-		for (Fieldset fieldset : this.fieldsets)
-			this.fieldsetIds.add(fieldset.id);
+		this.fieldsets = FormFieldset.prepare(this, this.fieldsets);
 	}
 
 	@Transient
@@ -71,9 +52,9 @@ public class Form extends UserModel {
 		if (fieldMap == null) {
 			fieldMap = new LinkedHashMap<String, Field>();
 			if (fieldsets != null)
-				for (Fieldset fieldset : fieldsets)
-					if (fieldset.fields != null)
-						for (Field field : fieldset.fields)
+				for (FormFieldset formFieldset : fieldsets)
+					if (formFieldset.fieldset.fields != null)
+						for (Field field : formFieldset.fieldset.fields)
 							fieldMap.put(field.id.toString(), field);
 		}
 		return fieldMap.get(key);
@@ -86,8 +67,9 @@ public class Form extends UserModel {
 		if (fieldsetMap == null) {
 			fieldsetMap = new LinkedHashMap<String, Fieldset>();
 			if (fieldsets != null)
-				for (Fieldset fieldset : fieldsets)
-					fieldsetMap.put(fieldset.id.toString(), fieldset);
+				for (FormFieldset formFieldset : fieldsets)
+					fieldsetMap.put(formFieldset.fieldset.id.toString(),
+							formFieldset.fieldset);
 		}
 		return fieldsetMap.get(key);
 	}
@@ -95,8 +77,8 @@ public class Form extends UserModel {
 	public play.data.Form<Results> getForm() {
 		Results results = new Results();
 		results.form = this;
-		for (Fieldset fieldset : fieldsets) {
-			for (Field field : fieldset.fields) {
+		for (FormFieldset formFieldset : fieldsets) {
+			for (Field field : formFieldset.fieldset.fields) {
 				Result result = new Result();
 				result.field = field;
 				results.results.add(result);

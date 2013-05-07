@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
@@ -13,7 +14,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.UserModel;
-
 import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.*;
@@ -32,8 +32,8 @@ public class Fieldset extends UserModel {
 	public String description;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@OrderColumn(name = "fields_index")
-	@javax.persistence.JoinColumn(name = "fieldset_id", nullable = false)
+	@OrderColumn(name = "field_index")
+	@JoinColumn(name = "fieldset_id", nullable = false)
 	@AuditMappedBy(mappedBy = "fieldset", positionMappedBy = "index")
 	@Valid
 	public List<Field> fields = new ArrayList<Field>();
@@ -42,17 +42,29 @@ public class Fieldset extends UserModel {
 		return name;
 	}
 
-	public static Map<String, String> options(String formId) {
+	public static play.data.Form<Form> getForm(Form form) {
+		List<Fieldset> all = Fieldset.dao.findAll();
+		if (form == null)
+			form = new Form();
+		for (FormFieldset formFieldset : form.fieldsets)
+			all.remove(formFieldset.fieldset);
+		List<FormFieldset> allFormFieldsets = new ArrayList<FormFieldset>();
+		for (Fieldset fieldset : all)
+			allFormFieldsets.add(new FormFieldset(form, fieldset));
+		form.fieldsets.addAll(allFormFieldsets);
+		play.data.Form<Form> FORM = new play.data.Form<Form>(Form.class);
+		return FORM.fill(form);
+	}
+
+	public static Map<String, String> options(Form form) {
 		Map<String, String> options = dao.options();
 		try {
-			Long id = Long.parseLong(formId);
-			Form form = Form.dao.findById(id);
 			if (form != null && form.fieldsets != null
 					&& !form.fieldsets.isEmpty()) {
 				Map<String, String> map = new HashMap<String, String>();
-				for (Fieldset fieldset : form.fieldsets) {
-					String key = fieldset.id.toString();
-					map.put(key, fieldset.toString());
+				for (FormFieldset formFieldset : form.fieldsets) {
+					String key = formFieldset.id.toString();
+					map.put(key, formFieldset.toString());
 					options.remove(key);
 				}
 				map.putAll(options);

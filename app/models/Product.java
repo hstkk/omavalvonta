@@ -3,23 +3,16 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.PostLoad;
-import javax.persistence.Transient;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
-
-import models.dynamicforms.Form;
 import models.helpers.Dao;
 import models.helpers.UserModel;
-
 import org.hibernate.envers.Audited;
-
 import play.data.validation.Constraints.Required;
 
 @Entity
@@ -43,33 +36,25 @@ public class Product extends UserModel {
 	@Lob
 	public String description;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
+	@OneToMany(mappedBy = "product", orphanRemoval = true)
+	// @LazyCollection(LazyCollectionOption.FALSE)
+	public List<ProductIngredient> ingredients = new ArrayList<ProductIngredient>();
 
-	@Transient
-	public List<Long> ingredientIds = new ArrayList<Long>();
-
-	@ManyToMany(cascade = CascadeType.ALL)
-	public List<Form> forms = new ArrayList<Form>();
-
-	@Transient
-	public List<Long> formIds = new ArrayList<Long>();
+	@OneToMany(mappedBy = "product", orphanRemoval = true)
+	public List<ProductForm> forms = new ArrayList<ProductForm>();
 
 	public String toString() {
 		return name + " (" + no + ")";
 	}
 
-	@Override
-	public void set() {
-		this.ingredients = Ingredient.dao.getReferences(this.ingredientIds);
-		this.forms = Form.dao.getReferences(this.formIds);
-	}
-
-	@PostLoad
-	private void onPost() {
-		for (Ingredient ingredient : this.ingredients)
-			this.ingredientIds.add(ingredient.id);
-		for (Form form : this.forms)
-			this.formIds.add(form.id);
+	@PrePersist
+	@PreUpdate
+	private void onPre() {
+		System.out
+				.println("*********************************************************************************");
+		this.ingredients = ProductIngredient.prepare(this, this.ingredients);
+		this.forms = ProductForm.prepare(this, this.forms);
+		System.out
+				.println("*********************************************************************************");
 	}
 }

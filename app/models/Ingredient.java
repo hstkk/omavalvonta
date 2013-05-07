@@ -2,23 +2,19 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 import models.dynamicforms.Form;
 import models.helpers.Dao;
 import models.helpers.UserModel;
-
 import org.hibernate.envers.Audited;
-
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 
@@ -42,18 +38,17 @@ public class Ingredient extends UserModel {
 
 	// Days
 	@Min(0)
+	@Required
+	@NotNull
 	public Integer bestBefore;
 
 	@ManyToOne
 	@Valid
 	public Form form;
 
-	@OneToMany(mappedBy = "ingredient")
+	@OneToMany(mappedBy = "ingredient", fetch = FetchType.LAZY)
 	@Valid
-	public List<IngredientSupply> ingredientSupllies = new ArrayList<IngredientSupply>();;
-
-	@ManyToMany(mappedBy = "ingredients")
-	public List<Product> products = new ArrayList<Product>();
+	public List<IngredientSupply> ingredientSupllies = new ArrayList<IngredientSupply>();
 
 	public String toString() {
 		return name;
