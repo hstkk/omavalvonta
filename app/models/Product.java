@@ -76,8 +76,6 @@ public class Product extends UserModel {
 		else
 			query.where(criteriaBuilder.equal(root.get(Product_.no), no));
 		Long count = dao.findLongBy(query);
-		System.out.println(count);
-		System.out.println(count > 0);
 		if (count != null)
 			return count > 0;
 		return false;
