@@ -46,12 +46,9 @@ public class Fieldset extends UserModel {
 		List<Fieldset> all = Fieldset.dao.findAll();
 		if (form == null)
 			form = new Form();
-		for (FormFieldset formFieldset : form.fieldsets)
-			all.remove(formFieldset.fieldset);
-		List<FormFieldset> allFormFieldsets = new ArrayList<FormFieldset>();
-		for (Fieldset fieldset : all)
-			allFormFieldsets.add(new FormFieldset(form, fieldset));
-		form.fieldsets.addAll(allFormFieldsets);
+		for (Fieldset fieldset : form.fieldsets)
+			all.remove(fieldset);
+		form.fieldsets.addAll(all);
 		play.data.Form<Form> FORM = new play.data.Form<Form>(Form.class);
 		return FORM.fill(form);
 	}
@@ -62,9 +59,9 @@ public class Fieldset extends UserModel {
 			if (form != null && form.fieldsets != null
 					&& !form.fieldsets.isEmpty()) {
 				Map<String, String> map = new HashMap<String, String>();
-				for (FormFieldset formFieldset : form.fieldsets) {
-					String key = formFieldset.id.toString();
-					map.put(key, formFieldset.toString());
+				for (Fieldset fieldset : form.fieldsets) {
+					String key = fieldset.id.toString();
+					map.put(key, fieldset.toString());
 					options.remove(key);
 				}
 				map.putAll(options);

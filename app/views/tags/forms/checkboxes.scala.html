@@ -10,14 +10,14 @@
  * @param args Set of extra attributes.
  * @param handler The field constructor.
  *@
-@(field: play.api.data.Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: helper.FieldConstructor, lang: play.api.i18n.Lang)
+@(field: play.api.data.Field, options: Seq[(String,String)], child: String, args: (Symbol,Any)*)(implicit handler: helper.FieldConstructor, lang: play.api.i18n.Lang)
 
-@values = @{ field.indexes.map { v => field("[" + v + "].id").value } }
+@values = @{ field.indexes.map { v => field("[" + v + "]." + child).value } }
 
 @helper.input(field, args:_*) { (id, name, value, htmlArgs) =>
 	@for((option, index) <- options.zipWithIndex) {
 		<label class="checkbox">
-			<input type="checkbox" id="@(id)_@(option._1)" name="@(name)[@(index)].id" value="@option._1" @{if(values.contains(Some(option._1))) "checked" else ""} @toHtmlArgs(htmlArgs)>
+			<input type="checkbox" id="@(id)_@(option._1)" name="@(name)[@(index)].@(child)" value="@option._1" @{if(values.contains(Some(option._1))) "checked" else ""} @toHtmlArgs(htmlArgs)>
 			@option._2
 		</label>
 	}

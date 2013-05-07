@@ -6,15 +6,12 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.UserModel;
-import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.*;
 
@@ -30,19 +27,28 @@ public class Form extends UserModel {
 	@Lob
 	public String description;
 
-	@OneToMany(mappedBy = "form", orphanRemoval = true)
+	@ManyToMany
 	@OrderColumn(name = "form_index")
-	@AuditMappedBy(mappedBy = "form", positionMappedBy = "index")
-	public List<FormFieldset> fieldsets = new ArrayList<FormFieldset>();
+	public List<Fieldset> fieldsets;
 
 	public String toString() {
 		return name;
 	}
 
-	@PrePersist
-	@PreUpdate
-	private void onPre() {
-		this.fieldsets = FormFieldset.prepare(this, this.fieldsets);
+	@Override
+	public void onCreate() {
+		set();
+		super.onCreate();
+	}
+
+	@Override
+	public void onUpdate() {
+		set();
+		super.onUpdate();
+	}
+
+	private void set() {
+		this.fieldsets = Fieldset.dao.getReference(this.fieldsets);
 	}
 
 	@Transient
@@ -52,9 +58,9 @@ public class Form extends UserModel {
 		if (fieldMap == null) {
 			fieldMap = new LinkedHashMap<String, Field>();
 			if (fieldsets != null)
-				for (FormFieldset formFieldset : fieldsets)
-					if (formFieldset.fieldset.fields != null)
-						for (Field field : formFieldset.fieldset.fields)
+				for (Fieldset fieldset : fieldsets)
+					if (fieldset.fields != null)
+						for (Field field : fieldset.fields)
 							fieldMap.put(field.id.toString(), field);
 		}
 		return fieldMap.get(key);
@@ -67,9 +73,8 @@ public class Form extends UserModel {
 		if (fieldsetMap == null) {
 			fieldsetMap = new LinkedHashMap<String, Fieldset>();
 			if (fieldsets != null)
-				for (FormFieldset formFieldset : fieldsets)
-					fieldsetMap.put(formFieldset.fieldset.id.toString(),
-							formFieldset.fieldset);
+				for (Fieldset fieldset : fieldsets)
+					fieldsetMap.put(fieldset.id.toString(), fieldset);
 		}
 		return fieldsetMap.get(key);
 	}
@@ -77,8 +82,8 @@ public class Form extends UserModel {
 	public play.data.Form<Results> getForm() {
 		Results results = new Results();
 		results.form = this;
-		for (FormFieldset formFieldset : fieldsets) {
-			for (Field field : formFieldset.fieldset.fields) {
+		for (Fieldset fieldset : fieldsets) {
+			for (Field field : fieldset.fields) {
 				Result result = new Result();
 				result.field = field;
 				results.results.add(result);

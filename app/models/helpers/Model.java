@@ -16,23 +16,17 @@ public class Model implements ModelInterface {
 	@Column(nullable = false)
 	public Date lastModified;
 
-	@PrePersist
+	// Executed before save
 	public void onCreate() {
 		lastModified = new Date();
-		set();
 	}
 
-	@PreUpdate
+	// Executed before update
 	public void onUpdate() {
 		lastModified = new Date();
-		set();
 	}
 
-	// Executed before save or update
-	public void set() {
-	}
-
-	// Executed after show or edit
-	public void get() {
-	}
+	// Executed before load
+	// public void onLoad() {
+	// }
 }

@@ -43,6 +43,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	@Override
 	public boolean create(T t) {
 		try {
+			t.onCreate();
 			JPA.em().persist(t);
 			return true;
 		} catch (Exception e) {
@@ -113,10 +114,10 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	}
 
 	@Override
-	public T findById(T t) {
+	public T findById(ID id) {
 		try {
-			if (t != null && t.id != null)
-				return JPA.em().find(clazz, t.id);
+			if (id != null)
+				return JPA.em().find(clazz, id);
 		} catch (NoResultException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -182,6 +183,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	@Override
 	public boolean update(T t) {
 		try {
+			t.onUpdate();
 			JPA.em().merge(t);
 			return true;
 		} catch (Exception e) {

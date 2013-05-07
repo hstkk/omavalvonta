@@ -46,7 +46,6 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 			if (list != null)
 				for (T t : list) {
 					T reference = getReference(t);
-					System.out.println(reference.id);
 					if (reference != null)
 						references.add(reference);
 				}
@@ -58,7 +57,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 
 	public T getReference(T t) {
 		try {
-			if (t.id != null)
+			if (t != null && t.id != null)
 				return JPA.em().getReference(clazz, t.id);
 		} catch (EntityNotFoundException e) {
 		} catch (NullPointerException e) {
