@@ -6,7 +6,7 @@
 
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
-@views.html.management(Messages.get("batch.create")) {
+@main(Messages.get("batch.create")) {
 	@tags.forms.form(FORM, routes.Batches.fresh, Messages.get("label.next")) {
 		@select(
 			FORM("tuote"),
