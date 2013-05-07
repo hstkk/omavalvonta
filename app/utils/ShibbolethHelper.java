@@ -3,12 +3,10 @@ package utils;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
-
 import models.User;
 import play.Play;
 import play.data.validation.Validation;
 import play.mvc.Http.Context;
-import controllers.Users;
 import controllers.routes;
 
 public class ShibbolethHelper {
