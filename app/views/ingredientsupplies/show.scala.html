@@ -1,9 +1,25 @@
 @(ingredientSupply: IngredientSupply)
 
+@import tags.tables._
 @import play.i18n._
 
-@main(Messages.get("ingredientsupply.show", ingredientSupply.id)) {
+@main(Messages.get("ingredientsupply.show", ingredientSupply)) {
 	@table() {
-		@row(ingredientSupply)
+		@thead() {
+			Messages.get("model.id")
+			Messages.get("ingredientsupply.ingredient")
+			Messages.get("ingredientsupply.received")
+			Messages.get("ingredientsupply.bestBefore")
+			Messages.get("ingredientsupply.amount")
+			Messages.get("ingredientsupply.amountAvailable")
+		}
+		<tbody>
+			@tr() { @ingredientSupply.ingredient.name
+	        	@ingredientSupply.received
+	        	@ingredientSupply.getBestBefore
+	        	@ingredientSupply.amount @ingredientSupply.unit
+	        	@ingredientSupply.used @ingredientSupply.unit }
+			}
+		</tbody>
 	}
 }
