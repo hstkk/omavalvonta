@@ -1,23 +1,14 @@
 package controllers;
 
+import static play.data.Form.form;
 import models.Batch;
-import models.Batch.Step2;
-import models.Ingredient;
-import models.helpers.Dao;
-import models.helpers.Page;
-import play.api.templates.Html;
-import play.api.templates.Template1;
-import play.api.templates.Template2;
-import play.data.Form;
 import play.db.jpa.Transactional;
-import play.i18n.Messages;
 import play.mvc.Call;
-import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
 import play.mvc.Security.Authenticated;
+import utils.Converter;
 import views.html.batches.*;
-import controllers.helpers.Crud;
 import controllers.helpers.UserCrud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
@@ -44,6 +35,18 @@ public class Batches extends UserCrud<Batch> {
 	public Result ack(Long id) {
 		// TODO Auto-generated method stub
 		return super.ack(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Result fresh() {
+		String value = request().getQueryString("tuote");
+		if (value != null && !value.isEmpty()) {
+			Long product = Converter.stringToLong(value);
+			if (product != null)
+				return redirect(controllers.routes.BatchStep2.fresh(product));
+		}
+		return ok(step1.render(form(Batch.class)));
 	}
 
 	@Override

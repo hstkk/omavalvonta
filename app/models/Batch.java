@@ -31,15 +31,12 @@ public class Batch extends UserModel {
 	public interface All {
 	}
 
-	public interface Step1 {
-	}
-
 	public interface Step2 {
 	}
 
 	public final static Dao<Batch, Long> dao = new Dao<Batch, Long>(Batch.class);
 
-	@Required(groups = { All.class, Step1.class })
+	@Required(groups = { All.class })
 	@Valid
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Product product;
