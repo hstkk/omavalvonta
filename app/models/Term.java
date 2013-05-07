@@ -36,12 +36,12 @@ public class Term extends UserModel {
 	@NotNull
 	public String name;
 
+	@Required
+	@NotNull
 	@Column(name = "category", nullable = false)
 	public int category;
 
 	@Transient
-	@Required
-	@NotNull
 	public TermCategory categoryEnum;
 
 	public String toString() {
@@ -55,13 +55,11 @@ public class Term extends UserModel {
 
 	@Override
 	public void onCreate() {
-		enumToInt();
 		super.onCreate();
 	}
 
 	@Override
 	public void onUpdate() {
-		enumToInt();
 		super.onUpdate();
 	}
 
