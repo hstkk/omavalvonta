@@ -6,38 +6,32 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-
+import javax.persistence.criteria.Root;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
-
 import play.db.jpa.JPA;
 
 public class Dao<T extends Model, ID extends Serializable> extends
 		JpaHelper<T, ID> implements GenericDao<T, ID> {
 
-	private final String entity;
-
 	public Dao(Class<T> clazz) {
 		super(clazz);
-		this.entity = clazz.getName();
 	}
 
 	@Override
 	public long count() {
-		try {
-			return (long) JPA.em()
-					.createQuery("select count(*) from " + entity + " e")
-					.getSingleResult();
-		} catch (NoResultException e) {
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
+		CriteriaBuilder criteriaBuilder = getCriteriaBuilder();
+		CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
+		Root<T> root = query.from(clazz);
+		query.select(criteriaBuilder.count(root));
+		Long count = findLongBy(query);
+		if(count == null)
+			return 0;
+		return count;
 	}
 
 	@Override
