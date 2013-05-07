@@ -32,7 +32,12 @@ GET		/kirjaudu-ulos										controllers.shib.Shibboleth.logout
 GET     /yllapito											controllers.Application.management
 
 # Users
+#
 # TODO what user did
+## batches
+## finalproducts
+## results
+## ingredientsupplies
 GET		/kayttajat											@controllers.Users.page(sivu: Int ?= 1)
 GET		/kayttajat/:userId									@controllers.Users.show(userId: Long)
 GET		/profiili											@controllers.Users.home
@@ -60,6 +65,8 @@ POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchI
 # TODO
 
 # Ingredient supply
+#
+# options, ei vanhentuneita
 # Where used
 # Ack
 GET		/raaka-aineet										@controllers.IngredientSupplies.page(sivu: Int ?= 1)
@@ -90,6 +97,7 @@ GET		/yllapito/termit/:termId/muokkaa					@controllers.Terms.edit(termId: Long)
 
 # Ingredient
 #
+# Products
 # Form
 #
 # Archive?
@@ -112,6 +120,8 @@ POST	/yllapito/tuotteet/:productId/muokkaa				@controllers.Products.update(produ
 
 # Fieldset / Field
 #
+# Forms
+#
 # Archive?
 GET		/yllapito/kenttaryhmat								@controllers.Fieldsets.page(sivu: Int ?= 1)
 GET		/yllapito/kenttaryhmat/uusi							@controllers.Fieldsets.fresh
@@ -121,6 +131,8 @@ GET		/yllapito/kenttaryhmat/:fieldsetId/muokkaa			@controllers.Fieldsets.edit(fi
 POST	/yllapito/kenttaryhmat/:fieldsetId/muokkaa			@controllers.Fieldsets.update(fieldsetId: Long)
 
 # Form
+#
+# Products
 #
 # Archive?
 GET		/yllapito/lomakkeet									@controllers.Forms.page(sivu: Int ?= 1)
