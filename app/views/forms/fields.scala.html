@@ -17,12 +17,15 @@
 		'_label -> Messages.get("label.description")
 	)
 
-	@checkboxes(
-		FORM("fieldsets"),
-		options = options(models.dynamicforms.Fieldset.options(t)),
-		child = "id",
-		'_label ->  Messages.get("label.fieldsets")
-	)
+	<div id="sortable">
+		@checkboxes(
+			FORM("fieldsets"),
+			options = options(models.dynamicforms.Fieldset.options(t)),
+			child = "id",
+			'_label ->  Messages.get("label.fieldsets"),
+			'_class -> "ui-state-default arrow"
+		)
+	</div>
 }
 
 <script src="@routes.Assets.at("javascripts/forms.js")"></script>

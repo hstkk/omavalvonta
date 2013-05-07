@@ -10,6 +10,11 @@ fieldset {
 	padding-top: 0;
 }
 
+.arrow:before {
+	content: '\2B0D';
+	font-weight: 700;
+}
+
 .form-horizontal .control-label {
 	font-weight: bold;
 }

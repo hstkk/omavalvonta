@@ -1,7 +1,7 @@
 package models.dynamicforms;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.CascadeType;
@@ -58,7 +58,7 @@ public class Fieldset extends UserModel {
 		try {
 			if (form != null && form.fieldsets != null
 					&& !form.fieldsets.isEmpty()) {
-				Map<String, String> map = new HashMap<String, String>();
+				Map<String, String> map = new LinkedHashMap<String, String>();
 				for (Fieldset fieldset : form.fieldsets) {
 					String key = fieldset.id.toString();
 					map.put(key, fieldset.toString());
