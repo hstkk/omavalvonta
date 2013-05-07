@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
@@ -94,12 +93,10 @@ public class IngredientSupply extends UserModel {
 	}
 
 	@Override
-	@PrePersist
 	public void onCreate() {
-		super.onCreate();
-
 		this.ingredient = Ingredient.dao.getReference(this.ingredient);
 		this.unit = Term.dao.getReference(this.unit);
+		super.onCreate();
 	}
 
 	public Date getBestBefore() {

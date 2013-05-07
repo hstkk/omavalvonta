@@ -48,10 +48,21 @@ public class Term extends UserModel {
 		return name;
 	}
 
-	@PrePersist
 	private void enumToInt() {
 		if (categoryEnum != null)
 			category = categoryEnum.getValue();
+	}
+
+	@Override
+	public void onCreate() {
+		enumToInt();
+		super.onCreate();
+	}
+
+	@Override
+	public void onUpdate() {
+		enumToInt();
+		super.onUpdate();
 	}
 
 	@PostLoad

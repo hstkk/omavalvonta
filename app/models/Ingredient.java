@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import models.dynamicforms.Form;
@@ -54,9 +52,19 @@ public class Ingredient extends UserModel {
 		return name;
 	}
 
-	@PrePersist
-	@PreUpdate
-	private void onPre() {
+	@Override
+	public void onCreate() {
+		set();
+		super.onCreate();
+	}
+
+	@Override
+	public void onUpdate() {
+		set();
+		super.onUpdate();
+	}
+
+	private void set() {
 		this.form = Form.dao.getReference(this.form);
 	}
 }

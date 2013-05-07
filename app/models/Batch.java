@@ -12,7 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -59,9 +58,10 @@ public class Batch extends UserModel {
 	@OneToOne(mappedBy = "batch", fetch = FetchType.LAZY)
 	public FinalProduct finalProduct;
 
-	@PrePersist
-	private void onPre() {
+	@Override
+	public void onCreate() {
 		this.product = Product.dao.getReference(this.product);
+		super.onCreate();
 	}
 
 	public String toString() {
