@@ -130,7 +130,7 @@ ingredientsupply.ingredient=Raaka-aine
 ingredientsupply.received=Vastaanottopäivä
 ingredientsupply.bestBefore=Parasta ennen
 ingredientsupply.amount=Määrä
-ingredientsupply.amountAvailable=Jäljellä
+ingredientsupply.amountUsed=Käytetty
 
 # --- Batch
 batch.create=Uusi erä

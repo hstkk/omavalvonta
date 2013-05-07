@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.UserModel;
@@ -27,8 +26,7 @@ public class IngredientSupply extends UserModel {
 
 	@Required
 	@NotNull
-	@Valid
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	public Ingredient ingredient;
 
 	@Required
@@ -38,7 +36,7 @@ public class IngredientSupply extends UserModel {
 	public Double amount;
 
 	@LocalizedDouble
-	public Double used;
+	public Double used = 0.0;
 
 	@Required
 	@NotNull
@@ -47,27 +45,22 @@ public class IngredientSupply extends UserModel {
 
 	@Required
 	@NotNull
-	@Valid
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	public Term unit;
 
-	@OneToMany(mappedBy = "ingredientSupply")
+	@OneToMany(mappedBy = "ingredientSupply", fetch = FetchType.LAZY)
 	public List<IngredientSupplyBatch> batches = new ArrayList<IngredientSupplyBatch>();
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(ingredient);
-		sb.append(" ");
-		sb.append(amount);
-		sb.append(" ");
-		sb.append(unit);
 		sb.append(" (");
 		sb.append(Converter.dateToString(received));
 		sb.append(")");
 		return sb.toString();
 	}
 
-	public boolean isAvailable(Double _amount) {
+	public boolean isAmountAvailable(Double _amount) {
 		if (_amount > 0 && !isUsed()) {
 			return amountAvailable() >= _amount;
 		}

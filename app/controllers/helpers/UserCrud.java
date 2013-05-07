@@ -17,7 +17,6 @@ import play.mvc.With;
 import utils.Helper;
 import controllers.shib.Secured;
 import controllers.shib.Session;
-import controllers.shib.Shibboleth;
 
 @With(Session.class)
 public class UserCrud<T extends UserModel> extends Crud<T> {
@@ -78,10 +77,6 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		User user = Session.user();
 		t.user = user;
 		Result result = super.onCreateOrUpdate(t, id);
-		if (user == null && result != null) {
-			Call call = callAck(id);
-			return Shibboleth.login(call.url());
-		}
 		return result;
 	}
 
