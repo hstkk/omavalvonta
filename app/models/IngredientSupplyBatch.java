@@ -40,6 +40,9 @@ public class IngredientSupplyBatch extends Model {
 	@LocalizedDouble
 	public Double amount;
 
+	public IngredientSupplyBatch() {
+	}
+
 	public IngredientSupplyBatch(IngredientSupply ingredientSupply, Batch batch) {
 		this.amount = (double) 0;
 		this.ingredientSupply = ingredientSupply;

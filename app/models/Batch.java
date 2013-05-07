@@ -103,10 +103,8 @@ public class Batch extends UserModel {
 		if (ingredientSupplyMap == null) {
 			ingredientSupplyMap = new LinkedHashMap<String, IngredientSupply>();
 			if (this.product.ingredients != null)
-//				for (Ingredient ingredient : this.product.ingredients)
-				for (ProductIngredient ingredient : this.product.ingredients)
-//					for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies)
-					for (IngredientSupply ingredientSupply : ingredient.ingredient.ingredientSupllies)
+				for (Ingredient ingredient : this.product.ingredients)
+					for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies)
 						ingredientSupplyMap.put(ingredientSupply.id.toString(),
 								ingredientSupply);
 		}
@@ -114,11 +112,9 @@ public class Batch extends UserModel {
 	}
 
 	public play.data.Form<Batch> getForm() {
-//		for (Ingredient ingredient : this.product.ingredients)
-		for (ProductIngredient ingredient : this.product.ingredients)
-//		for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies) {
-			for (IngredientSupply ingredientSupply : ingredient.ingredient.ingredientSupllies) {
-			IngredientSupplyBatch ingredientSupplyBatch = new IngredientSupplyBatch(
+		for (Ingredient ingredient : this.product.ingredients)
+			for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies) {
+				IngredientSupplyBatch ingredientSupplyBatch = new IngredientSupplyBatch(
 						ingredientSupply, this);
 				this.ingredientSupplies.add(ingredientSupplyBatch);
 			}

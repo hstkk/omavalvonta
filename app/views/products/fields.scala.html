@@ -27,12 +27,14 @@
 	@checkboxes(
 		FORM("ingredients"),
 		options = options(models.Ingredient.dao.options),
+		child = "id",
 		'_label ->  Messages.get("label.ingredients")
 	)
 
 	@checkboxes(
 		FORM("forms"),
 		options = options(models.dynamicforms.Form.dao.options),
+		child = "id",
 		'_label ->  Messages.get("label.forms")
 	)
 }

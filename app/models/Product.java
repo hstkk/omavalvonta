@@ -2,14 +2,12 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
+import models.dynamicforms.Form;
 import models.helpers.Dao;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
@@ -36,25 +34,30 @@ public class Product extends UserModel {
 	@Lob
 	public String description;
 
-	@OneToMany(mappedBy = "product", orphanRemoval = true)
-	// @LazyCollection(LazyCollectionOption.FALSE)
-	public List<ProductIngredient> ingredients = new ArrayList<ProductIngredient>();
+	@ManyToMany
+	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-	@OneToMany(mappedBy = "product", orphanRemoval = true)
-	public List<ProductForm> forms = new ArrayList<ProductForm>();
+	@ManyToMany
+	public List<Form> forms = new ArrayList<Form>();
 
 	public String toString() {
 		return name + " (" + no + ")";
 	}
 
-	@PrePersist
-	@PreUpdate
-	private void onPre() {
-		System.out
-				.println("*********************************************************************************");
-		this.ingredients = ProductIngredient.prepare(this, this.ingredients);
-		this.forms = ProductForm.prepare(this, this.forms);
-		System.out
-				.println("*********************************************************************************");
+	@Override
+	public void onCreate() {
+		set();
+		super.onCreate();
+	}
+
+	@Override
+	public void onUpdate() {
+		set();
+		super.onUpdate();
+	}
+
+	private void set() {
+		this.ingredients = Ingredient.dao.getReference(this.ingredients);
+		this.forms = Form.dao.getReference(this.forms);
 	}
 }
