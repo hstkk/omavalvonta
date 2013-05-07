@@ -73,6 +73,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		Result result = onCancel(filledForm);
 		if (result != null)
 			return result;
+		filledForm = validateForm(filledForm);
 		if (!filledForm.hasErrors()) {
 			T t = filledForm.get();
 			result = onCreateOrUpdate(t);
@@ -167,6 +168,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		Result result = onCancel(filledForm, id);
 		if (result != null)
 			return result;
+		filledForm = validateForm(filledForm, id);
 		if (!filledForm.hasErrors()) {
 			T fresh = filledForm.get();
 			result = onCreateOrUpdate(fresh, id);
@@ -176,5 +178,13 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		T t = DAO.findById(id);
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(UPDATE.render(t, filledForm));
+	}
+
+	private Form<T> validateForm(Form<T> filledForm) {
+		return validateForm(filledForm, null);
+	}
+
+	public Form<T> validateForm(Form<T> filledForm, Long id) {
+		return filledForm;
 	}
 }

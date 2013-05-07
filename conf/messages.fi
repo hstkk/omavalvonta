@@ -111,6 +111,7 @@ product.create=Uusi tuote
 product.page=Tuotteet
 product.page.empty=Tuotteita ei löytynyt
 product.update=Muokkaa tuotetta
+product.noExist=Tuotenumero on jo käytössä
 
 # --- Shibboleth
 shib.logout=Kirjaudu ulos

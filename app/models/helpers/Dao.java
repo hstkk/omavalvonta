@@ -63,7 +63,6 @@ public class Dao<T extends Model, ID extends Serializable> extends
 		return false;
 	}
 
-	// TODO test
 	@Override
 	public boolean exists(ID id) {
 		return getReference(id) != null;
@@ -118,6 +117,18 @@ public class Dao<T extends Model, ID extends Serializable> extends
 		try {
 			if (id != null)
 				return JPA.em().find(clazz, id);
+		} catch (NoResultException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Long findLongBy(CriteriaQuery<Long> query) {
+		try {
+			TypedQuery<Long> q = createLongQuery(query);
+			return q.getSingleResult();
 		} catch (NoResultException e) {
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -28,6 +28,8 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	T findById(ID id);
 
+	Long findLongBy(CriteriaQuery<Long> query);
+
 	T getVersion(ID id, Date date);
 
 	List<T> getVersions(ID id);

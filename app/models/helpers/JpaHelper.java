@@ -21,6 +21,10 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		this.pageSize = Play.application().configuration().getInt("page.size");
 	}
 
+	protected TypedQuery<Long> createLongQuery(CriteriaQuery<Long> query) {
+		return JPA.em().createQuery(query);
+	}
+
 	protected TypedQuery<T> createQuery(CriteriaQuery<T> query) {
 		return JPA.em().createQuery(query);
 	}
