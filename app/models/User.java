@@ -7,12 +7,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
-
 import models.helpers.Dao;
 import models.helpers.Model;
-
 import org.hibernate.envers.Audited;
-
 import play.data.validation.Constraints.Required;
 
 @Entity
@@ -26,8 +23,6 @@ public class User extends Model {
 
 	@Required
 	@NotNull
-	// ToDO email length
-	// @Lob
 	@Column(unique = true)
 	public String email;
 

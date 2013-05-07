@@ -6,12 +6,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -19,16 +16,10 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import models.dynamicforms.Fieldset;
 import models.helpers.Dao;
-import models.helpers.Model;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
-
 import play.data.format.Formats;
-import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import play.i18n.Messages;
 import utils.Converter;
@@ -65,8 +56,7 @@ public class Batch extends UserModel {
 	@OneToMany(mappedBy = "batch")
 	public List<IngredientSupplyBatch> ingredientSupplies = new ArrayList<IngredientSupplyBatch>();
 
-	// todo fetchtype
-	@OneToOne(mappedBy = "batch")
+	@OneToOne(mappedBy = "batch", fetch = FetchType.LAZY)
 	public FinalProduct finalProduct;
 
 	@PrePersist
@@ -113,8 +103,10 @@ public class Batch extends UserModel {
 		if (ingredientSupplyMap == null) {
 			ingredientSupplyMap = new LinkedHashMap<String, IngredientSupply>();
 			if (this.product.ingredients != null)
-				for (Ingredient ingredient : this.product.ingredients)
-					for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies)
+//				for (Ingredient ingredient : this.product.ingredients)
+				for (ProductIngredient ingredient : this.product.ingredients)
+//					for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies)
+					for (IngredientSupply ingredientSupply : ingredient.ingredient.ingredientSupllies)
 						ingredientSupplyMap.put(ingredientSupply.id.toString(),
 								ingredientSupply);
 		}
@@ -122,9 +114,11 @@ public class Batch extends UserModel {
 	}
 
 	public play.data.Form<Batch> getForm() {
-		for (Ingredient ingredient : this.product.ingredients)
-			for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies) {
-				IngredientSupplyBatch ingredientSupplyBatch = new IngredientSupplyBatch(
+//		for (Ingredient ingredient : this.product.ingredients)
+		for (ProductIngredient ingredient : this.product.ingredients)
+//		for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies) {
+			for (IngredientSupply ingredientSupply : ingredient.ingredient.ingredientSupllies) {
+			IngredientSupplyBatch ingredientSupplyBatch = new IngredientSupplyBatch(
 						ingredientSupply, this);
 				this.ingredientSupplies.add(ingredientSupplyBatch);
 			}

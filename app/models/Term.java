@@ -39,7 +39,6 @@ public class Term extends UserModel {
 	@Column(name = "category", nullable = false)
 	public int category;
 
-	// TODO test
 	@Transient
 	@Required
 	@NotNull

@@ -28,9 +28,11 @@ public class Model implements ModelInterface {
 		set();
 	}
 
+	// Executed before save or update
 	public void set() {
 	}
 
+	// Executed after show or edit
 	public void get() {
 	}
 }

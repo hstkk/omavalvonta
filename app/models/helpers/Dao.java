@@ -113,10 +113,11 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	}
 
 	@Override
-	public T findById(ID id) {
+	public T findById(T t) {
 		try {
-			if (id != null)
-				return JPA.em().find(clazz, id);
+			if (t != null && t.id != null)
+				return JPA.em().find(clazz, t.id);
+		} catch (NoResultException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

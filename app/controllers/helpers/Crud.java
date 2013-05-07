@@ -73,6 +73,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		Result result = onCancel(filledForm);
 		if (result != null)
 			return result;
+System.out.println(filledForm.errorsAsJson());
 		if (!filledForm.hasErrors()) {
 			T t = filledForm.get();
 			result = onCreateOrUpdate(t);
