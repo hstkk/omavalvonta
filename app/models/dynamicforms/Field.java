@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
@@ -56,6 +58,18 @@ public class Field extends Model {
 
 	public String toString() {
 		return name;
+	}
+
+	@PrePersist
+	@Override
+	public void onCreate() {
+		super.onCreate();
+	}
+
+	@PreUpdate
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
 	}
 
 	@PostLoad
