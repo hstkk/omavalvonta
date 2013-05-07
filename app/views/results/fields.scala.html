@@ -1,4 +1,4 @@
-@(FORM: play.data.Form[models.dynamicforms.Results], action: play.api.mvc.Call, t: models.dynamicforms.Form)
+@(FORM: play.data.Form[models.dynamicforms.Results], action: play.api.mvc.Call, t: models.dynamicforms.Results)
 
 @import play.i18n._
 @import helper._
@@ -7,5 +7,5 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @tags.forms.form(FORM, action) {
-	@forms.form(FORM, t)
+	@results.form(FORM, t)
 }

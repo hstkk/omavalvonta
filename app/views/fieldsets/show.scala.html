@@ -3,14 +3,9 @@
 @import play.i18n._
 
 @views.html.management(Messages.get("fieldset.show")) {
-	@fieldsets.fieldset(fieldset)
 
 	@defining(models.dynamicforms.Results.getEmptyForm) { FORM =>
-		<div class="form-horizontal">
-		@for(field <- fieldset.fields) {
-			@views.html.fields.field(FORM("results"), field)
-		}
-		</div>
+		@preview(fieldset, FORM)
 	}
 
 	<p><a class="btn btn-primary" href="@routes.Fieldsets.edit(fieldset.id)">@Messages.get("fieldset.update")</a></p>

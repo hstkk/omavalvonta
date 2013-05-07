@@ -1,0 +1,31 @@
+@(FORM: play.data.Form[models.dynamicforms.Results], results: models.dynamicforms.Results)
+
+@import play.i18n._
+@import helper._
+
+@forms.form(results.form)
+
+@repeat(FORM("results")) { result =>
+	@FIELDSET(result)
+	@FIELD(result)
+}
+
+@FIELDSET(field: Field) = {
+	@defining(field("field.fieldset.id").value.getOrElse("")) { fieldsetId =>
+		@if(!fieldsetId.isEmpty && results.isFieldsetPrinted(fieldsetId)) {
+			@defining(results.getFieldset(fieldsetId)) { _fieldset =>
+				@if(_fieldset != null) {
+					@fieldsets.fieldset(_fieldset)
+				}
+			}
+		}
+	}
+}
+
+@FIELD(field: Field) = {
+	@defining(results.getField(field("field.id").value.getOrElse(""))) { _field =>
+		@if(_field != null) {
+			@views.html.fields.field(field, _field)
+		}
+	}
+}

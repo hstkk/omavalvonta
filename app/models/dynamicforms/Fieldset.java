@@ -42,17 +42,6 @@ public class Fieldset extends UserModel {
 		return name;
 	}
 
-	public static play.data.Form<Form> getForm(Form form) {
-		List<Fieldset> all = Fieldset.dao.findAll();
-		if (form == null)
-			form = new Form();
-		for (Fieldset fieldset : form.fieldsets)
-			all.remove(fieldset);
-		form.fieldsets.addAll(all);
-		play.data.Form<Form> FORM = new play.data.Form<Form>(Form.class);
-		return FORM.fill(form);
-	}
-
 	public static Map<String, String> options(Form form) {
 		Map<String, String> options = dao.options();
 		try {

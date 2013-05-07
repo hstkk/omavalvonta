@@ -1,0 +1,9 @@
+@(fieldset: models.dynamicforms.Fieldset, FORM: play.data.Form[models.dynamicforms.Results])
+
+@fieldsets.fieldset(fieldset)
+
+<div class="form-horizontal">
+	@for(field <- fieldset.fields) {
+		@views.html.fields.field(FORM("results"), field)
+	}
+</div>

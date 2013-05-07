@@ -3,7 +3,13 @@
 @import play.i18n._
 
 @views.html.management(Messages.get("form.show")) {
-	@forms.form(form.getForm, form)
+	@forms.form(form)
+
+	@defining(models.dynamicforms.Results.getEmptyForm) { FORM =>
+		@for(fieldset <- form.fieldsets) {
+			@fieldsets.preview(fieldset, FORM)
+		}
+	}
 
 	<p><a class="btn btn-primary" href="@routes.Forms.edit(form.id)">@Messages.get("form.update")</a></p>
 }
