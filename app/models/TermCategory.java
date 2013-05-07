@@ -11,9 +11,9 @@ import utils.Helper;
  * 
  */
 public enum TermCategory {
-	FORMTYPE(0, Helper.getMessage("enum.FORMTYPE")), REASON(1, Helper
-			.getMessage("enum.REASON")), UNIT(2, Helper.getMessage("enum.UNIT")), DESTINY(
-			3, Helper.getMessage("enum.DESTINY"));
+	REASON(0, Helper.getMessage("enum.REASON")), UNIT(1, Helper
+			.getMessage("enum.UNIT")), DESTINY(2, Helper
+			.getMessage("enum.DESTINY"));
 
 	private final int ordinal;
 	private final String name;

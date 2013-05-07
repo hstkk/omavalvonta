@@ -25,15 +25,17 @@
 	}
 }
 
-@tags.forms.form(FORM, routes.BatchStep2.create(t.id)) {
-	@helper.inputText(
-		FORM("date"),
-		'_label -> Messages.get("label.date"),
-		'class -> "datepicker",
-		'placeholder -> Messages.get("placeholder.date")
-	)
-
-	@repeat(FORM("ingredientSupplies")) { ingredientSupply =>
-		@amount(ingredientSupply)
+@views.html.management(Messages.get("batch.create")) {
+	@tags.forms.form(FORM, routes.BatchStep2.create(t.id)) {
+		@helper.inputText(
+			FORM("date"),
+			'_label -> Messages.get("label.date"),
+			'class -> "datepicker",
+			'placeholder -> Messages.get("placeholder.date")
+		)
+	
+		@repeat(FORM("ingredientSupplies")) { ingredientSupply =>
+			@amount(ingredientSupply)
+		}
 	}
 }

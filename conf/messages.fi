@@ -74,6 +74,7 @@ label.isSigned=Kuitattava
 label.min=minimiarvo
 label.max=maksimiarvo
 label.targetValue=kyllä/ei kentän tavoitetulos
+label.story=Uutinen
 
 # --- Fieldset
 fieldset.create=Kenttäryhmän esikatselu
