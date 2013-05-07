@@ -9,14 +9,12 @@
 @tags.forms.form(FORM, action) {
 	@helper.inputText(
 		FORM("no"),
-		'_label -> Messages.get("label.productNo"),
-		'_class -> "control-group"
+		'_label -> Messages.get("label.productNo")
 	)
 
 	@helper.inputText(
 		FORM("name"),
-		'_label -> Messages.get("label.name"),
-		'_class -> "control-group"
+		'_label -> Messages.get("label.name")
 	)
 
 	@helper.textarea(

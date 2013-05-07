@@ -7,6 +7,12 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @tags.forms.form(FORM, action) {
-	@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
-	@helper.textarea(FORM("story"), '_label -> Messages.get("label.story"), '_class -> "control-group")
+	@helper.inputText(
+		FORM("name"),
+		'_label -> Messages.get("label.name")
+	)
+	@helper.textarea(
+		FORM("story"),
+		'_label -> Messages.get("label.story")
+	)
 }

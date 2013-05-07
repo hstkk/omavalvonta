@@ -8,5 +8,10 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @tags.forms.form(FORM, routes.BatchStep1.create, Messages.get("label.next")) {
-	select(FORM("form.id"), options = options(models.Product.crud.options), '_default -> "", '_label -> Messages.get("label.product"))
+	select(
+		FORM("form.id"),
+		options = options(models.Product.crud.options),
+		'_default -> "",
+		'_label -> Messages.get("label.product")
+	)
 }

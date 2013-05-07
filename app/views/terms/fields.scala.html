@@ -7,6 +7,14 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @tags.forms.form(FORM, action) {
-	@helper.inputText(FORM("name"), '_label -> Messages.get("label.name"), '_class -> "control-group")
-	@select(FORM("category"), options = options(models.TermCategory.options), '_default -> "", '_label ->  Messages.get("label.category"))
+	@helper.inputText(
+		FORM("name"),
+		'_label -> Messages.get("label.name")
+	)
+	@select(
+		FORM("category"),
+		options = options(models.TermCategory.options),
+		'_default -> "",
+		'_label ->  Messages.get("label.category")
+	)
 }
