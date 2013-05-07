@@ -9,21 +9,13 @@
 	@if(!page.isEmpty){
 		@table() {
 			@thead() {
-				Messages.get("model.id")
-				Messages.get("ingredientsupply.ingredient")
-				Messages.get("ingredientsupply.received")
-				Messages.get("ingredientsupply.bestBefore")
-				Messages.get("ingredientsupply.amount")
-				Messages.get("ingredientsupply.amountAvailable")
+				@Messages.get("label.batch")
+				@Messages.get("ingredientsupply.amount")
 			}
 			<tbody>
 				@for(ingredientSupply <- page.getList) {
 					@tr() { <a href="@routes.IngredientSupplies.show(ingredientSupply.id)">@ingredientSupply</a>
-	       				@ingredientSupply.ingredient.name
-	        			@ingredientSupply.received
-	        			@ingredientSupply.getBestBefore
-	        			@ingredientSupply.amount @ingredientSupply.unit
-	        			@ingredientSupply.used @ingredientSupply.unit }
+	        			@ingredientSupply.amount @ingredientSupply.unit }
 				}
 			</tbody>
 		}
