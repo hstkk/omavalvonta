@@ -12,11 +12,13 @@
 			@thead() {
 				@Messages.get("label.date")
 				@Messages.get("label.name")
+				@Messages.get("label.user")
 			}
 			<tbody>
 				@for(news <- page.getList) {
 					@tr() { <a href="@routes.News.edit(news.id)">@news.lastModified</a>
-						@news }
+						@news
+						@news.user }
 				}
 			</tbody>
 		}
