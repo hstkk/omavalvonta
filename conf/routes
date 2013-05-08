@@ -43,8 +43,9 @@ GET		/kayttajat/:userId									@controllers.Users.show(userId: Long)
 GET		/profiili											@controllers.Users.home
 
 # Batches
-# TODO
-# Raaka-aine-erät
+#
+# ack
+# lopputuote
 # Tulokset
 GET		/erat												@controllers.Batches.page(sivu: Int ?= 1)
 GET		/erat/uusi											@controllers.Batches.fresh
@@ -54,6 +55,7 @@ GET		/erat/:batchId										@controllers.Batches.show(batchId: Long)
 #POST	/erat/:batchId/kuittaa
 
 # Final product
+#
 # TODO
 # Ack
 GET		/erat/:batchId/lopputuote							@controllers.FinalProducts.edit(batchId: Long)
