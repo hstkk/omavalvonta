@@ -1,1 +1,21 @@
 @(batch: Batch)
+
+@import tags.tables._
+@import utils.Converter
+@import play.i18n._
+
+<h3>@Messages.get("ingredientsupply.page")</h3>
+	@if(batch.ingredientSupplies != null || !batch.ingredientSupplies.isEmpty){
+		@table() {
+			@thead() {
+				@Messages.get("label.batch")
+				@Messages.get("ingredientsupply.amount")
+			}
+		<tbody>
+			@for(ingredientSupply <- batch.ingredientSupplies) {
+				@tr() { <a href="@routes.IngredientSupplies.show(ingredientSupply.ingredientSupply.ingredient.id)">@ingredientSupply.ingredientSupply</a>
+					@Converter.doubleToString(ingredientSupply.amount) @ingredientSupply.ingredientSupply.unit }
+				}
+		</tbody>
+	}
+}

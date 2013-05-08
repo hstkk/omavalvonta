@@ -73,7 +73,7 @@ public class Batch extends UserModel {
 		stringBuilder.append(Converter.dateToString(this.date,
 				Helper.getOrElse("batch.date")));
 		stringBuilder.append(separator);
-		stringBuilder.append(this.product.id);
+		stringBuilder.append(this.product.no);
 		stringBuilder.append(separator);
 		stringBuilder.append(this.id);
 		return stringBuilder.toString();

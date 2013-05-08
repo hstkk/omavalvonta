@@ -17,7 +17,7 @@ import controllers.shib.Session;
 public class Batches extends UserCrud<Batch> {
 
 	public Batches() {
-		super(Batch.dao, null, null, null, null, null);
+		super(Batch.dao, null, null, page.ref(), show.ref(), null);
 	}
 
 	@Override
@@ -52,14 +52,12 @@ public class Batches extends UserCrud<Batch> {
 	@Override
 	@Transactional(readOnly = true)
 	public Result page(int pageNumber) {
-		// TODO Auto-generated method stub
 		return super.page(pageNumber);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result show(Long id) {
-		// TODO Auto-generated method stub
 		return super.show(id);
 	}
 }

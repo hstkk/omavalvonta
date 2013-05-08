@@ -4,12 +4,13 @@
 @import tags._
 @import tags.tables._
 @import tags.navs._
+@import utils.Converter
 
 @table() {
 	<tbody>
 		<tr>
 			<th>@Messages.get("label.date")</th>
-			<td>@batch.lastModified</td>
+			<td>@Converter.dateToString(batch.date)</td>
 		</tr>
 		<tr>
 			<th>@Messages.get("label.user")</th>
