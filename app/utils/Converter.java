@@ -61,7 +61,6 @@ public class Converter {
 		try {
 			if (locale == null)
 				locale = Locale.getDefault();
-			System.out.println("\n" + locale.toString() + "\n");
 			if (value == null)
 				return "";
 			NumberFormat numberFormat = NumberFormat.getInstance(locale);

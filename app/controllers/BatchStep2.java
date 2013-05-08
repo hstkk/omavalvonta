@@ -3,8 +3,6 @@ package controllers;
 import models.Batch;
 import models.Product;
 import models.User;
-import play.api.templates.Html;
-import play.api.templates.Template2;
 import play.data.Form;
 import static play.data.Form.*;
 import play.db.jpa.Transactional;
@@ -23,9 +21,6 @@ public class BatchStep2 extends UserCrud<Batch> {
 		super(null, form(Batch.class), null, null, null, null);
 	}
 
-	private final Template2<Batch, Form<Batch>, Html> CREATE = views.html.batches.step2
-			.ref();
-
 	@Override
 	public Call callShow(Long id) {
 		return controllers.routes.Batches.show(id);
@@ -33,7 +28,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 
 	@Transactional
 	public Result create(Long productId) {
-		Product product = Product.dao.findById(productId);
+		Product product = Product.dao.getReference(productId);
 		if (product == null)
 			return Helper.getNotFound();
 		Form<Batch> filledForm = form(Batch.class, Batch.Step2.class)
@@ -53,10 +48,9 @@ public class BatchStep2 extends UserCrud<Batch> {
 				}
 			}
 		}
-		Batch batch = new Batch();
-		batch.product = product;
+		Batch batch = new Batch(product);
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(CREATE.render(batch, filledForm));
+		return badRequest(step2.render(batch, filledForm));
 	}
 
 	@Transactional(readOnly = true)
@@ -64,9 +58,8 @@ public class BatchStep2 extends UserCrud<Batch> {
 		Product product = Product.dao.findById(productId);
 		if (product == null)
 			return Helper.getNotFound();
-		Batch batch = new Batch();
-		batch.product = product;
-		Form<Batch> preFilledForm = batch.getForm();
-		return ok(CREATE.render(batch, preFilledForm));
+		Batch batch = new Batch(product);
+		Form<Batch> preFilledForm = batch.getPrefilledForm();
+		return ok(step2.render(batch, preFilledForm));
 	}
 }

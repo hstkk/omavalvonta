@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.UserModel;
@@ -90,6 +91,12 @@ public class IngredientSupply extends UserModel {
 		this.ingredient = Ingredient.dao.getReference(this.ingredient);
 		this.unit = Term.dao.getReference(this.unit);
 		super.onCreate();
+	}
+
+	@PreUpdate
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
 	}
 
 	public Date getBestBefore() {
