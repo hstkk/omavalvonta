@@ -75,6 +75,8 @@ label.min=minimiarvo
 label.max=maksimiarvo
 label.targetValue=kyllä/ei kentän tavoitetulos
 label.story=Uutinen
+label.destiny=Erän kohtalo
+label.finalProduct=Myyntihyväksyntä
 
 # --- Fieldset
 fieldset.create=Kenttäryhmän esikatselu
@@ -139,6 +141,7 @@ batch.page.empty=Eriä ei löytynyt!
 
 # --- Final product
 finalproduct.title=Erän {0} lopputuote
+finalproduct.amount=Lopputuotteen punnitus
 
 # --- User
 user.page=Käyttäjät

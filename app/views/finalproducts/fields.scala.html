@@ -14,40 +14,37 @@
 
 	@tags.forms.form(FORM, routes.FinalProducts.save(batch.id)) {
 		<fieldset>
-			<legend>Lopputuotteen punnitus</legend>
+			<legend>@Messages.get("finalproduct.amount")</legend>
 	
-			@helper.inputText(
+			@inputText(
 				FORM("amount"),
-				'_label -> "paino"
+				'_label -> Messages.get("ingredientsupply.amount")
 			)
-	
-			@helper.select(
+			@select(
 				FORM("unit.id"),
 				options = options(models.Term.options(models.TermCategory.UNIT)),
 				'_default -> "",
-				'_label -> "mittayksikkÃ¶"
+				'_label -> Messages.get("enum.UNIT")
 			)
 		</fieldset>
 		<fieldset>
-			<legend>MyyntihyvÃ¤ksyntÃ¤</legend>
+			<legend>@Messages.get("label.finalProduct")</legend>
 	
-			@helper.inputText(
+			@inputText(
 				FORM("date"),
 				'_label -> Messages.get("label.date"),
 				'class -> "datepicker",
 				'placeholder -> Messages.get("placeholder.date")
 			)
-	
-			@helper.select(
+			@select(
 				FORM("destiny.id"),
 				options = options(models.Term.options(models.TermCategory.DESTINY)),
 				'_default -> "",
-				'_label -> "erÃ¤n kohtalo"
+				'_label -> Messages.get("label.destiny")
 			)
-	
-			@helper.textarea(
+			@textarea(
 				FORM("comment"),
-				'_label -> "huomioita"
+				'_label -> Messages.get("label.comment")
 			)
 		</fieldset>
 	}
