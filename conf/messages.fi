@@ -47,6 +47,7 @@ crud.success=Tallennus onnistui!
 crud.fail=Tallennus epäonnistui!
 crud.action.save=Tallenna
 crud.action.cancel=Peruuta
+crud.action.previous=Edellinen
 
 # --- Label
 label.name=Nimi

@@ -1,4 +1,4 @@
-@(submitTitle: String = "")
+@(submitTitle: String = "", previousPage: play.api.mvc.Call = null)
 @import play.i18n._
 
 @submitValue = {
@@ -11,5 +11,9 @@
 
 <fieldset class="form-actions">
 	<input type="submit" name="action" class="btn btn-primary" value="@submitValue.toString.trim"/>
-	<input type="submit" name="action" class="btn btn-warning" value="@Messages.get("crud.action.cancel")"/>
+	@if(previousPage == null) {
+		<input type="submit" name="action" class="btn btn-warning" value="@Messages.get("crud.action.cancel")"/>
+	} else {
+		<a href="@previousPage" class="btn btn-warning">@Messages.get("crud.action.previous")</a>
+	}
 </fieldset>

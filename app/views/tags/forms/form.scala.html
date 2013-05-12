@@ -1,4 +1,4 @@
-@(FORM: play.data.Form[_], action: play.api.mvc.Call, submitTitle: String = "")(content: Html)
+@(FORM: play.data.Form[_], action: play.api.mvc.Call, submitTitle: String = "", previousPage: play.api.mvc.Call = null)(content: Html)
 @import helper._
 @import tags._
 @import tags.alerts._
@@ -14,5 +14,5 @@
 
 @helper.form(helper.CSRF(action), 'class -> "form-horizontal") {
 	@content
-	@actions(submitTitle)
+	@actions(submitTitle, previousPage)
 }
