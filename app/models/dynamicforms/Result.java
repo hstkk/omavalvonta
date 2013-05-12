@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.validation.Valid;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.Required;
@@ -26,7 +26,6 @@ public class Result extends UserModel {
 
 	@Required
 	@NotNull
-	@Valid
 	@ManyToOne
 	public Field field;
 
@@ -44,7 +43,9 @@ public class Result extends UserModel {
 	@Lob
 	public String comment;
 
-	@Valid
 	@ManyToOne(cascade = CascadeType.ALL)
 	public Term reason;
+
+	@Transient
+	public Boolean ack;
 }

@@ -12,7 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import play.data.validation.Constraints.Required;
@@ -29,19 +28,16 @@ public class Results extends Model {
 	@Required
 	@ManyToOne(cascade = CascadeType.ALL)
 	@NotNull
-	@Valid
 	public Form form;
 
 	@Required
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinColumn(updatable = false)
 	@NotNull
-	@Valid
 	public List<Batch> batches = new ArrayList<Batch>();
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "results_id", nullable = false)
-	@Valid
 	@NotNull
 	public List<Result> results = new ArrayList<Result>();
 
