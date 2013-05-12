@@ -1,6 +1,8 @@
 import play.Application;
 import play.GlobalSettings;
+import play.api.mvc.EssentialFilter;
 import play.data.format.Formatters;
+import play.filters.csrf.CSRFFilter;
 import play.mvc.Http.RequestHeader;
 import play.mvc.Result;
 import utils.Formats.*;
@@ -10,6 +12,13 @@ import utils.Helper;
  * @author Sami Hostikka
  */
 public class Global extends GlobalSettings {
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public <T extends EssentialFilter> Class<T>[] filters() {
+		Class[] filters = {CSRFFilter.class};
+		return filters;
+	}
 
 	@Override
 	public Result onBadRequest(RequestHeader request, String error) {
