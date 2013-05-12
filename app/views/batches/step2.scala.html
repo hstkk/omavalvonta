@@ -27,6 +27,10 @@
 }
 
 @main(Messages.get("batch.create")) {
+	<ul>
+		<li>@Messages.get("label.product"): @batch.product</li>
+	</ul>
+
 	@tags.forms.form(FORM, routes.BatchStep2.create(batch.product.id)) {
 		@helper.inputText(
 			FORM("date"),
