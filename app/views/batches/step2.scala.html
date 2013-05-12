@@ -35,10 +35,11 @@
 			'placeholder -> Messages.get("placeholder.date")
 		)
 
-		<hr>
-
-		@repeat(FORM("ingredientSupplies")) { ingredientSupply =>
-			@amount(ingredientSupply)
-		}
+		<fieldset>
+			<legend>@Messages.get("ingredientsupply.page")</legend>
+			@repeat(FORM("ingredientSupplies")) { ingredientSupply =>
+				@amount(ingredientSupply)
+			}
+		</fieldset>
 	}
 }
