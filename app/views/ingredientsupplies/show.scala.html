@@ -8,6 +8,7 @@
 	@table() {
 		@thead() {
 			@Messages.get("ingredientsupply.ingredient")
+			@Messages.get("enum.PRODUCER")
 			@Messages.get("ingredientsupply.received")
 			@Messages.get("ingredientsupply.bestBefore")
 			@Messages.get("ingredientsupply.amount")
@@ -15,6 +16,7 @@
 		}
 		<tbody>
 			@tr() { @ingredientSupply.ingredient.name
+				@ingredientSupply.producer
 	        	@Converter.dateToString(ingredientSupply.received)
 	        	@Converter.dateToString(ingredientSupply.getBestBefore)
 	        	@Converter.doubleToString(ingredientSupply.amount) @ingredientSupply.unit
