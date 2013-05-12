@@ -13,7 +13,8 @@ import utils.Helper;
 public enum TermCategory {
 	REASON(0, Helper.getMessage("enum.REASON")), UNIT(1, Helper
 			.getMessage("enum.UNIT")), DESTINY(2, Helper
-			.getMessage("enum.DESTINY"));
+			.getMessage("enum.DESTINY")), PRODUCER(3, Helper
+			.getMessage("enum.PRODUCER"));
 
 	private final int ordinal;
 	private final String name;

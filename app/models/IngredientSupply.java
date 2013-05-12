@@ -49,6 +49,11 @@ public class IngredientSupply extends UserModel {
 	@ManyToOne
 	public Term unit;
 
+	@Required
+	@NotNull
+	@ManyToOne
+	public Term producer;
+
 	@OneToMany(mappedBy = "ingredientSupply", fetch = FetchType.LAZY)
 	public List<IngredientSupplyBatch> batches = new ArrayList<IngredientSupplyBatch>();
 
@@ -90,6 +95,7 @@ public class IngredientSupply extends UserModel {
 	public void onCreate() {
 		this.ingredient = Ingredient.dao.getReference(this.ingredient);
 		this.unit = Term.dao.getReference(this.unit);
+		this.producer = Term.dao.getReference(this.producer);
 		super.onCreate();
 	}
 

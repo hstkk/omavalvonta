@@ -204,3 +204,4 @@ enum.DOUBLE=Desimaaliluku
 enum.DATE=Päivämäärä
 enum.CHECKBOX=Kyllä/Ei
 enum.TEXTAREA=Tekstikenttä
+enum.PRODUCER=Raaka-aineen tuottaja
