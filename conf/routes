@@ -32,21 +32,11 @@ GET		/kirjaudu-ulos										controllers.shib.Shibboleth.logout
 GET     /yllapito											controllers.Application.management
 
 # Users
-#
-# TODO what user did
-## batches
-## finalproducts
-## results
-## ingredientsupplies
 GET		/kayttajat											@controllers.Users.page(sivu: Int ?= 1)
 GET		/kayttajat/:userId									@controllers.Users.show(userId: Long)
 GET		/profiili											@controllers.Users.home
 
 # Batches
-#
-# ack
-# lopputuote
-# Tulokset
 GET		/erat												@controllers.Batches.page(sivu: Int ?= 1)
 GET		/erat/uusi											@controllers.Batches.fresh
 GET		/erat/uusi/:productId								@controllers.BatchStep2.fresh(productId: Long)
@@ -55,21 +45,22 @@ GET		/erat/:batchId										@controllers.Batches.show(batchId: Long)
 #POST	/erat/:batchId/kuittaa
 
 # Final product
-#
-# TODO
-# Ack
 GET		/erat/:batchId/lopputuote							@controllers.FinalProducts.edit(batchId: Long)
 POST	/erat/:batchId/lopputuote							@controllers.FinalProducts.save(batchId: Long)
-POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchId: Long)
+#POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchId: Long)
 
 # Results
-# TODO
+#GET		/tulokset											@controllers.Results.page(sivu: Int ?= 1)
+#GET		/tulokset/uusi										@controllers.Results.fresh
+#GET		/tulokset/:resultsId								@controllers.Results.show(resultsId: Long)
+#GET		/tulokset/:resultsId/muokkaa						@controllers.Results.edit(resultsId: Long)
+#POST	/tulokset/:resultsId/muokkaa						@controllers.Results.update(resultsId: Long)
+#GET		/tulokset/:resultsId/kuittaa						@controllers.Results.ack(resultsId: Long)
+#POST	/tulokset/:resultsId/kuittaa						@controllers.Results.ack(resultsId: Long)
+#GET		/tulokset/:resultsId.pdf							@controllers.Results.pdf(resultsId: Long)
+#GET		/tulokset/:resultsId/historia						@controllers.Results.history(resultsId: Long)
 
 # Ingredient supply
-#
-# options, ei vanhentuneita
-# Where used
-# Ack
 GET		/raaka-aineet										@controllers.IngredientSupplies.page(sivu: Int ?= 1)
 GET		/raaka-aineet/vastaanota							@controllers.IngredientSupplies.fresh
 POST	/raaka-aineet/vastaanota							@controllers.IngredientSupplies.create
@@ -77,19 +68,13 @@ GET		/raaka-aineet/:ingredientId							@controllers.IngredientSupplies.show(ingr
 #POST	/raaka-aineet/:ingredientId/kuittaa					@controllers.IngredientSupplies.ack(ingredientId: Long)
 
 # News
-#
-# Delete?
 GET		/yllapito/uutiset									@controllers.News.page(sivu: Int ?= 1)
 GET		/yllapito/uutiset/uusi								@controllers.News.fresh
 POST	/yllapito/uutiset/uusi								@controllers.News.create
 POST	/yllapito/uutiset/:newsId/muokkaa					@controllers.News.update(newsId: Long)
 GET		/yllapito/uutiset/:newsId/muokkaa					@controllers.News.edit(newsId: Long)
-#POST	/yllapito/uutiset/:newsId/poista					controllers.News.delete(newsId: Long)
 
 # Term
-#
-# Archive?
-# Delete?
 GET		/yllapito/termit									@controllers.Terms.page(sivu: Int ?= 1)
 GET		/yllapito/termit/uusi								@controllers.Terms.fresh
 POST	/yllapito/termit/uusi								@controllers.Terms.create
@@ -97,12 +82,6 @@ POST	/yllapito/termit/:termId/muokkaa					@controllers.Terms.update(termId: Long
 GET		/yllapito/termit/:termId/muokkaa					@controllers.Terms.edit(termId: Long)
 
 # Ingredient
-#
-# Products
-# Form
-#
-# Archive?
-# Delete?
 GET		/yllapito/raaka-aineet								@controllers.Ingredients.page(sivu: Int ?= 1)
 GET		/yllapito/raaka-aineet/uusi							@controllers.Ingredients.fresh
 POST	/yllapito/raaka-aineet/uusi							@controllers.Ingredients.create
@@ -110,9 +89,6 @@ POST	/yllapito/raaka-aineet/:ingredientId/muokkaa		@controllers.Ingredients.upda
 GET		/yllapito/raaka-aineet/:ingredientId/muokkaa		@controllers.Ingredients.edit(ingredientId: Long)
 
 # Product
-#
-# Archive?
-# Delete?
 GET		/yllapito/tuotteet									@controllers.Products.page(sivu: Int ?= 1)
 GET		/yllapito/tuotteet/uusi								@controllers.Products.fresh
 POST	/yllapito/tuotteet/uusi								@controllers.Products.create
@@ -120,10 +96,6 @@ GET		/yllapito/tuotteet/:productId/muokkaa				@controllers.Products.edit(product
 POST	/yllapito/tuotteet/:productId/muokkaa				@controllers.Products.update(productId: Long)
 
 # Fieldset / Field
-#
-# Forms
-#
-# Archive?
 GET		/yllapito/kenttaryhmat								@controllers.Fieldsets.page(sivu: Int ?= 1)
 GET		/yllapito/kenttaryhmat/uusi							@controllers.Fieldsets.fresh
 POST	/yllapito/kenttaryhmat/uusi							@controllers.Fieldsets.create
@@ -132,10 +104,6 @@ GET		/yllapito/kenttaryhmat/:fieldsetId/muokkaa			@controllers.Fieldsets.edit(fi
 POST	/yllapito/kenttaryhmat/:fieldsetId/muokkaa			@controllers.Fieldsets.update(fieldsetId: Long)
 
 # Form
-#
-# Products
-#
-# Archive?
 GET		/yllapito/lomakkeet									@controllers.Forms.page(sivu: Int ?= 1)
 GET		/yllapito/lomakkeet/uusi							@controllers.Forms.fresh
 POST	/yllapito/lomakkeet/uusi							@controllers.Forms.create
