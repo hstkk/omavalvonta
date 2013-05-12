@@ -6,15 +6,16 @@
 
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
-@amount(field: Field) = {
+@amount(field: Field)(implicit handler: FieldConstructor, lang: play.api.i18n.Lang) = {
 	@defining(batch.getIngredientSupply(field("ingredientSupply.id").value.getOrElse(""))) { ingredientSupply =>
 		@if(ingredientSupply != null) {
 			@inputHidden(field("ingredientSupply.id"))
 
-			@helper.input(
+			@input(
 				field("amount"),
-				'_label -> ingredientSupply.ingredient,
-				'placeholder -> ingredientSupply.amountAvailableToString
+				'_label -> ingredientSupply,
+				'placeholder -> ingredientSupply.amountAvailableToString,
+				'_help -> ""
 			) { (id, name, value, args) =>
 				<div class="input-append">
 					<input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(args)>
@@ -33,7 +34,9 @@
 			'class -> "datepicker",
 			'placeholder -> Messages.get("placeholder.date")
 		)
-	
+
+		<hr>
+
 		@repeat(FORM("ingredientSupplies")) { ingredientSupply =>
 			@amount(ingredientSupply)
 		}
