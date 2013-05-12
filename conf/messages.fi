@@ -78,6 +78,9 @@ label.story=Uutinen
 label.destiny=Erän kohtalo
 label.finalProduct=Myyntihyväksyntä
 
+# --- Help
+help.producer=vastaa raaka-aineelle asetetuista lakisääteisistä vaatimuksista
+
 # --- Fieldset
 fieldset.create=Kenttäryhmän esikatselu
 fieldset.create=Uusi kenttäryhmä
