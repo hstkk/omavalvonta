@@ -15,7 +15,7 @@ public class Application extends Controller {
 	@Transactional(readOnly = true)
 	public static Result index(int pageNumber) {
 		Page<models.News> page = models.News.dao.page(pageNumber);
-		return ok(views.html.news.index.render(page));
+		return ok(news.index.render(page));
 	}
 
 	@Authenticated(Secured.class)
