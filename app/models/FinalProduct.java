@@ -82,4 +82,14 @@ public class FinalProduct extends UserModel {
 		query.where(criteriaBuilder.equal(root.get(FinalProduct_.batch), batch));
 		return dao.findBy(query);
 	}
+
+	public static List<FinalProduct> findByUser(User user) {
+		if (user == null)
+			return null;
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<FinalProduct> query = criteriaBuilder.createQuery(FinalProduct.class);
+		Root<FinalProduct> root = query.from(FinalProduct.class);
+		query.where(criteriaBuilder.equal(root.get(FinalProduct_.user), user));
+		return dao.findAllBy(query);
+	}
 }

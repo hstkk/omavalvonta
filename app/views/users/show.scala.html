@@ -1,9 +1,78 @@
 @(user: User)
 
+@import tags.alerts._
+@import tags.tables._
 @import play.i18n._
 
 @main(user.toString) {
 	<ul>
 		<li>@user.email</li>
 	</ul>
+	<h2>@Messages.get("ingredientsupply.page")</h2>
+	@defining(models.IngredientSupply.findByUser(user)) { ingredientSupplies =>
+		@if(ingredientSupplies == null || ingredientSupplies.isEmpty) {
+			@warning() {
+				@Messages.get("ingredientsupply.page.empty")
+			}
+		} else {
+			@table() {
+				@thead() {
+					@Messages.get("label.batch")
+				}
+				<tbody>
+					@for(ingredientSupply <- ingredientSupplies) {
+						@tr() { <a href="@routes.IngredientSupplies.show(ingredientSupply.id)">@ingredientSupply</a> }
+					}
+				</tbody>
+			}
+		}
+	}
+
+	<h2>@Messages.get("batch.page")</h2>
+	@defining(models.Batch.findByUser(user)) { batches =>
+		@if(batches == null || batches.isEmpty) {
+			@warning() {
+				@Messages.get("batch.page.empty")
+			}
+		} else {
+			@table() {
+				@thead() {
+					@Messages.get("label.batch")
+					@Messages.get("label.product")
+					@Messages.get("label.status")
+				}
+				<tbody>
+					@for(batch <- batches) {
+						@tr() { <a href="@routes.Batches.show(batch.id)">@batch</a>
+							@batch.product
+							@batch.getStatus }
+					}
+				</tbody>
+			}
+		}
+	}
+
+	<h2>@Messages.get("finalproduct.page")</h2>
+	@defining(models.FinalProduct.findByUser(user)) { finalProducts =>
+		@if(finalProducts == null || finalProducts.isEmpty) {
+			@warning() {
+				@Messages.get("finalproduct.page.empty")
+			}
+		} else {
+			@table() {
+				@thead() {
+					@Messages.get("label.batch")
+					@Messages.get("label.product")
+					@Messages.get("label.status")
+				}
+				<tbody>
+					@for(finalProduct <- finalProducts) {
+						@tr() { <a href="@routes.Batches.show(finalProduct.batch.id)">@finalProduct.batch</a>
+							@finalProduct.batch.product
+							@finalProduct }
+					}
+				</tbody>
+			}
+		}
+	}
 }

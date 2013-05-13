@@ -149,6 +149,8 @@ batch.page.empty=Eriä ei löytynyt!
 # --- Final product
 finalproduct.title=Erän {0} lopputuote
 finalproduct.amount=Lopputuotteen punnitus
+ingredientsupply.page.empty=Lopputuotteita ei löytynyt!
+finalproduct.page=Lopputuotteet
 
 # --- User
 user.page=Käyttäjät

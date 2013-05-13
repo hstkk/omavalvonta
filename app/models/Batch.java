@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
@@ -105,6 +108,16 @@ public class Batch extends UserModel {
 			return true;
 		}
 		return false;
+	}
+
+	public static List<Batch> findByUser(User user) {
+		if (user == null)
+			return null;
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<Batch> query = criteriaBuilder.createQuery(Batch.class);
+		Root<Batch> root = query.from(Batch.class);
+		query.where(criteriaBuilder.equal(root.get(Batch_.user), user));
+		return dao.findAllBy(query);
 	}
 
 	@Transient

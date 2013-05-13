@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PreUpdate;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.UserModel;
@@ -110,5 +113,15 @@ public class IngredientSupply extends UserModel {
 		bestBefore.setTime(this.received);
 		bestBefore.add(Calendar.DATE, this.ingredient.bestBefore);
 		return bestBefore.getTime();
+	}
+
+	public static List<IngredientSupply> findByUser(User user) {
+		if (user == null)
+			return null;
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<IngredientSupply> query = criteriaBuilder.createQuery(IngredientSupply.class);
+		Root<IngredientSupply> root = query.from(IngredientSupply.class);
+		query.where(criteriaBuilder.equal(root.get(IngredientSupply_.user), user));
+		return dao.findAllBy(query);
 	}
 }
