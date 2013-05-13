@@ -15,7 +15,7 @@
 
 	<hr>
 
-	@if(!FORM("id").value.getOrElse("").isEmpty) {
+	@if(!FORM("id").value.isEmpty) {
 		<tbody>
 			<tr>
 				<th>@Messages.get("label.user")</th>
