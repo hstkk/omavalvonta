@@ -33,7 +33,6 @@ public class Batches extends UserCrud<Batch> {
 	@Override
 	@Authenticated(Secured.class)
 	public Result ack(Long id) {
-		// TODO Auto-generated method stub
 		return super.ack(id);
 	}
 

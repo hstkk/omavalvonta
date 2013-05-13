@@ -23,14 +23,7 @@ public class IngredientSupplies extends UserCrud<IngredientSupply> {
 	@Override
 	@Authenticated(Secured.class)
 	public Result ack(Long id) {
-		// TODO Auto-generated method stub
 		return super.ack(id);
-	}
-
-	@Override
-	public Call callAck(Long id) {
-		// TODO Auto-generated method stub
-		return super.callAck(id);
 	}
 
 	@Override

@@ -42,12 +42,12 @@ GET		/erat/uusi											@controllers.Batches.fresh
 GET		/erat/uusi/:productId								@controllers.BatchStep2.fresh(productId: Long)
 POST	/erat/uusi/:productId								@controllers.BatchStep2.create(productId: Long)
 GET		/erat/:batchId										@controllers.Batches.show(batchId: Long)
-#POST	/erat/:batchId/kuittaa
+POST	/erat/:batchId/kuittaa								@controllers.Batches.ack(batchId: Long)
 
 # Final product
 GET		/erat/:batchId/lopputuote							@controllers.FinalProducts.edit(batchId: Long)
 POST	/erat/:batchId/lopputuote							@controllers.FinalProducts.save(batchId: Long)
-#POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchId: Long)
+POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchId: Long)
 
 # Results
 #GET		/tulokset											@controllers.Results.page(sivu: Int ?= 1)
@@ -65,7 +65,7 @@ GET		/raaka-aineet										@controllers.IngredientSupplies.page(sivu: Int ?= 1)
 GET		/raaka-aineet/vastaanota							@controllers.IngredientSupplies.fresh
 POST	/raaka-aineet/vastaanota							@controllers.IngredientSupplies.create
 GET		/raaka-aineet/:ingredientId							@controllers.IngredientSupplies.show(ingredientId: Long)
-#POST	/raaka-aineet/:ingredientId/kuittaa					@controllers.IngredientSupplies.ack(ingredientId: Long)
+POST	/raaka-aineet/:ingredientId/kuittaa					@controllers.IngredientSupplies.ack(ingredientId: Long)
 
 # News
 GET		/yllapito/uutiset									@controllers.News.page(sivu: Int ?= 1)

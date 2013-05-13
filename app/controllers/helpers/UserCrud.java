@@ -4,7 +4,6 @@ import models.User;
 import models.helpers.Dao;
 import models.helpers.Page;
 import models.helpers.UserModel;
-import play.mvc.Call;
 import play.api.templates.Html;
 import play.api.templates.Template1;
 import play.api.templates.Template2;
@@ -48,10 +47,6 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 			return redirect(callShow(id));
 		}
 		return Helper.getUnauthorized();
-	}
-
-	public Call callAck(Long id) {
-		return callShow(id);
 	}
 
 	@Override

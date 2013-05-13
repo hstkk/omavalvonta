@@ -32,9 +32,25 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 
 	@Override
 	@Authenticated(Secured.class)
-	public Result ack(Long id) {
-		// TODO Auto-generated method stub
-		return super.ack(id);
+	public Result ack(Long batchId) {
+		User user = Session.user();
+		if (user != null) {
+			Batch batch = Batch.dao.getReference(batchId);
+			if (batch == null)
+				return Helper.getNotFound();
+			FinalProduct finalProduct = FinalProduct.findByBatch(batch);
+			if (finalProduct == null)
+				return Helper.getNotFound();
+			if (finalProduct.user != null)
+				return Helper.getInternalServerError();
+			finalProduct.user = user;
+			if (DAO.update(finalProduct))
+				flash("success", Messages.get("crud.success"));
+			else
+				flash("error", Messages.get("crud.fail"));
+			return redirect(callShow(batchId));
+		}
+		return Helper.getUnauthorized();
 	}
 
 	@Override

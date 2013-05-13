@@ -14,7 +14,7 @@
 		</tr>
 		<tr>
 			<th>@Messages.get("label.user")</th>
-			<td>@{if(batch.user != null) batch.user }</td>
+			<td>@ack(batch, @routes.Batches.ack(batch.id))</td>
 		</tr>
 		<tr>
 			<th>@Messages.get("label.product")</th>

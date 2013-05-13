@@ -1,5 +1,6 @@
 @(ingredientSupply: IngredientSupply)
 
+@import tags._
 @import tags.tables._
 @import utils.Converter
 @import play.i18n._
@@ -13,14 +14,18 @@
 			@Messages.get("ingredientsupply.bestBefore")
 			@Messages.get("ingredientsupply.amount")
 			@Messages.get("ingredientsupply.amountUsed")
+			@Messages.get("label.user")
 		}
 		<tbody>
-			@tr() { @ingredientSupply.ingredient.name
-				@ingredientSupply.producer
-	        	@Converter.dateToString(ingredientSupply.received)
-	        	@Converter.dateToString(ingredientSupply.getBestBefore)
-	        	@Converter.doubleToString(ingredientSupply.amount) @ingredientSupply.unit
-	        	@Converter.doubleToString(ingredientSupply.used) @ingredientSupply.unit }
+			<tr>
+				<td>@ingredientSupply.ingredient.name</td>
+				<td>@ingredientSupply.producer</td>
+	        	<td>@Converter.dateToString(ingredientSupply.received)</td>
+	        	<td>@Converter.dateToString(ingredientSupply.getBestBefore)</td>
+	        	<td>@Converter.doubleToString(ingredientSupply.amount) @ingredientSupply.unit</td>
+	        	<td>@Converter.doubleToString(ingredientSupply.used) @ingredientSupply.unit</td>
+	        	<td>@ack(ingredientSupply, @routes.IngredientSupplies.ack(ingredientSupply.id))</td>
+	        <tr>
 		</tbody>
 	}
 }

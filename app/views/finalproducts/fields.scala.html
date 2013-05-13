@@ -2,6 +2,7 @@
 
 @import play.i18n._
 @import helper._
+@import tags._
 @import tags.forms._
 @import batches._
 
@@ -11,6 +12,17 @@
 	@info(batch)
 	@results(batch)
 	@ingredients(batch)
+
+	<hr>
+
+	@if(!FORM("id").value.getOrElse("").isEmpty) {
+		<tbody>
+			<tr>
+				<th>@Messages.get("label.user")</th>
+				<td>@ack(batch, @routes.FinalProducts.ack(batch.id))</td>
+			</tr>
+		</tbody>
+	}
 
 	@tags.forms.form(FORM, routes.FinalProducts.save(batch.id)) {
 		<fieldset>

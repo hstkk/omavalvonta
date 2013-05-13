@@ -48,6 +48,7 @@ crud.fail=Tallennus epäonnistui!
 crud.action.save=Tallenna
 crud.action.cancel=Peruuta
 crud.action.previous=Edellinen
+crud.action.ack=Kuittaa
 
 # --- Label
 label.name=Nimi
@@ -78,6 +79,8 @@ label.targetValue=kyllä/ei kentän tavoitetulos
 label.story=Uutinen
 label.destiny=Erän kohtalo
 label.finalProduct=Myyntihyväksyntä
+label.batches=Erät
+label.ack=Kuittaa
 
 # --- Help
 help.producer=vastaa raaka-aineelle asetetuista lakisääteisistä vaatimuksista
