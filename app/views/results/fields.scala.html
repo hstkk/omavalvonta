@@ -3,9 +3,36 @@
 @import play.i18n._
 @import helper._
 @import tags.forms._
-
+@import controllers.shib.Session
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @tags.forms.form(FORM, action) {
-	@results.form(FORM, t)
+	@defining(Session.username != null) { isLogged =>
+		@defining(options(models.Term.options(models.TermCategory.REASON))) { _options =>
+			@repeat(FORM("results")) { result =>
+				@FIELDSET(result)
+				@FIELD(result, isLogged, _options)
+			}
+		}
+	}
+}
+
+@FIELDSET(field: Field) = {
+	@defining(field("field.fieldset.id").value.getOrElse("")) { fieldsetId =>
+		@if(!fieldsetId.isEmpty && t.isFieldsetPrinted(fieldsetId)) {
+			@defining(t.getFieldset(fieldsetId)) { _fieldset =>
+				@if(_fieldset != null) {
+					@fieldsets.fieldset(_fieldset)
+				}
+			}
+		}
+	}
+}
+
+@FIELD(field: Field, isLogged: Boolean, _options: Seq[(String,String)]) = {
+	@defining(t.getField(field("field.id").value.getOrElse(""))) { _field =>
+		@if(_field != null) {
+			@views.html.fields.field(field, _field, isLogged, _options)
+		}
+	}
 }
