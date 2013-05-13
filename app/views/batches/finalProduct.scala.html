@@ -1,1 +1,24 @@
 @(batch: Batch)
+
+@import tags.tables._
+@import utils.Converter
+@import play.i18n._
+
+<h3>@Messages.get("ingredientsupply.page")</h3>
+
+@if(batch.finalProduct != null){
+	@table() {
+		@thead() {
+			@Messages.get("label.date")
+			@Messages.get("label.destiny")
+			@Messages.get("ingredientsupply.amount")
+			@Messages.get("label.comment")
+		}
+		<tbody>
+			@tr() { @Converter.dateToString(batch.finalProduct.date)
+				@batch.finalProduct
+				@Converter.doubleToString(batch.finalProduct.amount) @batch.finalProduct.unit
+				@batch.finalProduct.comment }
+		</tbody>
+	}
+}
