@@ -2,12 +2,17 @@
 
 @import play.i18n._
 @import helper._
+@import controllers.shib.Session
 
-@forms.form(results.form)
+@forms.form(results.getOldForm)
 
-@repeat(FORM("results")) { result =>
-	@FIELDSET(result)
-	@FIELD(result)
+@defining(Session.username != null) { isLogged =>
+	@defining(options(models.Term.options(models.TermCategory.REASON))) { _options =>
+		@repeat(FORM("results")) { result =>
+			@FIELDSET(result)
+			@FIELD(result, isLogged, _options)
+		}
+	}
 }
 
 @FIELDSET(field: Field) = {
@@ -22,10 +27,10 @@
 	}
 }
 
-@FIELD(field: Field) = {
+@FIELD(field: Field, isLogged: Boolean, _options: Seq[(String,String)]) = {
 	@defining(results.getField(field("field.id").value.getOrElse(""))) { _field =>
 		@if(_field != null) {
-			@views.html.fields.field(field, _field)
+			@views.html.fields.field(field, _field, isLogged, _options)
 		}
 	}
 }

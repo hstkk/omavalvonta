@@ -1,4 +1,4 @@
-@(field: Field, t: models.dynamicforms.Field)
+@(field: Field, t: models.dynamicforms.Field, isLogged: Boolean = false, _options: Seq[(String,String)] = Seq())
 
 @import play.i18n._
 @import helper._
@@ -7,12 +7,21 @@
 
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
+@ack() = {
+	@if(isLogged) {
+		@checkbox(
+			field("ack"),
+			'_label -> Messages.get("label.ack")
+		)
+	}
+}
+
 @reason(field: Field) = {
 	@defining(field.value.getOrElse("")) { value =>
 		@if(!value.isEmpty) {
 			@select(
 				field("reason.id"),
-				options = options(models.Term.options(models.TermCategory.REASON)),
+				options = _options,
 				'_default -> "",
 				'_label -> Messages.get("result.reason")
 			)
@@ -21,8 +30,6 @@
 }
 
 @inputHidden(field("id"))
-
-@inputHidden(field("field.id"))
 
 @t.fieldTypeEnum match {
 	case FieldType.TEXT => {
@@ -84,6 +91,7 @@
 	}
 }
 
+@ack()
 @textarea(
 	field("comment"),
 	'_label -> "",
