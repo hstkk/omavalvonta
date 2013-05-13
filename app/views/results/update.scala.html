@@ -1,0 +1,27 @@
+@(t: models.dynamicforms.Results, FORM: play.data.Form[models.dynamicforms.Results])
+
+@import tags._
+@import tags.tables._
+@import play.i18n._
+
+@views.html.management(t.getOldForm.toString){
+	<p>@t.getOldForm.description</p>
+
+	<h2>@Messages.get("batch.page")</h2>
+	@if(t.batches != null) {
+		@table() {
+			@thead() {
+				@Messages.get("label.batch")
+				@Messages.get("label.product")
+			}
+			<tbody>
+				@for(batch <- t.batches) {
+					@tr() { <a href="@routes.Batches.show(batch.id)">@batch</a>
+						@batch.product }
+				}
+			</tbody>
+		}
+	}
+
+	@fields(FORM, routes.Results.update(t.id), t)
+}

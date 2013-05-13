@@ -54,9 +54,7 @@ POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchI
 #GET		/tulokset/uusi										@controllers.Results.fresh
 #GET		/tulokset/:resultsId								@controllers.Results.show(resultsId: Long)
 #GET		/tulokset/:resultsId/muokkaa						@controllers.Results.edit(resultsId: Long)
-#POST	/tulokset/:resultsId/muokkaa						@controllers.Results.update(resultsId: Long)
-#GET		/tulokset/:resultsId/kuittaa						@controllers.Results.ack(resultsId: Long)
-#POST	/tulokset/:resultsId/kuittaa						@controllers.Results.ack(resultsId: Long)
+POST		/tulokset/:resultsId/muokkaa						@controllers.Results.update(resultsId: Long)
 #GET		/tulokset/:resultsId.pdf							@controllers.Results.pdf(resultsId: Long)
 #GET		/tulokset/:resultsId/historia						@controllers.Results.history(resultsId: Long)
 
