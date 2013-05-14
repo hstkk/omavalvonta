@@ -1,0 +1,25 @@
+*{
+	margin:0;
+	padding:0
+}
+
+body{
+	font:12pt/1em "Times New Roman",Times,FreeSerif,serif;
+	margin-top: 1cm;
+	margin-botton: 1cm;
+	margin-left: 2cm;
+	margin-right: 1cm;
+}
+
+table {
+	border-collapse:collapse;
+	width: 100%;
+}
+
+table,th, td {
+	border: 1px solid black;
+}
+
+table th, table td {
+	padding: 0 8px;
+}

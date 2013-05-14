@@ -7,6 +7,7 @@ import play.api.templates.Html;
 import play.api.templates.Template1;
 import play.api.templates.Template2;
 import play.data.Form;
+import static play.data.Form.*;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.Call;
@@ -18,18 +19,27 @@ import views.html.results.*;
 import controllers.helpers.Crud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
+import util.pdf.PDF;
 
 @With(Session.class)
-public class Results extends Crud<models.dynamicforms.Results>{
+public class Results extends Crud<models.dynamicforms.Results> {
 	public Results() {
-		super(models.dynamicforms.Results.dao, form(models.dynamicforms.Results.class), create.ref(), page.ref(), show.ref(), update.ref());
+		/*
+		 * super(models.dynamicforms.Results.dao,
+		 * form(models.dynamicforms.Results.class), create.ref(), page .ref(),
+		 * show.ref(), update.ref());
+		 */
+		super(models.dynamicforms.Results.dao,
+				form(models.dynamicforms.Results.class), null, page.ref(), show
+						.ref(), update.ref());
 	}
 
 	@Authenticated(Secured.class)
 	public Result ack(Long resultsId, Long resultId) {
 		User user = Session.user();
 		if (user != null) {
-			models.dynamicforms.Result t = models.dynamicforms.Result.dao.findById(resultId);
+			models.dynamicforms.Result t = models.dynamicforms.Result.dao
+					.findById(resultId);
 			if (t == null)
 				return Helper.getNotFound();
 			if (t.user != null)
@@ -72,6 +82,16 @@ public class Results extends Crud<models.dynamicforms.Results>{
 	public Result fresh() {
 		// TODO Auto-generated method stub
 		return super.fresh();
+	}
+
+	@Transactional(readOnly = true)
+	public Result pdfify(Long id) {
+		if (DAO == null)
+			return Helper.getInternalServerError();
+		models.dynamicforms.Results t = DAO.findById(id);
+		if (t == null)
+			return Helper.getNotFound();
+		return PDF.ok(pdf.render(t));
 	}
 
 	@Override

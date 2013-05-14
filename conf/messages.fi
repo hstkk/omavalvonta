@@ -198,6 +198,16 @@ radiobox.true=Kyllä
 radiobox.false=Ei
 radiobox.default=Ei valintaa
 
+# --- PDF
+pdf.user=Kuittaus
+pdf.printed=Tulostettu
+pdf.date=HH:mm dd.MM.yyyy
+pdf.product=Valmiste:
+pdf.created=Valmistuspäivä:
+pdf.subject=AIHE:
+pdf.brand=HAMI/Sairio Opetusmeijeri
+pdf.type=Ohjetyyppi: Omavalvonta
+
 # --- Etc
 model.id="#"
 status.wip=Kesken

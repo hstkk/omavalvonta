@@ -77,7 +77,7 @@ public class Results extends Model {
 		if (that != null) {
 			for (Result result : this.results)
 				resultMap.put(result.id, result);
-// TODO update that.results
+			// TODO update that.results
 			return dao.update(that);
 		}
 		return false;
@@ -133,6 +133,12 @@ public class Results extends Model {
 					fieldsetMap.put(fieldset.id.toString(), fieldset);
 		}
 		return fieldsetMap.get(key);
+	}
+
+	public Product getProduct() {
+		if (this.batches != null && !this.batches.isEmpty())
+			return this.batches.get(0).product;
+		return null;
 	}
 
 	@Transient

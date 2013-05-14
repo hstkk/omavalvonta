@@ -1,0 +1,58 @@
+@(results: models.dynamicforms.Results)
+
+@import tags._
+@import tags.tables._
+@import play.i18n._
+@import utils.Converter
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>@results.getOldForm.toString</title>
+	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/pdf.css")"/>
+</head>
+<body>
+<div>
+	<p style="float: left;width: 6.9cm;">@Messages.get("pdf.brand")</p>
+	<p style="float: left;margin-left: 2.3cm;">@Messages.get("pdf.type")</p>
+</div>
+<div style="clear: both;"></div>
+<pre>
+
+
+</pre>
+<p><strong>@Messages.get("pdf.subject") @results.getOldForm</strong></p>
+<pre>
+</pre>
+<p>@Messages.get("pdf.product") @if(results.getProduct != null) { @results.getProduct }</p>
+<p>@Messages.get("pdf.created") @Converter.dateToString(results.lastModified)</p>
+<pre>
+</pre>
+@table() {
+	@thead() {
+		@Messages.get("results.name")
+		@Messages.get("results.help")
+		@Messages.get("results.result")
+		@Messages.get("pdf.user")
+		@Messages.get("label.comment")
+	}
+	<tbody>
+		@for(result <- results.results) {
+			@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
+				<tr><th colspan="5">@result.getOldField(results).fieldset</th></tr>
+			}
+			<tr>
+				<td>@result.getOldField(results).name</td>
+				<td>@result.getOldField(results).help</td>
+				<td>@result</td>
+				<td>@if(result.user != null) { @result.user }</td>
+				<td>@result.comment</td>
+			</tr>
+		}
+	</tbody>
+}
+<pre>
+</pre>
+<p style="text-align:right;"><small>@Messages.get("pdf.printed") @(new Date().format(Messages.get("pdf.date"))).</small></p>
+</body>
+</html>
