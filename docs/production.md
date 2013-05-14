@@ -9,17 +9,17 @@
 
 - MySQL-palvelimen asennus
 
-    zypper install mysql-community-server
+    zypper install mysql
 
 - Käynnistetään MySQL daemon automaattisesti
 
-     systemctl enable mysql.service
+     chkconfig mysql on
 
 
 
 - Käynnistetään MySQL daemon
 
-    systemctl start mysql.service 
+     service mysql start
 
 
 - Konfiguroidaan MySQL
@@ -103,7 +103,7 @@
 
 - Määritetään käyttäjän omavalvonta salasana
 
-    mysql> set password for omavalvonta@localhost= password('salasana');
+    mysql> set password for omavalvonta@localhost=password('salasana');
 
 - Päivitetään käyttöoikeudet
 
@@ -117,11 +117,11 @@
 
 - Käynnistetään Apache daemon automaattisesti
 
-     systemctl enable apache2.service
+     service apache2 start
 
 - Käynnistetään Apache daemon
 
-     systemctl start apache2.service
+     service apache2 start
 
 ### SSL-sertifikaatti
 
@@ -209,9 +209,13 @@
 
 ## Shibboleth
 
+- Lisätään Xerces repo
+
+    zypper addrepo -f http://download.opensuse.org/repositories/devel:/libraries:/c_c++/SLE_11_SP2/devel:libraries:c_c++.repo
+
 - Lisätään Shibboleth repo
 
-    zypper addrepo -f http://download.opensuse.org/repositories/security://shibboleth/openSUSE_12.1/security:shibboleth.repo
+    zypper addrepo -f http://download.opensuse.org/repositories/security://shibboleth/SLE_11_SP2/security:shibboleth.repo
 
 - Asennetaan Shibboleth service provider
 
