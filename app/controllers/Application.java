@@ -7,7 +7,7 @@ import play.db.jpa.Transactional;
 import play.mvc.*;
 import play.mvc.Security.Authenticated;
 import utils.Helper;
-import views.html.*;
+import views.html.news.*;
 
 @With(Session.class)
 public class Application extends Controller {
@@ -15,7 +15,7 @@ public class Application extends Controller {
 	@Transactional(readOnly = true)
 	public static Result index(int pageNumber) {
 		Page<models.News> page = models.News.dao.page(pageNumber);
-		return ok(news.index.render(page));
+		return ok(index.render(page));
 	}
 
 	@Authenticated(Secured.class)

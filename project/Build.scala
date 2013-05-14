@@ -15,12 +15,14 @@ object ApplicationBuild extends Build {
 		"org.hibernate" % "hibernate-entitymanager" % "4.2.0.Final",
 		"org.hibernate" % "hibernate-envers" % "4.2.0.Final",
 		"mysql" % "mysql-connector-java" % "5.1.24",
-		"org.hibernate" % "hibernate-jpamodelgen" % "1.2.0.Final"
+		"org.hibernate" % "hibernate-jpamodelgen" % "1.2.0.Final",
+		"pdf" % "pdf_2.10" % "0.4.1"
     )
 
     val main = play.Project(appName, appVersion, appDependencies).settings(
 		ebeanEnabled := false,
 		javacOptions ++= Seq("-s", "metamodel")
-		,javacOptions += "-Xlint:all"
+		,javacOptions += "-Xlint:all",
+		resolvers += Resolver.url("Violas Play Modules", url("http://www.joergviola.de/releases/"))(Resolver.ivyStylePatterns)
     )
 }
