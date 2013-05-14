@@ -81,6 +81,7 @@ label.destiny=Erän kohtalo
 label.finalProduct=Myyntihyväksyntä
 label.batches=Erät
 label.ack=Kuittaa
+label.form=Lomake
 
 # --- Help
 help.producer=vastaa raaka-aineelle asetetuista lakisääteisistä vaatimuksista
@@ -167,7 +168,10 @@ news.update=Muokkaa uutista
 results.create=Uusi tulos
 results.page=Tulokset
 results.page.empty=Tuloksia ei löytynyt!
-results.update=Muokkaa tulosta
+results.update=Tulos
+results.name=Määritys
+results.help=Vaatimus
+results.result=Tulos
 
 # --- Result
 results.reason=Muutoksen syy

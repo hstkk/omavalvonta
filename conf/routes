@@ -50,11 +50,11 @@ POST	/erat/:batchId/lopputuote							@controllers.FinalProducts.save(batchId: Lo
 POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchId: Long)
 
 # Results
-#GET		/tulokset											@controllers.Results.page(sivu: Int ?= 1)
+GET		/tulokset											@controllers.Results.page(sivu: Int ?= 1)
 #GET		/tulokset/uusi										@controllers.Results.fresh
-#GET		/tulokset/:resultsId								@controllers.Results.show(resultsId: Long)
-#GET		/tulokset/:resultsId/muokkaa						@controllers.Results.edit(resultsId: Long)
-POST		/tulokset/:resultsId/muokkaa						@controllers.Results.update(resultsId: Long)
+GET		/tulokset/:resultsId								@controllers.Results.show(resultsId: Long)
+GET		/tulokset/:resultsId/muokkaa						@controllers.Results.edit(resultsId: Long)
+POST	/tulokset/:resultsId/muokkaa						@controllers.Results.update(resultsId: Long)
 #GET		/tulokset/:resultsId.pdf							@controllers.Results.pdf(resultsId: Long)
 #GET		/tulokset/:resultsId/historia						@controllers.Results.history(resultsId: Long)
 

@@ -1,0 +1,61 @@
+@(t: models.dynamicforms.Results)
+
+@import tags._
+@import tags.tables._
+@import play.i18n._
+@import utils.Converter
+
+@views.html.management(t.getOldForm.toString) {
+	<p>@Messages.get("label.date") @Converter.dateToString(results.t)</p>
+	<p>@t.getOldForm.description</p>
+
+	<h2>@Messages.get("batch.page")</h2>
+	@if(t.batches != null) {
+		@table() {
+			@thead() {
+				@Messages.get("label.batch")
+				@Messages.get("label.product")
+			}
+			<tbody>
+				@for(batch <- t.batches) {
+					@tr() { <a href="@routes.Batches.show(batch.id)">@batch</a>
+						@batch.product }
+				}
+			</tbody>
+		}
+	}
+
+	<h2>@Messages.get("results.page")</h2>
+	@if(results.results != null || results.results.isEmpty) {
+		@table() {
+			@thead() {
+				@Messages.get("results.name")
+				@Messages.get("results.help")
+				@Messages.get("results.result")
+				@Messages.get("label.user")
+				@Messages.get("label.comment")
+			}
+			<tbody>
+				@for(result <- results.results) {
+					@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id) {
+						<tr><th colspan="5">@result.getOldField(results).fieldset</th></tr>
+					}
+					<tr @if(!result.isDone(results) { class="error" } >
+						<td>@result.getOldField(results).name</td>
+						<td>@result.getOldField(results).help</td>
+						<td>@result</td>
+						<td>@ack(result, routes.Batches.ack(result.id))</td>
+						<td>@result.comment</td>
+					</tr>
+				}
+			</tbody>
+		}
+
+
+
+	} else {
+		@warning() {
+			@Messages.get("results.page.empty")
+		}
+	}
+}

@@ -50,11 +50,11 @@ public class Field extends Model {
 	@NotNull
 	public boolean isSigned;
 
-	public Double min;
+	public Double min = null;
 
-	public Double max;
+	public Double max = null;
 
-	public Boolean targetValue;
+	public Boolean targetValue = null;
 
 	public String toString() {
 		return name;

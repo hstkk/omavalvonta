@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import play.Play;
+import play.i18n.Messages;
 
 /**
  * @author Sami Hostikka
@@ -90,5 +91,13 @@ public class Converter {
 					.getString("date.format");
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 		return simpleDateFormat.format(date);
+	}
+
+	public static String booleanToString(Boolean value) {
+		if(value == null)
+			return "";
+		else if(value)
+			return Messages.get("boolean.true");
+		return Messages.get("boolean.false");
 	}
 }
