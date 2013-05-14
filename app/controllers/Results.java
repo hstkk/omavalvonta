@@ -91,7 +91,4 @@ public class Results extends Crud<models.dynamicforms.Results>{
 	public Result update(Long id) {
 		return super.update(id);
 	}
-
-	
-
 }

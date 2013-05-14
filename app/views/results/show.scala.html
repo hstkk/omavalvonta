@@ -1,23 +1,24 @@
-@(t: models.dynamicforms.Results)
+@(results: models.dynamicforms.Results)
 
 @import tags._
+@import tags.alerts._
 @import tags.tables._
 @import play.i18n._
 @import utils.Converter
 
-@views.html.management(t.getOldForm.toString) {
-	<p>@Messages.get("label.date") @Converter.dateToString(results.t)</p>
-	<p>@t.getOldForm.description</p>
+@views.html.management(results.getOldForm.toString) {
+	<p>@Messages.get("label.date") @Converter.dateToString(results.lastModified)</p>
+	<p>@results.getOldForm.description</p>
 
 	<h2>@Messages.get("batch.page")</h2>
-	@if(t.batches != null) {
+	@if(results.batches != null) {
 		@table() {
 			@thead() {
 				@Messages.get("label.batch")
 				@Messages.get("label.product")
 			}
 			<tbody>
-				@for(batch <- t.batches) {
+				@for(batch <- results.batches) {
 					@tr() { <a href="@routes.Batches.show(batch.id)">@batch</a>
 						@batch.product }
 				}
@@ -37,10 +38,10 @@
 			}
 			<tbody>
 				@for(result <- results.results) {
-					@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id) {
+					@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
 						<tr><th colspan="5">@result.getOldField(results).fieldset</th></tr>
 					}
-					<tr @if(!result.isDone(results) { class="error" } >
+					<tr @if(!result.isDone(results)) { class="error" } >
 						<td>@result.getOldField(results).name</td>
 						<td>@result.getOldField(results).help</td>
 						<td>@result</td>
@@ -50,9 +51,6 @@
 				}
 			</tbody>
 		}
-
-
-
 	} else {
 		@warning() {
 			@Messages.get("results.page.empty")
