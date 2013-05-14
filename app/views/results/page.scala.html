@@ -1,0 +1,41 @@
+@(page: models.helpers.Page[models.dynamicforms.Results])
+
+@import play.i18n._
+@import tags._
+@import tags.alerts._
+@import tags.tables._
+@import utils.Converter
+
+@views.html.management(Messages.get("results.page")) {
+	@if(!page.isEmpty){
+		@table() {
+			@thead() {
+				@Messages.get("label.form")
+				@Messages.get("label.date")
+				@Messages.get("label.batch")
+				@Messages.get("label.product")
+			}
+			<tbody>
+				@for(results <- page.getList) {
+					@for((batch, index) <- results.batches.zipWithIndex) {
+						<tr>
+							@if(index == 0) {
+								<td rowspan="@results.batches.size"><a href="@routes.Results.show(results.id)">@results.form</a></td>
+								<td rowspan="@results.batches.size">@Converter.dateToString(results.lastModified)</td>
+							}
+							<td>@batch</td>
+							@if(index == 0) {
+								<td rowspan="@results.batches.size">@batch.product</td>
+							}
+						</tr>
+					}
+				}
+			</tbody>
+		}
+		@pagination(page, routes.Results.page(page.getPrevious), routes.Results.page(page.getNext))
+	} else {
+		@warning() {
+			@Messages.get("results.page.empty")
+		}
+	}
+}
