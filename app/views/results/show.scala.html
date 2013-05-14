@@ -44,7 +44,7 @@
 						<td>@result.getOldField(results).name</td>
 						<td>@result.getOldField(results).help</td>
 						<td>@result</td>
-						<td>@ack(result, routes.Batches.ack(result.id))</td>
+						<td>@ack(result, routes.Results.ack(results.id, result.id))</td>
 						<td>@result.comment</td>
 					</tr>
 				}
