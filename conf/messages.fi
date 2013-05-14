@@ -208,6 +208,12 @@ pdf.subject=AIHE:
 pdf.brand=HAMI/Sairio Opetusmeijeri
 pdf.type=Ohjetyyppi: Omavalvonta
 
+# --- History
+history.info=Määrityksen viimeinen tulos on nykyinen tulos.
+history.title={0} historia
+history.empty=Määrityksiä ei löytynyt!
+history.updated=Määritetty
+
 # --- Etc
 model.id="#"
 status.wip=Kesken

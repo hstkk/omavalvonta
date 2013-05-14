@@ -1,0 +1,55 @@
+@(results: models.dynamicforms.Results)
+
+@import tags._
+@import tags.alerts._
+@import tags.tables._
+@import play.i18n._
+@import utils.Converter
+
+@main(Messages.get("history.title", results.getOldForm.toString)) {
+	@info() { @Messages.get("history.info") }
+
+	@if(results.results != null || results.results.isEmpty) {
+		@for(result <- results.results) {
+			@subTitle(result)
+			@history(result)
+		}
+	} else {
+		@warning() {
+			@Messages.get("history.empty")
+		}
+	}
+}
+
+@subTitle(result: models.dynamicforms.Result) = {
+	@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
+		<h2>@result.getOldField(results).fieldset</h2>
+	}
+}
+
+@history(result: models.dynamicforms.Result) = {
+	<h3>@result.getOldField(results).name</h3>
+	@table() {
+		@thead() {
+			@Messages.get("history.updated")
+			@Messages.get("results.result")
+			@Messages.get("label.user")
+			@Messages.get("label.comment")
+			@Messages.get("enum.REASON")
+		}
+		<tbody>
+			@defining(models.dynamicforms.Result.dao.getVersions(result.id)) { oldResults =>
+				@if(oldResults != null) {
+					@for(oldResult <- oldResults) {
+						<tr>
+							<td>@Converter.dateToString(oldResult.lastModified)</td>
+							<td>@oldResult</td>
+							<td>@if(oldResult.user != null) { @oldResult.user }</td>
+							<td>@oldResult.comment</td>
+						</tr>
+					}
+				}
+			}
+		</tbody>
+	}
+}

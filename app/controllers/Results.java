@@ -85,6 +85,16 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	}
 
 	@Transactional(readOnly = true)
+	public Result history(Long id) {
+		if (DAO == null)
+			return Helper.getInternalServerError();
+		models.dynamicforms.Results t = DAO.findById(id);
+		if (t == null)
+			return Helper.getNotFound();
+		return ok(history.render(t));
+	}
+
+	@Transactional(readOnly = true)
 	public Result pdfify(Long id) {
 		if (DAO == null)
 			return Helper.getInternalServerError();
