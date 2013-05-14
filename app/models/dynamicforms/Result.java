@@ -19,7 +19,7 @@ import models.helpers.UserModel;
 import utils.Converter;
 
 @Entity
-@Audited
+@Audited(auditParents = { UserModel.class })
 public class Result extends UserModel {
 	public final static Dao<Result, Long> dao = new Dao<Result, Long>(
 			Result.class);
@@ -91,8 +91,9 @@ public class Result extends UserModel {
 		if (oldField == null) {
 			if (results != null)
 				oldField = results.getField(this.id.toString());
-			else
-				oldField = dao.getFirstVersion(this);
+			// TODO
+			// else
+			// oldField = dao.getFirstVersion(this);
 			if (oldField == null)
 				oldField = this.field;
 		}
