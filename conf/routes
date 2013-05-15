@@ -31,6 +31,11 @@ GET		/kirjaudu-ulos										controllers.shib.Shibboleth.logout
 # Management
 GET     /yllapito											controllers.Application.management
 
+# API
+GET		/api												@controllers.Api.javascriptRoutes
+GET		/api/lomakkeet										@controllers.Api.forms(tuote: Long)
+GET		/api/erat											@controllers.Api.batches(tuote: Long, lomake: Long)
+
 # Users
 GET		/kayttajat											@controllers.Users.page(sivu: Int ?= 1)
 GET		/kayttajat/:userId									@controllers.Users.show(userId: Long)

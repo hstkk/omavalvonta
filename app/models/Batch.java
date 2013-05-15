@@ -14,9 +14,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import models.dynamicforms.Form;
+import models.dynamicforms.Results;
 import models.helpers.Dao;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
@@ -56,6 +60,9 @@ public class Batch extends UserModel {
 
 	@OneToOne(mappedBy = "batch", fetch = FetchType.LAZY)
 	public FinalProduct finalProduct;
+
+	@OneToMany(mappedBy = "form", fetch = FetchType.LAZY)
+	public List<Results> results;
 
 	public Batch() {
 	}
@@ -155,5 +162,18 @@ public class Batch extends UserModel {
 		if (this.finalProduct != null)
 			return this.finalProduct.toString();
 		return Messages.get("status.wip");
+	}
+
+	public static Map<String, String> optionsByProductAndForm(Product product, Form form) {
+		if(product == null || form == null)
+			return new LinkedHashMap<String, String>();
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<Batch> query = criteriaBuilder.createQuery(Batch.class);
+		Root<Batch> root = query.from(Batch.class);
+		query.where(
+				criteriaBuilder.equal(root.get(Batch_.product), product),
+				criteriaBuilder.isNull(root.get(Batch_.finalProduct))
+		);
+		return dao.options(query);
 	}
 }
