@@ -1,6 +1,7 @@
 package models.dynamicforms;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
+
+import play.data.validation.ValidationError;
 import play.data.validation.Constraints.Required;
+import play.i18n.Messages;
 import models.Batch;
+import models.IngredientSupplyBatch;
 import models.Product;
 import models.helpers.Dao;
 import models.helpers.Model;
@@ -73,6 +78,7 @@ public class Results extends Model {
 
 	@Override
 	public void onUpdate() {
+		// org.springframework.beans.BeanUtils
 	}
 
 	private void fill() {
@@ -166,5 +172,33 @@ public class Results extends Model {
 		if (!printed)
 			printedFieldsets.add(key);
 		return printed;
+	}
+
+	public Map<String, List<ValidationError>> validate() {
+		Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
+		if (this.results != null) {
+			Results t = dao.findById(this.id);
+			if (t != null) {
+				Map<Long, Result> oldResults = new HashMap<Long, Result>();
+				for (Result result : t.results)
+					oldResults.put(result.id, result);
+				int i = 0;
+				for (Result result : this.results) {
+					Result oldResult = oldResults.get(result.id);
+					if (oldResult != null
+							&& !oldResult.isEmpty()
+							&& (result.reason == null || result.reason.id == null)) {
+						List<ValidationError> list = new ArrayList<ValidationError>();
+						list.add(new ValidationError("required", Messages
+								.get("constraint.required")));
+						errors.put("results[" + i + "].reason.id", list);
+					}
+					i++;
+				}
+			}
+		}
+		if (!errors.isEmpty())
+			return errors;
+		return null;
 	}
 }
