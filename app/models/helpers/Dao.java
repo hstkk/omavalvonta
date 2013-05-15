@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -88,6 +90,8 @@ public class Dao<T extends Model, ID extends Serializable> extends
 			TypedQuery<T> q = createQuery(query);
 			q = setPage(q, pageNumber);
 			return q.getResultList();
+		} catch (NoResultException e) {
+		} catch (EntityNotFoundException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -139,6 +143,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 				return auditReader.find(clazz, id, revision);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -157,6 +162,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 				return versions;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
