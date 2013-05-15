@@ -5,6 +5,8 @@
 @import play.i18n._
 
 @views.html.management(t.getOldForm.toString){
+	@tabs(results)
+
 	<p>@t.getOldForm.description</p>
 
 	<h2>@Messages.get("batch.page")</h2>

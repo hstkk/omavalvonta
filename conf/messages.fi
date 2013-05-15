@@ -173,6 +173,8 @@ results.name=Määritys
 results.help=Vaatimus
 results.result=Tulos
 results.updatable=Tuloksia ei voi päivittää, koska erän lopputuote on määritetty.
+results.history=Historia
+results.pdf=PDF-tiedosto
 
 # --- Result
 results.reason=Muutoksen syy

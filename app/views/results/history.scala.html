@@ -7,6 +7,8 @@
 @import utils.Converter
 
 @main(Messages.get("history.title", results.getOldForm.toString)) {
+	@tabs(results)
+
 	@info() { @Messages.get("history.info") }
 
 	@if(results.results != null || results.results.isEmpty) {
