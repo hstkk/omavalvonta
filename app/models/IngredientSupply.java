@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
+import org.joda.time.DateTime;
+
 import play.data.format.Formats;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
@@ -95,17 +97,17 @@ public class IngredientSupply extends UserModel {
 	}
 
 	@Override
-	public void onCreate() {
+	public boolean onCreate() {
 		this.ingredient = Ingredient.dao.getReference(this.ingredient);
 		this.unit = Term.dao.getReference(this.unit);
 		this.producer = Term.dao.getReference(this.producer);
-		super.onCreate();
+		return super.onCreate();
 	}
 
 	@PreUpdate
 	@Override
-	public void onUpdate() {
-		super.onUpdate();
+	public boolean onUpdate() {
+		return super.onUpdate();
 	}
 
 	public Date getBestBefore() {
@@ -124,4 +126,21 @@ public class IngredientSupply extends UserModel {
 		query.where(criteriaBuilder.equal(root.get(IngredientSupply_.user), user));
 		return dao.findAllBy(query);
 	}
+
+	/*public static List<IngredientSupply> options() {
+		Calendar calendar = Calendar.getInstance();
+		DateTime datetime = new DateTime();
+		datetime.minusDays()
+		
+		calendar.setTime(this.received);
+		calendar.
+		bestBefore.add(Calendar.DATE, this.ingredient.bestBefore);
+		Date since = calendar.getTime();
+
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<IngredientSupply> query = criteriaBuilder.createQuery(IngredientSupply.class);
+		Root<IngredientSupply> root = query.from(IngredientSupply.class);
+		query.where(criteriaBuilder.equal(root.get(IngredientSupply_.user), user));
+		return dao.findAllBy(query);
+	}*/
 }

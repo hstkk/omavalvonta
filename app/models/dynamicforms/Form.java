@@ -38,15 +38,15 @@ public class Form extends UserModel {
 	}
 
 	@Override
-	public void onCreate() {
+	public boolean onCreate() {
 		set();
-		super.onCreate();
+		return super.onCreate();
 	}
 
 	@Override
-	public void onUpdate() {
+	public boolean onUpdate() {
 		set();
-		super.onUpdate();
+		return super.onUpdate();
 	}
 
 	private void set() {

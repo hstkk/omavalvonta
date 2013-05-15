@@ -31,7 +31,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 		Root<T> root = query.from(clazz);
 		query.select(criteriaBuilder.count(root));
 		Long count = findLongBy(query);
-		if(count == null)
+		if (count == null)
 			return 0;
 		return count;
 	}
@@ -39,9 +39,11 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	@Override
 	public boolean create(T t) {
 		try {
-			t.onCreate();
-			JPA.em().persist(t);
-			return true;
+			boolean success = t.onCreate();
+			if (success) {
+				JPA.em().persist(t);
+				return true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -194,9 +196,11 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	@Override
 	public boolean update(T t) {
 		try {
-			t.onUpdate();
-			JPA.em().merge(t);
-			return true;
+			boolean success = t.onUpdate();
+			if (success) {
+				JPA.em().merge(t);
+				return true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

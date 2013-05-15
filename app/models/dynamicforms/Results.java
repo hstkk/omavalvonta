@@ -73,17 +73,17 @@ public class Results extends Model {
 	public Product product;
 
 	@Override
-	public void onCreate() {
-		super.onCreate();
+	public boolean onCreate() {
 		if (this.form != null)
 			this.form = Form.dao.findById(this.form.id);
 		this.batches = Batch.dao.getReference(this.batches);
 		fill();
+		return super.onCreate();
 	}
 
 	@Override
-	public void onUpdate() {
-		update();
+	public boolean onUpdate() {
+		return updateResults();
 	}
 
 	private void fill() {
@@ -95,7 +95,7 @@ public class Results extends Model {
 				}
 	}
 
-	public boolean update() {
+	public boolean updateResults() {
 		Results that = dao.findById(this.id);
 		if (that != null) {
 			Map<Long, Result> newResults = new HashMap<Long, Result>();

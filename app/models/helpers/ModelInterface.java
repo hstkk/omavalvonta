@@ -1,7 +1,7 @@
 package models.helpers;
 
 public interface ModelInterface {
-	void onCreate();
+	boolean onCreate();
 
-	void onUpdate();
+	boolean onUpdate();
 }

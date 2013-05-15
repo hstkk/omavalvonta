@@ -17,13 +17,15 @@ public class Model implements ModelInterface {
 	public Date lastModified;
 
 	// Executed before save
-	public void onCreate() {
+	public boolean onCreate() {
 		lastModified = new Date();
+		return true;
 	}
 
 	// Executed before update
-	public void onUpdate() {
+	public boolean onUpdate() {
 		lastModified = new Date();
+		return true;
 	}
 
 	// Executed before load

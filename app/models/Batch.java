@@ -74,9 +74,9 @@ public class Batch extends UserModel {
 	}
 
 	@Override
-	public void onCreate() {
+	public boolean onCreate() {
 		this.product = Product.dao.getReference(this.product);
-		super.onCreate();
+		return super.onCreate();
 	}
 
 	public String toString() {

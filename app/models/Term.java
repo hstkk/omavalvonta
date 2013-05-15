@@ -54,13 +54,13 @@ public class Term extends UserModel {
 	}
 
 	@Override
-	public void onCreate() {
-		super.onCreate();
+	public boolean onCreate() {
+		return super.onCreate();
 	}
 
 	@Override
-	public void onUpdate() {
-		super.onUpdate();
+	public boolean onUpdate() {
+		return super.onUpdate();
 	}
 
 	@PostLoad
