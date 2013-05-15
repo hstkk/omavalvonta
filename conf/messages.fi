@@ -147,6 +147,7 @@ batch.create=Uusi erä
 batch.page=Erät
 batch.page.empty=Eriä ei löytynyt!
 batch.amountNegative=Määrä ei voi olla negatiivinen
+batch.finalproduct=Lopputuote
 
 # --- Final product
 finalproduct.title=Erän {0} lopputuote
