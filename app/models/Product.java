@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NoResultException;
@@ -35,10 +36,10 @@ public class Product extends UserModel {
 	@Lob
 	public String description;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	public List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	public List<Form> forms = new ArrayList<Form>();
 
 	public String toString() {
