@@ -20,7 +20,7 @@ import controllers.shib.Session;
 public class Crud<T extends Model> extends Controller implements CrudInterface {
 	protected final Form<T> FORM;
 	protected final Dao<T, Long> DAO;
-	private final Template1<Form<T>, Html> CREATE;
+	protected final Template1<Form<T>, Html> CREATE;
 	private final Template1<Page<T>, Html> PAGE;
 	private final Template1<T, Html> SHOW;
 	private final Template2<T, Form<T>, Html> UPDATE;
@@ -192,7 +192,6 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	}
 
 	public Form<T> validateForm(Form<T> filledForm, Long id) {
-System.out.println(filledForm.errorsAsJson());
 		return filledForm;
 	}
 }

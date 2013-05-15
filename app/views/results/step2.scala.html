@@ -1,0 +1,22 @@
+@(FORM: play.data.Form[models.dynamicforms.Results], product: models.Product)
+
+@import play.i18n._
+@import helper._
+@import tags.forms._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
+
+@main(Messages.get("results.create")) {
+	<p>@Messages.get("label.product"): @product</p>
+
+	@inputHidden(FORM("product.id"))
+
+	tags.forms.form(FORM, routes.Results.step3, Messages.get("label.next")) {
+		@select(
+			FORM("form.id"),
+			options = options(models.dynamicforms.Form.options(product)),
+			'_default -> "",
+			'_label -> Messages.get("label.form")
+		)
+	}
+}

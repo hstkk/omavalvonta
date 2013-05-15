@@ -1,6 +1,7 @@
 package controllers;
 
 import models.FinalProduct;
+import models.Product;
 import models.User;
 import models.helpers.Dao;
 import models.helpers.Page;
@@ -25,14 +26,9 @@ import util.pdf.PDF;
 @With(Session.class)
 public class Results extends Crud<models.dynamicforms.Results> {
 	public Results() {
-		/*
-		 * super(models.dynamicforms.Results.dao,
-		 * form(models.dynamicforms.Results.class), create.ref(), page .ref(),
-		 * show.ref(), update.ref());
-		 */
 		super(models.dynamicforms.Results.dao,
-				form(models.dynamicforms.Results.class), null, page.ref(), show
-						.ref(), update.ref());
+				form(models.dynamicforms.Results.class), step1.ref(), page
+						.ref(), show.ref(), update.ref());
 	}
 
 	@Authenticated(Secured.class)
@@ -56,6 +52,14 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	}
 
 	@Override
+	protected Form<models.dynamicforms.Results> bindForm() {
+		Form<models.dynamicforms.Results> filledForm = form(
+				models.dynamicforms.Results.class,
+				models.dynamicforms.Results.Update.class).bindFromRequest();
+		return filledForm;
+	}
+
+	@Override
 	public Call callPage() {
 		return controllers.routes.Results.page(1);
 	}
@@ -68,8 +72,29 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	@Override
 	@Transactional
 	public Result create() {
-		// TODO Auto-generated method stub
-		return super.create();
+		if (DAO == null)
+			return Helper.getInternalServerError();
+		Form<models.dynamicforms.Results> filledForm = form(
+				models.dynamicforms.Results.class,
+				models.dynamicforms.Results.Step3.class).bindFromRequest();
+		Result result = onCancel(filledForm);
+		if (result != null)
+			return result;
+		models.dynamicforms.Results t = filledForm.get();
+		Product product = Product.dao.getReference(t.product);
+		models.dynamicforms.Form form = models.dynamicforms.Form.dao
+				.getReference(t.form);
+		if (product == null || form == null)
+			return Helper.getNotFound();
+		if (!filledForm.hasErrors()) {
+			boolean success = DAO.create(t);
+			if (success) {
+				Call call = callShow(t.id);
+				return redirect(call);
+			}
+		}
+		flash("error", Messages.get("crud.fail"));
+		return badRequest(step3.render(filledForm, product, form));
 	}
 
 	@Override
@@ -125,6 +150,40 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	@Transactional(readOnly = true)
 	public Result show(Long id) {
 		return super.show(id);
+	}
+
+	@Transactional(readOnly = true)
+	public Result step2() {
+		Form<models.dynamicforms.Results> filledForm = form(
+				models.dynamicforms.Results.class,
+				models.dynamicforms.Results.Step1.class).bindFromRequest();
+		if (!filledForm.hasErrors()) {
+			models.dynamicforms.Results t = filledForm.get();
+			Product product = Product.dao.findById(t.product.id);
+			if (product == null)
+				return Helper.getNotFound();
+			return ok(step2.render(filledForm, product));
+		}
+		return badRequest(CREATE.render(filledForm));
+	}
+
+	@Transactional(readOnly = true)
+	public Result step3() {
+		Form<models.dynamicforms.Results> filledForm = form(
+				models.dynamicforms.Results.class,
+				models.dynamicforms.Results.Step2.class).bindFromRequest();
+		models.dynamicforms.Results t = filledForm.get();
+		Product product = Product.dao.getReference(t.product);
+		if (product == null)
+			return Helper.getNotFound();
+		if (!filledForm.hasErrors()) {
+			models.dynamicforms.Form form = models.dynamicforms.Form.dao
+					.getReference(t.form);
+			if (form == null)
+				return Helper.getNotFound();
+			return ok(step3.render(filledForm, product, form));
+		}
+		return badRequest(step2.render(filledForm, product));
 	}
 
 	@Override

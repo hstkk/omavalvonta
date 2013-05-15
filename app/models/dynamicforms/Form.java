@@ -1,12 +1,17 @@
 package models.dynamicforms;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotNull;
+
+import models.Product;
 import models.helpers.Dao;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
@@ -46,5 +51,14 @@ public class Form extends UserModel {
 
 	private void set() {
 		this.fieldsets = Fieldset.dao.getReference(this.fieldsets);
+	}
+
+	public static Map<String, String> options(Product product) {
+		LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
+		if(product != null && product.forms != null) {
+			for(Form form: product.forms)
+				options.put(form.id.toString(), form.toString());
+		}
+		return options;
 	}
 }

@@ -27,27 +27,40 @@ import models.helpers.Model;
 @Audited
 @AttributeOverride(name = "lastModified", column = @Column(name = "created"))
 public class Results extends Model {
+	public interface Step1 {
+	}
+
+	public interface Step2 {
+	}
+
+	public interface Step3 {
+	}
+
+	public interface Update {
+	}
+
 	public final static Dao<Results, Long> dao = new Dao<Results, Long>(
 			Results.class);
 
-	@Required
+	@Required(groups = { Step2.class, Step3.class })
 	@ManyToOne
-	@NotNull
+	@NotNull(groups = { Step2.class, Step3.class })
 	public Form form;
 
-	@Required
+	@Required(groups = { Step3.class })
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinColumn(updatable = false)
-	@NotNull
+	@NotNull(groups = { Step3.class })
 	public List<Batch> batches = new ArrayList<Batch>();
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "results_id", nullable = false)
-	@NotNull
+	@NotNull(groups = { Update.class })
 	public List<Result> results = new ArrayList<Result>();
 
 	@Transient
-	Product product;
+	@Required(groups = { Step1.class })
+	public Product product;
 
 	@Override
 	public void onCreate() {

@@ -31,11 +31,6 @@ GET		/kirjaudu-ulos										controllers.shib.Shibboleth.logout
 # Management
 GET     /yllapito											controllers.Application.management
 
-# API
-GET		/api												@controllers.Api.javascriptRoutes
-GET		/api/lomakkeet										@controllers.Api.forms(tuote: Long)
-GET		/api/erat											@controllers.Api.batches(tuote: Long, lomake: Long)
-
 # Users
 GET		/kayttajat											@controllers.Users.page(sivu: Int ?= 1)
 GET		/kayttajat/:userId									@controllers.Users.show(userId: Long)
@@ -58,6 +53,9 @@ POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchI
 GET		/tulokset											@controllers.Results.page(sivu: Int ?= 1)
 # TODO
 GET		/tulokset/uusi										@controllers.Results.fresh
+POST	/tulokset/uusi/2									@controllers.Results.step2
+POST	/tulokset/uusi/3									@controllers.Results.step3
+POST	/tulokset/uusi/4									@controllers.Results.create
 GET		/tulokset/:resultsId								@controllers.Results.show(resultsId: Long)
 GET		/tulokset/:resultsId/muokkaa						@controllers.Results.edit(resultsId: Long)
 POST	/tulokset/:resultsId/muokkaa						@controllers.Results.update(resultsId: Long)
