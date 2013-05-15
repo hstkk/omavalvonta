@@ -90,8 +90,9 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (UPDATE == null || DAO == null || FORM == null)
 			return Helper.getNotFound();
 		T t = DAO.findById(id);
-		if (t == null)
-			return Helper.getNotFound();
+		Result result = isUpdatable(t);
+		if (result != null)
+			return result;
 		Form<T> filledForm = FORM.fill(t);
 		return ok(UPDATE.render(t, filledForm));
 	}
@@ -102,6 +103,12 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (CREATE == null || FORM == null)
 			return Helper.getNotFound();
 		return ok(CREATE.render(FORM));
+	}
+
+	public Result isUpdatable(T t) {
+		if (t == null)
+			return Helper.getNotFound();
+		return null;
 	}
 
 	protected Result onCancel(Form<T> filledForm) {
@@ -185,6 +192,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	}
 
 	public Form<T> validateForm(Form<T> filledForm, Long id) {
+System.out.println(filledForm.errorsAsJson());
 		return filledForm;
 	}
 }

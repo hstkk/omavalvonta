@@ -172,6 +172,7 @@ results.update=Tulos
 results.name=Määritys
 results.help=Vaatimus
 results.result=Tulos
+results.updatable=Tuloksia ei voi päivittää, koska erän lopputuote on määritetty.
 
 # --- Result
 results.reason=Muutoksen syy

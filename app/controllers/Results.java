@@ -1,5 +1,6 @@
 package controllers;
 
+import models.FinalProduct;
 import models.User;
 import models.helpers.Dao;
 import models.helpers.Page;
@@ -80,7 +81,6 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
-		// TODO Auto-generated method stub
 		return super.fresh();
 	}
 
@@ -92,6 +92,17 @@ public class Results extends Crud<models.dynamicforms.Results> {
 		if (t == null)
 			return Helper.getNotFound();
 		return ok(history.render(t));
+	}
+
+	@Override
+	public Result isUpdatable(models.dynamicforms.Results t) {
+		if (t == null)
+			return Helper.getNotFound();
+		else if (FinalProduct.isFinished(t.batches)) {
+			flash("warning", Messages.get("results.updatable"));
+			return redirect(callShow(t.id));
+		}
+		return null;
 	}
 
 	@Transactional(readOnly = true)
