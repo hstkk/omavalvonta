@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PreUpdate;
+import javax.persistence.Transient;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -105,9 +106,8 @@ public class IngredientSupply extends UserModel {
 	}
 
 	@PreUpdate
-	@Override
-	public boolean onUpdate() {
-		return super.onUpdate();
+	public void preUpdate() {
+		super.onUpdate();
 	}
 
 	public Date getBestBefore() {

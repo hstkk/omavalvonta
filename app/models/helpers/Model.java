@@ -27,8 +27,4 @@ public class Model implements ModelInterface {
 		lastModified = new Date();
 		return true;
 	}
-
-	// Executed before load
-	// public void onLoad() {
-	// }
 }

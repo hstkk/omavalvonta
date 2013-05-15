@@ -61,15 +61,13 @@ public class Field extends Model {
 	}
 
 	@PrePersist
-	@Override
-	public boolean onCreate() {
-		return super.onCreate();
+	public void preCreate() {
+		super.onCreate();
 	}
 
 	@PreUpdate
-	@Override
-	public boolean onUpdate() {
-		return super.onUpdate();
+	public void preUpdate() {
+		super.onUpdate();
 	}
 
 	@PostLoad
