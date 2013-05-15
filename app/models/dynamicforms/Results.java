@@ -18,6 +18,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
+import org.springframework.beans.BeanUtils;
+
+import controllers.shib.Session;
 
 import play.data.validation.ValidationError;
 import play.data.validation.Constraints.Required;
@@ -25,6 +28,8 @@ import play.i18n.Messages;
 import models.Batch;
 import models.IngredientSupplyBatch;
 import models.Product;
+import models.Term;
+import models.User;
 import models.helpers.Dao;
 import models.helpers.Model;
 
@@ -78,7 +83,7 @@ public class Results extends Model {
 
 	@Override
 	public void onUpdate() {
-		// org.springframework.beans.BeanUtils
+		update();
 	}
 
 	private void fill() {
@@ -91,13 +96,47 @@ public class Results extends Model {
 	}
 
 	public boolean update() {
-		Map<Long, Result> resultMap = new LinkedHashMap<Long, Result>();
 		Results that = dao.findById(this.id);
 		if (that != null) {
+			Map<Long, Result> newResults = new HashMap<Long, Result>();
 			for (Result result : this.results)
-				resultMap.put(result.id, result);
-			// TODO update that.results
-			return dao.update(that);
+				newResults.put(result.id, result);
+
+			try {
+				BeanUtils.copyProperties(that, this);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+
+			User user = Session.user();
+
+			List<Result> _results = this.results;
+			this.results = new ArrayList<Result>();
+			for (Result result : _results) {
+				Result newResult = newResults.get(result.id);
+				if (newResult != null) {
+					if (newResult.ack)
+						result.user = user;
+					if (result.isEmpty()
+							|| (newResult.reason != null && newResult.reason.id != null)) {
+						result.comment = newResult.comment;
+						result.valueBoolean = newResult.valueBoolean;
+						result.valueDate = newResult.valueDate;
+						result.valueInt = newResult.valueInt;
+						result.valueString = newResult.valueString;
+						if (newResult.reason != null
+								&& newResult.reason.id != null) {
+							result.reason = Term.dao
+									.getReference(newResult.reason);
+							if (result.reason == null)
+								return false;
+						}
+					}
+				}
+				this.results.add(result);
+			}
+			return true;
 		}
 		return false;
 	}
