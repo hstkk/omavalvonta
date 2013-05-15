@@ -32,6 +32,7 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 
 	@Override
 	@Authenticated(Secured.class)
+	@Transactional
 	public Result ack(Long batchId) {
 		User user = Session.user();
 		if (user != null) {

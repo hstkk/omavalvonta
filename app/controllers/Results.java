@@ -32,6 +32,7 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	}
 
 	@Authenticated(Secured.class)
+	@Transactional
 	public Result ack(Long resultsId, Long resultId) {
 		User user = Session.user();
 		if (user != null) {

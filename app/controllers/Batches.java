@@ -32,6 +32,7 @@ public class Batches extends UserCrud<Batch> {
 
 	@Override
 	@Authenticated(Secured.class)
+	@Transactional
 	public Result ack(Long id) {
 		return super.ack(id);
 	}

@@ -31,6 +31,7 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	}
 
 	@Authenticated(Secured.class)
+	@Transactional
 	public Result ack(Long id) {
 		User user = Session.user();
 		if (user != null) {

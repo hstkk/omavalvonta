@@ -22,6 +22,7 @@ public class IngredientSupplies extends UserCrud<IngredientSupply> {
 
 	@Override
 	@Authenticated(Secured.class)
+	@Transactional
 	public Result ack(Long id) {
 		return super.ack(id);
 	}
