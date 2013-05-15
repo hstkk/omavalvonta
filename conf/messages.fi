@@ -146,6 +146,7 @@ ingredientsupply.amountUsed=Käytetty
 batch.create=Uusi erä
 batch.page=Erät
 batch.page.empty=Eriä ei löytynyt!
+batch.amountNegative=Määrä ei voi olla negatiivinen
 
 # --- Final product
 finalproduct.title=Erän {0} lopputuote

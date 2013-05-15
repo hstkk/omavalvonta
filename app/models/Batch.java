@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
+import play.data.validation.ValidationError;
 import play.i18n.Messages;
 import utils.Converter;
 import utils.Helper;
@@ -164,16 +166,33 @@ public class Batch extends UserModel {
 		return Messages.get("status.wip");
 	}
 
-	public static Map<String, String> optionsByProductAndForm(Product product, Form form) {
-		if(product == null || form == null)
+	public static Map<String, String> optionsByProductAndForm(Product product,
+			Form form) {
+		if (product == null || form == null)
 			return new LinkedHashMap<String, String>();
 		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<Batch> query = criteriaBuilder.createQuery(Batch.class);
 		Root<Batch> root = query.from(Batch.class);
-		query.where(
-				criteriaBuilder.equal(root.get(Batch_.product), product),
-				criteriaBuilder.isNull(root.get(Batch_.finalProduct))
-		);
+		query.where(criteriaBuilder.equal(root.get(Batch_.product), product),
+				criteriaBuilder.isNull(root.get(Batch_.finalProduct)));
 		return dao.options(query);
+	}
+
+	public Map<String, List<ValidationError>> validate() {
+		Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
+		int i = 0;
+		for (IngredientSupplyBatch ingredientSupplyBatch : this.ingredientSupplies) {
+			if (ingredientSupplyBatch.amount != null
+					&& ingredientSupplyBatch.amount < 0) {
+				List<ValidationError> list = new ArrayList<ValidationError>();
+				list.add(new ValidationError("negative", Messages.get("batch.amountNegative")));
+				errors.put("ingredientSupplies[" + i + "].amount", list);
+			}
+
+			i++;
+		}
+		if (!errors.isEmpty())
+			return errors;
+		return null;
 	}
 }
