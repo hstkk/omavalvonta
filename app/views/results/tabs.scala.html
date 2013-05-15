@@ -1,11 +1,10 @@
 @(results: models.dynamicforms.Results)
 
-@import tags.navs._
 @import play.i18n._
 
-@tabs() {
+@tags.navs.tabs() {
 	<li><a href="@controllers.routes.Results.show(results.id)">@Messages.get("results.page")</a></li>
-	<li><a href="@controllers.routes.Results.edit(results.id)">results.getOldForm</a></li>
+	<li><a href="@controllers.routes.Results.edit(results.id)">@results.getOldForm</a></li>
 	<li><a href="@controllers.routes.Results.history(results.id)">@Messages.get("results.history")</a></li>
 	<li><a href="@controllers.routes.Results.pdfify(results.id)">@Messages.get("results.pdf")</a></li>
 }
