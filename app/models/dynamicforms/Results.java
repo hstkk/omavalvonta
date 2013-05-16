@@ -26,7 +26,6 @@ import play.data.validation.ValidationError;
 import play.data.validation.Constraints.Required;
 import play.i18n.Messages;
 import models.Batch;
-import models.IngredientSupplyBatch;
 import models.Product;
 import models.Term;
 import models.User;
@@ -109,8 +108,10 @@ public class Results extends Model {
 			for (Result result : _results) {
 				Result newResult = newResults.get(result.id);
 				if (newResult != null) {
-					if (newResult.ack)
+					if (newResult.ack != null && newResult.ack)
 						result.user = user;
+					else
+						result.user = null;
 					if (result.isEmpty()
 							|| (newResult.reason != null && newResult.reason.id != null)) {
 						result.comment = newResult.comment;
