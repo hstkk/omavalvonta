@@ -1,1 +1,45 @@
 @(batch: Batch)
+
+@import play.i18n._
+@import tags._
+@import tags.alerts._
+@import tags.tables._
+
+<h3>@Messages.get("results.summary")</h3>
+
+@if(batch.results != null && !batch.results.isEmpty){
+	@for(results <- batch.results) {
+		<h4><a href="@routes.Results.show(results.id)">@results.getOldForm</a></h4>
+		@if(results.results != null) {
+			@table() {
+				@thead() {
+					@Messages.get("results.name")
+					@Messages.get("results.help")
+					@Messages.get("results.result")
+					@Messages.get("label.user")
+					@Messages.get("label.comment")
+				}
+				<tbody>
+					@for(result <- results.results) {
+						@if(result.field.isImportant) {
+							@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
+								<tr><th colspan="5">@result.getOldField(results).fieldset</th></tr>
+							}
+							<tr @if(!result.isDone(results)) { class="error" } >
+								<td>@result.getOldField(results).name</td>
+								<td>@result.getOldField(results).help</td>
+								<td>@result</td>
+								<td>@if(result.user != null) { @result.user }</td>
+								<td>@result.comment</td>
+							</tr>
+						}
+					}
+				</tbody>
+			}
+		}
+	} 
+} else {
+	@warning() {
+		@Messages.get("results.page.empty")
+	}
+}
