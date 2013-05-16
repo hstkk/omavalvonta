@@ -9,8 +9,6 @@
 @main(Messages.get("results.create")) {
 	<p>@Messages.get("label.product"): @product</p>
 
-	@inputHidden(FORM("product.id"))
-
 	@tags.forms.form(FORM, routes.Results.step3(product.id), Messages.get("label.next")) {
 		@select(
 			FORM("form.id"),
