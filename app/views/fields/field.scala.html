@@ -7,7 +7,7 @@
 
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
-@ack() = {
+@ack()(implicit handler: FieldConstructor, lang: play.api.i18n.Lang) = {
 	@if(isLogged) {
 		@checkbox(
 			field("ack"),
@@ -16,14 +16,14 @@
 	}
 }
 
-@reason(field: Field) = {
+@reason(field: Field)(implicit handler: FieldConstructor, lang: play.api.i18n.Lang) = {
 	@defining(field.value.getOrElse("")) { value =>
 		@if(!value.isEmpty) {
 			@select(
 				field("reason.id"),
 				options = _options,
 				'_default -> "",
-				'_label -> Messages.get("result.reason")
+				'_label -> Messages.get("enum.REASON")
 			)
 		}
 	}
