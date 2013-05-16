@@ -5,6 +5,7 @@
 @import tags.tables._
 @import tags.navs._
 @import utils.Converter
+@import controllers.shib.Session
 
 @table() {
 	<tbody>
@@ -14,7 +15,9 @@
 		</tr>
 		<tr>
 			<th>@Messages.get("label.user")</th>
-			<td>@ack(batch, routes.Batches.ack(batch.id))</td>
+			@defining(Session.username != null) { isLogged =>
+				<td>@ack(batch, routes.Batches.ack(batch.id), isLogged)</td>
+			}
 		</tr>
 		<tr>
 			<th>@Messages.get("label.product")</th>

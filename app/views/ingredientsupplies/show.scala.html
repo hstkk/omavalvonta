@@ -4,6 +4,7 @@
 @import tags.tables._
 @import utils.Converter
 @import play.i18n._
+@import controllers.shib.Session
 
 @main(Messages.get("ingredientsupply.show", ingredientSupply)) {
 	@table() {
@@ -24,7 +25,9 @@
 	        	<td>@Converter.dateToString(ingredientSupply.getBestBefore)</td>
 	        	<td>@Converter.doubleToString(ingredientSupply.amount) @ingredientSupply.unit</td>
 	        	<td>@Converter.doubleToString(ingredientSupply.used) @ingredientSupply.unit</td>
-	        	<td>@ack(ingredientSupply, routes.IngredientSupplies.ack(ingredientSupply.id))</td>
+	        	@defining(Session.username != null) { isLogged =>
+		        	<td>@ack(ingredientSupply, routes.IngredientSupplies.ack(ingredientSupply.id), isLogged)</td>
+		        }
 	        <tr>
 		</tbody>
 	}

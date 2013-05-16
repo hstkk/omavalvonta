@@ -1,11 +1,15 @@
-@(t: models.helpers.UserModel, action: play.api.mvc.Call)
+@(t: models.helpers.UserModel, action: play.api.mvc.Call, isLogged: Boolean)
 
 @import play.i18n._
 @import helper._
 
 @if(t.user == null) {
-	@form(helper.CSRF(action)) {
-		<input type="submit" name="action" class="btn btn-success" value="@Messages.get("crud.action.ack")"/>
+	@if(isLogged) {
+		@form(helper.CSRF(action)) {
+			<input type="submit" name="action" class="btn btn-success" value="@Messages.get("crud.action.ack")"/>
+		}	
+	} else {
+		<a class="btn btn-success" href="@controllers.shib.Shibboleth.login(request.uri)">@Messages.get("crud.action.ack")"</a>
 	}
 } else {
 	@t.user
