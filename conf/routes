@@ -53,13 +53,13 @@ POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchI
 GET		/tulokset											@controllers.Results.page(sivu: Int ?= 1)
 # TODO
 GET		/tulokset/uusi										@controllers.Results.fresh
-POST	/tulokset/uusi/2									@controllers.Results.step2
-POST	/tulokset/uusi/3									@controllers.Results.step3
-POST	/tulokset/uusi/4									@controllers.Results.create
+GET		/tulokset/uusi/:productId							@controllers.Results.step2(productId: Long)
+POST	/tulokset/uusi/:productId							@controllers.Results.step3(productId: Long)
+POST	/tulokset/uusi/:productId/:formId					@controllers.Results.create(productId: Long, formId: Long)
 GET		/tulokset/:resultsId								@controllers.Results.show(resultsId: Long)
 GET		/tulokset/:resultsId/muokkaa						@controllers.Results.edit(resultsId: Long)
 POST	/tulokset/:resultsId/muokkaa						@controllers.Results.update(resultsId: Long)
-GET		/tulokset/:resultsId.pdf							@controllers.Results.pdfify(resultsId: Long)
+GET		/tulokset/:resultsId/pdf							@controllers.Results.pdfify(resultsId: Long)
 GET		/tulokset/:resultsId/historia						@controllers.Results.history(resultsId: Long)
 POST	/tulos/:resultsId/:resultId/kuittaa					@controllers.Results.ack(resultsId: Long, resultId: Long)
 

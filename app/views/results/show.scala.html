@@ -6,7 +6,7 @@
 @import play.i18n._
 @import utils.Converter
 
-@views.html.management(results.getOldForm.toString) {
+@main(results.getOldForm.toString) {
 	@tabs(results)
 
 	<p>@Messages.get("label.date") @Converter.dateToString(results.lastModified)</p>

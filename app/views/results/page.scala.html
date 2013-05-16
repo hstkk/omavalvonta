@@ -6,7 +6,7 @@
 @import tags.tables._
 @import utils.Converter
 
-@views.html.management(Messages.get("results.page")) {
+@main(Messages.get("results.page")) {
 	@if(!page.isEmpty){
 		@table() {
 			@thead() {

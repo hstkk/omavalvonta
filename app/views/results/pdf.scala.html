@@ -17,17 +17,13 @@
 	<p style="float: left;margin-left: 2.3cm;">@Messages.get("pdf.type")</p>
 </div>
 <div style="clear: both;"></div>
-<pre>
-
-
-</pre>
+<br>
+<br>
 <p><strong>@Messages.get("pdf.subject") @results.getOldForm</strong></p>
-<pre>
-</pre>
+<br>
 <p>@Messages.get("pdf.product") @if(results.getProduct != null) { @results.getProduct }</p>
 <p>@Messages.get("pdf.created") @Converter.dateToString(results.lastModified)</p>
-<pre>
-</pre>
+<br>
 @table() {
 	@thead() {
 		@Messages.get("results.name")
@@ -37,22 +33,23 @@
 		@Messages.get("label.comment")
 	}
 	<tbody>
-		@for(result <- results.results) {
-			@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
-				<tr><th colspan="5">@result.getOldField(results).fieldset</th></tr>
+		@if(results.results != null) {
+			@for(result <- results.results) {
+				@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
+					<tr><th colspan="5">@result.getOldField(results).fieldset</th></tr>
+				}
+				<tr>
+					<td>@result.getOldField(results).name</td>
+					<td>@result.getOldField(results).help</td>
+					<td>@result</td>
+					<td>@if(result.user != null) { @result.user }</td>
+					<td>@result.comment</td>
+				</tr>
 			}
-			<tr>
-				<td>@result.getOldField(results).name</td>
-				<td>@result.getOldField(results).help</td>
-				<td>@result</td>
-				<td>@if(result.user != null) { @result.user }</td>
-				<td>@result.comment</td>
-			</tr>
 		}
 	</tbody>
 }
-<pre>
-</pre>
+<br>
 <p style="text-align:right;"><small>@Messages.get("pdf.printed") @(new Date().format(Messages.get("pdf.date"))).</small></p>
 </body>
 </html>

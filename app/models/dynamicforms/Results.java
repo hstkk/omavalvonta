@@ -37,9 +37,6 @@ import models.helpers.Model;
 @Audited
 @AttributeOverride(name = "lastModified", column = @Column(name = "created"))
 public class Results extends Model {
-	public interface Step1 {
-	}
-
 	public interface Step2 {
 	}
 
@@ -67,10 +64,6 @@ public class Results extends Model {
 	@JoinColumn(name = "results_id", nullable = false)
 	@NotNull(groups = { Update.class })
 	public List<Result> results = new ArrayList<Result>();
-
-	@Transient
-	@Required(groups = { Step1.class })
-	public Product product;
 
 	@Override
 	public boolean onCreate() {

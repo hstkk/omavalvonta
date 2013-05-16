@@ -173,8 +173,9 @@ public class Batch extends UserModel {
 		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<Batch> query = criteriaBuilder.createQuery(Batch.class);
 		Root<Batch> root = query.from(Batch.class);
-		query.where(criteriaBuilder.equal(root.get(Batch_.product), product),
-				criteriaBuilder.isNull(root.get(Batch_.finalProduct)));
+		query.where(criteriaBuilder.equal(root.get(Batch_.product).get("id"), product.id)
+				//,criteriaBuilder.isNull(root.get(Batch_.finalProduct).get("destiny"))
+		);
 		return dao.options(query);
 	}
 

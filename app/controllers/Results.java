@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Batch;
 import models.FinalProduct;
 import models.Product;
 import models.User;
@@ -16,6 +17,7 @@ import play.mvc.Call;
 import play.mvc.Result;
 import play.mvc.With;
 import play.mvc.Security.Authenticated;
+import utils.Converter;
 import utils.Helper;
 import views.html.results.*;
 import controllers.helpers.Crud;
@@ -70,9 +72,8 @@ public class Results extends Crud<models.dynamicforms.Results> {
 		return controllers.routes.Results.show(id);
 	}
 
-	@Override
 	@Transactional
-	public Result create() {
+	public Result create(Long productId, Long formId) {
 		if (DAO == null)
 			return Helper.getInternalServerError();
 		Form<models.dynamicforms.Results> filledForm = form(
@@ -81,13 +82,13 @@ public class Results extends Crud<models.dynamicforms.Results> {
 		Result result = onCancel(filledForm);
 		if (result != null)
 			return result;
-		models.dynamicforms.Results t = filledForm.get();
-		Product product = Product.dao.getReference(t.product);
+		Product product = Product.dao.getReference(productId);
 		models.dynamicforms.Form form = models.dynamicforms.Form.dao
-				.getReference(t.form);
+				.getReference(formId);
 		if (product == null || form == null)
 			return Helper.getNotFound();
 		if (!filledForm.hasErrors()) {
+			models.dynamicforms.Results t = filledForm.get();
 			boolean success = DAO.create(t);
 			if (success) {
 				Call call = callShow(t.id);
@@ -107,7 +108,13 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
-		return super.fresh();
+		String value = request().getQueryString("tuote");
+		if (value != null && !value.isEmpty()) {
+			Long product = Converter.stringToLong(value);
+			if (product != null)
+				return redirect(controllers.routes.Results.step2(product));
+		}
+		return ok(step1.render(FORM));
 	}
 
 	@Transactional(readOnly = true)
@@ -154,13 +161,11 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	}
 
 	@Transactional(readOnly = true)
-	public Result step2() {
-		Form<models.dynamicforms.Results> filledForm = form(
-				models.dynamicforms.Results.class,
-				models.dynamicforms.Results.Step1.class).bindFromRequest();
+	public Result step2(Long productId) {
+		Form<models.dynamicforms.Results> filledForm = FORM.bindFromRequest();
 		if (!filledForm.hasErrors()) {
 			models.dynamicforms.Results t = filledForm.get();
-			Product product = Product.dao.findById(t.product.id);
+			Product product = Product.dao.findById(productId);
 			if (product == null)
 				return Helper.getNotFound();
 			return ok(step2.render(filledForm, product));
@@ -169,15 +174,15 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	}
 
 	@Transactional(readOnly = true)
-	public Result step3() {
+	public Result step3(Long productId) {
 		Form<models.dynamicforms.Results> filledForm = form(
 				models.dynamicforms.Results.class,
 				models.dynamicforms.Results.Step2.class).bindFromRequest();
-		models.dynamicforms.Results t = filledForm.get();
-		Product product = Product.dao.getReference(t.product);
+		Product product = Product.dao.getReference(productId);
 		if (product == null)
 			return Helper.getNotFound();
 		if (!filledForm.hasErrors()) {
+			models.dynamicforms.Results t = filledForm.get();
 			models.dynamicforms.Form form = models.dynamicforms.Form.dao
 					.getReference(t.form);
 			if (form == null)

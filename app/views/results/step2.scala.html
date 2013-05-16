@@ -11,7 +11,7 @@
 
 	@inputHidden(FORM("product.id"))
 
-	tags.forms.form(FORM, routes.Results.step3, Messages.get("label.next")) {
+	@tags.forms.form(FORM, routes.Results.step3(product.id), Messages.get("label.next")) {
 		@select(
 			FORM("form.id"),
 			options = options(models.dynamicforms.Form.options(product)),

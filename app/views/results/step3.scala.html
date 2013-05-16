@@ -8,15 +8,15 @@
 
 @main(Messages.get("results.create")) {
 	<p>@Messages.get("label.form"): @t</p>
+	
+	@tags.forms.form(FORM, routes.Results.create(product.id, t.id)) {
+		@inputHidden(FORM("form.id"))
 
-	@inputHidden(FORM("form.id"))
-
-	tags.forms.form(FORM, routes.Results.create) {
 		@checkboxes(
 			FORM("batches"),
 			options = options(models.Batch.optionsByProductAndForm(product, t)),
 			child = "id",
-			'_label ->  Messages.get("label.batches")
+			'_label -> Messages.get("label.batches")
 		)
 	}
 }

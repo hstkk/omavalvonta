@@ -136,23 +136,26 @@ public class Dao<T extends Model, ID extends Serializable> extends
 		return null;
 	}
 
+	// TODO fix
 	@Override
 	public T getVersion(ID id, Date date) {
-		try {
+		/*try {
 			if (id != null && date != null) {
 				AuditReader auditReader = AuditReaderFactory.get(JPA.em());
 				Number revision = auditReader.getRevisionNumberForDate(date);
-				return auditReader.find(clazz, id, revision);
+				T t = auditReader.find(clazz, id, revision);
+				return t;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		return null;
 	}
 
+	// TODO fix
 	@Override
 	public List<T> getVersions(ID id) {
-		try {
+		/*try {
 			if (id != null) {
 				List<T> versions = new ArrayList<T>();
 				AuditReader auditReader = AuditReaderFactory.get(JPA.em());
@@ -165,7 +168,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		return null;
 	}
 
