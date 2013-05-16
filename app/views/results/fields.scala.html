@@ -7,6 +7,8 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @tags.forms.form(FORM, action) {
+	<input type="hidden" id="id" name="id" value="@t.id">
+
 	@defining(Session.username != null) { isLogged =>
 		@defining(options(models.Term.options(models.TermCategory.REASON))) { _options =>
 			@repeat(FORM("results")) { result =>
