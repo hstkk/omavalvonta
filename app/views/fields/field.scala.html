@@ -17,8 +17,8 @@
 }
 
 @reason(field: Field)(implicit handler: FieldConstructor, lang: play.api.i18n.Lang) = {
-	@defining(field.value.getOrElse("")) { value =>
-		@if(!value.isEmpty) {
+	@defining(field("isEmpty").value.getOrElse("")) { value =>
+		@if(value.equals("false")) {
 			@defaultSelect(
 				field("reason.id"),
 				options = _options,
@@ -29,10 +29,14 @@
 }
 
 @inputHidden(field("id"))
+@inputHidden(field("isEmpty"))
+@inputHidden(field("field.id"))
+@inputHidden(field("field.fieldset.id"))
+
+@reason(field)
 
 @t.fieldTypeEnum match {
 	case FieldType.TEXT => {
-		@reason(field)
 		@inputText(
 			field("valueString"),
 			'_label -> t.name,
@@ -41,7 +45,6 @@
 	}
 
 	case FieldType.INT => {
-		@reason(field)
 		@inputText(
 			field("valueInt"),
 			'_label -> t.name,
@@ -51,7 +54,6 @@
 	}
 
 	case FieldType.DOUBLE => {
-		@reason(field)
 		@inputText(
 			field("valueDouble"),
 			'_label -> t.name,
@@ -61,7 +63,6 @@
 	}
 
 	case FieldType.DATE => {
-		@reason(field)
 		@inputText(
 			field("valueDate"),
 			'_label -> t.name,
@@ -72,7 +73,6 @@
 	}
 
 	case FieldType.CHECKBOX => {
-		@reason(field)
 		@radiobox(
 			field("valueBoolean"),
 			'_label -> t.name,
@@ -81,7 +81,6 @@
 	}
 
 	case FieldType.TEXTAREA => {
-		@reason(field)
 		@textarea(
 			field("valueString"),
 			'_label -> t.name,

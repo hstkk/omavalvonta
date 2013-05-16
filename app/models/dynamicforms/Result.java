@@ -7,9 +7,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 
@@ -39,14 +41,18 @@ public class Result extends UserModel {
 	@Lob
 	public String valueString;
 
+	@Valid
 	public Integer valueInt;
 
 	@LocalizedDouble
+	@Valid
 	public Double valueDouble;
 
+	@Valid
 	public Boolean valueBoolean;
 
 	@Formats.DateTime(pattern = "dd.MM.yyyy")
+	@Valid
 	public Date valueDate;
 
 	@Lob
@@ -57,6 +63,9 @@ public class Result extends UserModel {
 
 	@Transient
 	public Boolean ack;
+
+	@Transient
+	public Boolean isEmpty;
 
 	public Result() {
 	}
@@ -83,6 +92,11 @@ public class Result extends UserModel {
 	@PrePersist
 	private void onPre() {
 		lastModified = new Date();
+	}
+
+	@PostLoad
+	private void onLoad() {
+		isEmpty = isEmpty();
 	}
 
 	@Transient

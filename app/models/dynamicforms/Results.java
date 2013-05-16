@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import org.springframework.beans.BeanUtils;
@@ -62,6 +63,7 @@ public class Results extends Model {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "results_id", nullable = false)
 	@NotNull(groups = { Update.class })
+	@Valid
 	public List<Result> results = new ArrayList<Result>();
 
 	@Override
@@ -214,7 +216,7 @@ public class Results extends Model {
 
 	public Map<String, List<ValidationError>> validate() {
 		Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
-		if (this.results != null) {
+		if (this.results != null && !this.results.isEmpty()) {
 			Results t = dao.findById(this.id);
 			if (t != null) {
 				Map<Long, Result> oldResults = new HashMap<Long, Result>();
