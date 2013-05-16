@@ -45,7 +45,6 @@ public class Converter {
 		try {
 			if (locale == null)
 				locale = Locale.getDefault();
-			System.out.println("\n" + locale.toString() + "\n");
 			NumberFormat numberFormat = NumberFormat.getInstance(locale);
 			Number number = numberFormat.parse(value);
 			return number.doubleValue();
