@@ -82,6 +82,7 @@ label.finalProduct=Myyntihyväksyntä
 label.batches=Erät
 label.ack=Kuittaa
 label.form=Lomake
+label.update=Muokkaa
 
 # --- Help
 help.producer=vastaa raaka-aineelle asetetuista lakisääteisistä vaatimuksista
