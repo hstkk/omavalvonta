@@ -89,6 +89,7 @@ public class Results extends Model {
 
 	public boolean updateResults() {
 		Results that = dao.findById(this.id);
+		List<Result> _newResults = this.results;
 		if (that != null) {
 			Map<Long, Result> newResults = new HashMap<Long, Result>();
 			for (Result result : this.results)
@@ -117,14 +118,17 @@ public class Results extends Model {
 						result.comment = newResult.comment;
 						result.valueBoolean = newResult.valueBoolean;
 						result.valueDate = newResult.valueDate;
+						result.valueDouble = newResult.valueDouble;
 						result.valueInt = newResult.valueInt;
 						result.valueString = newResult.valueString;
 						if (newResult.reason != null
 								&& newResult.reason.id != null) {
 							result.reason = Term.dao
 									.getReference(newResult.reason);
-							if (result.reason == null)
+							if (result.reason == null) {
+								this.results = _newResults;
 								return false;
+							}
 						}
 					}
 				}
@@ -132,6 +136,7 @@ public class Results extends Model {
 			}
 			return true;
 		}
+		this.results = _newResults;
 		return false;
 	}
 
@@ -220,6 +225,7 @@ public class Results extends Model {
 					Result oldResult = oldResults.get(result.id);
 					if (oldResult != null
 							&& !oldResult.isEmpty()
+							&& !oldResult.toString().equals(result.toString())
 							&& (result.reason == null || result.reason.id == null)) {
 						List<ValidationError> list = new ArrayList<ValidationError>();
 						list.add(new ValidationError("required", Messages
@@ -228,7 +234,8 @@ public class Results extends Model {
 					}
 					i++;
 				}
-			}
+			} else
+				return errors;
 		}
 		if (!errors.isEmpty())
 			return errors;
