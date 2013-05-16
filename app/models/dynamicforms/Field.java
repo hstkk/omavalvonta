@@ -32,6 +32,10 @@ public class Field extends Model {
 	@NotNull
 	public boolean isRequired;
 
+	@Required
+	@NotNull
+	public boolean isImportant;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fieldset_id", insertable = false, updatable = false, nullable = false)
 	public Fieldset fieldset;
@@ -45,10 +49,6 @@ public class Field extends Model {
 
 	@Transient
 	public FieldType fieldTypeEnum;
-
-	@Required
-	@NotNull
-	public boolean isSigned;
 
 	public Double min = null;
 
