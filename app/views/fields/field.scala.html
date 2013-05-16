@@ -19,10 +19,9 @@
 @reason(field: Field)(implicit handler: FieldConstructor, lang: play.api.i18n.Lang) = {
 	@defining(field.value.getOrElse("")) { value =>
 		@if(!value.isEmpty) {
-			@select(
+			@defaultSelect(
 				field("reason.id"),
 				options = _options,
-				'_default -> "",
 				'_label -> Messages.get("enum.REASON")
 			)
 		}
@@ -33,7 +32,7 @@
 
 @t.fieldTypeEnum match {
 	case FieldType.TEXT => {
-		@reason(field("valueString"))
+		@reason(field)
 		@inputText(
 			field("valueString"),
 			'_label -> t.name,
@@ -42,7 +41,7 @@
 	}
 
 	case FieldType.INT => {
-		@reason(field("valueInt"))
+		@reason(field)
 		@inputText(
 			field("valueInt"),
 			'_label -> t.name,
@@ -52,7 +51,7 @@
 	}
 
 	case FieldType.DOUBLE => {
-		@reason(field("valueDouble"))
+		@reason(field)
 		@inputText(
 			field("valueDouble"),
 			'_label -> t.name,
@@ -62,7 +61,7 @@
 	}
 
 	case FieldType.DATE => {
-		@reason(field("valueDate"))
+		@reason(field)
 		@inputText(
 			field("valueDate"),
 			'_label -> t.name,
@@ -73,7 +72,7 @@
 	}
 
 	case FieldType.CHECKBOX => {
-		@reason(field("valueBoolean"))
+		@reason(field)
 		@radiobox(
 			field("valueBoolean"),
 			'_label -> t.name,
@@ -82,7 +81,7 @@
 	}
 
 	case FieldType.TEXTAREA => {
-		@reason(field("valueString"))
+		@reason(field)
 		@textarea(
 			field("valueString"),
 			'_label -> t.name,
@@ -97,3 +96,5 @@
 	'_label -> "",
 	'_help -> Messages.get("label.comment")
 )
+
+<hr>

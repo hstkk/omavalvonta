@@ -1,0 +1,22 @@
+@**
+ * Generate an HTML select with empty default selected.
+ *
+ * Example:
+ * {{{
+ * @defaultSelect(field = myForm("isDone"), options = options("Yes","No"))
+ * }}}
+ *
+ * @param field The form field.
+ * @param args Set of extra attributes.
+ * @param handler The field constructor.
+ *@
+@(field: play.api.data.Field, options: Seq[(String,String)], args: (Symbol,Any)*)(implicit handler: helper.FieldConstructor, lang: play.api.i18n.Lang)
+
+@helper.input(field, args:_*) { (id, name, value, htmlArgs) =>
+    <select id="@id" name="@name" @toHtmlArgs(htmlArgs)>
+        <option class="blank" value="" "selected"></option>
+        @options.map { v =>
+            <option value="@v._1">@v._2</option>
+        }
+    </select>
+}
