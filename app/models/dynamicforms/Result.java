@@ -12,11 +12,14 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
+
+import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import models.Term;
 import models.helpers.Dao;
 import models.helpers.UserModel;
 import utils.Converter;
+import utils.Formats.LocalizedDouble;
 
 @Entity
 @Audited(auditParents = { UserModel.class })
@@ -38,10 +41,12 @@ public class Result extends UserModel {
 
 	public Integer valueInt;
 
+	@LocalizedDouble
 	public Double valueDouble;
 
 	public Boolean valueBoolean;
 
+	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date valueDate;
 
 	@Lob
