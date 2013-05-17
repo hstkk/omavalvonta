@@ -25,12 +25,12 @@ public class Product extends UserModel {
 			Product.class);
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@Column(unique = true)
 	public int no;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public String name;
 
 	@Lob

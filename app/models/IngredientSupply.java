@@ -32,12 +32,12 @@ public class IngredientSupply extends UserModel {
 			IngredientSupply.class);
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Ingredient ingredient;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@Min(0)
 	@LocalizedDouble
 	public Double amount;
@@ -46,17 +46,17 @@ public class IngredientSupply extends UserModel {
 	public Double used = 0.0;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date received;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@ManyToOne
 	public Term unit;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@ManyToOne
 	public Term producer;
 

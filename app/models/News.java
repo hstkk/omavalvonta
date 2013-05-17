@@ -22,12 +22,12 @@ public class News extends UserModel {
 
 	@Column(name = "name")
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public String name;
 
 	@Lob
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public String story;
 
 	public String toString() {

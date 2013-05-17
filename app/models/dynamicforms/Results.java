@@ -55,18 +55,18 @@ public class Results extends Model {
 
 	@Required(groups = { Step2.class, Step3.class })
 	@ManyToOne
-	@NotNull(groups = { Step2.class, Step3.class })
+	@NotNull(message = "", groups = { Step2.class, Step3.class })
 	public Form form;
 
 	@Required(groups = { Step3.class })
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinColumn(updatable = false)
-	@NotNull(groups = { Step3.class })
+	@NotNull(message = "", groups = { Step3.class })
 	public List<Batch> batches = new ArrayList<Batch>();
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "results_id", nullable = false)
-	@NotNull(groups = { Update.class })
+	@NotNull(message = "", groups = { Update.class })
 	@Valid
 	public List<Result> results = new ArrayList<Result>();
 

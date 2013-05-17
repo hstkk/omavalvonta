@@ -22,18 +22,18 @@ public class Field extends Model {
 	public final static Dao<Field, Long> dao = new Dao<Field, Long>(Field.class);
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public String name;
 
 	@Lob
 	public String help;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public boolean isRequired;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public boolean isImportant;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -44,7 +44,7 @@ public class Field extends Model {
 	public Integer index;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public Integer fieldType;
 
 	@Transient

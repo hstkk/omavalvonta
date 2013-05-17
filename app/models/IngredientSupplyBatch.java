@@ -26,19 +26,19 @@ public class IngredientSupplyBatch {
 	public Long id;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@ManyToOne
 	@JoinColumn(name = "ingredientSupply_id", updatable = false)
 	public IngredientSupply ingredientSupply;
 
 	@Required(groups = { All.class })
-	@NotNull(groups = { All.class })
+	@NotNull(message = "", groups = { All.class })
 	@ManyToOne
 	@JoinColumn(name = "batch_id", updatable = false)
 	public Batch batch;
 
 	@Required
-	@NotNull(groups = { All.class })
+	@NotNull(message = "", groups = { All.class })
 	@Min(0)
 	@Column(updatable = false, nullable = false)
 	@Valid

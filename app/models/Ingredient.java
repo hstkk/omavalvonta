@@ -28,7 +28,7 @@ public class Ingredient extends UserModel {
 			Ingredient.class);
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@Column(unique = true)
 	public String name;
 
@@ -37,7 +37,7 @@ public class Ingredient extends UserModel {
 	// Days
 	@Min(0)
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public Integer bestBefore;
 
 	@ManyToOne

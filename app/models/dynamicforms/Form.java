@@ -23,7 +23,7 @@ public class Form extends UserModel {
 	public final static Dao<Form, Long> dao = new Dao<Form, Long>(Form.class);
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public String name;
 
 	@Lob

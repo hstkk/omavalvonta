@@ -25,7 +25,7 @@ public class Fieldset extends UserModel {
 			Fieldset.class);
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public String name;
 
 	@Lob

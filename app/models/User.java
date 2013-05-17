@@ -22,7 +22,7 @@ public class User extends Model {
 	public String lastName;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@Column(unique = true)
 	public String email;
 

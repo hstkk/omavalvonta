@@ -39,30 +39,30 @@ public class FinalProduct extends UserModel {
 			FinalProduct.class);
 
 	@Required(groups = { All.class, Partial.class })
-	@NotNull(groups = { All.class, Partial.class })
+	@NotNull(message = "", groups = { All.class, Partial.class })
 	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date date;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Required(groups = { All.class, Partial.class })
-	@NotNull(groups = { All.class, Partial.class })
+	@NotNull(message = "", groups = { All.class, Partial.class })
 	@Valid
 	public Term destiny;
 
 	@Required(groups = { All.class, Partial.class })
-	@NotNull(groups = { All.class, Partial.class })
+	@NotNull(message = "", groups = { All.class, Partial.class })
 	@LocalizedDouble
 	public Double amount;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Required(groups = { All.class, Partial.class })
-	@NotNull(groups = { All.class, Partial.class })
+	@NotNull(message = "", groups = { All.class, Partial.class })
 	@Valid
 	public Term unit;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@Required(groups = { All.class })
-	@NotNull(groups = { All.class })
+	@NotNull(message = "", groups = { All.class })
 	@Valid
 	public Batch batch;
 

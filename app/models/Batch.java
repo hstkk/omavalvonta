@@ -50,12 +50,12 @@ public class Batch extends UserModel {
 	public Product product;
 
 	@Required(groups = { All.class, Step2.class })
-	@NotNull(groups = { All.class, Step2.class })
+	@NotNull(message = "", groups = { All.class, Step2.class })
 	@Formats.DateTime(pattern = "dd.MM.yyyy")
 	public Date date;
 
 	@Required(groups = { All.class, Step2.class })
-	@NotNull(groups = { All.class, Step2.class })
+	@NotNull(message = "", groups = { All.class, Step2.class })
 	@Valid
 	@OneToMany(mappedBy = "batch", cascade = CascadeType.ALL)
 	public List<IngredientSupplyBatch> ingredientSupplies = new ArrayList<IngredientSupplyBatch>();
@@ -173,8 +173,9 @@ public class Batch extends UserModel {
 		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<Batch> query = criteriaBuilder.createQuery(Batch.class);
 		Root<Batch> root = query.from(Batch.class);
-		query.where(criteriaBuilder.equal(root.get(Batch_.product).get("id"), product.id)
-				//,criteriaBuilder.isNull(root.get(Batch_.finalProduct).get("destiny"))
+		query.where(criteriaBuilder.equal(root.get(Batch_.product).get("id"),
+				product.id)
+		// ,criteriaBuilder.isNull(root.get(Batch_.finalProduct).get("destiny"))
 		);
 		return dao.options(query);
 	}
@@ -186,7 +187,8 @@ public class Batch extends UserModel {
 			if (ingredientSupplyBatch.amount != null
 					&& ingredientSupplyBatch.amount < 0) {
 				List<ValidationError> list = new ArrayList<ValidationError>();
-				list.add(new ValidationError("negative", Messages.get("batch.amountNegative")));
+				list.add(new ValidationError("negative", Messages
+						.get("batch.amountNegative")));
 				errors.put("ingredientSupplies[" + i + "].amount", list);
 			}
 

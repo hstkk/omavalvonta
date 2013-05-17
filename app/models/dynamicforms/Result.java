@@ -34,7 +34,7 @@ public class Result extends UserModel {
 	public Results results;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Field field;
 

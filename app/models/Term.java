@@ -33,11 +33,11 @@ public class Term extends UserModel {
 
 	@Column(name = "name")
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	public String name;
 
 	@Required
-	@NotNull
+	@NotNull(message = "")
 	@Column(name = "category", nullable = false)
 	public int category;
 
