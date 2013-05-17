@@ -12,7 +12,7 @@
 	@defining(Session.username != null) { isLogged =>
 		@if(isLogged) {
 			@checkbox(
-				field("checkAll"),
+				FORM("checkAll"),
 				'_label -> Messages.get("label.checkAll"),
 				'_id -> "checkAll"
 			)
