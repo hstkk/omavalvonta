@@ -31,4 +31,19 @@
 	        <tr>
 		</tbody>
 	}
+	<h3>@Messages.get("batch.page")</h3>
+		@if(ingredientSupply.batches != null || !ingredientSupply.batches.isEmpty){
+			@table() {
+				@thead() {
+					@Messages.get("label.batch")
+					@Messages.get("ingredientsupply.amount")
+				}
+			<tbody>
+				@for(batch <- ingredientSupply.batches) {
+					@tr() { <a href="@routes.Batchs.show(batch.batch.id)">@batch.batch</a>
+						@Converter.doubleToString(batch.amount) @ingredientSupply.unit }
+					}
+			</tbody>
+		}
+	}
 }
