@@ -1,0 +1,8 @@
+@(batch: models.Batch)
+
+@import play.i18n._
+
+@tags.navs.tabs() {
+	<li><a href="@routes.Batches.show(batch.id)">@Messages.get("label.batch")</a></li>
+	<li><a href="@routes.FinalProducts.edit(batch.id)">@Messages.get("batch.finalproduct")</a></li>
+}

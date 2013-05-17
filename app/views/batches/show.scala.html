@@ -5,6 +5,7 @@
 @import tags.navs._
 
 @main(Messages.get("label.batch") + " " + batch.toString) {
+	@batches.tabs(batch)
 	@info(batch)
 	@finalProduct(batch)
 	@results(batch)
