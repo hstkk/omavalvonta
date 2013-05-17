@@ -83,6 +83,7 @@ label.batches=Erät
 label.ack=Kuittaa
 label.form=Lomake
 label.update=Muokkaa
+label.checkAll=Kuittaa kaikki
 
 # --- Help
 help.producer=vastaa raaka-aineelle asetetuista lakisääteisistä vaatimuksista

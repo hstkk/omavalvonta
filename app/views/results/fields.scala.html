@@ -10,6 +10,13 @@
 	<input type="hidden" id="id" name="id" value="@t.id">
 
 	@defining(Session.username != null) { isLogged =>
+		@if(isLogged) {
+			@checkbox(
+				field("checkAll"),
+				'_label -> Messages.get("label.checkAll"),
+				'_id -> "checkAll"
+			)
+		}
 		@defining(options(models.Term.options(models.TermCategory.REASON))) { _options =>
 			@repeat(FORM("results")) { result =>
 				@FIELDSET(result)
