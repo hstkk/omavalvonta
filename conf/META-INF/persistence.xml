@@ -11,7 +11,7 @@
 			<!--Fix MySQL5 boolean type-->
 			<property name="hibernate.dialect" value="models.helpers.MySQL5Dialect"/>
 			<!--Remove when in production (generate table schema)-->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
             <!--Remove when in production (print SQL)-->
             <!--<property name="hibernate.show_sql" value="true"/>-->
 		</properties>
