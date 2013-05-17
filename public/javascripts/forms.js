@@ -14,7 +14,6 @@ $(function() {
 	// renumber form fields
 	var renumber = function(){
 		sortable.find('input').each(function(i) {
-console.log(i);
 			$(this).attr('name', $(this).attr('name').replace(/\[.+?\]/g, '[' + i + ']'));
 		});
 	};
