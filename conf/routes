@@ -19,7 +19,7 @@ GET		/													controllers.Application.index(sivu: Int ?= 1)
 
 #
 #
-GET		/test												controllers.Application.test
+#GET		/test												controllers.Application.test
 #
 #
 
