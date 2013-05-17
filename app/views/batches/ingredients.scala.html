@@ -13,7 +13,7 @@
 			}
 		<tbody>
 			@for(ingredientSupply <- batch.ingredientSupplies) {
-				@tr() { <a href="@routes.IngredientSupplies.show(ingredientSupply.ingredientSupply.ingredient.id)">@ingredientSupply.ingredientSupply</a>
+				@tr() { <a href="@routes.IngredientSupplies.show(ingredientSupply.ingredientSupply.id)">@ingredientSupply.ingredientSupply</a>
 					@Converter.doubleToString(ingredientSupply.amount) @ingredientSupply.ingredientSupply.unit }
 				}
 		</tbody>
