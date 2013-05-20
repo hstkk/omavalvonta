@@ -164,12 +164,12 @@ public class ShibbolethHelper {
 
 	public static void printHeaders(Map<String, String[]> headers) {
 		for (String key : headers.keySet())
-			System.out.println("Info: " + key + " - " + headers.get(key));
+			System.out.println("Info: " + key + " - " + headers.get(key)[0]);
 	}
 
 	public static boolean verifyAttributes(Map<String, String[]> headers) {
 		// test
-		printHeaders(headers);
+		//printHeaders(headers);
 		// test
 		if (headers.isEmpty()) {
 			System.out.println("Shibboleth: empty HTTP headers");
