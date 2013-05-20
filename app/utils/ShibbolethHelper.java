@@ -75,7 +75,7 @@ public class ShibbolethHelper {
 		url.append("?return=");
 		boolean secure = true;
 		url.append(URLEncoder.encode(
-				routes.Application.index(0).absoluteURL(ctx.request(), secure)
+				routes.Application.index(1).absoluteURL(ctx.request(), secure)
 						.toString(), ShibbolethDefaults.URL_ENCODING));
 
 		return url.toString();
@@ -155,7 +155,7 @@ public class ShibbolethHelper {
 					.getString("shibboleth.attribute.firstName"))[0];
 			user.lastName = headers.get(Helper
 					.getString("shibboleth.attribute.lastName"))[0];
-			user.role = user.email = headers.get(Helper
+			user.role = headers.get(Helper
 					.getString("shibboleth.attribute.role"))[0];
 			return user;
 		}
