@@ -25,7 +25,7 @@ GET		/													controllers.Application.index(sivu: Int ?= 1)
 
 # Shibboleth
 GET		/autentikoi											controllers.shib.Shibboleth.authenticate
-GET		/kirjaudu											controllers.shib.Shibboleth.login(url = "/")
+GET		/kirjaudu											controllers.shib.Shibboleth.login(url: String ?= "/")
 GET		/kirjaudu-ulos										controllers.shib.Shibboleth.logout
 
 # Management
