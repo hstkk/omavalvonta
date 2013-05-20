@@ -4,6 +4,7 @@
 @import tags.alerts._
 @import tags.tables._
 @import play.i18n._
+@import utils.Converter
 
 @main(Messages.get("ingredientsupply.page")) {
 	@if(!page.isEmpty){
@@ -15,7 +16,7 @@
 			<tbody>
 				@for(ingredientSupply <- page.getList) {
 					@tr() { <a href="@routes.IngredientSupplies.show(ingredientSupply.id)">@ingredientSupply</a>
-	        			@ingredientSupply.amount @ingredientSupply.unit }
+	        			@Converter.doubleToString(ingredientSupply.amount) @ingredientSupply.unit }
 				}
 			</tbody>
 		}
