@@ -5,6 +5,7 @@ import java.util.*;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -79,7 +80,8 @@ public class FinalProduct extends UserModel {
 		CriteriaQuery<FinalProduct> query = criteriaBuilder
 				.createQuery(FinalProduct.class);
 		Root<FinalProduct> root = query.from(FinalProduct.class);
-		query.where(criteriaBuilder.equal(root.get(FinalProduct_.batch), batch));
+		Join<FinalProduct, Batch> join = root.join(FinalProduct_.batch);
+		query.where(criteriaBuilder.equal(join.get(Batch_.id), batch.id));
 		return dao.findBy(query);
 	}
 
