@@ -45,11 +45,11 @@
 						@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
 							<tr><th colspan="5">@result.getOldField(results).fieldset</th></tr>
 						}
-						<tr @if(!result.isDone(results)) { class="error" } >
+						<tr class="@{if(result.isEmpty) "warning" else if(!result.isDone(results)) "error"}">
 							<td>@result.getOldField(results).name</td>
 							<td>@result.getOldField(results).help</td>
 							<td>@result</td>
-							<td>@ack(result, routes.Results.ack(results.id, result.id), isLogged)</td>
+							<td>@ack(result, routes.Results.ack(results.id, result.id), isLogged, !result.isEmpty)</td>
 							<td>@result.comment</td>
 						</tr>
 					}

@@ -25,7 +25,7 @@
 							@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
 								<tr><th colspan="5">@result.getOldField(results).fieldset</th></tr>
 							}
-							<tr @if(!result.isDone(results)) { class="error" } >
+							<tr class="@{if(result.isEmpty) "warning" else if(!result.isDone(results)) "error"}">
 								<td>@result.getOldField(results).name</td>
 								<td>@result.getOldField(results).help</td>
 								<td>@result</td>
