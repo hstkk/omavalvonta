@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -16,17 +17,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.envers.Audited;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import controllers.shib.Session;
 
+import play.data.validation.Validation;
 import play.data.validation.ValidationError;
 import play.data.validation.Constraints.Required;
 import play.i18n.Messages;
@@ -218,8 +218,23 @@ public class Results extends Model {
 		return printed;
 	}
 
-	public Map<String, List<ValidationError>> validate() {
+	private Map<String, List<ValidationError>> _validate() {
 		Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
+		SpringValidatorAdapter validator = new SpringValidatorAdapter(
+				Validation.getValidator());
+		Set<ConstraintViolation<Results>> violations = validator.validate(this);
+		for (ConstraintViolation<Results> violation : violations) {
+			String field = violation.getPropertyPath().toString();
+			String error = violation.getMessage();
+			List<ValidationError> list = new ArrayList<ValidationError>();
+			list.add(new ValidationError(field, error));
+			errors.put(field, list);
+		}
+		return errors;
+	}
+
+	public Map<String, List<ValidationError>> validate() {
+		Map<String, List<ValidationError>> errors = _validate();
 		if (this.results != null && !this.results.isEmpty()) {
 			Results t = dao.findById(this.id);
 			if (t != null) {
