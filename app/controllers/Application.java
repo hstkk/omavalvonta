@@ -25,19 +25,4 @@ public class Application extends Controller {
 			return redirect(routes.News.page(1));
 		return Helper.getUnauthorized();
 	}
-
-	@Transactional
-	public static Result test() {
-		if (models.User.dao.count() == 0) {
-			models.User user = new models.User();
-			user.email = "foo@bar.com";
-			user.role = "stuff";
-			models.User.dao.create(user);
-			utils.ShibbolethHelper.createSession(ctx(), user);
-		} else {
-			models.User user = models.User.dao.findById((long) 1);
-			utils.ShibbolethHelper.createSession(ctx(), user);
-		}
-		return index(1);
-	}
 }

@@ -17,12 +17,6 @@
 # News
 GET		/													controllers.Application.index(sivu: Int ?= 1)
 
-#
-#
-#GET		/test												controllers.Application.test
-#
-#
-
 # Shibboleth
 GET		/autentikoi											controllers.shib.Shibboleth.authenticate
 GET		/kirjaudu											controllers.shib.Shibboleth.login(url: String ?= "/")
