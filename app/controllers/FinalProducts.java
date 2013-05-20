@@ -61,7 +61,7 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 
 	@Transactional
 	public Result save(Long batchId) {
-		Batch batch = Batch.dao.getReference(batchId);
+		Batch batch = Batch.dao.findById(batchId);
 		if (batch == null)
 			return Helper.getNotFound();
 		Form<FinalProduct> filledForm = form(FinalProduct.class,
@@ -95,7 +95,7 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 
 	@Transactional(readOnly = true)
 	public Result edit(Long batchId) {
-		Batch batch = Batch.dao.getReference(batchId);
+		Batch batch = Batch.dao.findById(batchId);
 		if (batch == null)
 			return Helper.getNotFound();
 		FinalProduct finalProduct = FinalProduct.findByBatch(batch);
