@@ -3,13 +3,14 @@
 @import play.i18n._
 @import tags._
 @import tags.alerts._
+@import utils.Converter
 
 @main(Messages.get("news.page")) {
 	@if(!page.isEmpty){
 		@for(news <- page.getList) {
 			<div class="news">
 				<h2>@news.name</h2>
-				<p>@news.lastModified &ndash; @news.user</p>
+				<p>@Converter.dateToString(news.lastModified) &ndash; @news.user</p>
 				@news.story
 			</div>
 		}

@@ -5,6 +5,7 @@
 @import tags.alerts._
 @import tags.tables._
 @import tags.navs._
+@import utils.Converter
 
 @views.html.management(Messages.get("news.page")) {
 	@if(!page.isEmpty){
@@ -16,7 +17,7 @@
 			}
 			<tbody>
 				@for(news <- page.getList) {
-					@tr() { <a href="@routes.News.edit(news.id)">@news.lastModified</a>
+					@tr() { <a href="@routes.News.edit(news.id)">@Converter.dateToString(news.lastModified)</a>
 						@news
 						@news.user }
 				}
