@@ -5,16 +5,16 @@ import play.Project._
 object ApplicationBuild extends Build {
 
     val appName         = "omavalvonta"
-    val appVersion      = "1.0-SNAPSHOT-3"
+    val appVersion      = "1.0-SNAPSHOT-4"
 
     val appDependencies = Seq(
 		javaCore,
 		javaJdbc,
 		javaJpa,
 		filters,
-		"org.hibernate" % "hibernate-entitymanager" % "4.2.0.Final",
-		"org.hibernate" % "hibernate-envers" % "4.2.0.Final",
-		"mysql" % "mysql-connector-java" % "5.1.24",
+		"org.hibernate" % "hibernate-entitymanager" % "4.2.1.Final",
+		"org.hibernate" % "hibernate-envers" % "4.2.1.Final",
+		"mysql" % "mysql-connector-java" % "5.1.25",
 		"org.hibernate" % "hibernate-jpamodelgen" % "1.2.0.Final",
 		"pdf" % "pdf_2.10" % "0.4.1"
     )
