@@ -1,4 +1,4 @@
-@(FORM: play.data.Form[models.Term], action: play.api.mvc.Call)
+@(FORM: play.data.Form[models.Term], action: play.api.mvc.Call)(content: Html)
 
 @import play.i18n._
 @import helper._
@@ -11,10 +11,6 @@
 		FORM("name"),
 		'_label -> Messages.get("label.name")
 	)
-	@select(
-		FORM("category"),
-		options = options(models.TermCategory.options),
-		'_default -> "",
-		'_label ->  Messages.get("label.category")
-	)
+
+	@content
 }

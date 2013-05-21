@@ -1,7 +1,18 @@
 @(FORM: play.data.Form[models.Term])
 
 @import play.i18n._
+@import helper._
+@import tags.forms._
+
+@implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @views.html.management(Messages.get("term.create")){
-	@fields(FORM, routes.Terms.create)
+	@fields(FORM, routes.Terms.create) {
+		@select(
+			FORM("category"),
+			options = options(models.TermCategory.options),
+			'_default -> "",
+			'_label ->  Messages.get("label.category")
+		)
+	}
 }

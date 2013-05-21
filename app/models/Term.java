@@ -38,7 +38,7 @@ public class Term extends UserModel {
 
 	@Required
 	@NotNull(message = "")
-	@Column(name = "category", nullable = false)
+	@Column(name = "category", nullable = false, updatable = false)
 	public int category;
 
 	@Transient
