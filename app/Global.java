@@ -1,3 +1,4 @@
+import java.util.Locale;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -41,5 +42,6 @@ public class Global extends GlobalSettings {
 	public void onStart(Application app) {
 		Formatters.register(Double.class, new DoubleFormatter());
 		super.onStart(app);
+		Logger.info("Locale " + Locale.getDefault().toString());
 	}
 }
