@@ -15,7 +15,6 @@ public class Session extends Action.Simple {
 		if (ShibbolethHelper.isSession(ctx)
 				&& !ctx.request().method().equalsIgnoreCase("POST")
 				&& !ShibbolethHelper.isSessionValid(ctx)) {
-			System.out.println("Timeout");
 			return Shibboleth.logout();
 		}
 

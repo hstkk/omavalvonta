@@ -26,6 +26,7 @@ import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import controllers.shib.Session;
 
+import play.Logger;
 import play.data.validation.Validation;
 import play.data.validation.ValidationError;
 import play.data.validation.Constraints.Required;
@@ -104,7 +105,7 @@ public class Results extends Model {
 			try {
 				BeanUtils.copyProperties(that, this);
 			} catch (Exception e) {
-				e.printStackTrace();
+				Logger.warn("Update results", e);
 				return false;
 			}
 

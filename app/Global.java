@@ -1,5 +1,6 @@
 import play.Application;
 import play.GlobalSettings;
+import play.Logger;
 import play.api.mvc.EssentialFilter;
 import play.data.format.Formatters;
 import play.filters.csrf.CSRFFilter;
@@ -16,7 +17,7 @@ public class Global extends GlobalSettings {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public <T extends EssentialFilter> Class<T>[] filters() {
-		Class[] filters = {CSRFFilter.class};
+		Class[] filters = { CSRFFilter.class };
 		return filters;
 	}
 
@@ -27,7 +28,7 @@ public class Global extends GlobalSettings {
 
 	@Override
 	public Result onError(RequestHeader request, Throwable t) {
-		t.printStackTrace();
+		Logger.warn("500", t);
 		return Helper.getInternalServerError();
 	}
 

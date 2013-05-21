@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
+import play.Logger;
 import play.Play;
 import play.db.jpa.JPA;
 
@@ -39,7 +40,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 				return JPA.em().getReference(clazz, id);
 		} catch (EntityNotFoundException e) {
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("getReference", e);
 		}
 		return null;
 	}
@@ -54,7 +55,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 						references.add(reference);
 				}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("getReference", e);
 		}
 		return references;
 	}
@@ -66,7 +67,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		} catch (EntityNotFoundException e) {
 		} catch (NullPointerException e) {
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("getReference", e);
 		}
 		return null;
 	}

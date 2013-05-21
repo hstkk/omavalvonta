@@ -15,6 +15,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+
+import play.Logger;
 import play.db.jpa.JPA;
 
 public class Dao<T extends Model, ID extends Serializable> extends
@@ -45,7 +47,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("create", e);
 		}
 		return false;
 	};
@@ -56,7 +58,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 			JPA.em().remove(t);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("delete", e);
 		}
 		return false;
 	}
@@ -95,7 +97,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 		} catch (NoResultException e) {
 		} catch (EntityNotFoundException e) {
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("findAllBy", e);
 		}
 		return null;
 	}
@@ -107,7 +109,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 			return q.getSingleResult();
 		} catch (NoResultException e) {
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("findBy", e);
 		}
 		return null;
 	}
@@ -119,7 +121,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 				return JPA.em().find(clazz, id);
 		} catch (NoResultException e) {
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("findById", e);
 		}
 		return null;
 	}
@@ -131,7 +133,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 			return q.getSingleResult();
 		} catch (NoResultException e) {
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("findLongBy", e);
 		}
 		return null;
 	}
@@ -147,7 +149,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 				return t;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("getVersion", e);
 		}*/
 		return null;
 	}
@@ -167,7 +169,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 				return versions;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("getVersions", e);
 		}*/
 		return null;
 	}
@@ -205,7 +207,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 				return true;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.warn("update", e);
 		}
 		return false;
 	}

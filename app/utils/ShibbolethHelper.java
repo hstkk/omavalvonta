@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
 import models.User;
+import play.Logger;
 import play.Play;
 import play.data.validation.Validation;
 import play.mvc.Http.Context;
@@ -164,15 +165,15 @@ public class ShibbolethHelper {
 
 	public static void printHeaders(Map<String, String[]> headers) {
 		for (String key : headers.keySet())
-			System.out.println("Info: " + key + " - " + headers.get(key)[0]);
+			Logger.info(key + " " + headers.get(key)[0]);
 	}
 
 	public static boolean verifyAttributes(Map<String, String[]> headers) {
-		// test
-		//printHeaders(headers);
-		// test
+		if (Play.isDev())
+			printHeaders(headers);
+
 		if (headers.isEmpty()) {
-			System.out.println("Shibboleth: empty HTTP headers");
+			Logger.warn("Shibboleth: empty HTTP headers");
 			return false;
 		}
 		String[] keys = { "shibboleth.attribute.email",
@@ -182,14 +183,11 @@ public class ShibbolethHelper {
 			String header = Helper.getString(key);
 			Boolean required = Helper.getBool(key + "Required");
 			if (!headers.containsKey(header)) {
-				System.out.print("Shibboleth: couldn't find ");
-				System.out.print(header);
-				System.out.println(" HTTP header");
+				Logger.warn("Shibboleth: couldn't find " + header
+						+ " HTTP header");
 				return false;
 			} else if (required && headers.get(header)[0].isEmpty()) {
-				System.out.print("Shibboleth: ");
-				System.out.print(header);
-				System.out.println(" HTTP header is empty");
+				Logger.warn("Shibboleth: " + header + " HTTP header is empty");
 				return false;
 			}
 		}
