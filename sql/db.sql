@@ -33,7 +33,7 @@ CREATE TABLE `Batch` (
   KEY `FK3CFE71A63509FB6` (`product_id`),
   CONSTRAINT `FK3CFE71A63509FB6` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`),
   CONSTRAINT `FK3CFE71A47140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `Batch_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FK3D1EF7EBDF74E053` (`REV`),
   CONSTRAINT `FK3D1EF7EBDF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ CREATE TABLE `Field` (
   PRIMARY KEY (`id`),
   KEY `FK40BB0DAA76B7D34` (`fieldset_id`),
   CONSTRAINT `FK40BB0DAA76B7D34` FOREIGN KEY (`fieldset_id`) REFERENCES `Fieldset` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,7 +134,7 @@ CREATE TABLE `Field_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FKC2DFE1ABDF74E053` (`REV`),
   CONSTRAINT `FKC2DFE1ABDF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +162,7 @@ CREATE TABLE `Fieldset` (
   PRIMARY KEY (`id`),
   KEY `FKCC7B254847140EFE` (`user_id`),
   CONSTRAINT `FKCC7B254847140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +191,7 @@ CREATE TABLE `Fieldset_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FK24836F19DF74E053` (`REV`),
   CONSTRAINT `FK24836F19DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,7 +229,7 @@ CREATE TABLE `FinalProduct` (
   CONSTRAINT `FK75A286B9453CDED6` FOREIGN KEY (`batch_id`) REFERENCES `Batch` (`id`),
   CONSTRAINT `FK75A286B947140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`),
   CONSTRAINT `FK75A286B99775DBF8` FOREIGN KEY (`destiny_id`) REFERENCES `Term` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +262,7 @@ CREATE TABLE `FinalProduct_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FK3F4AB00ADF74E053` (`REV`),
   CONSTRAINT `FK3F4AB00ADF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,7 +290,7 @@ CREATE TABLE `Form` (
   PRIMARY KEY (`id`),
   KEY `FK2180E447140EFE` (`user_id`),
   CONSTRAINT `FK2180E447140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +319,7 @@ CREATE TABLE `Form_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FK201A9CB5DF74E053` (`REV`),
   CONSTRAINT `FK201A9CB5DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -347,7 +347,7 @@ CREATE TABLE `Form_Fieldset` (
   KEY `FKB0D79643C3FD4B4` (`Form_id`),
   CONSTRAINT `FKB0D79643C3FD4B4` FOREIGN KEY (`Form_id`) REFERENCES `Form` (`id`),
   CONSTRAINT `FKB0D7964376FDE331` FOREIGN KEY (`fieldsets_id`) REFERENCES `Fieldset` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -375,7 +375,7 @@ CREATE TABLE `Form_Fieldset_AUD` (
   PRIMARY KEY (`REV`,`Form_id`,`fieldsets_id`,`form_index`),
   KEY `FKB2F8EA94DF74E053` (`REV`),
   CONSTRAINT `FKB2F8EA94DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,7 +407,7 @@ CREATE TABLE `Ingredient` (
   KEY `FK6A844DF1C3FD4B4` (`form_id`),
   CONSTRAINT `FK6A844DF1C3FD4B4` FOREIGN KEY (`form_id`) REFERENCES `Form` (`id`),
   CONSTRAINT `FK6A844DF147140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -445,7 +445,7 @@ CREATE TABLE `IngredientSupply` (
   CONSTRAINT `FK185BEA4047140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`),
   CONSTRAINT `FK185BEA40E7459E3E` FOREIGN KEY (`ingredient_id`) REFERENCES `Ingredient` (`id`),
   CONSTRAINT `FK185BEA40F62A1A78` FOREIGN KEY (`producer_id`) REFERENCES `Term` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -478,7 +478,7 @@ CREATE TABLE `IngredientSupply_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FK5808F811DF74E053` (`REV`),
   CONSTRAINT `FK5808F811DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -507,7 +507,7 @@ CREATE TABLE `IngredientSupply_Batch` (
   KEY `FK79BF845BD01BBCFE` (`ingredientSupply_id`),
   CONSTRAINT `FK79BF845BD01BBCFE` FOREIGN KEY (`ingredientSupply_id`) REFERENCES `IngredientSupply` (`id`),
   CONSTRAINT `FK79BF845B453CDED6` FOREIGN KEY (`batch_id`) REFERENCES `Batch` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -536,7 +536,7 @@ CREATE TABLE `IngredientSupply_Batch_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FKCB8C0CACDF74E053` (`REV`),
   CONSTRAINT `FKCB8C0CACDF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -567,7 +567,7 @@ CREATE TABLE `Ingredient_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FKD3061B42DF74E053` (`REV`),
   CONSTRAINT `FKD3061B42DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -595,7 +595,7 @@ CREATE TABLE `News` (
   PRIMARY KEY (`id`),
   KEY `FK24FEF347140EFE` (`user_id`),
   CONSTRAINT `FK24FEF347140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -624,7 +624,7 @@ CREATE TABLE `News_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FK57027B44DF74E053` (`REV`),
   CONSTRAINT `FK57027B44DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -653,7 +653,7 @@ CREATE TABLE `Product` (
   PRIMARY KEY (`id`),
   KEY `FK50C664CF47140EFE` (`user_id`),
   CONSTRAINT `FK50C664CF47140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -683,7 +683,7 @@ CREATE TABLE `Product_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FKA859320DF74E053` (`REV`),
   CONSTRAINT `FKA859320DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -709,7 +709,7 @@ CREATE TABLE `Product_Form` (
   KEY `FK462F7E5463509FB6` (`Product_id`),
   CONSTRAINT `FK462F7E5463509FB6` FOREIGN KEY (`Product_id`) REFERENCES `Product` (`id`),
   CONSTRAINT `FK462F7E5450EA9969` FOREIGN KEY (`forms_id`) REFERENCES `Form` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -736,7 +736,7 @@ CREATE TABLE `Product_Form_AUD` (
   PRIMARY KEY (`REV`,`Product_id`,`forms_id`),
   KEY `FK8B0C6225DF74E053` (`REV`),
   CONSTRAINT `FK8B0C6225DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -762,7 +762,7 @@ CREATE TABLE `Product_Ingredient` (
   KEY `FKE01A776163509FB6` (`Product_id`),
   CONSTRAINT `FKE01A776163509FB6` FOREIGN KEY (`Product_id`) REFERENCES `Product` (`id`),
   CONSTRAINT `FKE01A7761AB4215AD` FOREIGN KEY (`ingredients_id`) REFERENCES `Ingredient` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -789,7 +789,7 @@ CREATE TABLE `Product_Ingredient_AUD` (
   PRIMARY KEY (`REV`,`Product_id`,`ingredients_id`),
   KEY `FKD58A0CB2DF74E053` (`REV`),
   CONSTRAINT `FKD58A0CB2DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -812,7 +812,7 @@ CREATE TABLE `REVINFO` (
   `REV` int(11) NOT NULL AUTO_INCREMENT,
   `REVTSTMP` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -853,7 +853,7 @@ CREATE TABLE `Result` (
   CONSTRAINT `FK91B2B43D27F20286` FOREIGN KEY (`reason_id`) REFERENCES `Term` (`id`),
   CONSTRAINT `FK91B2B43D28177D40` FOREIGN KEY (`field_id`) REFERENCES `Field` (`id`),
   CONSTRAINT `FK91B2B43D47140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -889,7 +889,7 @@ CREATE TABLE `Result_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FK54C07B8EDF74E053` (`REV`),
   CONSTRAINT `FK54C07B8EDF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -917,7 +917,7 @@ CREATE TABLE `Results` (
   KEY `FKA4A3D3D681D6450C` (`form_id`),
   CONSTRAINT `FKA4A3D3D681D6450C` FOREIGN KEY (`form_id`) REFERENCES `Batch` (`id`),
   CONSTRAINT `FKA4A3D3D6C3FD4B4` FOREIGN KEY (`form_id`) REFERENCES `Form` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -944,7 +944,7 @@ CREATE TABLE `Results_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FK447626A7DF74E053` (`REV`),
   CONSTRAINT `FK447626A7DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -970,7 +970,7 @@ CREATE TABLE `Results_Batch` (
   KEY `FKFF9B6571B0897240` (`Results_id`),
   CONSTRAINT `FKFF9B6571B0897240` FOREIGN KEY (`Results_id`) REFERENCES `Results` (`id`),
   CONSTRAINT `FKFF9B65719A90E1E8` FOREIGN KEY (`batches_id`) REFERENCES `Batch` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -997,7 +997,7 @@ CREATE TABLE `Results_Batch_AUD` (
   PRIMARY KEY (`REV`,`Results_id`,`batches_id`),
   KEY `FK4FC572C2DF74E053` (`REV`),
   CONSTRAINT `FK4FC572C2DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1024,7 +1024,7 @@ CREATE TABLE `Results_Result_AUD` (
   PRIMARY KEY (`REV`,`results_id`,`id`),
   KEY `FK96E95B97DF74E053` (`REV`),
   CONSTRAINT `FK96E95B97DF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1052,7 +1052,7 @@ CREATE TABLE `Term` (
   PRIMARY KEY (`id`),
   KEY `FK27B88C47140EFE` (`user_id`),
   CONSTRAINT `FK27B88C47140EFE` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1081,7 +1081,7 @@ CREATE TABLE `Term_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FKBD6CC05DDF74E053` (`REV`),
   CONSTRAINT `FKBD6CC05DDF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1108,7 +1108,7 @@ CREATE TABLE `User` (
   `lastName` varchar(255) DEFAULT NULL,
   `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1138,7 +1138,7 @@ CREATE TABLE `User_AUD` (
   PRIMARY KEY (`id`,`REV`),
   KEY `FKF3FCA03CDF74E053` (`REV`),
   CONSTRAINT `FKF3FCA03CDF74E053` FOREIGN KEY (`REV`) REFERENCES `REVINFO` (`REV`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
