@@ -75,6 +75,22 @@ public class FinalProduct extends UserModel {
 		return destiny.toString();
 	}
 
+	private void set() {
+		this.destiny = Term.dao.getReference(this.destiny);
+	}
+
+	@Override
+	public boolean onCreate() {
+		set();
+		return super.onCreate();
+	}
+
+	@Override
+	public boolean onUpdate() {
+		set();
+		return super.onUpdate();
+	}
+
 	public static FinalProduct findByBatch(Batch batch) {
 		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<FinalProduct> query = criteriaBuilder
