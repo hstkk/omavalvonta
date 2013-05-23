@@ -180,6 +180,7 @@ results.updatable=Tuloksia ei voi päivittää, koska erän lopputuote on määr
 results.history=Historia
 results.pdf=PDF-tiedosto
 results.summary=Yhteenveto tärkeistä tuloksista
+results.sum=Yhteenveto
 
 # --- Result
 results.reason=Muutoksen syy
