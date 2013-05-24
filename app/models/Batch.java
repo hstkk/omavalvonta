@@ -24,7 +24,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import models.dynamicforms.Form;
+import models.dynamicforms.Form_;
 import models.dynamicforms.Results;
+import models.dynamicforms.Results_;
 import models.helpers.Dao;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
@@ -184,25 +186,28 @@ public class Batch extends UserModel {
 		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<Batch> query = criteriaBuilder.createQuery(Batch.class);
 		Root<Batch> root = query.from(Batch.class);
-		query.where(criteriaBuilder.equal(root.get(Batch_.product).get("id"),
-				product.id)
-		// ,criteriaBuilder.isNull(root.get(Batch_.finalProduct).get("destiny"))
+		Join<Batch, Results> joinA = root.join(Batch_.results);
+		Join<Results, Form> joinB = joinA.join(Results_.form);
+		query.where(
+			criteriaBuilder.equal(root.get(Batch_.product).get(Product_.id), product.id),
+			criteriaBuilder.notEqual(joinB.get(Form_.id), form.id),
+		    criteriaBuilder.isNull(root.get(Batch_.finalProduct))
 		);
 		return dao.options(query);
 	}
 
 	private Map<String, List<ValidationError>> _validate() {
 		Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
-		SpringValidatorAdapter validator = new SpringValidatorAdapter(
-				Validation.getValidator());
-		Set<ConstraintViolation<Batch>> violations = validator.validate(this);
-		for (ConstraintViolation<Batch> violation : violations) {
-			String field = violation.getPropertyPath().toString();
-			String error = violation.getMessage();
-			List<ValidationError> list = new ArrayList<ValidationError>();
-			list.add(new ValidationError(field, error));
-			errors.put(field, list);
-		}
+		/*
+		 * SpringValidatorAdapter validator = new SpringValidatorAdapter(
+		 * Validation.getValidator()); Set<ConstraintViolation<Batch>>
+		 * violations = validator.validate(this); for
+		 * (ConstraintViolation<Batch> violation : violations) { String field =
+		 * violation.getPropertyPath().toString(); String error =
+		 * violation.getMessage(); List<ValidationError> list = new
+		 * ArrayList<ValidationError>(); list.add(new ValidationError(field,
+		 * error)); errors.put(field, list); }
+		 */
 		return errors;
 	}
 
