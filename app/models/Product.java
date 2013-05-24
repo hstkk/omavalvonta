@@ -93,4 +93,14 @@ public class Product extends UserModel {
 		query.where(criteriaBuilder.equal(join.get(Form_.id), form.id));
 		return dao.findAllBy(query);
 	}
+
+	public static List<Product> findByIngredient(Ingredient ingredient) {
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<Product> query = criteriaBuilder
+				.createQuery(Product.class);
+		Root<Product> root = query.from(Product.class);
+		Join<Product, Ingredient> join = root.join(Product_.ingredients);
+		query.where(criteriaBuilder.equal(join.get(Ingredient_.id), ingredient.id));
+		return dao.findAllBy(query);
+	}
 }

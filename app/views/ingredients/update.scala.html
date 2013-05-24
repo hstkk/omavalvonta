@@ -1,7 +1,27 @@
 @(t: models.Ingredient, FORM: play.data.Form[models.Ingredient])
 
 @import play.i18n._
+@import tags.alerts._
+@import tags.tables._
 
 @views.html.management(Messages.get("ingredient.update")){
 	@fields(FORM, routes.Ingredients.update(t.id))
+
+	<hr>
+	<h3>@Messages.get("product.page")</h3>
+	@defining(models.Product.findByIngredient(t)) { products =>
+		@if(products != null && !products.isEmpty){
+			@table() {
+				<tbody>
+					@for(product <- products) {
+						@tr() { <a href="@routes.Products.edit(product.id)">@product</a> }
+					}
+				</tbody>
+			}
+		} else {
+			@warning() {
+				@Messages.get("product.page.empty")
+			}
+		}
+	}
 }
