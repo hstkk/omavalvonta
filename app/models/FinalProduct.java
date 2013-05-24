@@ -108,7 +108,8 @@ public class FinalProduct extends UserModel {
 		CriteriaQuery<FinalProduct> query = criteriaBuilder
 				.createQuery(FinalProduct.class);
 		Root<FinalProduct> root = query.from(FinalProduct.class);
-		query.where(criteriaBuilder.equal(root.get(FinalProduct_.user), user));
+		Join<FinalProduct, User> join = root.join(FinalProduct_.user);
+		query.where(criteriaBuilder.equal(join.get(User_.id), user.id));
 		return dao.findAllBy(query);
 	}
 
