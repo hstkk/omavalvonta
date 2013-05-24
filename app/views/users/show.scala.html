@@ -75,4 +75,32 @@
 			}
 		}
 	}
+
+	<h2>@Messages.get("results.page")</h2>
+	@defining(models.dynamicforms.Results.findByUser(user)) { results =>
+		@if(results == null || results.isEmpty) {
+			@warning() {
+				@Messages.get("results.page.empty")
+			}
+		} else {
+			@table() {
+				@thead() {
+					@Messages.get("label.form")
+					@Messages.get("label.batch")
+				}
+				<tbody>
+					@for(result <- results) {
+						@for((batch, index) <- result.batches.zipWithIndex) {
+							<tr>
+								@if(index == 0) {
+									<td rowspan="@result.batches.size"><a href="@routes.Results.show(result.id)">@result.form</a></td>
+								}
+								<td>@batch</td>
+							</tr>
+						}
+					}
+				</tbody>
+			}
+		}
+	}
 }

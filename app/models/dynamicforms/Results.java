@@ -17,6 +17,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -35,6 +39,7 @@ import models.Batch;
 import models.Product;
 import models.Term;
 import models.User;
+import models.User_;
 import models.helpers.Dao;
 import models.helpers.Model;
 
@@ -262,5 +267,16 @@ public class Results extends Model {
 		if (!errors.isEmpty())
 			return errors;
 		return null;
+	}
+
+	public static List<Results> findByUser(User user) {
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<Results> query = criteriaBuilder
+				.createQuery(Results.class);
+		Root<Results> root = query.from(Results.class);
+		Join<Results, Result> _result = root.join(Results_.results);
+		Join<Result, User> _user = _result.join(Result_.user);
+		query.where(criteriaBuilder.equal(_user.get(User_.id), user.id));
+		return dao.findAllBy(query);
 	}
 }
