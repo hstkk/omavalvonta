@@ -1,6 +1,8 @@
 @(fieldset: models.dynamicforms.Fieldset)
 
 @import play.i18n._
+@import tags.alerts._
+@import tags.tables._
 
 @views.html.management(Messages.get("fieldset.show")) {
 
@@ -9,4 +11,22 @@
 	}
 
 	<p><a class="btn btn-primary" href="@routes.Fieldsets.edit(fieldset.id)">@Messages.get("fieldset.update")</a></p>
+
+	<hr>
+	<h3>@Messages.get("form.page")</h3>
+	@defining(models.dynamicforms.Form.findByFieldset(fieldset)) { forms =>
+		@if(forms != null && !forms.isEmpty){
+			@table() {
+				<tbody>
+					@for(form <- forms) {
+						@tr() { <a href="@routes.Forms.show(form.id)">@form</a> }
+					}
+				</tbody>
+			}
+		} else {
+			@warning() {
+				@Messages.get("form.page.empty")
+			}
+		}
+	}
 }

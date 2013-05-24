@@ -9,6 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 
 import models.Product;
@@ -60,5 +64,15 @@ public class Form extends UserModel {
 				options.put(form.id.toString(), form.toString());
 		}
 		return options;
+	}
+
+	public static List<Form> findByFieldset(Fieldset fieldset) {
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<Form> query = criteriaBuilder
+				.createQuery(Form.class);
+		Root<Form> root = query.from(Form.class);
+		Join<Form, Fieldset> join = root.join(Form_.fieldsets);
+		query.where(criteriaBuilder.equal(join.get(Fieldset_.id), fieldset.id));
+		return dao.findAllBy(query);
 	}
 }
