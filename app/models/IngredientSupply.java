@@ -127,20 +127,20 @@ public class IngredientSupply extends UserModel {
 		return dao.findAllBy(query);
 	}
 
-	/*public static List<IngredientSupply> options() {
-		Calendar calendar = Calendar.getInstance();
-		DateTime datetime = new DateTime();
-		datetime.minusDays()
-		
-		calendar.setTime(this.received);
-		calendar.
-		bestBefore.add(Calendar.DATE, this.ingredient.bestBefore);
-		Date since = calendar.getTime();
+	public static List<IngredientSupply> options(Ingredient ingredient) {
+		if(ingredient == null)
+			return null;
+
+		DateTime since = new DateTime();
+		since.minusDays(ingredient.bestBefore);
 
 		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<IngredientSupply> query = criteriaBuilder.createQuery(IngredientSupply.class);
 		Root<IngredientSupply> root = query.from(IngredientSupply.class);
-		query.where(criteriaBuilder.equal(root.get(IngredientSupply_.user), user));
+		query.where(
+			criteriaBuilder.between(root.get(IngredientSupply_.received), since.toDate(), new Date()),
+			criteriaBuilder.greaterThan(root.get(IngredientSupply_.amount), root.get(IngredientSupply_.used))
+		);
 		return dao.findAllBy(query);
-	}*/
+	}
 }

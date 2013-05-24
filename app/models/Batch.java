@@ -156,12 +156,17 @@ public class Batch extends UserModel {
 	public play.data.Form<Batch> getPrefilledForm() {
 		if (this.product != null && this.product.ingredients != null)
 			for (Ingredient ingredient : this.product.ingredients)
-				if (ingredient != null && ingredient.ingredientSupllies != null)
-					for (IngredientSupply ingredientSupply : ingredient.ingredientSupllies) {
-						IngredientSupplyBatch ingredientSupplyBatch = new IngredientSupplyBatch(
-								ingredientSupply);
-						this.ingredientSupplies.add(ingredientSupplyBatch);
+				if (ingredient != null) {
+					List<IngredientSupply> ingredientSupplies = IngredientSupply
+							.options(ingredient);
+					if (ingredientSupplies != null) {
+						for (IngredientSupply ingredientSupply : ingredientSupplies) {
+							IngredientSupplyBatch ingredientSupplyBatch = new IngredientSupplyBatch(
+									ingredientSupply);
+							this.ingredientSupplies.add(ingredientSupplyBatch);
+						}
 					}
+				}
 		play.data.Form<Batch> form = new play.data.Form<Batch>(Batch.class);
 		return form.fill(this);
 	}
