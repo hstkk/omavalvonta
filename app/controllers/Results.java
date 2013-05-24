@@ -1,14 +1,8 @@
 package controllers;
 
-import models.Batch;
 import models.FinalProduct;
 import models.Product;
 import models.User;
-import models.helpers.Dao;
-import models.helpers.Page;
-import play.api.templates.Html;
-import play.api.templates.Template1;
-import play.api.templates.Template2;
 import play.data.Form;
 import static play.data.Form.*;
 import play.db.jpa.Transactional;
