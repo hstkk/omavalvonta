@@ -2,6 +2,7 @@ package utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 import models.User;
 import play.Logger;
@@ -199,16 +200,15 @@ public class ShibbolethHelper {
 				.isEmpty());
 	}
 
-	// TODO document split regex
-	public static boolean verifyRole(String role, String adminRole) {
-		if (adminRole != null && !adminRole.isEmpty()) {
+	public static boolean verifyRole(String role, List<String> adminRoles) {
+		if (adminRoles != null && !adminRoles.isEmpty()) {
 			String separator = Helper.getString("shibboleth.separator");
 			if (separator != null && !separator.isEmpty()) {
 				for (String r : role.split(separator))
-					if (r.equals(adminRole))
+					if (adminRoles.contains(r.trim()))
 						return true;
 			} else
-				return role.equals(adminRole);
+				return adminRoles.contains(role.trim());
 		}
 		return false;
 	}

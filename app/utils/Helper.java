@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.Arrays;
+import java.util.List;
 
 import play.Play;
 import play.i18n.Lang;
@@ -24,6 +25,10 @@ public class Helper {
 
 	public static String getString(String key) {
 		return Play.application().configuration().getString(key.trim());
+	}
+
+	public static List<String> getStrings(String key) {
+		return Play.application().configuration().getStringList(key);
 	}
 
 	public static Result getInternalServerError() {

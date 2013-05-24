@@ -1,5 +1,7 @@
 package controllers.shib;
 
+import java.util.List;
+
 import models.User;
 import play.mvc.*;
 import play.mvc.Http.Context;
@@ -23,9 +25,8 @@ public class Secured extends Security.Authenticator {
 
 	public static boolean isAdmin(User user) {
 		if (user != null && user.role != null) {
-			String adminRole = Helper.getOrElse("shibboleth.adminRole",
-					ShibbolethDefaults.ROLE);
-			return ShibbolethHelper.verifyRole(user.role, adminRole);
+			List<String> adminRoles = Helper.getStrings("shibboleth.adminRole");
+			return ShibbolethHelper.verifyRole(user.role, adminRoles);
 		}
 		return false;
 	}
