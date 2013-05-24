@@ -38,12 +38,11 @@ public class ShibbolethHelper {
 		StringBuilder url = new StringBuilder();
 
 		// Shibboleth login url
-		url.append(Helper.getOrElse("shibboleth.login.url",
-				ShibbolethDefaults.LOGIN_URL));
+		url.append(Helper.getOrElse("shibboleth.login.url"));
 
 		// The IdP to request authentication from
 		String entity = Helper.getString("shibboleth.entityID");
-		if (entity != null && !entity.isEmpty()) {
+		if (!entity.isEmpty()) {
 			url.append("?entityID=");
 			url.append(URLEncoder.encode(entity,
 					ShibbolethDefaults.URL_ENCODING));
@@ -71,8 +70,7 @@ public class ShibbolethHelper {
 		StringBuilder url = new StringBuilder();
 
 		// Shibboleth logout url
-		url.append(Helper.getOrElse("shibboleth.logout.url",
-				ShibbolethDefaults.LOGOUT_URL));
+		url.append(Helper.getOrElse("shibboleth.logout.url"));
 
 		url.append("?return=");
 		boolean secure = true;
