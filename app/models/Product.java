@@ -10,9 +10,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 import models.dynamicforms.Form;
+import models.dynamicforms.Form_;
 import models.helpers.Dao;
 import models.helpers.UserModel;
 import org.hibernate.envers.Audited;
@@ -80,5 +82,15 @@ public class Product extends UserModel {
 		if (count != null)
 			return count > 0;
 		return false;
+	}
+
+	public static List<Product> findByForm(Form form) {
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<Product> query = criteriaBuilder
+				.createQuery(Product.class);
+		Root<Product> root = query.from(Product.class);
+		Join<Product, Form> join = root.join(Product_.forms);
+		query.where(criteriaBuilder.equal(join.get(Form_.id), form.id));
+		return dao.findAllBy(query);
 	}
 }
