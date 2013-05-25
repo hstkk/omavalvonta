@@ -41,7 +41,7 @@ public class ShibbolethHelper {
 		url.append(Helper.getOrElse("shibboleth.login.url"));
 
 		// The IdP to request authentication from
-		String entity = Helper.getString("shibboleth.entityID");
+		String entity = Helper.getOrElse("shibboleth.entityID");
 		if (!entity.isEmpty()) {
 			url.append("?entityID=");
 			url.append(URLEncoder.encode(entity,
@@ -150,13 +150,13 @@ public class ShibbolethHelper {
 		if (verifyAttributes(headers)) {
 			User user = new User();
 			user.email = headers.get(Helper
-					.getString("shibboleth.attribute.email"))[0];
+					.getOrElse("shibboleth.attribute.email"))[0];
 			user.firstName = headers.get(Helper
-					.getString("shibboleth.attribute.firstName"))[0];
+					.getOrElse("shibboleth.attribute.firstName"))[0];
 			user.lastName = headers.get(Helper
-					.getString("shibboleth.attribute.lastName"))[0];
+					.getOrElse("shibboleth.attribute.lastName"))[0];
 			user.role = headers.get(Helper
-					.getString("shibboleth.attribute.role"))[0];
+					.getOrElse("shibboleth.attribute.role"))[0];
 			return user;
 		}
 		return null;
@@ -179,7 +179,7 @@ public class ShibbolethHelper {
 				"shibboleth.attribute.firstName",
 				"shibboleth.attribute.lastName", "shibboleth.attribute.role" };
 		for (String key : keys) {
-			String header = Helper.getString(key);
+			String header = Helper.getOrElse(key);
 			Boolean required = Helper.getBool(key + "Required");
 			if (!headers.containsKey(header)) {
 				Logger.warn("Shibboleth: couldn't find " + header
@@ -200,8 +200,8 @@ public class ShibbolethHelper {
 
 	public static boolean verifyRole(String role, List<String> adminRoles) {
 		if (adminRoles != null && !adminRoles.isEmpty()) {
-			String separator = Helper.getString("shibboleth.separator");
-			if (separator != null && !separator.isEmpty()) {
+			String separator = Helper.getOrElse("shibboleth.separator");
+			if (!separator.isEmpty()) {
 				for (String r : role.split(separator))
 					if (adminRoles.contains(r.trim()))
 						return true;
