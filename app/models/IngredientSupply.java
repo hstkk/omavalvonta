@@ -4,26 +4,29 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PreUpdate;
-import javax.persistence.Transient;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
+
 import models.helpers.Dao;
 import models.helpers.UserModel;
+
 import org.hibernate.envers.Audited;
-import org.joda.time.DateTime;
+import org.joda.time.DateMidnight;
 
 import play.data.format.Formats;
 import play.data.validation.Constraints.Min;
 import play.data.validation.Constraints.Required;
 import utils.Converter;
-import utils.Formats.*;
+import utils.Formats.LocalizedDouble;
 
 @Entity
 @Audited
@@ -131,16 +134,21 @@ public class IngredientSupply extends UserModel {
 		if(ingredient == null)
 			return null;
 
-		DateTime since = new DateTime();
-		since.minusDays(ingredient.bestBefore);
+		DateMidnight dateMidnight = new DateMidnight();
+		Date since = dateMidnight.minusDays(ingredient.bestBefore).toDate();
+
 
 		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<IngredientSupply> query = criteriaBuilder.createQuery(IngredientSupply.class);
 		Root<IngredientSupply> root = query.from(IngredientSupply.class);
+		Join<IngredientSupply, Ingredient> join = root.join(IngredientSupply_.ingredient);
+
 		query.where(
-			criteriaBuilder.between(root.get(IngredientSupply_.received), since.toDate(), new Date()),
+			criteriaBuilder.equal(join.get(Ingredient_.id), ingredient.id),
+			criteriaBuilder.greaterThan(root.get(IngredientSupply_.received).as(Date.class), since),
 			criteriaBuilder.greaterThan(root.get(IngredientSupply_.amount), root.get(IngredientSupply_.used))
 		);
+
 		return dao.findAllBy(query);
 	}
 }
