@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -19,7 +19,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
-import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -29,12 +28,11 @@ import models.dynamicforms.Results;
 import models.dynamicforms.Results_;
 import models.helpers.Dao;
 import models.helpers.UserModel;
+
 import org.hibernate.envers.Audited;
-import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
-import play.data.validation.Validation;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
 import utils.Converter;
@@ -71,7 +69,7 @@ public class Batch extends UserModel {
 	@OneToOne(mappedBy = "batch", fetch = FetchType.LAZY)
 	public FinalProduct finalProduct;
 
-	@OneToMany(mappedBy = "form", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "batches", fetch = FetchType.LAZY)
 	public List<Results> results;
 
 	public Batch() {

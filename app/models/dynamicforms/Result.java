@@ -2,6 +2,7 @@ package models.dynamicforms;
 
 import java.util.Date;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -29,7 +30,7 @@ public class Result extends UserModel {
 	public final static Dao<Result, Long> dao = new Dao<Result, Long>(
 			Result.class);
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "results_id", insertable = false, updatable = false, nullable = false)
 	public Results results;
 
