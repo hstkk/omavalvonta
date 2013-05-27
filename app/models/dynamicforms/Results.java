@@ -277,6 +277,7 @@ public class Results extends Model {
 		Join<Results, Result> _result = root.join(Results_.results);
 		Join<Result, User> _user = _result.join(Result_.user);
 		query.where(criteriaBuilder.equal(_user.get(User_.id), user.id));
+		query.distinct(true);
 		return dao.findAllBy(query);
 	}
 }
