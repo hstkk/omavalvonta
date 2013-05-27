@@ -76,6 +76,7 @@ public class FinalProduct extends UserModel {
 	}
 
 	private void set() {
+		this.unit = Term.dao.getReference(this.unit);
 		this.destiny = Term.dao.getReference(this.destiny);
 	}
 
