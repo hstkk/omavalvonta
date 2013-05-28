@@ -64,11 +64,7 @@
 
 \newpage
 
-5. Valitaan tuloksen yhteenvedossa **muokkaa**
-
-![](kaytto/11-tulos.png)
-
-6. Lisätään tuloksia
+5. Lisätään tuloksia
 
 ![](kaytto/12-tulos.png)
 
