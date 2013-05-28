@@ -188,21 +188,33 @@ public class Batch extends UserModel {
 		Root<Batch> root = query.from(Batch.class);
 		Join<Batch, Product> join = root.join(Batch_.product);
 
-		Subquery<Results> subquery = query.subquery(Results.class);
-		Root<Results> subRoot= subquery.from(Results.class);
-		Join<Results, Form> subJoin = subRoot.join(Results_.form);
-		Join<Results, Batch> subJoin2 = subRoot.join(Results_.batches);
-		subquery.select(subRoot);
+		Subquery<Results> subqueryA = query.subquery(Results.class);
+		Root<Results> subRoot = subqueryA.from(Results.class);
+		Join<Results, Batch> subJoinA = subRoot.join(Results_.batches);
+		Join<Results, Form> subJoinB = subRoot.join(Results_.form);
+		subqueryA.select(subRoot);
+
+		Subquery<FinalProduct> subqueryB = query.subquery(FinalProduct.class);
+		Root<FinalProduct> subRootB = subqueryB.from(FinalProduct.class);
+		Join<FinalProduct, Batch> subJoinC = subRootB.join(FinalProduct_.batch);
+		subqueryB.select(subRootB);
 
 		query.where(
 			criteriaBuilder.and(
 				criteriaBuilder.equal(join.get(Product_.id), product.id),
 				criteriaBuilder.not(
 					criteriaBuilder.exists(
-							subquery.where(
-									criteriaBuilder.equal(subJoin2.get(Batch_.id), root.get(Batch_.id)),
-									criteriaBuilder.equal(subJoin.get(Form_.id), form.id)
-							)
+						subqueryA.where(
+							criteriaBuilder.equal(subJoinA.get(Batch_.id), root.get(Batch_.id)),
+							criteriaBuilder.equal(subJoinB.get(Form_.id), form.id)
+						)
+					)
+				),
+				criteriaBuilder.not(
+					criteriaBuilder.exists(
+						subqueryB.where(
+							criteriaBuilder.equal(subJoinC.get(Batch_.id), root.get(Batch_.id))
+						)
 					)
 				)
 			)
