@@ -85,7 +85,7 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			models.dynamicforms.Results t = filledForm.get();
 			boolean success = DAO.create(t);
 			if (success) {
-				Call call = callShow(t.id);
+				Call call = controllers.routes.Results.edit(t.id);
 				return redirect(call);
 			}
 		}

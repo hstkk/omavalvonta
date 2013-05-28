@@ -7,7 +7,7 @@
 @implicitFieldConstructor = @{FieldConstructor(twitterBootstrapInput.f)}
 
 @main(Messages.get("results.create")) {
-	@tags.forms.form(FORM, routes.Results.fresh, Messages.get("label.next")) {
+	@tags.forms.form(FORM, routes.Results.fresh, Messages.get("label.next"), routes.Results.page()) {
 		@select(
 			FORM("tuote"),
 			options = options(models.Product.dao.options),

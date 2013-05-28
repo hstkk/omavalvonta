@@ -9,7 +9,7 @@
 @main(Messages.get("results.create")) {
 	<p>@Messages.get("label.product"): @product</p>
 
-	@tags.forms.form(FORM, routes.Results.step3(product.id), Messages.get("label.next")) {
+	@tags.forms.form(FORM, routes.Results.step3(product.id), Messages.get("label.next"), routes.Results.fresh) {
 		@select(
 			FORM("form.id"),
 			options = options(models.dynamicforms.Form.options(product)),

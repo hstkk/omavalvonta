@@ -9,7 +9,7 @@
 @main(Messages.get("results.create")) {
 	<p>@Messages.get("label.form"): @t</p>
 	
-	@tags.forms.form(FORM, routes.Results.create(product.id, t.id)) {
+	@tags.forms.form(FORM, routes.Results.create(product.id, t.id), Messages.get("label.next"), routes.Results.step2(product.id)) {
 		@inputHidden(FORM("form.id"))
 
 		@checkboxes(
