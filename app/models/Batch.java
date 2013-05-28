@@ -19,6 +19,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -181,16 +182,32 @@ public class Batch extends UserModel {
 			Form form) {
 		if (product == null || form == null)
 			return new LinkedHashMap<String, String>();
+
 		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<Batch> query = criteriaBuilder.createQuery(Batch.class);
 		Root<Batch> root = query.from(Batch.class);
-		Join<Batch, Results> joinA = root.join(Batch_.results);
-		Join<Results, Form> joinB = joinA.join(Results_.form);
+		Join<Batch, Product> join = root.join(Batch_.product);
+
+		Subquery<Results> subquery = query.subquery(Results.class);
+		Root<Results> subRoot= subquery.from(Results.class);
+		Join<Results, Form> subJoin = subRoot.join(Results_.form);
+		Join<Results, Batch> subJoin2 = subRoot.join(Results_.batches);
+		subquery.select(subRoot);
+
 		query.where(
-			criteriaBuilder.equal(root.get(Batch_.product).get(Product_.id), product.id),
-			criteriaBuilder.notEqual(joinB.get(Form_.id), form.id),
-		    criteriaBuilder.isNull(root.get(Batch_.finalProduct))
+			criteriaBuilder.and(
+				criteriaBuilder.equal(join.get(Product_.id), product.id),
+				criteriaBuilder.not(
+					criteriaBuilder.exists(
+							subquery.where(
+									criteriaBuilder.equal(subJoin2.get(Batch_.id), root.get(Batch_.id)),
+									criteriaBuilder.equal(subJoin.get(Form_.id), form.id)
+							)
+					)
+				)
+			)
 		);
+
 		return dao.options(query);
 	}
 
