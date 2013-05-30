@@ -2,7 +2,6 @@ package models.dynamicforms;
 
 import java.util.Date;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -14,6 +13,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.envers.Audited;
 
 import play.data.format.Formats;
@@ -25,7 +25,7 @@ import utils.Converter;
 import utils.Formats.LocalizedDouble;
 
 @Entity
-@Audited(auditParents = { UserModel.class })
+@Audited
 public class Result extends UserModel {
 	public final static Dao<Result, Long> dao = new Dao<Result, Long>(
 			Result.class);
@@ -111,9 +111,6 @@ public class Result extends UserModel {
 		if (oldField == null) {
 			if (results != null)
 				oldField = results.getField(this.id.toString());
-			// TODO
-			// else
-			// oldField = dao.getFirstVersion(this);
 			if (oldField == null)
 				oldField = this.field;
 		}
