@@ -85,17 +85,21 @@ public class Converter {
 	}
 
 	public static String dateToString(Date date, String format) {
-		if (format == null || format.isEmpty())
-			format = Play.application().configuration()
-					.getString("date.format");
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-		return simpleDateFormat.format(date);
+		try {
+			if (format == null || format.isEmpty())
+				format = Play.application().configuration()
+						.getString("date.format");
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+			return simpleDateFormat.format(date);
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 	public static String booleanToString(Boolean value) {
-		if(value == null)
+		if (value == null)
 			return "";
-		else if(value)
+		else if (value)
 			return Messages.get("boolean.true");
 		return Messages.get("boolean.false");
 	}
