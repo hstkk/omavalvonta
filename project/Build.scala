@@ -14,7 +14,7 @@ object ApplicationBuild extends Build {
 		javaJdbc,
 		javaJpa,
 		filters,
-		"org.hibernate" % "hibernate-entitymanager" % "4.2.1.Final",
+		"org.hibernate" % "hibernate-core" % "4.2.1.Final",
 		"org.hibernate" % "hibernate-envers" % "4.2.1.Final",
 		"mysql" % "mysql-connector-java" % "5.1.25",
 		"org.hibernate" % "hibernate-jpamodelgen" % "1.2.0.Final",
