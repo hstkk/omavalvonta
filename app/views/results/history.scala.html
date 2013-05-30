@@ -43,12 +43,15 @@
 			@defining(models.dynamicforms.Result.dao.getVersions(result.id)) { oldResults =>
 				@if(oldResults != null) {
 					@for(oldResult <- oldResults) {
-						<tr>
-							<td>@Converter.dateToString(oldResult.lastModified)</td>
-							<td>@oldResult</td>
-							<td>@if(oldResult.user != null) { @oldResult.user }</td>
-							<td>@oldResult.comment</td>
-						</tr>
+						@if(oldResult != null && oldResult.lastModified != null) {
+							<tr>
+								<td>@Converter.dateToString(oldResult.lastModified)</td>
+								<td>@oldResult</td>
+								<td>@if(oldResult.user != null) { @oldResult.user }</td>
+								<td>@if(oldResult.comment != null) { @oldResult.comment }</td>
+								<td>@if(oldResult.reason != null) { @oldResult.reason }</td>
+							</tr>
+						}
 					}
 				}
 			}
