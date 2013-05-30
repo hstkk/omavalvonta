@@ -3,7 +3,7 @@ package models.helpers;
 import java.util.Date;
 import javax.persistence.*;
 
-import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.Audited;
 
 @MappedSuperclass
 public class Model implements ModelInterface {
@@ -12,8 +12,8 @@ public class Model implements ModelInterface {
 	@Column(updatable = false)
 	public Long id;
 
-	@NotAudited
 	@Column(nullable = false)
+	@Audited
 	public Date lastModified;
 
 	// Executed before save
