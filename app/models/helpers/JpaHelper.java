@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -23,21 +24,25 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 	}
 
 	protected TypedQuery<Long> createLongQuery(CriteriaQuery<Long> query) {
-		return JPA.em().createQuery(query);
+		return getEm().createQuery(query);
 	}
 
 	protected TypedQuery<T> createQuery(CriteriaQuery<T> query) {
-		return JPA.em().createQuery(query);
+		return getEm().createQuery(query);
 	}
 
 	public CriteriaBuilder getCriteriaBuilder() {
-		return JPA.em().getCriteriaBuilder();
+		return getEm().getCriteriaBuilder();
+	}
+
+	public EntityManager getEm() {
+		return MyJPA.em();
 	}
 
 	public T getReference(ID id) {
 		try {
 			if (id != null)
-				return JPA.em().getReference(clazz, id);
+				return getEm().getReference(clazz, id);
 		} catch (EntityNotFoundException e) {
 		} catch (Exception e) {
 			Logger.warn("getReference", e);
@@ -63,7 +68,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 	public T getReference(T t) {
 		try {
 			if (t != null && t.id != null)
-				return JPA.em().getReference(clazz, t.id);
+				return getEm().getReference(clazz, t.id);
 		} catch (EntityNotFoundException e) {
 		} catch (NullPointerException e) {
 		} catch (Exception e) {

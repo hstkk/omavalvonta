@@ -17,7 +17,6 @@ import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 
 import play.Logger;
-import play.db.jpa.JPA;
 
 public class Dao<T extends Model, ID extends Serializable> extends
 		JpaHelper<T, ID> implements GenericDao<T, ID> {
@@ -43,7 +42,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 		try {
 			boolean success = t.onCreate();
 			if (success) {
-				JPA.em().persist(t);
+				getEm().persist(t);
 				return true;
 			}
 		} catch (Exception e) {
@@ -55,7 +54,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	@Override
 	public boolean delete(T t) {
 		try {
-			JPA.em().remove(t);
+			getEm().remove(t);
 			return true;
 		} catch (Exception e) {
 			Logger.warn("delete", e);
@@ -118,7 +117,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	public T findById(ID id) {
 		try {
 			if (id != null)
-				return JPA.em().find(clazz, id);
+				return getEm().find(clazz, id);
 		} catch (NoResultException e) {
 		} catch (Exception e) {
 			Logger.warn("findById", e);
@@ -138,29 +137,27 @@ public class Dao<T extends Model, ID extends Serializable> extends
 		return null;
 	}
 
-	// TODO fix
 	@Override
 	public T getVersion(ID id, Date date) {
-		/*try {
+		try {
 			if (id != null && date != null) {
-				AuditReader auditReader = AuditReaderFactory.get(JPA.em());
+				AuditReader auditReader = AuditReaderFactory.get(getEm());
 				Number revision = auditReader.getRevisionNumberForDate(date);
 				T t = auditReader.find(clazz, id, revision);
 				return t;
 			}
 		} catch (Exception e) {
 			Logger.warn("getVersion", e);
-		}*/
+		}
 		return null;
 	}
 
-	// TODO fix
 	@Override
 	public List<T> getVersions(ID id) {
-		/*try {
+		try {
 			if (id != null) {
 				List<T> versions = new ArrayList<T>();
-				AuditReader auditReader = AuditReaderFactory.get(JPA.em());
+				AuditReader auditReader = AuditReaderFactory.get(getEm());
 				List<Number> revisions = auditReader.getRevisions(clazz, id);
 				for (Number revision : revisions) {
 					T t = auditReader.find(clazz, id, revision);
@@ -170,7 +167,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 			}
 		} catch (Exception e) {
 			Logger.warn("getVersions", e);
-		}*/
+		}
 		return null;
 	}
 
@@ -203,7 +200,7 @@ public class Dao<T extends Model, ID extends Serializable> extends
 		try {
 			boolean success = t.onUpdate();
 			if (success) {
-				JPA.em().merge(t);
+				getEm().merge(t);
 				return true;
 			}
 		} catch (Exception e) {
