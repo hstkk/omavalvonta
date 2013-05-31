@@ -191,24 +191,6 @@ public class Results extends Model {
 		return field;
 	}
 
-	/*@Transient
-	private Map<String, Fieldset> fieldsetMap;
-
-	public Fieldset getFieldset(Long id) {
-		return getFieldset(id.toString());
-	}
-
-	public Fieldset getFieldset(String key) {
-		if (fieldsetMap == null || fieldsetMap.isEmpty()) {
-			fieldsetMap = new LinkedHashMap<String, Fieldset>();
-			Form _form = getOldForm();
-			if (_form != null && _form.fieldsets != null)
-				for (Fieldset fieldset : _form.fieldsets)
-					fieldsetMap.put(fieldset.id.toString(), fieldset);
-		}
-		return fieldsetMap.get(key);
-	}*/
-
 	public Product getProduct() {
 		if (this.batches != null && !this.batches.isEmpty())
 			return this.batches.get(0).product;

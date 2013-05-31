@@ -7,7 +7,7 @@ object ApplicationBuild extends Build {
     import Tasks._
 
     val appName         = "omavalvonta"
-    val appVersion      = "1.0-SNAPSHOT-6-test"
+    val appVersion      = "1.0-SNAPSHOT-7"
 
     val appDependencies = Seq(
 		javaCore,

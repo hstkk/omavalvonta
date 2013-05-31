@@ -116,10 +116,10 @@ public class Result extends UserModel {
 	}
 
 	public boolean isValid(Field _field) {
-		if (field != null) {
-			if (field.isRequired && toString().isEmpty())
+		if (_field != null) {
+			if (_field.isRequired && isEmpty())
 				return false;
-			switch (_field.fieldTypeEnum) {
+			switch (FieldType.setValue(_field)) {
 			case CHECKBOX:
 				return (valueBoolean != null && (_field.targetValue == null || _field.targetValue == valueBoolean));
 			case DATE:

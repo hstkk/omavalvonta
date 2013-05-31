@@ -34,7 +34,7 @@ public class Fieldset extends UserModel {
 	@OneToMany(cascade = CascadeType.ALL)
 	@OrderColumn(name = "field_index")
 	@JoinColumn(name = "fieldset_id", nullable = false)
-	@AuditMappedBy(mappedBy = "fieldset", positionMappedBy = "index")
+	@AuditMappedBy(mappedBy = "fieldset")
 	@Valid
 	public List<Field> fields = new ArrayList<Field>();
 

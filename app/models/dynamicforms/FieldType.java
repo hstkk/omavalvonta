@@ -31,6 +31,10 @@ public enum FieldType {
 		return ordinal;
 	}
 
+	public static FieldType setValue(Field field) {
+		return setValue(field.fieldType);
+	}
+
 	public static FieldType setValue(int ordinal) {
 		FieldType type = null;
 		for (FieldType value : FieldType.values())

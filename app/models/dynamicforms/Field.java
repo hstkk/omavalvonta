@@ -1,15 +1,12 @@
 package models.dynamicforms;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import models.helpers.Dao;
 import models.helpers.Model;
@@ -40,15 +37,9 @@ public class Field extends Model {
 	@JoinColumn(name = "fieldset_id", insertable = false, updatable = false, nullable = false)
 	public Fieldset fieldset;
 
-	@Column(name = "fields_index", insertable = false, updatable = false)
-	public Integer index;
-
 	@Required
 	@NotNull(message = "")
 	public Integer fieldType;
-
-	@Transient
-	public FieldType fieldTypeEnum;
 
 	public Double min = null;
 
@@ -68,11 +59,5 @@ public class Field extends Model {
 	@PreUpdate
 	public void preUpdate() {
 		super.onUpdate();
-	}
-
-	@PostLoad
-	private void onPost() {
-		if (this.fieldType != null)
-			fieldTypeEnum = FieldType.setValue(this.fieldType);
 	}
 }
