@@ -12,7 +12,7 @@ public class MyJPA {
 
 	public static EntityManager em() {
 		return (EntityManager) Proxy.newProxyInstance(Play.application()
-				.classloader(), new Class[] { EntityManager.class },
+				.classloader(), new Class<?>[] { EntityManager.class },
 				new ProxyEM(JPA.em()));
 	}
 
