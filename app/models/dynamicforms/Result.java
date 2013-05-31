@@ -100,29 +100,12 @@ public class Result extends UserModel {
 		isEmpty = isEmpty();
 	}
 
-	@Transient
-	private Field oldField;
-
-	public Field getOldField() {
-		return getOldField(null);
-	}
-
-	public Field getOldField(Results results) {
-		if (oldField == null) {
-			if (results != null)
-				oldField = results.getField(this.id.toString());
-			if (oldField == null)
-				oldField = this.field;
-		}
-		return oldField;
-	}
-
 	public boolean isDone() {
 		return isDone(null);
 	}
 
-	public boolean isDone(Results results) {
-		return isValid(getOldField(results));
+	public boolean isDone(Field _field) {
+		return isValid(_field);
 	}
 
 	public boolean isEmpty() {

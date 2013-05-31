@@ -13,7 +13,6 @@
 
 	@if(results.results != null || results.results.isEmpty) {
 		@for(result <- results.results) {
-			@subTitle(result)
 			@history(result)
 		}
 	} else {
@@ -23,14 +22,18 @@
 	}
 }
 
-@subTitle(result: models.dynamicforms.Result) = {
-	@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
-		<h2>@result.getOldField(results).fieldset</h2>
+@subTitle(field: models.dynamicforms.Field) = {
+	@if(!results.isFieldsetPrinted(field.fieldset.id)) {
+		<h2>@field.fieldset</h2>
 	}
 }
 
 @history(result: models.dynamicforms.Result) = {
-	<h3>@result.getOldField(results).name</h3>
+	@defining(results.getOldField(result)) { field =>
+		@subTitle(field)
+		<h3>@field.name</h3>
+		<p>@field.fieldset</p>
+	}
 	@table() {
 		@thead() {
 			@Messages.get("history.updated")

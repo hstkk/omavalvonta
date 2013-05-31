@@ -24,6 +24,8 @@ import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.Audited;
 import org.springframework.beans.BeanUtils;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
@@ -35,6 +37,7 @@ import play.data.validation.Validation;
 import play.data.validation.ValidationError;
 import play.data.validation.Constraints.Required;
 import play.i18n.Messages;
+import utils.Converter;
 import models.Batch;
 import models.Product;
 import models.Term;
@@ -72,6 +75,7 @@ public class Results extends Model {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "results_id", nullable = false)
+	@AuditMappedBy(mappedBy = "results")
 	@NotNull(message = "", groups = { Update.class })
 	@Valid
 	public List<Result> results = new ArrayList<Result>();
@@ -170,23 +174,24 @@ public class Results extends Model {
 		return oldForm;
 	}
 
-	@Transient
-	private Map<String, Field> fieldMap;
-
-	public Field getField(String key) {
-		if (fieldMap == null || fieldMap.isEmpty()) {
-			fieldMap = new LinkedHashMap<String, Field>();
-			Form _form = getOldForm();
-			if (_form != null && _form.fieldsets != null)
-				for (Fieldset fieldset : _form.fieldsets)
-					if (fieldset.fields != null)
-						for (Field field : fieldset.fields)
-							fieldMap.put(field.id.toString(), field);
+	public Field getOldField(Result result) {
+		if (result.field != null) {
+			Field field = Field.dao.getVersion(result.field.id, this.lastModified);
+			if(field != null)
+				return field;
 		}
-		return fieldMap.get(key);
+		return result.field;
 	}
 
-	@Transient
+	public Field getOldField(String id) {
+		Long _id = Converter.stringToLong(id);
+		if(_id == null)
+			return null;
+		Field field = Field.dao.getVersion(_id, this.lastModified);
+		return field;
+	}
+
+	/*@Transient
 	private Map<String, Fieldset> fieldsetMap;
 
 	public Fieldset getFieldset(Long id) {
@@ -202,7 +207,7 @@ public class Results extends Model {
 					fieldsetMap.put(fieldset.id.toString(), fieldset);
 		}
 		return fieldsetMap.get(key);
-	}
+	}*/
 
 	public Product getProduct() {
 		if (this.batches != null && !this.batches.isEmpty())

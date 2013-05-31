@@ -21,17 +21,19 @@
 				}
 				<tbody>
 					@for(result <- results.results) {
-						@if(result.field.isImportant) {
-							@if(!results.isFieldsetPrinted(result.getOldField(results).fieldset.id)) {
-								<tr><th colspan="5">@result.getOldField(results).fieldset</th></tr>
+						@defining(results.getOldField(result)) { field =>
+							@if(result.isEmpty || !result.isDone(field) || field.isImportant) {
+								@if(!results.isFieldsetPrinted(field.fieldset.id)) {
+									<tr><th colspan="5">@field.fieldset</th></tr>
+								}
+								<tr class="@{if(result.isEmpty) "warning" else if(!result.isDone(field)) "error"}">
+									<td>@field.name</td>
+									<td>@if(field.help != null) { @field.help }</td>
+									<td>@result</td>
+									<td>@if(result.user != null) { @result.user }</td>
+									<td>@result.comment</td>
+								</tr>
 							}
-							<tr class="@{if(result.isEmpty) "warning" else if(!result.isDone(results)) "error"}">
-								<td>@result.getOldField(results).name</td>
-								<td>@result.getOldField(results).help</td>
-								<td>@result</td>
-								<td>@if(result.user != null) { @result.user }</td>
-								<td>@result.comment</td>
-							</tr>
 						}
 					}
 				</tbody>

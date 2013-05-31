@@ -19,28 +19,22 @@
 		}
 		@defining(options(models.Term.options(models.TermCategory.REASON))) { _options =>
 			@repeat(FORM("results")) { result =>
-				@FIELDSET(result)
 				@FIELD(result, isLogged, _options)
 			}
 		}
 	}
 }
 
-@FIELDSET(field: Field) = {
-	@defining(field("field.fieldset.id").value.getOrElse("")) { fieldsetId =>
-		@if(!fieldsetId.isEmpty && !t.isFieldsetPrinted(fieldsetId)) {
-			@defining(t.getFieldset(fieldsetId)) { _fieldset =>
-				@if(_fieldset != null) {
-					@fieldsets.fieldset(_fieldset)
-				}
-			}
-		}
+@FIELDSET(field: models.dynamicforms.Field) = {
+	@if(field.fieldset != null && !t.isFieldsetPrinted(field.fieldset.id)) {
+		@fieldsets.fieldset(field.fieldset)
 	}
 }
 
 @FIELD(field: Field, isLogged: Boolean, _options: Seq[(String,String)]) = {
-	@defining(t.getField(field("field.id").value.getOrElse(""))) { _field =>
+	@defining(t.getOldField(field("field.id").value.getOrElse(""))) { _field =>
 		@if(_field != null) {
+			@FIELDSET(_field)
 			@views.html.fields.field(field, _field, isLogged, _options)
 		}
 	}
