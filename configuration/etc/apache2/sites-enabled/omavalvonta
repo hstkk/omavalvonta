@@ -1,0 +1,31 @@
+LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule proxy_module modules/mod_proxy.so
+
+<VirtualHost *:80>
+  ServerName 141.0.169.206
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName 141.0.169.206
+
+  # SSL
+  SSLEngine On
+  SSLCertificateFile /etc/apache2/ssl/apache.pem
+  SSLCertificateKeyFile /etc/apache2/ssl/apache.key
+
+  # Proxy
+  ProxyPreserveHost On
+  ProxyPass /Shibboleth.sso !
+  ProxyPass / http://127.0.0.1:9000/
+  ProxyPassReverse / http://127.0.0.1:9000/
+
+        <Location />
+                AuthType shibboleth
+                ShibRequestSetting requireSession false
+                ShibUseHeaders On
+                Require shibboleth
+        </Location>
+</VirtualHost>
