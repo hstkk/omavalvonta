@@ -14,7 +14,6 @@ public class Session extends Action.Simple {
 
 		// timeout
 		if (ShibbolethHelper.isSession(ctx)
-				&& !ctx.request().method().equalsIgnoreCase("POST")
 				&& !ShibbolethHelper.isSessionValid(ctx)) {
 			ctx.flash().put("info", Messages.get("shib.flash.timeout"));
 			return Shibboleth.logout();
