@@ -174,21 +174,38 @@ public class Results extends Model {
 		return oldForm;
 	}
 
+	@Transient
+	private Map<Long, Field> oldFields;
+
+	private void setOldFields() {
+		if (oldFields == null) {
+			oldFields = new HashMap<Long, Field>();
+			List<Field> fields = form.getOldFields(this.lastModified);
+			if (fields != null)
+				for (Field field : fields)
+					oldFields.put(field.id, field);
+		}
+	}
+
 	public Field getOldField(Result result) {
-		if (result.field != null) {
-			Field field = Field.dao.getVersion(result.field.id, this.lastModified);
-			if(field != null)
-				return field;
+		setOldFields();
+		if (result != null && result.field != null) {
+			Field oldField = oldFields.get(result.field.id);
+			if (oldField != null)
+				return oldField;
 		}
 		return result.field;
 	}
 
 	public Field getOldField(String id) {
 		Long _id = Converter.stringToLong(id);
-		if(_id == null)
+		if (_id == null)
 			return null;
-		Field field = Field.dao.getVersion(_id, this.lastModified);
-		return field;
+		setOldFields();
+		Field oldField = oldFields.get(_id);
+		if (oldField != null)
+			return oldField;
+		return Field.dao.findById(_id);
 	}
 
 	public Product getProduct() {

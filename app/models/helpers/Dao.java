@@ -13,8 +13,11 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditQuery;
+import org.hibernate.envers.query.criteria.AuditCriterion;
 
 import play.Logger;
 
@@ -167,6 +170,23 @@ public class Dao<T extends Model, ID extends Serializable> extends
 			}
 		} catch (Exception e) {
 			Logger.warn("getVersions", e);
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> getVersionsBy(Date date, AuditCriterion auditCriterion) {
+		try {
+			if (date != null && auditCriterion != null) {
+				AuditReader auditReader = AuditReaderFactory.get(getEm());
+				Number revision = auditReader.getRevisionNumberForDate(date);
+				AuditQuery query = auditReader.createQuery()
+						.forEntitiesAtRevision(clazz, revision);
+				query.add(auditCriterion);
+				return query.getResultList();
+			}
+		} catch (Exception e) {
+			Logger.warn("getVersionsBy", e);
 		}
 		return null;
 	}
