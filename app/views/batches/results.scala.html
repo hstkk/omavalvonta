@@ -18,6 +18,7 @@
 					@Messages.get("results.result")
 					@Messages.get("label.user")
 					@Messages.get("label.comment")
+					@Messages.get("enum.REASON")
 				}
 				<tbody>
 					@for(result <- results.results) {
@@ -32,6 +33,7 @@
 									<td>@result</td>
 									<td>@if(result.user != null) { @result.user }</td>
 									<td>@result.comment</td>
+									<td>@if(result.reason != null) { @result.reason }</td>
 								</tr>
 							}
 						}

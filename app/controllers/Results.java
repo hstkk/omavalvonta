@@ -112,10 +112,8 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	}
 
 	@Transactional(readOnly = true)
-	public Result history(Long id) {
-		if (DAO == null)
-			return Helper.getInternalServerError();
-		models.dynamicforms.Results t = DAO.findById(id);
+	public Result history(Long resultsId, Long resultId) {
+		models.dynamicforms.Result t = models.dynamicforms.Result.findByResultAndId(resultsId, resultId);
 		if (t == null)
 			return Helper.getNotFound();
 		return ok(history.render(t));

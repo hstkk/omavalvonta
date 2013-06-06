@@ -45,7 +45,6 @@ POST	/erat/:batchId/lopputuote/kuittaa					@controllers.FinalProducts.ack(batchI
 
 # Results
 GET		/tulokset											@controllers.Results.page(sivu: Int ?= 1)
-# TODO
 GET		/tulokset/uusi										@controllers.Results.fresh
 GET		/tulokset/uusi/:productId							@controllers.Results.step2(productId: Long)
 POST	/tulokset/uusi/:productId							@controllers.Results.step3(productId: Long)
@@ -54,7 +53,7 @@ GET		/tulokset/:resultsId								@controllers.Results.show(resultsId: Long)
 GET		/tulokset/:resultsId/muokkaa						@controllers.Results.edit(resultsId: Long)
 POST	/tulokset/:resultsId/muokkaa						@controllers.Results.update(resultsId: Long)
 GET		/tulokset/:resultsId/pdf							@controllers.Results.pdfify(resultsId: Long)
-GET		/tulokset/:resultsId/historia						@controllers.Results.history(resultsId: Long)
+GET		/tulokset/:resultsId/:resultId/historia				@controllers.Results.history(resultsId: Long, resultId: Long)
 POST	/tulos/:resultsId/:resultId/kuittaa					@controllers.Results.ack(resultsId: Long, resultId: Long)
 
 # Ingredient supply

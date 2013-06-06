@@ -11,6 +11,10 @@ import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -136,5 +140,17 @@ public class Result extends UserModel {
 			}
 		}
 		return false;
+	}
+
+	public static Result findByResultAndId(Long resultsId, Long resultId) {
+		if (resultsId == null || resultId == null)
+			return null;
+		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
+		CriteriaQuery<Result> query = criteriaBuilder.createQuery(Result.class);
+		Root<Result> root = query.from(Result.class);
+		Join<Result, Results> join = root.join(Result_.results);
+		query.where(criteriaBuilder.equal(join.get(Results_.id), resultsId),
+				criteriaBuilder.equal(root.get(Result_.id), resultId));
+		return dao.findBy(query);
 	}
 }

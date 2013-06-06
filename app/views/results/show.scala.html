@@ -38,6 +38,7 @@
 				@Messages.get("results.result")
 				@Messages.get("label.user")
 				@Messages.get("label.comment")
+				@Messages.get("enum.REASON")
 			}
 			<tbody>
 				@defining(Session.username != null) { isLogged =>
@@ -53,6 +54,7 @@
 									<td>@result</td>
 									<td>@ack(result, routes.Results.ack(results.id, result.id), isLogged, !result.isEmpty)</td>
 									<td>@result.comment</td>
+									<td>@if(result.reason != null) { <a href="@routes.Results.history(results.id, result.id)">@result.reason</a> }</td>
 								</tr>
 							}
 						}

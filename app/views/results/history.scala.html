@@ -1,4 +1,4 @@
-@(results: models.dynamicforms.Results)
+@(result: models.dynamicforms.Result)
 
 @import tags._
 @import tags.alerts._
@@ -6,33 +6,20 @@
 @import play.i18n._
 @import utils.Converter
 
-@main(Messages.get("history.title", results.getOldForm.toString)) {
-	@tabs(results)
+@main(Messages.get("history.title", result.results.getOldForm.toString)) {
+	@tabs(result.results)
 
 	@info() { @Messages.get("history.info") }
 
-	@if(results.results != null || results.results.isEmpty) {
-		@for(result <- results.results) {
-			@history(result)
-		}
-	} else {
-		@warning() {
-			@Messages.get("history.empty")
-		}
-	}
-}
-
-@subTitle(field: models.dynamicforms.Field) = {
-	@if(!results.isFieldsetPrinted(field.fieldset.id)) {
-		<h2>@field.fieldset</h2>
-	}
+	@history(result)
 }
 
 @history(result: models.dynamicforms.Result) = {
-	@defining(results.getOldField(result)) { field =>
-		@subTitle(field)
+	@defining(result.results.getOldField(result)) { field =>
+		<h2>@field.fieldset</h2>
+		<p>@field.fieldset.description</p>
 		<h3>@field.name</h3>
-		<p>@field.fieldset</p>
+		<p>@field.help</p>
 	}
 	@table() {
 		@thead() {
@@ -44,7 +31,7 @@
 		}
 		<tbody>
 			@defining(models.dynamicforms.Result.dao.getVersions(result.id)) { oldResults =>
-				@if(oldResults != null) {
+				@if(oldResults != null || !oldResults.isEmpty) {
 					@for(oldResult <- oldResults) {
 						@if(oldResult != null && oldResult.lastModified != null) {
 							<tr>
@@ -55,6 +42,10 @@
 								<td>@if(oldResult.reason != null) { @oldResult.reason }</td>
 							</tr>
 						}
+					}
+				} else {
+					@warning() {
+						@Messages.get("history.empty")
 					}
 				}
 			}
