@@ -199,57 +199,41 @@ public class Batch extends UserModel {
 		Join<FinalProduct, Batch> subJoinC = subRootB.join(FinalProduct_.batch);
 		subqueryB.select(subRootB);
 
-		query.where(
-			criteriaBuilder.and(
+		query.where(criteriaBuilder.and(
 				criteriaBuilder.equal(join.get(Product_.id), product.id),
-				criteriaBuilder.not(
-					criteriaBuilder.exists(
-						subqueryA.where(
-							criteriaBuilder.equal(subJoinA.get(Batch_.id), root.get(Batch_.id)),
-							criteriaBuilder.equal(subJoinB.get(Form_.id), form.id)
-						)
-					)
-				),
-				criteriaBuilder.not(
-					criteriaBuilder.exists(
-						subqueryB.where(
-							criteriaBuilder.equal(subJoinC.get(Batch_.id), root.get(Batch_.id))
-						)
-					)
-				)
-			)
-		);
+				criteriaBuilder.not(criteriaBuilder.exists(subqueryA.where(
+						criteriaBuilder.equal(subJoinA.get(Batch_.id),
+								root.get(Batch_.id)),
+						criteriaBuilder.equal(subJoinB.get(Form_.id), form.id)))),
+				criteriaBuilder.not(criteriaBuilder.exists(subqueryB
+						.where(criteriaBuilder.equal(subJoinC.get(Batch_.id),
+								root.get(Batch_.id)))))));
 
 		return dao.options(query);
 	}
 
-	private Map<String, List<ValidationError>> _validate() {
-		Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
-		/*
-		 * SpringValidatorAdapter validator = new SpringValidatorAdapter(
-		 * Validation.getValidator()); Set<ConstraintViolation<Batch>>
-		 * violations = validator.validate(this); for
-		 * (ConstraintViolation<Batch> violation : violations) { String field =
-		 * violation.getPropertyPath().toString(); String error =
-		 * violation.getMessage(); List<ValidationError> list = new
-		 * ArrayList<ValidationError>(); list.add(new ValidationError(field,
-		 * error)); errors.put(field, list); }
-		 */
-		return errors;
-	}
-
 	public Map<String, List<ValidationError>> validate() {
-		Map<String, List<ValidationError>> errors = _validate();
+		Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
 		int i = 0;
 		for (IngredientSupplyBatch ingredientSupplyBatch : this.ingredientSupplies) {
-			if (ingredientSupplyBatch.amount != null
-					&& ingredientSupplyBatch.amount < 0) {
-				List<ValidationError> list = new ArrayList<ValidationError>();
-				list.add(new ValidationError("negative", Messages
-						.get("batch.amountNegative")));
-				errors.put("ingredientSupplies[" + i + "].amount", list);
-			}
-
+			if (ingredientSupplyBatch.amount != null)
+				if (ingredientSupplyBatch.amount < 0) {
+					List<ValidationError> list = new ArrayList<ValidationError>();
+					list.add(new ValidationError("negative", Messages
+							.get("batch.amountNegative")));
+					errors.put("ingredientSupplies[" + i + "].amount", list);
+				} else if (ingredientSupplyBatch.amount > 0) {
+					IngredientSupply ingredientSupply = IngredientSupply.dao
+							.findById(ingredientSupplyBatch.ingredientSupply.id);
+					if (ingredientSupply != null
+							&& !ingredientSupply
+									.isAmountAvailable(ingredientSupplyBatch.amount)) {
+						List<ValidationError> list = new ArrayList<ValidationError>();
+						list.add(new ValidationError("tooMuch", Messages
+								.get("batch.amountTooMuch")));
+						errors.put("ingredientSupplies[" + i + "].amount", list);
+					}
+				}
 			i++;
 		}
 		if (!errors.isEmpty())

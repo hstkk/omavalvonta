@@ -188,11 +188,11 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		return badRequest(UPDATE.render(t, filledForm));
 	}
 
-	private Form<T> validateForm(Form<T> filledForm) {
+	protected Form<T> validateForm(Form<T> filledForm) {
 		return validateForm(filledForm, null);
 	}
 
-	public Form<T> validateForm(Form<T> filledForm, Long id) {
+	protected Form<T> validateForm(Form<T> filledForm, Long id) {
 		return filledForm;
 	}
 }

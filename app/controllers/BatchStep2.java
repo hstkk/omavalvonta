@@ -1,8 +1,11 @@
 package controllers;
 
+import java.util.List;
+
 import models.Batch;
 import models.Product;
 import models.User;
+import play.Logger;
 import play.data.Form;
 import static play.data.Form.*;
 import play.db.jpa.Transactional;
@@ -10,6 +13,7 @@ import play.i18n.Messages;
 import play.mvc.Call;
 import play.mvc.Result;
 import play.mvc.With;
+import utils.Converter;
 import utils.Helper;
 import views.html.batches.*;
 import controllers.helpers.UserCrud;
@@ -36,6 +40,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 		Result result = onCancel(filledForm);
 		if (result != null)
 			return result;
+		filledForm = validateForm(filledForm);
 		if (!filledForm.hasErrors()) {
 			Batch batch = filledForm.get();
 			User user = Session.user();
@@ -62,5 +67,23 @@ public class BatchStep2 extends UserCrud<Batch> {
 		Batch batch = new Batch(product);
 		Form<Batch> preFilledForm = batch.getPrefilledForm();
 		return ok(step2.render(batch, preFilledForm));
+	}
+
+	@Override
+	protected Form<Batch> validateForm(Form<Batch> filledForm) {
+		String fieldName = "ingredientSupplies";
+		String subFieldName = "amount";
+		Field field = filledForm.field(fieldName);
+		List<Integer> indexes = field.indexes();
+		for (Integer index : indexes) {
+			Field subField = field.sub("[" + index + "]." + subFieldName);
+			String value = subField.valueOr("");
+			if (!value.isEmpty()) {
+				Double _value = Converter.stringToDouble(value);
+				if (_value == null)
+					filledForm.reject(subField.name(), "error.invalid");
+			}
+		}
+		return filledForm;
 	}
 }
