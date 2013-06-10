@@ -35,7 +35,7 @@
 					@for(oldResult <- oldResults) {
 						@if(oldResult != null && oldResult.lastModified != null) {
 							<tr>
-								<td>@Converter.dateToString(oldResult.lastModified)</td>
+								<td>@Converter.timeToString(oldResult.lastModified)</td>
 								<td>@oldResult</td>
 								<td>@if(oldResult.user != null) { @oldResult.user }</td>
 								<td>@if(oldResult.comment != null) { @oldResult.comment }</td>

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import play.Logger;
 import play.Play;
 import play.i18n.Messages;
 
@@ -92,8 +93,15 @@ public class Converter {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 			return simpleDateFormat.format(date);
 		} catch (Exception e) {
+			Logger.info("date", e);
 			return "";
 		}
+	}
+
+	public static String timeToString(Date date) {
+		String format = Play.application().configuration()
+						.getString("time.format");
+		return dateToString(date, format);
 	}
 
 	public static String booleanToString(Boolean value) {
