@@ -1,9 +1,12 @@
 package controllers;
 
+import java.util.List;
+
 import models.FinalProduct;
 import models.Product;
 import models.User;
 import play.data.Form;
+import play.data.Form.Field;
 import static play.data.Form.*;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
@@ -115,7 +118,8 @@ public class Results extends Crud<models.dynamicforms.Results> {
 
 	@Transactional(readOnly = true)
 	public Result history(Long resultsId, Long resultId) {
-		models.dynamicforms.Result t = models.dynamicforms.Result.findByResultAndId(resultsId, resultId);
+		models.dynamicforms.Result t = models.dynamicforms.Result
+				.findByResultAndId(resultsId, resultId);
 		if (t == null)
 			return Helper.getNotFound();
 		return ok(history.render(t));
@@ -185,5 +189,33 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	@Transactional
 	public Result update(Long id) {
 		return super.update(id);
+	}
+
+	@Override
+	protected Form<models.dynamicforms.Results> validateForm(
+			Form<models.dynamicforms.Results> filledForm, Long id) {
+		String fieldName = "results";
+		String doubleFieldName = "valueDouble";
+		String intFieldName = "valueInt";
+		Field field = filledForm.field(fieldName);
+		List<Integer> indexes = field.indexes();
+		for (Integer index : indexes) {
+			Field doubleField = field.sub("[" + index + "]." + doubleFieldName);
+			String doubleValue = doubleField.valueOr("");
+			if (!doubleValue.isEmpty()) {
+				Double _doubleValue = Converter.stringToDouble(doubleValue);
+				if (_doubleValue == null)
+					filledForm.reject(doubleField.name(), "error.invalid");
+			}
+
+			Field intField = field.sub("[" + index + "]." + intFieldName);
+			String intValue = intField.valueOr("");
+			if (!intValue.isEmpty()) {
+				Integer _intValue = Converter.stringToInt(intValue);
+				if (_intValue == null)
+					filledForm.reject(intField.name(), "error.invalid");
+			}
+		}
+		return filledForm;
 	}
 }
