@@ -195,25 +195,16 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	protected Form<models.dynamicforms.Results> validateForm(
 			Form<models.dynamicforms.Results> filledForm, Long id) {
 		String fieldName = "results";
-		String doubleFieldName = "valueDouble";
-		String intFieldName = "valueInt";
+		String subFieldName = "valueDouble";
 		Field field = filledForm.field(fieldName);
 		List<Integer> indexes = field.indexes();
 		for (Integer index : indexes) {
-			Field doubleField = field.sub("[" + index + "]." + doubleFieldName);
-			String doubleValue = doubleField.valueOr("");
-			if (!doubleValue.isEmpty()) {
-				Double _doubleValue = Converter.stringToDouble(doubleValue);
-				if (_doubleValue == null)
-					filledForm.reject(doubleField.name(), "error.invalid");
-			}
-
-			Field intField = field.sub("[" + index + "]." + intFieldName);
-			String intValue = intField.valueOr("");
-			if (!intValue.isEmpty()) {
-				Integer _intValue = Converter.stringToInt(intValue);
-				if (_intValue == null)
-					filledForm.reject(intField.name(), "error.invalid");
+			Field subField = field.sub("[" + index + "]." + subFieldName);
+			String value = subField.valueOr("");
+			if (!value.isEmpty()) {
+				Double _value = Converter.stringToDouble(value);
+				if (_value == null)
+					filledForm.reject(subField.name(), "error.invalid");
 			}
 		}
 		return filledForm;
