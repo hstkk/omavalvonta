@@ -150,6 +150,7 @@ batch.create=Uusi erä
 batch.page=Erät
 batch.page.empty=Eriä ei löytynyt!
 batch.amountNegative=Määrä ei voi olla negatiivinen
+batch.amountTooMuch=Määrä ei voi olla suurempi kuin raaka-aine-erä
 batch.finalproduct=Lopputuote
 
 # --- Final product
