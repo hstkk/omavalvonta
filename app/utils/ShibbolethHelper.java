@@ -67,16 +67,27 @@ public class ShibbolethHelper {
 
 	public static String getLogoutUrl(Context ctx)
 			throws UnsupportedEncodingException {
+		String logoutUrl = Helper.getOrElse("shibboleth.logout.url");
+		String hakaLogoutUrl = Helper.getOrElse("shibboleth.haka.logout.url");
+		boolean secure = true;
+
 		StringBuilder url = new StringBuilder();
 
-		// Shibboleth logout url
-		url.append(Helper.getOrElse("shibboleth.logout.url"));
-
+		url.append(logoutUrl);
 		url.append("?return=");
-		boolean secure = true;
+
+		if (!hakaLogoutUrl.isEmpty()) {
+			url.append(URLEncoder.encode(hakaLogoutUrl,
+					ShibbolethDefaults.URL_ENCODING));
+			url.append(URLEncoder.encode("?return=",
+					ShibbolethDefaults.URL_ENCODING));
+		}
+
 		url.append(URLEncoder.encode(
 				routes.Application.index(1).absoluteURL(ctx.request(), secure)
 						.toString(), ShibbolethDefaults.URL_ENCODING));
+
+Logger.info(url.toString());
 
 		return url.toString();
 	}
