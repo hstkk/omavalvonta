@@ -41,9 +41,10 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 			if (t.user != null)
 				return Helper.getInternalServerError();
 			t.user = user;
-			if (DAO.update(t))
+			if (DAO.update(t)) {
+				flash().remove("error");
 				flash("success", Messages.get("crud.success"));
-			else
+			} else
 				flash("error", Messages.get("crud.fail"));
 			return redirect(callShow(id));
 		}

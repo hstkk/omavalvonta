@@ -139,6 +139,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 				success = DAO.update(t);
 			}
 			if (success) {
+				flash().remove("error");
 				flash("success", Messages.get("crud.success"));
 				Call call = callShow(t.id);
 				return redirect(call);

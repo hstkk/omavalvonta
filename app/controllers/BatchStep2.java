@@ -43,6 +43,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 			if (success) {
 				success = Batch.dao.create(batch);
 				if (success) {
+					flash().remove("error");
 					flash("success", Messages.get("crud.success"));
 					return redirect(callShow(batch.id));
 				}

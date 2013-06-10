@@ -39,9 +39,10 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			if (t.user != null)
 				return Helper.getInternalServerError();
 			t.user = user;
-			if (models.dynamicforms.Result.dao.update(t))
+			if (models.dynamicforms.Result.dao.update(t)) {
+				flash().remove("error");
 				flash("success", Messages.get("crud.success"));
-			else
+			} else
 				flash("error", Messages.get("crud.fail"));
 			return redirect(callShow(resultsId));
 		}
@@ -85,6 +86,7 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			models.dynamicforms.Results t = filledForm.get();
 			boolean success = DAO.create(t);
 			if (success) {
+				flash().remove("error");
 				Call call = controllers.routes.Results.edit(t.id);
 				return redirect(call);
 			}

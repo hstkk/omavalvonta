@@ -45,9 +45,10 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 			if (finalProduct.user != null)
 				return Helper.getInternalServerError();
 			finalProduct.user = user;
-			if (DAO.update(finalProduct))
+			if (DAO.update(finalProduct)) {
+				flash().remove("error");
 				flash("success", Messages.get("crud.success"));
-			else
+			} else
 				flash("error", Messages.get("crud.fail"));
 			return redirect(callShow(batchId));
 		}
@@ -85,6 +86,7 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 			}
 
 			if (success) {
+				flash().remove("error");
 				flash("success", Messages.get("crud.success"));
 				return redirect(callShow(batch.id));
 			}
