@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -31,9 +33,11 @@ import models.helpers.Dao;
 import models.helpers.UserModel;
 
 import org.hibernate.envers.Audited;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
 import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
+import play.data.validation.Validation;
 import play.data.validation.ValidationError;
 import play.i18n.Messages;
 import utils.Converter;
@@ -212,8 +216,25 @@ public class Batch extends UserModel {
 		return dao.options(query);
 	}
 
-	public Map<String, List<ValidationError>> validate() {
+	private Map<String, List<ValidationError>> _validate() {
 		Map<String, List<ValidationError>> errors = new HashMap<String, List<ValidationError>>();
+
+		SpringValidatorAdapter validator = new SpringValidatorAdapter(
+				Validation.getValidator());
+		Set<ConstraintViolation<Batch>> violations = validator.validate(this);
+		for (ConstraintViolation<Batch> violation : violations) {
+			String field = violation.getPropertyPath().toString();
+			String error = violation.getMessage();
+			List<ValidationError> list = new ArrayList<ValidationError>();
+			list.add(new ValidationError(field, error));
+			errors.put(field, list);
+		}
+
+		return errors;
+	}
+
+	public Map<String, List<ValidationError>> validate() {
+		Map<String, List<ValidationError>> errors = _validate();
 		int i = 0;
 		for (IngredientSupplyBatch ingredientSupplyBatch : this.ingredientSupplies) {
 			if (ingredientSupplyBatch.amount != null)
