@@ -1,9 +1,14 @@
 README
 ======
 
-Standalone
-==========
+## Creating a standalone version
 
-    play dist
+sbt dist
 
-    play app-docs
+tai
+
+play dist
+
+## Genereting javadoc & scaladoc
+
+play app-docs
