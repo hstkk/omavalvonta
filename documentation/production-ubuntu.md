@@ -193,7 +193,6 @@
     
     <Location /Shibboleth.sso>
       SetHandler shib
-      ShibUseHeaders On
     </Location>
 
 - Käynnistetään Shibd daemon uudelleen
@@ -217,6 +216,11 @@
 
 ## Omavalvonta
 
+- Siirrä db.sql palvelimelle
+- Palauta tietokanta
+
+    mysql -u root -p omavalvonta < db.sql
+
 - Siirrä omavalvonta-1.0.zip palvelimelle
 - Pura siirretty zip-tiedosto
 
@@ -224,4 +228,11 @@
 
 - Käynnistä omavalvonta
 
-    omavalvonta-1.0/start -Dhttp.port=9000
+    omavalvonta-1.0/start -Dhttp.port=9000 -Duser.language=fi -Duser.country=FI
+
+shib-keygen -y 3 -h 141.0.169.206 -e https://141.0.169.206/shibboleth
+chmod +x /home/omavalvonta/start
+
+
+http://stackoverflow.com/a/202276/1612439
+http://stackoverflow.com/a/10866836/1612439
