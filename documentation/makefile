@@ -7,13 +7,20 @@ PANDOC = pandoc \
         --variable monofont="Bitstream Vera Sans Mono" \
         --variable fontsize=12pt
 
-all: pdf
+all: yllapito kaytto asennus
 
-pdf:
+yllapito:
 	$(PANDOC) \
 	--output yllapito.pdf \
 	yllapito.md
+
+kaytto:
 	$(PANDOC) \
 	--output kaytto.pdf \
 	kaytto.md
+
+asennus:
+	$(PANDOC) \
+	--output asennus.pdf \
+	asennus.md
 

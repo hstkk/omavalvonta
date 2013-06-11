@@ -1,18 +1,29 @@
-# Omavalvonta & Ubuntu
+% Omavalvonta, asennus Ubuntu Server 12.04
+% Sami Hostikka
+% 21.05.2013
 
-## Ubuntun päivittäminen
+\renewcommand{\contentsname}{Sisällys}
+\tableofcontents
+\newpage
 
+# Ubuntun päivittäminen
+
+```
     aptitude update
     aptitude safe-upgrade
+```
 
-## MySQL
+# MySQL
 
 - MySQL-palvelimen asennus
 
+```
     aptitude install mysql-server
+```
 
 - Konfiguroidaan MySQL
 
+```
     mysql_secure_installation
 
     NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MySQL
@@ -77,50 +88,81 @@
     installation should now be secure.
     
     Thanks for using MySQL!
+```
 
+- Konfiguroidaan MySQL käyttämään UTF-8 merkistöä, ```/etc/mysql/my.cnf```
+
+```
+    [mysqld]
+    #...
+    collation-server = utf8_unicode_ci
+    init-connect='SET NAMES utf8'
+    character-set-server = utf8
+```
 - Kirjaudutaan MySQL-palvelimelle
 
+```
     mysql -u root -p
+```
 
 - Lisätään omavalvonnalle oma tietokanta
 
+```
     mysql> create database omavalvonta;
+```
 
 - Lisätään Omavalvonnalle oma MySQL-käyttäjä
 
-    mysql> grant CREATE,INSERT,DELETE,UPDATE,SELECT on omavalvonta.* to omavalvonta@localhost;
+```
+    mysql> grant CREATE,INSERT,DELETE,UPDATE,SELECT on omavalvonta.* to
+            omavalvonta@localhost;
+```
 
 - Määritetään käyttäjän omavalvonta salasana
 
+```
     mysql> set password for omavalvonta@localhost=password('salasana');
+```
 
 - Päivitetään käyttöoikeudet
 
+```
     mysql> flush privileges;
+```
 
-## Apache
+# Apache
 
 - Apachen asennus
 
+```
     aptitude install apache2
+```
 
-### SSL-sertifikaatti
+## SSL-sertifikaatti
 
 - Aktivoidaan Apchen uudelleenkirjoitus-moduuli
 
+```
     a2enmod rewrite
+```
 
 - Aktivoidaan Apachen SSL-moduuli
 
+```
     a2enmod ssl
+```
 
 - Tehdään SSL-sertifikaateille oma hakemisto
 
+```
     mkdir /etc/apache2/ssl
+```
 
 - Generoidaan itseallekirjoitettu sertifikaatti
 
-    openssl req -new -x509 -days 365 -nodes -out /etc/apache2/ssl/apache.pem -keyout /etc/apache2/ssl/apache.key
+```
+    openssl req -new -x509 -days 365 -nodes -out /etc/apache2/ssl/apache.pem -keyout
+     /etc/apache2/ssl/apache.key
 
     Generating a 1024 bit RSA private key
     .....++++++
@@ -141,52 +183,72 @@
     Organizational Unit Name (eg, section) []:Tietohallinto
     Common Name (eg, YOUR name) []:
     Email Address []:
+```
 
-### Proxy
+## Proxy
 
 - Aktivoidaan Apachen proxy-moduuli
 
+```
     a2enmod proxy
     a2enmod proxy_http
+```
 
-### Konfigurointi
+## Konfigurointi
 
-- 
+- Lisätään omavalvonnalle vhost, ```/etc/apache2/sites-enabled/omavalvonta```
 
-    #/etc/apache2/vhosts.d/omavalvonta.conf
-    LoadModule rewrite_module modules/mod_rewrite.so
-    LoadModule proxy_module modules/mod_proxy.so
-    
-    <VirtualHost *:80>
-      RewriteEngine On
-      RewriteCond %{HTTPS} off
-      RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
-    </VirtualHost>
-    
-    <VirtualHost *:443>
-      ServerName omavalvonta.local
-    
-      # SSL
-      SSLEngine On
-      SSLCertificateFile /etc/apache2/ssl/apache.pem
-      SSLCertificateKeyFile /etc/apache2/ssl/apache.key
-    
-      # Proxy
-      ProxyPreserveHost On
-      ProxyPass /Shibboleth.sso !
-      ProxyPass / http://127.0.0.1:9000/
-      ProxyPassReverse / http://127.0.0.1:9000/
-    </VirtualHost>
+```
+LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule proxy_module modules/mod_proxy.so
 
-## Shibboleth
+<VirtualHost *:80>
+  ServerName example.com
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
+</VirtualHost>
+
+<VirtualHost *:443>
+  ServerName example.com
+
+  # SSL
+  SSLEngine On
+  SSLCertificateFile /etc/apache2/ssl/apache.pem
+  SSLCertificateKeyFile /etc/apache2/ssl/apache.key
+
+  # Proxy
+  ProxyPreserveHost On
+  ProxyPass /Shibboleth.sso !
+  ProxyPass / http://127.0.0.1:9000/
+  ProxyPassReverse / http://127.0.0.1:9000/
+
+        <Location />
+                AuthType shibboleth
+                ShibRequestSetting requireSession false
+                ShibUseHeaders On
+                Require shibboleth
+        </Location>
+</VirtualHost>
+```
+
+# Shibboleth
 
 - Asennetaan Shibboleth service provider
 
+```
     aptitude install libapache2-mod-shib2
+```
 
-- Konfiguroidaan Shibboleth toimimaan Apachen kanssa
+- Generoidaan Shibbolethille sertifikaatti
 
-    #/etc/apache2/conf.d/shib.conf
+```
+    shib-keygen -y 3 -h example.com -e https://example.com/shibboleth
+```
+
+- Konfiguroidaan Shibboleth toimimaan Apachen kanssa, ```/etc/apache2/conf.d/shib.conf```
+
+```
     LoadModule mod_shib /usr/lib/apache2/modules/mod_shib_22.so
     
     UseCanonicalName On
@@ -194,45 +256,105 @@
     <Location /Shibboleth.sso>
       SetHandler shib
     </Location>
+```
 
+- Konfiguroi Shibboleth
 - Käynnistetään Shibd daemon uudelleen
 
+```
      service shibd restart
+```
 
 - Käynnistetään Apache uudelleen
 
+```
     service  apache2 restart
+```
 
-- Kopioidaan shibboleth2.xml /etc/shibboleth/shibboleth2.xml
-- Kopioidaan attribute-map.xml /etc/shibboleth/attribute-map.xml
-
-- Metadata
-
-## Java
+# Java
 
 - Asennetaan JDK
 
+```
     aptitude install openjdk-7-jdk openjdk-7-jre
+```
 
-## Omavalvonta
+# Omavalvonta
 
-- Siirrä db.sql palvelimelle
+- Lisää omavalvonnalle käyttäjätunnus
+
+```
+    adduser omavalvonta
+```
+
+- Siirrä tietokanta palvelimelle
 - Palauta tietokanta
 
+```
     mysql -u root -p omavalvonta < db.sql
+```
 
 - Siirrä omavalvonta-1.0.zip palvelimelle
 - Pura siirretty zip-tiedosto
 
+```
     unzip omavalvonta-1.0.zip
+```
+
+- Siirrä omavalvonta ```/home/omavalvonta``` hakemistoon
+
+```
+    mkdir -p /home/omavalvonta
+    cd omavalvonta-1.0
+    mv * /home/omavalvonta/.
+```
+
+- Anna omavalvonnalle suoritusoikeudet
+
+```
+    chmod +x /home/omavalvonta/start
+```
+
+- Lisätään omavalvonnalle Upstart käynnistyskripti, ```/etc/init/omavalvonta.conf```
+
+```
+# Usage:
+#   start omavalvonta
+#   stop omavalvonta
+#   restart omavalvonta
+#
+# WARNING: This is still beta, I have not tested the respawning functionality, but it should work. 
+#
+# http://leon.radley.se
+
+description "Omavalvonta"
+author "Leon Radley <leon@radley.se>"
+version "1.0"
+
+env USER=omavalvonta
+env GROUP=omavalvonta
+env HOME=/home/omavalvonta
+env PORT=9000
+env ADDRESS=127.0.0.1
+env CONFIG=production.conf
+env EXTRA="-Duser.language=fi -Duser.country=FI -Duser.timezone=Europe/Helsinki"
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+respawn
+respawn limit 10 5
+umask 022
+expect daemon
+
+exec start-stop-daemon --pidfile ${HOME}/RUNNING_PID --chuid $USER:$GROUP --exec 
+ ${HOME}/start --start -- -Dconfig.file=${HOME}/$CONFIG -Dhttp.port=$PORT
+ -Dhttp.address=$ADDRESS $EXTRA
+```
 
 - Käynnistä omavalvonta
 
-    omavalvonta-1.0/start -Dhttp.port=9000 -Duser.language=fi -Duser.country=FI
+```
+    service omavalvonta start
+```
 
-shib-keygen -y 3 -h 141.0.169.206 -e https://141.0.169.206/shibboleth
-chmod +x /home/omavalvonta/start
-
-
-http://stackoverflow.com/a/202276/1612439
-http://stackoverflow.com/a/10866836/1612439
