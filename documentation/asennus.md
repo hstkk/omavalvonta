@@ -92,6 +92,8 @@
 
 - Konfiguroidaan MySQL käyttämään UTF-8 merkistöä, ```/etc/mysql/my.cnf```
 
+> *Huomaa, esimerkkikonfiguraatio löytyy **configuration/etc/mysql** kansiosta*
+
 ```
     [mysqld]
     #...
@@ -198,6 +200,8 @@
 
 - Lisätään omavalvonnalle vhost, ```/etc/apache2/sites-enabled/omavalvonta```
 
+> *Huomaa, esimerkkikonfiguraatio löytyy **configuration/etc/apache/sites-enabled** kansiosta*
+
 ```
 LoadModule rewrite_module modules/mod_rewrite.so
 LoadModule proxy_module modules/mod_proxy.so
@@ -247,6 +251,8 @@ LoadModule proxy_module modules/mod_proxy.so
 ```
 
 - Konfiguroidaan Shibboleth toimimaan Apachen kanssa, ```/etc/apache2/conf.d/shib.conf```
+
+> *Huomaa, esimerkkikonfiguraatio löytyy **configuration/etc/apache/conf.d** kansiosta*
 
 ```
     LoadModule mod_shib /usr/lib/apache2/modules/mod_shib_22.so
@@ -317,6 +323,8 @@ LoadModule proxy_module modules/mod_proxy.so
 
 - Lisätään omavalvonnalle Upstart käynnistyskripti, ```/etc/init/omavalvonta.conf```
 
+> *Huomaa, käynnistyskripti löytyy **configuration/etc/init** kansiosta*
+
 ```
 # Usage:
 #   start omavalvonta
@@ -352,9 +360,136 @@ exec start-stop-daemon --pidfile ${HOME}/RUNNING_PID --chuid $USER:$GROUP --exec
  -Dhttp.address=$ADDRESS $EXTRA
 ```
 
+- Lisätään konfigurointitiedosto ```/home/omavalvonta/production.conf```, katso [konfigurointi](#konfigurointi)
 - Käynnistä omavalvonta
 
 ```
     service omavalvonta start
 ```
 
+## Konfigurointi {#konfigurointi}
+
+### Esimerkkikonfiguraatio
+
+> *Huomaa, esimerkkikonfiguraatio löytyy **configuration/home/omavalvonta** kansiosta*
+
+```
+include "application.conf"
+
+# Database configuration
+# ~~~~~ 
+db.default.url="jdbc:mysql://127.0.0.1/omavalvonta?characterEncoding=UTF-8"
+db.default.user=omavalvonta
+db.default.password="salasana"
+
+# Shibboleth
+# ~~~~~
+# milliseconds
+#shibboleth.session.maxAge=1800000
+#shibboleth.login.url=/Shibboleth.sso/Login
+#shibboleth.login.entityId=""
+#shibboleth.logout.url=/Shibboleth.sso/Logout
+#shibboleth.haka.logout.url=""
+#shibboleth.adminRole=[Staff,Faculty]
+#shibboleth.attribute.email=mail
+#shibboleth.attribute.role=eduPersonPrimaryAffiliation
+#shibboleth.attribute.firstName=givenName
+#shibboleth.attribute.lastName=sn
+#http://docs.oracle.com/javase/6/docs/api/java/lang/String.html#split(java.lang.String)
+#shibboleth.separator=""
+```
+
+### Konfigurointitiedoston sisältö
+
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Muuttuja                               | Tarkoitus                                                                                                                                                          |
++========================================+====================================================================================================================================================================+
+| db.default.url                         |                                                                                        |
+|                                        |  Tietokannan JDBC url                                                                                                                                               |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| db.default.user                        | Tietokannan käyttäjä                                                                                                                                               |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| db.default.password                    | Tietokannan käyttäjän salasana                                                                                                                                     |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.session. maxAge             | Kirjautuneen käyttäjän session kesto millisekunteina                                                                                                               |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.login.url                   | Shibboleth sp:n sisäänkirjautumisosoite                                                                                                                            |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.login. entityId             | Shibboleth sp:n sisäänkirjautumisosoitteessa käytettävä entityID                                                                                                   |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.logout.url                  | Shibboleth sp:n uloskirjautumisosoite                                                                                                                              |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.haka. logout.url            | [Haka logout](http://www.csc.fi/hallinto/haka/ohjeet/ohjeet-yllapitajille/haka-logout) osoite                                                                      |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.adminRole                   | Lista rooleista, joilla on pääsy omavalvonnan ylläpitoon                                                                                                           |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.attribute. email            | Apachen request headereissa välittämän sähköposti atribuutin nimi                                                                                                  |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.attribute. role             | Apachen request headereissa välittämän rooli atribuutin nimi                                                                                                       |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.attribute. firstName        | Apachen request headereissa välittämän etunimi atribuutin nimi                                                                                                     |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.attribute. lastName         | Apachen request headereissa välittämän sukunimi atribuutin nimi                                                                                                                |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| shibboleth.separator                   | [Regex](http://docs.oracle.com/javase/6/docs/api/java/lang/String.html#split(java.lang.String)), jolla erotetaan roolit, mikäli niitä on useita rooli atribuutissa |
++----------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+\newpage
+
+### Konfiguraation oletusarvot
+
++----------------------------------------+-----------------------------+
+| Muuttuja                               | Oletusarvo                  |
++========================================+=============================+
+| db.default.url                         |                             |
++----------------------------------------+-----------------------------+
+| db.default.user                        |                             |
++----------------------------------------+-----------------------------+
+| db.default.password                    |                             |
++----------------------------------------+-----------------------------+
+| shibboleth.session.maxAge              | 1800000                     |
++----------------------------------------+-----------------------------+
+| shibboleth.login.url                   | /Shibboleth.sso/Login       |
++----------------------------------------+-----------------------------+
+| shibboleth.login.entityId              |                             |
++----------------------------------------+-----------------------------+
+| shibboleth.logout.url                  | /Shibboleth.sso/Logout      |
++----------------------------------------+-----------------------------+
+| shibboleth.haka.logout.url             |                             |
++----------------------------------------+-----------------------------+
+| shibboleth.adminRole                   | [Staff,Faculty]             |
++----------------------------------------+-----------------------------+
+| shibboleth.attribute.email             | mail                        |
++----------------------------------------+-----------------------------+
+| shibboleth.attribute.role              | eduPersonPrimaryAffiliation |
++----------------------------------------+-----------------------------+
+| shibboleth.attribute.firstName         | givenName                   |
++----------------------------------------+-----------------------------+
+| shibboleth.attribute.lastName          | sn                          |
++----------------------------------------+-----------------------------+
+| shibboleth.attribute.roleRequired      | false                       |
++----------------------------------------+-----------------------------+
+| shibboleth.attribute.firstNameRequired | false                       |
++----------------------------------------+-----------------------------+
+| shibboleth.attribute.lastNameRequired  | false                       |
++----------------------------------------+-----------------------------+
+| shibboleth.separator                   |                             |
++----------------------------------------+-----------------------------+
+
+### Esimerkkejä
+
++----------------------------------------+----------------------------------------------------------------------------+
+| Muuttuja                               | Arvo                                                                       |
++========================================+============================================================================+
+| db.default.url                         | jdbc:mysql://127.0.0.1/omavalvonta?characterEncoding=UTF-8&useUnicode=true |
++----------------------------------------+----------------------------------------------------------------------------+
+| db.default.user                        | omavalvonta                                                                |
++----------------------------------------+----------------------------------------------------------------------------+
+| db.default.password                    | salasana                                                                   |
++----------------------------------------+----------------------------------------------------------------------------+
+| shibboleth.login.entityId              | https://shibboleth.hamk.fi/shibboleth-hamk                                 |
++----------------------------------------+----------------------------------------------------------------------------+
+| shibboleth.haka.logout.url             | https://shib-origin.tut.fi/SHIBLOGOUT                                      |
++----------------------------------------+----------------------------------------------------------------------------+
+| shibboleth.separator                   | ```\\s*,\\s*```                                                            |
++----------------------------------------+----------------------------------------------------------------------------+
