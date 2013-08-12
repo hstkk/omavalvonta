@@ -7,7 +7,11 @@ import java.lang.reflect.Proxy;
 import javax.persistence.EntityManager;
 import play.Play;
 import play.db.jpa.JPA;
-
+/**
+ * https://github.com/playframework/Play20/issues/851
+ * @author sami
+ *
+ */
 public class MyJPA {
 
 	public static EntityManager em() {
