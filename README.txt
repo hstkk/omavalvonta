@@ -27,3 +27,14 @@ play dist
 ## Genereting javadoc & scaladoc ##
 
 play app-docs
+
+## Docker
+
+1. Install
+   - http://docs.docker.io/en/latest/installation/
+1. Build docker container
+   - `docker build -t play .`
+2. Run docker container
+   - `docker run -v $(pwd):/src -i -t play`
+   - `docker run -v $(pwd):/src -i -t play dist`
+   - `docker run -p 9000:9000 -v $(pwd):/src -i -t play run`
