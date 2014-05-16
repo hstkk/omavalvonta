@@ -1,10 +1,9 @@
-README
-======
+# README
 
-## Play framework ##
+## Play framework
 
-1. Lataa Play Framework 2.1.1
-        http://downloads.typesafe.com/play/2.1.1/play-2.1.1.zip
+1. Lataa Play Framework 2.2.3
+        http://downloads.typesafe.com/play/2.2.3/play-2.2.3.zip
 2. Pura ladattu ZIP-paketti
 3. Lisää puretun kansion sijainti PATH-ympäristömuuttujaan (varmista myös, että Java on ympäristömuuttujassa)
         http://geekswithblogs.net/renso/archive/2009/10/21/how-to-set-the-windows-path-in-windows-7.aspx
@@ -14,19 +13,20 @@ README
         play clean compile
 6. Käynnistä web-sovellus
         play run
-7. Konsultoi jatkossa dokumentaatiota http://www.playframework.com/documentation/2.1.1/Home
+7. Konsultoi jatkossa dokumentaatiota http://www.playframework.com/documentation/2.2.x/Home
 
-## Creating a standalone version ##
+## Create a standalone version
 
-sbt dist
+`play dist`
 
-tai
+## Generate javadoc and scaladoc
 
-play dist
+`play unidoc`
 
-## Genereting javadoc & scaladoc ##
-
-play app-docs
+    target
+    ├── javaunidoc
+    └── scala-2.10
+        └── unidoc
 
 ## Docker
 
