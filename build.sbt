@@ -25,3 +25,5 @@ resolvers += Resolver.url("Violas Play Modules", url("http://www.joergviola.de/r
 javacOptions ++= Seq("-s", "metamodel")
 
 javacOptions += "-Xlint:all"
+
+scalaJavaUnidocSettings
