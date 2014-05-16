@@ -1,0 +1,25 @@
+import play.Project._
+
+name := "omavalvonta"
+
+version := "1.0"
+
+playJavaSettings
+
+libraryDependencies ++= Seq(
+	javaCore,
+	javaJdbc,
+	javaJpa,
+	filters,
+	"org.hibernate" % "hibernate-core" % "4.3.5.Final",
+	"org.hibernate" % "hibernate-envers" % "4.3.5.Final",
+	"mysql" % "mysql-connector-java" % "5.1.30",
+	"org.hibernate" % "hibernate-jpamodelgen" % "4.3.5.Final",
+	"pdf" % "pdf_2.10" % "0.5"
+)
+
+resolvers += Resolver.url("Violas Play Modules", url("http://www.joergviola.de/releases/"))(Resolver.ivyStylePatterns)
+
+javacOptions ++= Seq("-s", "metamodel")
+
+javacOptions += "-Xlint:all"
