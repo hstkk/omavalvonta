@@ -1,6 +1,9 @@
 package controllers;
 
 import static play.data.Form.form;
+
+import com.google.common.base.Optional;
+
 import models.Batch;
 import models.FinalProduct;
 import models.User;
@@ -48,10 +51,10 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 		if (user != null) {
 			if(DAO.isEmpty())
 				return Helper.getNotFound();
-			Batch batch = Batch.dao.getReference(batchId);
-			if (batch == null)
+			Optional<Batch> batch = Batch.dao.getReference(batchId);
+			if (!batch.isPresent())
 				return Helper.getNotFound();
-			FinalProduct finalProduct = FinalProduct.findByBatch(batch);
+			FinalProduct finalProduct = FinalProduct.findByBatch(batch.get());
 			if (finalProduct == null)
 				return Helper.getNotFound();
 			if (finalProduct.user != null)

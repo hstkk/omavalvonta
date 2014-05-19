@@ -63,7 +63,7 @@ public class Form extends UserModel {
 	}
 
 	private void set() {
-		this.fieldsets = Fieldset.dao.getReference(this.fieldsets);
+		this.fieldsets = Fieldset.dao.getReference(this.fieldsets).or(new ArrayList<Fieldset>());
 	}
 
 	public static Map<String, String> options(Product product) {

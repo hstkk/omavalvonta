@@ -98,13 +98,13 @@ public class Results extends Crud<models.dynamicforms.Results> {
 		Form<models.dynamicforms.Results> filledForm = form(
 				models.dynamicforms.Results.class,
 				models.dynamicforms.Results.Step3.class).bindFromRequest();
-		Result result = onCancel(filledForm);
-		if (result != null)
-			return result;
-		Product product = Product.dao.getReference(productId);
-		models.dynamicforms.Form form = models.dynamicforms.Form.dao
+		Optional<Result> result = onCancel(filledForm);
+		if (result.isPresent())
+			return result.get();
+		Optional<Product> product = Product.dao.getReference(productId);
+		Optional<models.dynamicforms.Form> form = models.dynamicforms.Form.dao
 				.getReference(formId);
-		if (product == null || form == null)
+		if (!product.isPresent() || !form.isPresent())
 			return Helper.getNotFound();
 		if (!filledForm.hasErrors()) {
 			models.dynamicforms.Results t = filledForm.get();
@@ -116,7 +116,7 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			}
 		}
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(step3.render(filledForm, product, form));
+		return badRequest(step3.render(filledForm, product.get(), form));
 	}
 
 	@Override
@@ -191,19 +191,19 @@ public class Results extends Crud<models.dynamicforms.Results> {
 
 	@Transactional(readOnly = true)
 	public Result step3(Long productId) {
-		Product product = Product.dao.getReference(productId);
-		if (product == null)
+		Optional<Product> product = Product.dao.getReference(productId);
+		if (!product.isPresent())
 			return Helper.getNotFound();
 		Form<models.dynamicforms.Results> filledForm = form(
 				models.dynamicforms.Results.class,
 				models.dynamicforms.Results.Step2.class).bindFromRequest();
 		if (!filledForm.hasErrors()) {
 			models.dynamicforms.Results t = filledForm.get();
-			models.dynamicforms.Form form = models.dynamicforms.Form.dao
+			Optional<models.dynamicforms.Form> form = models.dynamicforms.Form.dao
 					.getReference(t.form);
-			if (form == null)
+			if (!form.isPresent())
 				return Helper.getNotFound();
-			return ok(step3.render(filledForm, product, form));
+			return ok(step3.render(filledForm, product, form.get()));
 		}
 		return badRequest(step2.render(filledForm, product));
 	}

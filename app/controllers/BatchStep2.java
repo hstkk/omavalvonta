@@ -48,19 +48,19 @@ public class BatchStep2 extends UserCrud<Batch> {
 
 	@Transactional
 	public Result create(Long productId) {
-		Product product = Product.dao.getReference(productId);
-		if (product == null)
+		Optional<Product> product = Product.dao.getReference(productId);
+		if (!product.isPresent())
 			return Helper.getNotFound();
 		Form<Batch> filledForm = form(Batch.class, Batch.Step2.class)
 				.bindFromRequest();
-		Result result = onCancel(filledForm);
-		if (result != null)
-			return result;
+		Optional<Result> result = onCancel(filledForm);
+		if (result.isPresent())
+			return result.get();
 		filledForm = validateForm(filledForm);
 		if (!filledForm.hasErrors()) {
 			Batch batch = filledForm.get();
 			User user = Session.user();
-			boolean success = batch.bind(user, product);
+			boolean success = batch.bind(user, product.get());
 			if (success) {
 				success = Batch.dao.create(batch);
 				if (success) {
@@ -70,7 +70,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 				}
 			}
 		}
-		Batch batch = new Batch(product);
+		Batch batch = new Batch(product.get());
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(step2.render(batch, filledForm));
 	}
