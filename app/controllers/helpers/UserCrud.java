@@ -10,6 +10,7 @@ import play.api.templates.Template2;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
+import play.libs.F;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 import play.mvc.With;
@@ -21,27 +22,30 @@ import controllers.shib.Session;
 public class UserCrud<T extends UserModel> extends Crud<T> {
 
 	public UserCrud(
-			Dao<T, Long> DAO,
-			Form<T> FORM,
-			Template1<Form<T>, Html> CREATE,
-			Template1<Page<T>, Html> PAGE,
-			Template1<T, Html> SHOW,
-			Template2<T, Form<T>, Html> UPDATE) {
+			F.Option<Dao<T, Long>> DAO,
+			F.Option<Form<T>> FORM,
+			F.Option<Template1<Form<T>, Html>> CREATE,
+			F.Option<Template1<Page<T>, Html>> PAGE,
+			F.Option<Template1<T, Html>> SHOW,
+			F.Option<Template2<T, Form<T>, Html>> UPDATE
+		) {
 		super(DAO, FORM, CREATE, PAGE, SHOW, UPDATE);
 	}
 
 	@Authenticated(Secured.class)
 	@Transactional
 	public Result ack(Long id) {
+		if(DAO.isEmpty())
+			return Helper.getNotFound();
 		User user = Session.user();
 		if (user != null) {
-			T t = DAO.findById(id);
+			T t = DAO.get().findById(id);
 			if (t == null)
 				return Helper.getNotFound();
 			if (t.user != null)
 				return Helper.getInternalServerError();
 			t.user = user;
-			if (DAO.update(t)) {
+			if (DAO.get().update(t)) {
 				flash().remove("error");
 				flash("success", Messages.get("crud.success"));
 			} else
