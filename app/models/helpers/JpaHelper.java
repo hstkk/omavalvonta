@@ -36,7 +36,7 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 	}
 
 	public EntityManager getEm() {
-		return MyJPA.em();
+		return JPA.em();
 	}
 
 	public T getReference(ID id) {
