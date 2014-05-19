@@ -2,13 +2,22 @@ package controllers;
 
 import static play.data.Form.form;
 import models.Batch;
+import models.helpers.Dao;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
+import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.F;
 import play.mvc.Call;
 import play.mvc.Result;
-import play.mvc.With;
 import play.mvc.Security.Authenticated;
+import play.mvc.With;
 import utils.Converter;
-import views.html.batches.*;
+import views.html.batches.page;
+import views.html.batches.show;
+import views.html.batches.step1;
 import controllers.helpers.UserCrud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
@@ -17,7 +26,14 @@ import controllers.shib.Session;
 public class Batches extends UserCrud<Batch> {
 
 	public Batches() {
-		super(Batch.dao, null, null, page.ref(), show.ref(), null);
+		super(
+			F.Option.<Dao<Batch, Long>>Some(Batch.dao),
+			F.Option.<Form<Batch>>None(),
+			F.Option.<Template1<Form<Batch>, Html>>None(),
+			F.Option.<Template1<Page<Batch>, Html>>Some(page.ref()),
+			F.Option.<Template1<Batch, Html>>Some(show.ref()),
+			F.Option.<Template2<Batch, Form<Batch>, Html>>None()
+		);
 	}
 
 	@Override
