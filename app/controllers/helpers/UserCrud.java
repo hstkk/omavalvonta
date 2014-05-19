@@ -15,6 +15,7 @@ import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 import play.mvc.With;
 import utils.Helper;
+import com.google.common.base.Optional;
 import controllers.shib.Secured;
 import controllers.shib.Session;
 
@@ -38,14 +39,15 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 		if(DAO.isEmpty())
 			return Helper.getNotFound();
 		User user = Session.user();
-		if (user != null) {
-			T t = DAO.get().findById(id);
-			if (t == null)
+		if (Optional.fromNullable(user).isPresent()) {
+			Optional<T> t = DAO.get().findById(id);
+			if (!t.isPresent())
 				return Helper.getNotFound();
-			if (t.user != null)
+			if (Optional.fromNullable(t.get().user).isPresent())
 				return Helper.getInternalServerError();
-			t.user = user;
-			if (DAO.get().update(t)) {
+			T tUpdate = t.get();
+			tUpdate.user = user;
+			if (DAO.get().update(tUpdate)) {
 				flash().remove("error");
 				flash("success", Messages.get("crud.success"));
 			} else
@@ -74,11 +76,10 @@ public class UserCrud<T extends UserModel> extends Crud<T> {
 	}
 
 	@Override
-	public Result onCreateOrUpdate(T t, Long id) {
+	public Optional<Result> onCreateOrUpdate(T t, Optional<Long> id) {
 		User user = Session.user();
 		t.user = user;
-		Result result = super.onCreateOrUpdate(t, id);
-		return result;
+		return super.onCreateOrUpdate(t, id);
 	}
 
 	@Override
