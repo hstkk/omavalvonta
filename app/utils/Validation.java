@@ -59,7 +59,7 @@ public class Validation {
 	 * @return double if valid else null.
 	 */
 	public static Double isDouble(String value) {
-		return Converter.stringToDouble(value);
+		return Converter.stringToDouble(value).get();
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class Validation {
 	 * @return boolean if valid else null.
 	 */
 	public static Boolean isBoolean(String value) {
-		return Converter.stringToBool(value);
+		return Converter.stringToBool(value).get();
 	}
 
 	/**
@@ -94,6 +94,6 @@ public class Validation {
 	 * @return Date if valid else null.
 	 */
 	public static Date isDate(String value) {
-		return Converter.stringToDate(value);
+		return Converter.stringToDate(value).get();
 	}
 }

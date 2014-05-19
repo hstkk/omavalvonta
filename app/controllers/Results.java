@@ -225,8 +225,8 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			Field subField = field.sub("[" + index + "]." + subFieldName);
 			String value = subField.valueOr("");
 			if (!value.isEmpty()) {
-				Double _value = Converter.stringToDouble(value);
-				if (_value == null)
+				Optional<Double> _value = Converter.stringToDouble(value);
+				if (!_value.isPresent())
 					filledForm.reject(subField.name(), "error.invalid");
 			}
 		}

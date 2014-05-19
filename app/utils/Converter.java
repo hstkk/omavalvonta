@@ -83,6 +83,10 @@ public class Converter {
 		return dateToString(date, Optional.<String>absent());
 	}
 
+	public static String dateToString(Date date, String format) {
+		return dateToString(date, Optional.fromNullable(format));
+	}
+
 	public static String dateToString(Date date, Optional<String> format) {
 		try {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format.or(Play.application().configuration()
@@ -101,7 +105,7 @@ public class Converter {
 	}
 
 	public static String booleanToString(Boolean value) {
-		if (value == null)
+		if (!Optional.fromNullable(value).isPresent())
 			return "";
 		else if (value)
 			return Messages.get("boolean.true");

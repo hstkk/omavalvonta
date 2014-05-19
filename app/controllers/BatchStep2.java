@@ -3,6 +3,9 @@ package controllers;
 import static play.data.Form.form;
 
 import java.util.List;
+
+import com.google.common.base.Optional;
+
 import models.Batch;
 import models.Product;
 import models.User;
@@ -92,8 +95,8 @@ public class BatchStep2 extends UserCrud<Batch> {
 			Field subField = field.sub("[" + index + "]." + subFieldName);
 			String value = subField.valueOr("");
 			if (!value.isEmpty()) {
-				Double _value = Converter.stringToDouble(value);
-				if (_value == null)
+				Optional<Double> _value = Converter.stringToDouble(value);
+				if (!_value.isPresent())
 					filledForm.reject(subField.name(), "error.invalid");
 			}
 		}
