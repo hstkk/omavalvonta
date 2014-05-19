@@ -4,6 +4,8 @@ import static play.data.Form.form;
 
 import java.util.List;
 
+import com.google.common.base.Optional;
+
 import models.FinalProduct;
 import models.Product;
 import models.User;
@@ -130,9 +132,9 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			return Helper.getInternalServerError();
 		String value = request().getQueryString("tuote");
 		if (value != null && !value.isEmpty()) {
-			Long product = Converter.stringToLong(value);
-			if (product != null)
-				return redirect(controllers.routes.Results.step2(product));
+			Optional<Long> product = Converter.stringToLong(value);
+			if (product.isPresent())
+				return redirect(controllers.routes.Results.step2(product.get()));
 		}
 		return ok(step1.render(FORM.get()));
 	}
