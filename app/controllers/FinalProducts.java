@@ -1,20 +1,24 @@
 package controllers;
 
+import static play.data.Form.form;
 import models.Batch;
 import models.FinalProduct;
 import models.User;
+import models.helpers.Dao;
+import models.helpers.Page;
 import play.api.templates.Html;
+import play.api.templates.Template1;
 import play.api.templates.Template2;
 import play.data.Form;
-import static play.data.Form.*;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
+import play.libs.F;
 import play.mvc.Call;
 import play.mvc.Result;
-import play.mvc.With;
 import play.mvc.Security.Authenticated;
+import play.mvc.With;
 import utils.Helper;
-import views.html.finalproducts.*;
+import views.html.finalproducts.fields;
 import controllers.helpers.UserCrud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
@@ -23,8 +27,14 @@ import controllers.shib.Session;
 public class FinalProducts extends UserCrud<FinalProduct> {
 
 	public FinalProducts() {
-		super(FinalProduct.dao, form(FinalProduct.class), null, null, null,
-				null);
+		super(
+			F.Option.<Dao<FinalProduct, Long>>Some(FinalProduct.dao),
+			F.Option.<Form<FinalProduct>>Some(form(FinalProduct.class)),
+			F.Option.<Template1<Form<FinalProduct>, Html>>None(),
+			F.Option.<Template1<Page<FinalProduct>, Html>>None(),
+			F.Option.<Template1<FinalProduct, Html>>None(),
+			F.Option.<Template2<FinalProduct, Form<FinalProduct>, Html>>None()
+		);
 	}
 
 	private final Template2<Form<FinalProduct>, Batch, Html> FIELDS = fields
