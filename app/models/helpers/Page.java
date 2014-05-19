@@ -1,6 +1,8 @@
 package models.helpers;
 
+import java.util.ArrayList;
 import java.util.List;
+import com.google.common.base.Optional;
 
 /**
  * The Class Page.
@@ -21,7 +23,7 @@ public class Page<T> {
 	private final long rows;
 
 	/** The list. */
-	private final List<T> list;
+	private final Optional<List<T>> list;
 
 	/**
 	 * Instantiates a new page.
@@ -39,7 +41,7 @@ public class Page<T> {
 		this.pageNumber = (pageNumber < 1) ? 1 : pageNumber;
 		this.pageSize = pageSize;
 		this.rows = rows;
-		this.list = list;
+		this.list = Optional.fromNullable(list);
 	}
 
 	/**
@@ -66,7 +68,7 @@ public class Page<T> {
 	 * @return true, if is empty
 	 */
 	public boolean isEmpty() {
-		return (list == null || list.isEmpty());
+		return (!list.isPresent() || list.get().isEmpty());
 	}
 
 	/**
@@ -92,6 +94,6 @@ public class Page<T> {
 	 * @return the list
 	 */
 	public List<T> getList() {
-		return list;
+		return list.or(new ArrayList<T>());
 	}
 }
