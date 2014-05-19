@@ -37,18 +37,18 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	 * @param REDIRECT
 	 */
 	public Crud(
-			Dao<T, Long> DAO,
-			Form<T> FORM,
-			Template1<Form<T>, Html> CREATE,
-			Template1<Page<T>, Html> PAGE,
-			Template1<T, Html> SHOW,
-			Template2<T, Form<T>, Html> UPDATE) {
-		this.DAO = F.Option.Some(DAO);
-		this.FORM = F.Option.Some(FORM);
-		this.CREATE = F.Option.Some(CREATE);
-		this.PAGE = F.Option.Some(PAGE);
-		this.SHOW = F.Option.Some(SHOW);
-		this.UPDATE = F.Option.Some(UPDATE);
+			F.Option<Dao<T, Long>> DAO,
+			F.Option<Form<T>> FORM,
+			F.Option<Template1<Form<T>, Html>> CREATE,
+			F.Option<Template1<Page<T>, Html>> PAGE,
+			F.Option<Template1<T, Html>> SHOW,
+			F.Option<Template2<T, Form<T>, Html>> UPDATE) {
+		this.DAO = DAO;
+		this.FORM = FORM;
+		this.CREATE = CREATE;
+		this.PAGE = PAGE;
+		this.SHOW = SHOW;
+		this.UPDATE = UPDATE;
 	}
 
 	protected Form<T> bindForm() {
