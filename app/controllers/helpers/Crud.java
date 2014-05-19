@@ -3,13 +3,14 @@ package controllers.helpers;
 import models.helpers.Dao;
 import models.helpers.Model;
 import models.helpers.Page;
-import play.mvc.Call;
 import play.api.templates.Html;
 import play.api.templates.Template1;
 import play.api.templates.Template2;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
+import play.libs.F;
+import play.mvc.Call;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
@@ -18,12 +19,12 @@ import controllers.shib.Session;
 
 @With(Session.class)
 public class Crud<T extends Model> extends Controller implements CrudInterface {
-	protected final Form<T> FORM;
-	protected final Dao<T, Long> DAO;
-	protected final Template1<Form<T>, Html> CREATE;
-	private final Template1<Page<T>, Html> PAGE;
-	private final Template1<T, Html> SHOW;
-	private final Template2<T, Form<T>, Html> UPDATE;
+	protected final F.Option<Form<T>> FORM;
+	protected final F.Option<Dao<T, Long>> DAO;
+	protected final F.Option<Template1<Form<T>, Html>> CREATE;
+	private final F.Option<Template1<Page<T>, Html>> PAGE;
+	private final F.Option<Template1<T, Html>> SHOW;
+	private final F.Option<Template2<T, Form<T>, Html>> UPDATE;
 
 	/**
 	 * 
@@ -42,16 +43,16 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			Template1<Page<T>, Html> PAGE,
 			Template1<T, Html> SHOW,
 			Template2<T, Form<T>, Html> UPDATE) {
-		this.DAO = DAO;
-		this.FORM = FORM;
-		this.CREATE = CREATE;
-		this.PAGE = PAGE;
-		this.SHOW = SHOW;
-		this.UPDATE = UPDATE;
+		this.DAO = F.Option.Some(DAO);
+		this.FORM = F.Option.Some(FORM);
+		this.CREATE = F.Option.Some(CREATE);
+		this.PAGE = F.Option.Some(PAGE);
+		this.SHOW = F.Option.Some(SHOW);
+		this.UPDATE = F.Option.Some(UPDATE);
 	}
 
 	protected Form<T> bindForm() {
-		return FORM.bindFromRequest();
+		return FORM.get().bindFromRequest();
 	}
 
 	@Override
@@ -67,10 +68,12 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional
 	public Result create() {
-		if (CREATE == null || FORM == null)
+		if(CREATE.isEmpty() && FORM.isEmpty())
 			return Helper.getNotFound();
 		Form<T> filledForm = bindForm();
+		
 		Result result = onCancel(filledForm);
+
 		if (result != null)
 			return result;
 		filledForm = validateForm(filledForm);
@@ -81,28 +84,28 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 				return result;
 		}
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(CREATE.render(filledForm));
+		return badRequest(CREATE.get().render(filledForm));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result edit(Long id) {
-		if (UPDATE == null || DAO == null || FORM == null)
+		if (UPDATE.isEmpty() || DAO.isEmpty() || FORM.isEmpty())
 			return Helper.getNotFound();
-		T t = DAO.findById(id);
+		T t = DAO.get().findById(id);
 		Result result = isUpdatable(t);
 		if (result != null)
 			return result;
-		Form<T> filledForm = FORM.fill(t);
-		return ok(UPDATE.render(t, filledForm));
+		Form<T> filledForm = FORM.get().fill(t);
+		return ok(UPDATE.get().render(t, filledForm));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
-		if (CREATE == null || FORM == null)
+		if (CREATE.isEmpty() || FORM.isEmpty())
 			return Helper.getNotFound();
-		return ok(CREATE.render(FORM));
+		return ok(CREATE.get().render(FORM.get()));
 	}
 
 	public Result isUpdatable(T t) {
@@ -130,13 +133,13 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	}
 
 	protected Result onCreateOrUpdate(T t, Long id) {
-		if (DAO != null) {
+		if (DAO.isDefined()) {
 			boolean success = false;
 			if (id == null)
-				success = DAO.create(t);
+				success = DAO.get().create(t);
 			else {
 				t.id = id;
-				success = DAO.update(t);
+				success = DAO.get().update(t);
 			}
 			if (success) {
 				flash().remove("error");
@@ -151,26 +154,26 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	@Override
 	@Transactional(readOnly = true)
 	public Result page(int pageNumber) {
-		if (PAGE == null || DAO == null)
+		if (PAGE.isEmpty() || DAO.isEmpty())
 			return Helper.getNotFound();
-		return ok(PAGE.render(DAO.page(pageNumber)));
+		return ok(PAGE.get().render(DAO.get().page(pageNumber)));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Result show(Long id) {
-		if (SHOW == null || DAO == null)
+		if (SHOW.isEmpty() || DAO.isEmpty())
 			return Helper.getNotFound();
-		T t = DAO.findById(id);
+		T t = DAO.get().findById(id);
 		if (t == null)
 			return Helper.getNotFound();
-		return ok(SHOW.render(t));
+		return ok(SHOW.get().render(t));
 	}
 
 	@Override
 	@Transactional
 	public Result update(Long id) {
-		if (UPDATE == null || DAO == null || !DAO.exists(id) || FORM == null)
+		if (UPDATE.isEmpty() || DAO.isEmpty() || DAO.get().doesNotExist(id) || FORM.isEmpty())
 			return Helper.getNotFound();
 		Form<T> filledForm = bindForm();
 		Result result = onCancel(filledForm, id);
@@ -183,9 +186,9 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			if (result != null)
 				return result;
 		}
-		T t = DAO.findById(id);
+		T t = DAO.get().findById(id);
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(UPDATE.render(t, filledForm));
+		return badRequest(UPDATE.get().render(t, filledForm));
 	}
 
 	protected Form<T> validateForm(Form<T> filledForm) {
