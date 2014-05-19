@@ -5,9 +5,10 @@ import play.Logger;
 import play.api.mvc.EssentialFilter;
 import play.data.format.Formatters;
 import play.filters.csrf.CSRFFilter;
+import play.libs.F.Promise;
 import play.mvc.Http.RequestHeader;
-import play.mvc.Result;
-import utils.Formats.*;
+import play.mvc.SimpleResult;
+import utils.Formats.DoubleFormatter;
 import utils.Helper;
 
 /**
@@ -23,19 +24,20 @@ public class Global extends GlobalSettings {
 	}
 
 	@Override
-	public Result onBadRequest(RequestHeader request, String error) {
-		return Helper.getBadRequest();
+	public Promise<SimpleResult> onBadRequest(RequestHeader request,
+			String error) {
+		return Promise.<SimpleResult>pure((SimpleResult) Helper.getBadRequest());
 	}
 
 	@Override
-	public Result onError(RequestHeader request, Throwable t) {
+	public Promise<SimpleResult> onError(RequestHeader request, Throwable t) {
 		Logger.warn("500", t);
-		return Helper.getInternalServerError();
+		return Promise.<SimpleResult>pure((SimpleResult) Helper.getInternalServerError());
 	}
 
 	@Override
-	public Result onHandlerNotFound(RequestHeader request) {
-		return Helper.getNotFound();
+	public Promise<SimpleResult> onHandlerNotFound(RequestHeader request) {
+		return Promise.<SimpleResult>pure((SimpleResult) Helper.getNotFound());
 	}
 
 	@Override
