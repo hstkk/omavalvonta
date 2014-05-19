@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,11 +14,16 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
+
 import models.dynamicforms.Form;
 import models.dynamicforms.Form_;
 import models.helpers.Dao;
 import models.helpers.UserModel;
+
 import org.hibernate.envers.Audited;
+
+import com.google.common.base.Optional;
+
 import play.data.validation.Constraints.Required;
 
 @Entity
@@ -66,21 +72,21 @@ public class Product extends UserModel {
 	}
 
 	// Check that no is uniq
-	public static boolean noExists(Integer no, Long id) {
-		if (no == null)
+	public static boolean noExists(Optional<Integer> no, Long id) {
+		if (!no.isPresent())
 			return false;
 		CriteriaBuilder criteriaBuilder = dao.getCriteriaBuilder();
 		CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
 		Root<Product> root = query.from(Product.class);
 		query.select(criteriaBuilder.count(root));
 		if (id != null)
-			query.where(criteriaBuilder.equal(root.get(Product_.no), no),
+			query.where(criteriaBuilder.equal(root.get(Product_.no), no.get()),
 					criteriaBuilder.notEqual(root.get(Product_.id), id));
 		else
-			query.where(criteriaBuilder.equal(root.get(Product_.no), no));
-		Long count = dao.findLongBy(query);
-		if (count != null)
-			return count > 0;
+			query.where(criteriaBuilder.equal(root.get(Product_.no), no.get()));
+		Optional<Long> count = dao.findLongBy(query);
+		if (count.isPresent())
+			return count.get() > 0;
 		return false;
 	}
 
