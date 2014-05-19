@@ -14,6 +14,8 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	boolean delete(T t);
 
+	boolean doesNotExist(ID id);
+
 	boolean exists(ID id);
 
 	List<T> findAll();

@@ -66,6 +66,11 @@ public class Dao<T extends Model, ID extends Serializable> extends
 	}
 
 	@Override
+	public boolean doesNotExist(ID id) {
+		return !exists(id);
+	}
+
+	@Override
 	public boolean exists(ID id) {
 		return getReference(id) != null;
 	};
