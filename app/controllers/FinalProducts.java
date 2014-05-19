@@ -46,6 +46,8 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 	public Result ack(Long batchId) {
 		User user = Session.user();
 		if (user != null) {
+			if(DAO.isEmpty())
+				return Helper.getNotFound();
 			Batch batch = Batch.dao.getReference(batchId);
 			if (batch == null)
 				return Helper.getNotFound();
@@ -55,7 +57,7 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 			if (finalProduct.user != null)
 				return Helper.getInternalServerError();
 			finalProduct.user = user;
-			if (DAO.update(finalProduct)) {
+			if (DAO.get().update(finalProduct)) {
 				flash().remove("error");
 				flash("success", Messages.get("crud.success"));
 			} else
@@ -73,7 +75,7 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 	@Transactional
 	public Result save(Long batchId) {
 		Batch batch = Batch.dao.findById(batchId);
-		if (batch == null)
+		if (batch == null || DAO.isEmpty())
 			return Helper.getNotFound();
 		Form<FinalProduct> filledForm = form(FinalProduct.class,
 				FinalProduct.Partial.class).bindFromRequest();
@@ -89,10 +91,10 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 			boolean success = false;
 			FinalProduct finalProductOriginal = FinalProduct.findByBatch(batch);
 			if (finalProductOriginal == null)
-				success = DAO.create(finalProduct);
+				success = DAO.get().create(finalProduct);
 			else {
 				finalProduct.id = finalProductOriginal.id;
-				success = DAO.update(finalProduct);
+				success = DAO.get().update(finalProduct);
 			}
 
 			if (success) {
@@ -108,11 +110,11 @@ public class FinalProducts extends UserCrud<FinalProduct> {
 	@Transactional(readOnly = true)
 	public Result edit(Long batchId) {
 		Batch batch = Batch.dao.findById(batchId);
-		if (batch == null)
+		if (batch == null || FORM.isEmpty())
 			return Helper.getNotFound();
 		FinalProduct finalProduct = FinalProduct.findByBatch(batch);
 		if (finalProduct != null)
-			return ok(FIELDS.render(FORM.fill(finalProduct), batch));
-		return ok(FIELDS.render(FORM, batch));
+			return ok(FIELDS.render(FORM.get().fill(finalProduct), batch));
+		return ok(FIELDS.render(FORM.get(), batch));
 	}
 }
