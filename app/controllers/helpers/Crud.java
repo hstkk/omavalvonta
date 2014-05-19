@@ -37,7 +37,7 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	 * @param REDIRECT
 	 */
 	public Crud(
-			models.helpers.Dao<T, Long> DAO,
+			Dao<T, Long> DAO,
 			Form<T> FORM,
 			Template1<Form<T>, Html> CREATE,
 			Template1<Page<T>, Html> PAGE,
