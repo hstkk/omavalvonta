@@ -1,33 +1,52 @@
 package controllers;
 
+import static play.data.Form.form;
+
 import java.util.List;
 
 import models.FinalProduct;
 import models.Product;
 import models.User;
+import models.helpers.Dao;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
 import play.data.Form;
 import play.data.Form.Field;
-import static play.data.Form.*;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
+import play.libs.F;
 import play.mvc.Call;
 import play.mvc.Result;
-import play.mvc.With;
 import play.mvc.Security.Authenticated;
+import play.mvc.With;
+import util.pdf.PDF;
 import utils.Converter;
 import utils.Helper;
-import views.html.results.*;
+import views.html.results.history;
+import views.html.results.page;
+import views.html.results.pdf;
+import views.html.results.show;
+import views.html.results.step1;
+import views.html.results.step2;
+import views.html.results.step3;
+import views.html.results.update;
 import controllers.helpers.Crud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
-import util.pdf.PDF;
 
 @With(Session.class)
 public class Results extends Crud<models.dynamicforms.Results> {
 	public Results() {
-		super(models.dynamicforms.Results.dao,
-				form(models.dynamicforms.Results.class), step1.ref(), page
-						.ref(), show.ref(), update.ref());
+		super(
+			F.Option.<Dao<models.dynamicforms.Results, Long>>Some(models.dynamicforms.Results.dao),
+			F.Option.<Form<models.dynamicforms.Results>>Some(form(models.dynamicforms.Results.class)),
+			F.Option.<Template1<Form<models.dynamicforms.Results>, Html>>Some(step1.ref()),
+			F.Option.<Template1<Page<models.dynamicforms.Results>, Html>>Some(page.ref()),
+			F.Option.<Template1<models.dynamicforms.Results, Html>>Some(show.ref()),
+			F.Option.<Template2<models.dynamicforms.Results, Form<models.dynamicforms.Results>, Html>>Some(update.ref())
+		);
 	}
 
 	@Authenticated(Secured.class)
@@ -72,7 +91,7 @@ public class Results extends Crud<models.dynamicforms.Results> {
 
 	@Transactional
 	public Result create(Long productId, Long formId) {
-		if (DAO == null)
+		if (DAO.isEmpty())
 			return Helper.getInternalServerError();
 		Form<models.dynamicforms.Results> filledForm = form(
 				models.dynamicforms.Results.class,
@@ -87,7 +106,7 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			return Helper.getNotFound();
 		if (!filledForm.hasErrors()) {
 			models.dynamicforms.Results t = filledForm.get();
-			boolean success = DAO.create(t);
+			boolean success = DAO.get().create(t);
 			if (success) {
 				flash().remove("error");
 				Call call = controllers.routes.Results.edit(t.id);
@@ -107,13 +126,15 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
+		if (FORM.isEmpty())
+			return Helper.getInternalServerError();
 		String value = request().getQueryString("tuote");
 		if (value != null && !value.isEmpty()) {
 			Long product = Converter.stringToLong(value);
 			if (product != null)
 				return redirect(controllers.routes.Results.step2(product));
 		}
-		return ok(step1.render(FORM));
+		return ok(step1.render(FORM.get()));
 	}
 
 	@Transactional(readOnly = true)
@@ -138,9 +159,9 @@ public class Results extends Crud<models.dynamicforms.Results> {
 
 	@Transactional(readOnly = true)
 	public Result pdfify(Long id) {
-		if (DAO == null)
+		if (DAO.isEmpty())
 			return Helper.getInternalServerError();
-		models.dynamicforms.Results t = DAO.findById(id);
+		models.dynamicforms.Results t = DAO.get().findById(id);
 		if (t == null)
 			return Helper.getNotFound();
 		return PDF.ok(pdf.render(t));
@@ -161,9 +182,9 @@ public class Results extends Crud<models.dynamicforms.Results> {
 	@Transactional(readOnly = true)
 	public Result step2(Long productId) {
 		Product product = Product.dao.findById(productId);
-		if (product == null)
+		if (product == null || FORM.isEmpty())
 			return Helper.getNotFound();
-		return ok(step2.render(FORM, product));
+		return ok(step2.render(FORM.get(), product));
 	}
 
 	@Transactional(readOnly = true)
