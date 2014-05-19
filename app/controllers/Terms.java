@@ -1,13 +1,22 @@
 package controllers;
 
+import static play.data.Form.form;
 import models.Term;
-import static play.data.Form.*;
+import models.helpers.Dao;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
+import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.F;
 import play.mvc.Call;
 import play.mvc.Result;
-import play.mvc.With;
 import play.mvc.Security.Authenticated;
-import views.html.terms.*;
+import play.mvc.With;
+import views.html.terms.create;
+import views.html.terms.page;
+import views.html.terms.update;
 import controllers.helpers.SecuredCrud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
@@ -16,8 +25,14 @@ import controllers.shib.Session;
 @Authenticated(Secured.class)
 public class Terms extends SecuredCrud<Term> {
 	public Terms() {
-		super(Term.dao, form(Term.class), create.ref(), page.ref(), null,
-				update.ref());
+		super(
+			F.Option.<Dao<Term, Long>>Some(Term.dao),
+			F.Option.<Form<Term>>Some(form(Term.class)),
+			F.Option.<Template1<Form<Term>, Html>>Some(create.ref()),
+			F.Option.<Template1<Page<Term>, Html>>Some(page.ref()),
+			F.Option.<Template1<Term, Html>>None(),
+			F.Option.<Template2<Term, Form<Term>, Html>>Some(update.ref())
+		);
 	}
 
 	@Override
