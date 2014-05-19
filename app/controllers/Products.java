@@ -1,26 +1,40 @@
 package controllers;
 
+import static play.data.Form.form;
 import models.Product;
-import static play.data.Form.*;
+import models.helpers.Dao;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
+import play.libs.F;
 import play.mvc.Call;
 import play.mvc.Result;
-import play.mvc.With;
 import play.mvc.Security.Authenticated;
-import views.html.products.*;
+import play.mvc.With;
+import utils.Converter;
+import views.html.products.create;
+import views.html.products.page;
+import views.html.products.update;
 import controllers.helpers.SecuredCrud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
-import utils.Converter;
 
 @With(Session.class)
 @Authenticated(Secured.class)
 public class Products extends SecuredCrud<Product> {
 	public Products() {
-		super(Product.dao, form(Product.class), create.ref(), page.ref(), null,
-				update.ref());
+		super(
+			F.Option.<Dao<Product, Long>>Some(Product.dao),
+			F.Option.<Form<Product>>Some(form(Product.class)),
+			F.Option.<Template1<Form<Product>, Html>>Some(create.ref()),
+			F.Option.<Template1<Page<Product>, Html>>Some(page.ref()),
+			F.Option.<Template1<Product, Html>>None(),
+			F.Option.<Template2<Product, Form<Product>, Html>>Some(update.ref())
+		);
 	}
 
 	@Override
