@@ -1,28 +1,41 @@
 package controllers;
 
-import java.util.List;
+import static play.data.Form.form;
 
+import java.util.List;
 import models.Batch;
 import models.Product;
 import models.User;
-import play.Logger;
+import models.helpers.Dao;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
 import play.data.Form;
-import static play.data.Form.*;
+import play.data.Form.Field;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
+import play.libs.F;
 import play.mvc.Call;
 import play.mvc.Result;
 import play.mvc.With;
 import utils.Converter;
 import utils.Helper;
-import views.html.batches.*;
+import views.html.batches.step2;
 import controllers.helpers.UserCrud;
 import controllers.shib.Session;
 
 @With(Session.class)
 public class BatchStep2 extends UserCrud<Batch> {
 	public BatchStep2() {
-		super(null, form(Batch.class), null, null, null, null);
+		super(
+			F.Option.<Dao<Batch, Long>>None(),
+			F.Option.<Form<Batch>>Some(form(Batch.class)),
+			F.Option.<Template1<Form<Batch>, Html>>None(),
+			F.Option.<Template1<Page<Batch>, Html>>None(),
+			F.Option.<Template1<Batch, Html>>None(),
+			F.Option.<Template2<Batch, Form<Batch>, Html>>None()
+		);
 	}
 
 	@Override
