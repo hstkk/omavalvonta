@@ -42,7 +42,8 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			F.Option<Template1<Form<T>, Html>> CREATE,
 			F.Option<Template1<Page<T>, Html>> PAGE,
 			F.Option<Template1<T, Html>> SHOW,
-			F.Option<Template2<T, Form<T>, Html>> UPDATE) {
+			F.Option<Template2<T, Form<T>, Html>> UPDATE
+		) {
 		this.DAO = DAO;
 		this.FORM = FORM;
 		this.CREATE = CREATE;
