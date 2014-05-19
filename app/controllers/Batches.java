@@ -1,6 +1,9 @@
 package controllers;
 
 import static play.data.Form.form;
+
+import com.google.common.base.Optional;
+
 import models.Batch;
 import models.helpers.Dao;
 import models.helpers.Page;
@@ -56,11 +59,11 @@ public class Batches extends UserCrud<Batch> {
 	@Override
 	@Transactional(readOnly = true)
 	public Result fresh() {
-		String value = request().getQueryString("tuote");
-		if (value != null && !value.isEmpty()) {
-			Long product = Converter.stringToLong(value);
-			if (product != null)
-				return redirect(controllers.routes.BatchStep2.fresh(product));
+		Optional<String> value = Optional.fromNullable(request().getQueryString("tuote"));
+		if (value.isPresent() && !value.get().isEmpty()) {
+			Optional<Long> product = Converter.stringToLong(value.get());
+			if (product.isPresent())
+				return redirect(controllers.routes.BatchStep2.fresh(product.get()));
 		}
 		return ok(step1.render(form(Batch.class)));
 	}
