@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import com.google.common.base.Optional;
+
 import play.Logger;
 import play.Play;
 import play.i18n.Messages;
@@ -14,83 +16,77 @@ import play.i18n.Messages;
  */
 public class Converter {
 
-	public static Long stringToLong(String value) {
+	public static Optional<Long> stringToLong(String value) {
 		try {
-			return Long.parseLong(value);
+			return Optional.fromNullable(Long.parseLong(value));
 		} catch (Exception e) {
-			return null;
+			return Optional.absent();
 		}
 	}
 
-	public static Integer stringToInt(String value) {
+	public static Optional<Integer> stringToInt(String value) {
 		try {
-			return Integer.parseInt(value);
+			return Optional.fromNullable(Integer.parseInt(value));
 		} catch (Exception e) {
-			return null;
+			return Optional.absent();
 		}
 	}
 
-	public static Boolean stringToBool(String value) {
+	public static Optional<Boolean> stringToBool(String value) {
 		try {
-			return Boolean.parseBoolean(value);
+			return Optional.fromNullable(Boolean.parseBoolean(value));
 		} catch (Exception e) {
-			return null;
+			return Optional.absent();
 		}
 	}
 
-	public static Double stringToDouble(String value) {
-		return stringToDouble(value, null);
+	public static Optional<Double> stringToDouble(String value) {
+		return stringToDouble(value, Optional.<Locale>absent());
 	}
 
-	public static Double stringToDouble(String value, Locale locale) {
+	public static Optional<Double> stringToDouble(String value, Optional<Locale> locale) {
 		try {
-			if (locale == null)
-				locale = Locale.getDefault();
-			NumberFormat numberFormat = NumberFormat.getInstance(locale);
+			NumberFormat numberFormat = NumberFormat.getInstance(locale.or(Locale.getDefault()));
 			Number number = numberFormat.parse(value);
-			return number.doubleValue();
+			return Optional.fromNullable(number.doubleValue());
 		} catch (Exception e) {
-			return null;
+			return Optional.absent();
 		}
 	}
 
 	public static String doubleToString(Double value) {
-		return doubleToString(value, null);
+		return doubleToString(value, Optional.<Locale>absent());
 	}
 
-	public static String doubleToString(Double value, Locale locale) {
+	public static String doubleToString(Double value, Optional<Locale> locale) {
 		try {
-			if (locale == null)
-				locale = Locale.getDefault();
-			if (value == null)
+			if (!Optional.fromNullable(value).isPresent())
 				return "";
-			NumberFormat numberFormat = NumberFormat.getInstance(locale);
+			NumberFormat numberFormat = NumberFormat.getInstance(locale.or(Locale.getDefault()));
 			return numberFormat.format(value);
 		} catch (Exception e) {
 			return "";
 		}
 	}
 
-	public static Date stringToDate(String value) {
+	public static Optional<Date> stringToDate(String value) {
 		try {
 			String format = Play.application().configuration()
 					.getString("date.format");
-			return new SimpleDateFormat(format).parse(value);
+			return Optional.fromNullable(new SimpleDateFormat(format).parse(value));
 		} catch (Exception e) {
-			return null;
+			return Optional.absent();
 		}
 	}
 
 	public static String dateToString(Date date) {
-		return dateToString(date, null);
+		return dateToString(date, Optional.<String>absent());
 	}
 
-	public static String dateToString(Date date, String format) {
+	public static String dateToString(Date date, Optional<String> format) {
 		try {
-			if (format == null || format.isEmpty())
-				format = Play.application().configuration()
-						.getString("date.format");
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format.or(Play.application().configuration()
+						.getString("date.format")));
 			return simpleDateFormat.format(date);
 		} catch (Exception e) {
 			Logger.info("date", e);
@@ -101,7 +97,7 @@ public class Converter {
 	public static String timeToString(Date date) {
 		String format = Play.application().configuration()
 						.getString("time.format");
-		return dateToString(date, format);
+		return dateToString(date, Optional.fromNullable(format));
 	}
 
 	public static String booleanToString(Boolean value) {
