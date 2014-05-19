@@ -48,11 +48,6 @@ public class Term extends UserModel {
 		return name;
 	}
 
-	private void enumToInt() {
-		if (categoryEnum != null)
-			category = categoryEnum.getValue();
-	}
-
 	@Override
 	public boolean onCreate() {
 		return super.onCreate();
