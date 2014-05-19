@@ -1,13 +1,23 @@
 package controllers;
 
+import static play.data.Form.form;
 import models.dynamicforms.Fieldset;
-import static play.data.Form.*;
+import models.helpers.Dao;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
+import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.F;
 import play.mvc.Call;
 import play.mvc.Result;
-import play.mvc.With;
 import play.mvc.Security.Authenticated;
-import views.html.fieldsets.*;
+import play.mvc.With;
+import views.html.fieldsets.create;
+import views.html.fieldsets.page;
+import views.html.fieldsets.show;
+import views.html.fieldsets.update;
 import controllers.helpers.SecuredCrud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
@@ -16,8 +26,14 @@ import controllers.shib.Session;
 @Authenticated(Secured.class)
 public class Fieldsets extends SecuredCrud<Fieldset> {
 	public Fieldsets() {
-		super(Fieldset.dao, form(Fieldset.class), create.ref(), page.ref(),
-				show.ref(), update.ref());
+		super(
+			F.Option.<Dao<Fieldset, Long>>Some(Fieldset.dao),
+			F.Option.<Form<Fieldset>>Some(form(Fieldset.class)),
+			F.Option.<Template1<Form<Fieldset>, Html>>Some(create.ref()),
+			F.Option.<Template1<Page<Fieldset>, Html>>Some(page.ref()),
+			F.Option.<Template1<Fieldset, Html>>Some(show.ref()),
+			F.Option.<Template2<Fieldset, Form<Fieldset>, Html>>Some(update.ref())
+	);
 	}
 
 	@Override
