@@ -50,20 +50,22 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		return Optional.absent();
 	}
 
-	public List<T> getReference(List<T> list) {
-		ArrayList<T> references = new ArrayList<T>();
+	public Optional<List<T>> getReference(List<T> list) {
+		List<T> references = new ArrayList<T>();
 		Optional<List<T>> optList = Optional.fromNullable(list);
 		try {
-			if (optList.isPresent())
+			if (optList.isPresent()) {
 				for (T t : optList.get()) {
 					Optional<T> reference = getReference(t);
 					if (reference.isPresent())
 						references.add(reference.get());
 				}
+				return Optional.fromNullable(references);
+			}
 		} catch (Exception e) {
 			Logger.warn("getReference", e);
 		}
-		return references;
+		return Optional.absent();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -74,11 +76,11 @@ public class JpaHelper<T extends Model, ID extends Serializable> {
 		return Optional.absent();
 	}
 
-	protected TypedQuery<T> setPage(TypedQuery<T> q, Integer pageNumber) {
-		if (pageNumber != null) {
-			if (pageNumber < 1)
-				pageNumber = 1;
-			q.setFirstResult((pageNumber - 1) * pageSize).setMaxResults(
+	protected TypedQuery<T> setPage(TypedQuery<T> q, Optional<Integer> pageNumber) {
+		if (pageNumber.isPresent()) {
+			if (pageNumber.get() < 1)
+				pageNumber = Optional.fromNullable(1);
+			q.setFirstResult((pageNumber.get() - 1) * pageSize).setMaxResults(
 					pageSize);
 		}
 		return q;
