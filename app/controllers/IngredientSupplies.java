@@ -1,13 +1,22 @@
 package controllers;
 
+import static play.data.Form.form;
 import models.IngredientSupply;
-import static play.data.Form.*;
+import models.helpers.Dao;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
+import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.F;
 import play.mvc.Call;
 import play.mvc.Result;
-import play.mvc.With;
 import play.mvc.Security.Authenticated;
-import views.html.ingredientsupplies.*;
+import play.mvc.With;
+import views.html.ingredientsupplies.create;
+import views.html.ingredientsupplies.page;
+import views.html.ingredientsupplies.show;
 import controllers.helpers.UserCrud;
 import controllers.shib.Secured;
 import controllers.shib.Session;
@@ -16,8 +25,14 @@ import controllers.shib.Session;
 public class IngredientSupplies extends UserCrud<IngredientSupply> {
 
 	public IngredientSupplies() {
-		super(IngredientSupply.dao, form(IngredientSupply.class), create.ref(),
-				page.ref(), show.ref(), null);
+		super(
+			F.Option.<Dao<IngredientSupply, Long>>Some(IngredientSupply.dao),
+			F.Option.<Form<IngredientSupply>>Some(form(IngredientSupply.class)),
+			F.Option.<Template1<Form<IngredientSupply>, Html>>Some(create.ref()),
+			F.Option.<Template1<Page<IngredientSupply>, Html>>Some(page.ref()),
+			F.Option.<Template1<IngredientSupply, Html>>Some(show.ref()),
+			F.Option.<Template2<IngredientSupply, Form<IngredientSupply>, Html>>None()
+		);
 	}
 
 	@Override
