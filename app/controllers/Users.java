@@ -1,19 +1,34 @@
 package controllers;
 
 import models.User;
+import models.helpers.Dao;
+import models.helpers.Page;
+import play.api.templates.Html;
+import play.api.templates.Template1;
+import play.api.templates.Template2;
+import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.F;
 import play.mvc.Call;
 import play.mvc.Result;
 import play.mvc.With;
 import utils.Helper;
-import views.html.users.*;
+import views.html.users.page;
+import views.html.users.show;
 import controllers.helpers.Crud;
 import controllers.shib.Session;
 
 @With(Session.class)
 public class Users extends Crud<User> {
 	public Users() {
-		super(User.dao, null, null, page.ref(), show.ref(), null);
+		super(
+				F.Option.<Dao<User, Long>>Some(User.dao),
+				F.Option.<Form<User>>None(),
+				F.Option.<Template1<Form<User>, Html>>None(),
+				F.Option.<Template1<Page<User>, Html>>Some(page.ref()),
+				F.Option.<Template1<User, Html>>Some(show.ref()),
+				F.Option.<Template2<User, Form<User>, Html>>None()
+			);
 	}
 
 	@Override
