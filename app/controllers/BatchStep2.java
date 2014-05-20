@@ -3,9 +3,6 @@ package controllers;
 import static play.data.Form.form;
 
 import java.util.List;
-
-import com.google.common.base.Optional;
-
 import models.Batch;
 import models.Product;
 import models.User;
@@ -48,19 +45,19 @@ public class BatchStep2 extends UserCrud<Batch> {
 
 	@Transactional
 	public Result create(Long productId) {
-		Optional<Product> product = Product.dao.getReference(productId);
-		if (!product.isPresent())
+		Product product = Product.dao.getReference(productId);
+		if (product == null)
 			return Helper.getNotFound();
 		Form<Batch> filledForm = form(Batch.class, Batch.Step2.class)
 				.bindFromRequest();
-		Optional<Result> result = onCancel(filledForm);
-		if (result.isPresent())
-			return result.get();
+		Result result = onCancel(filledForm);
+		if (result != null)
+			return result;
 		filledForm = validateForm(filledForm);
 		if (!filledForm.hasErrors()) {
 			Batch batch = filledForm.get();
 			User user = Session.user();
-			boolean success = batch.bind(user, product.get());
+			boolean success = batch.bind(user, product);
 			if (success) {
 				success = Batch.dao.create(batch);
 				if (success) {
@@ -70,7 +67,7 @@ public class BatchStep2 extends UserCrud<Batch> {
 				}
 			}
 		}
-		Batch batch = new Batch(product.get());
+		Batch batch = new Batch(product);
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(step2.render(batch, filledForm));
 	}
@@ -95,8 +92,8 @@ public class BatchStep2 extends UserCrud<Batch> {
 			Field subField = field.sub("[" + index + "]." + subFieldName);
 			String value = subField.valueOr("");
 			if (!value.isEmpty()) {
-				Optional<Double> _value = Converter.stringToDouble(value);
-				if (!_value.isPresent())
+				Double _value = Converter.stringToDouble(value);
+				if (_value == null)
 					filledForm.reject(subField.name(), "error.invalid");
 			}
 		}

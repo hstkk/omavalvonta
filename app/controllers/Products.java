@@ -1,9 +1,6 @@
 package controllers;
 
 import static play.data.Form.form;
-
-import com.google.common.base.Optional;
-
 import models.Product;
 import models.helpers.Dao;
 import models.helpers.Page;
@@ -68,7 +65,7 @@ public class Products extends SecuredCrud<Product> {
 	public Form<Product> validateForm(Form<Product> filledForm, Long id) {
 		String value = filledForm.field("no").valueOr("");
 		if (!value.isEmpty()) {
-			Optional<Integer> no = Converter.stringToInt(value);
+			Integer no = Converter.stringToInt(value);
 			if (Product.noExists(no, id))
 				filledForm.reject("no", Messages.get("product.noExist"));
 		}

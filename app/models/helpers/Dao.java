@@ -6,18 +6,20 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.query.AuditQuery;
 import org.hibernate.envers.query.criteria.AuditCriterion;
+
 import play.Logger;
-import com.google.common.base.Optional;
 
 public class Dao<T extends Model, ID extends Serializable> extends
 		JpaHelper<T, ID> implements GenericDao<T, ID> {
@@ -32,10 +34,10 @@ public class Dao<T extends Model, ID extends Serializable> extends
 		CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
 		Root<T> root = query.from(clazz);
 		query.select(criteriaBuilder.count(root));
-		Optional<Long> count = findLongBy(query);
-		if (count.isPresent())
-			return count.get();
-		return 0;
+		Long count = findLongBy(query);
+		if (count == null)
+			return 0;
+		return count;
 	}
 
 	@Override
@@ -70,183 +72,151 @@ public class Dao<T extends Model, ID extends Serializable> extends
 
 	@Override
 	public boolean exists(ID id) {
-		return Optional.fromNullable(getReference(id)).isPresent();
+		return getReference(id) != null;
 	};
-	
+
 	@Override
-	public Optional<List<T>> findAll() {
-		return findAll(Optional.<Integer>absent());
+	public List<T> findAll() {
+		return findAll(null);
 	}
 
 	@Override
-	public Optional<List<T>> findAll(Integer pageNumber) {
-		return findAll(Optional.fromNullable(pageNumber));
+	public List<T> findAll(Integer pageNumber) {
+		return findAllBy(null, pageNumber);
+	}
+
+	public List<T> findAllBy(CriteriaQuery<T> query) {
+		return findAllBy(query, null);
 	}
 
 	@Override
-	public Optional<List<T>> findAll(Optional<Integer> pageNumber) {
-		return findAllBy(Optional.<CriteriaQuery<T>>absent(), pageNumber);
-	}
-
-	@Override
-	public Optional<List<T>> findAllBy(CriteriaQuery<T> query) {
-		return findAllBy(Optional.fromNullable(query), Optional.<Integer>absent());
-	}
-
-	@Override
-	public Optional<List<T>> findAllBy(Optional<CriteriaQuery<T>> query) {
-		return findAllBy(query, Optional.<Integer>absent());
-	}
-
-	@Override
-	public Optional<List<T>> findAllBy(Optional<CriteriaQuery<T>> query, Optional<Integer> pageNumber) {
+	public List<T> findAllBy(CriteriaQuery<T> query, Integer pageNumber) {
 		try {
-			if (!query.isPresent()) {
+			if (query == null) {
 				CriteriaBuilder criteriaBuilder = getCriteriaBuilder();
-				query = Optional.fromNullable(criteriaBuilder.createQuery(clazz));
-				query.get().from(clazz);
+				query = criteriaBuilder.createQuery(clazz);
+				query.from(clazz);
 			}
 
-			TypedQuery<T> q = createQuery(query.get());
+			TypedQuery<T> q = createQuery(query);
 			q = setPage(q, pageNumber);
-			return Optional.fromNullable(q.getResultList());
+			return q.getResultList();
 		} catch (NoResultException e) {
 		} catch (EntityNotFoundException e) {
 		} catch (Exception e) {
 			Logger.warn("findAllBy", e);
 		}
-		return Optional.absent();
+		return null;
 	}
 
 	@Override
-	public Optional<T> findBy(CriteriaQuery<T> query) {
+	public T findBy(CriteriaQuery<T> query) {
 		try {
 			TypedQuery<T> q = createQuery(query);
-			return Optional.fromNullable(q.getSingleResult());
+			return q.getSingleResult();
 		} catch (NoResultException e) {
 		} catch (Exception e) {
 			Logger.warn("findBy", e);
 		}
-		return Optional.absent();
+		return null;
 	}
 
 	@Override
-	public Optional<T> findById(ID id) {
-		return findById(Optional.fromNullable(id));
-	}
-
-	@Override
-	public Optional<T> findById(Optional<ID> id) {
+	public T findById(ID id) {
 		try {
-			if (id.isPresent())
-				return Optional.fromNullable(getEm().find(clazz, id.get()));
+			if (id != null)
+				return getEm().find(clazz, id);
 		} catch (NoResultException e) {
 		} catch (Exception e) {
 			Logger.warn("findById", e);
 		}
-		return Optional.absent();
+		return null;
 	}
 
 	@Override
-	public Optional<Long> findLongBy(CriteriaQuery<Long> query) {
+	public Long findLongBy(CriteriaQuery<Long> query) {
 		try {
 			TypedQuery<Long> q = createLongQuery(query);
-			return Optional.fromNullable(q.getSingleResult());
+			return q.getSingleResult();
 		} catch (NoResultException e) {
 		} catch (Exception e) {
 			Logger.warn("findLongBy", e);
 		}
-		return Optional.absent();
+		return null;
 	}
 
 	@Override
-	public Optional<T> getVersion(ID id, Date date) {
-			return getVersion(Optional.fromNullable(id), Optional.fromNullable(date));
-	}
-
-	@Override
-	public Optional<T> getVersion(Optional<ID> id, Optional<Date> date) {
+	public T getVersion(ID id, Date date) {
 		try {
-			if (id.isPresent() && date.isPresent()) {
+			if (id != null && date != null) {
 				AuditReader auditReader = AuditReaderFactory.get(getEm());
-				Number revision = auditReader.getRevisionNumberForDate(date.get());
-				T t = auditReader.find(clazz, id.get(), revision);
-				return Optional.fromNullable(t);
+				Number revision = auditReader.getRevisionNumberForDate(date);
+				T t = auditReader.find(clazz, id, revision);
+				return t;
 			}
 		} catch (Exception e) {
 			Logger.warn("getVersion", e);
 		}
-		return Optional.absent();
+		return null;
 	}
 
 	@Override
-	public Optional<List<T>> getVersions(ID id) {
-		return getVersions(Optional.fromNullable(id));
-	}
-
-	@Override
-	public Optional<List<T>> getVersions(Optional<ID> id) {
+	public List<T> getVersions(ID id) {
 		try {
-			if (id.isPresent()) {
+			if (id != null) {
 				List<T> versions = new ArrayList<T>();
 				AuditReader auditReader = AuditReaderFactory.get(getEm());
-				List<Number> revisions = auditReader.getRevisions(clazz, id.get());
+				List<Number> revisions = auditReader.getRevisions(clazz, id);
 				for (Number revision : revisions) {
-					T t = auditReader.find(clazz, id.get(), revision);
+					T t = auditReader.find(clazz, id, revision);
 					versions.add(t);
 				}
-				return Optional.fromNullable(versions);
+				return versions;
 			}
 		} catch (Exception e) {
 			Logger.warn("getVersions", e);
 		}
-		return Optional.absent();
+		return null;
 	}
 
-	@Override
-	public Optional<List<T>> getVersionsBy(Date date, AuditCriterion auditCriterion) {
-		return getVersionsBy(Optional.fromNullable(date), Optional.fromNullable(auditCriterion));
-	}
-
-	@Override
 	@SuppressWarnings("unchecked")
-	public Optional<List<T>> getVersionsBy(Optional<Date> date, Optional<AuditCriterion> auditCriterion) {
+	public List<T> getVersionsBy(Date date, AuditCriterion auditCriterion) {
 		try {
-			if (date.isPresent()&& auditCriterion.isPresent()) {
+			if (date != null && auditCriterion != null) {
 				AuditReader auditReader = AuditReaderFactory.get(getEm());
-				Number revision = auditReader.getRevisionNumberForDate(date.get());
+				Number revision = auditReader.getRevisionNumberForDate(date);
 				AuditQuery query = auditReader.createQuery()
 						.forEntitiesAtRevision(clazz, revision);
-				query.add(auditCriterion.get());
-				return Optional.fromNullable((List<T>) query.getResultList());
+				query.add(auditCriterion);
+				return query.getResultList();
 			}
 		} catch (Exception e) {
 			Logger.warn("getVersionsBy", e);
 		}
-		return Optional.absent();
+		return null;
 	}
 
 	@Override
 	public Map<String, String> options() {
-		return options(Optional.<CriteriaQuery<T>>absent());
+		return options(null);
 	}
 
 	@Override
-	public Map<String, String> options(Optional<CriteriaQuery<T>> query) {
+	public Map<String, String> options(CriteriaQuery<T> query) {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		Optional<List<T>> list = Optional.fromNullable((List<T>) findAllBy(query));
-		if (list.isPresent())
-			for (T t : list.get())
+		List<T> list = findAllBy(query);
+		if (list != null)
+			for (T t : list)
 				map.put(t.id.toString(), t.toString());
 		return map;
 	};
 
 	@Override
 	public Page<T> page(int pageNumber) {
-		List<T> list = new ArrayList<T>();
+		List<T> list = null;
 		long rows = count();
 		if (rows > 0)
-			list = findAll(pageNumber).get();
+			list = findAll(pageNumber);
 		return new Page<T>(pageNumber, pageSize, rows, list);
 	};
 

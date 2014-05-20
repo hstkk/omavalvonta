@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import javax.persistence.criteria.CriteriaQuery;
-import org.hibernate.envers.query.criteria.AuditCriterion;
-import com.google.common.base.Optional;
 
+import javax.persistence.criteria.CriteriaQuery;
 
 public interface GenericDao<T, ID extends Serializable> {
 	long count();
@@ -20,41 +18,27 @@ public interface GenericDao<T, ID extends Serializable> {
 
 	boolean exists(ID id);
 
-	Optional<List<T>> findAll();
+	List<T> findAll();
 
-	Optional<List<T>> findAll(Integer pageNumber);
+	List<T> findAll(Integer pageNumber);
 
-	Optional<List<T>> findAll(Optional<Integer> pageNumber);
+	List<T> findAllBy(CriteriaQuery<T> query);
 
-	Optional<List<T>> findAllBy(CriteriaQuery<T> query);
+	List<T> findAllBy(CriteriaQuery<T> query, Integer pageNumber);
 
-	Optional<List<T>> findAllBy(Optional<CriteriaQuery<T>> query);
+	T findBy(CriteriaQuery<T> query);
 
-	Optional<List<T>> findAllBy(Optional<CriteriaQuery<T>> query, Optional<Integer> pageNumber);
+	T findById(ID id);
 
-	Optional<T> findBy(CriteriaQuery<T> query);
+	Long findLongBy(CriteriaQuery<Long> query);
 
-	Optional<T> findById(ID id);
+	T getVersion(ID id, Date date);
 
-	Optional<T> findById(Optional<ID> id);
-
-	Optional<Long> findLongBy(CriteriaQuery<Long> query);
-
-	Optional<T> getVersion(ID id, Date date);
-
-	Optional<T> getVersion(Optional<ID> id, Optional<Date> date);
-
-	Optional<List<T>> getVersions(ID id);
-
-	Optional<List<T>> getVersions(Optional<ID> id);
-
-	Optional<List<T>> getVersionsBy(Date date, AuditCriterion auditCriterion);
-
-	Optional<List<T>> getVersionsBy(Optional<Date> date, Optional<AuditCriterion> auditCriterion);
+	List<T> getVersions(ID id);
 
 	Map<String, String> options();
 
-	Map<String, String> options(Optional<CriteriaQuery<T>> query);
+	Map<String, String> options(CriteriaQuery<T> query);
 
 	Page<T> page(int pageNumber);
 

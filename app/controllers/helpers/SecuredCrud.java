@@ -14,7 +14,6 @@ import play.mvc.Result;
 import play.mvc.Security;
 import play.mvc.With;
 import utils.Helper;
-import com.google.common.base.Optional;
 import controllers.shib.Secured;
 import controllers.shib.Session;
 
@@ -66,7 +65,7 @@ public class SecuredCrud<T extends UserModel> extends Crud<T> {
 	}
 
 	@Override
-	public Optional<Result> onCreateOrUpdate(T t, Optional<Long> id) {
+	public Result onCreateOrUpdate(T t, Long id) {
 		t.user = getUser();
 		return super.onCreateOrUpdate(t, id);
 	}

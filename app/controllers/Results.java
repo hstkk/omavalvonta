@@ -4,8 +4,6 @@ import static play.data.Form.form;
 
 import java.util.List;
 
-import com.google.common.base.Optional;
-
 import models.FinalProduct;
 import models.Product;
 import models.User;
@@ -98,13 +96,13 @@ public class Results extends Crud<models.dynamicforms.Results> {
 		Form<models.dynamicforms.Results> filledForm = form(
 				models.dynamicforms.Results.class,
 				models.dynamicforms.Results.Step3.class).bindFromRequest();
-		Optional<Result> result = onCancel(filledForm);
-		if (result.isPresent())
-			return result.get();
-		Optional<Product> product = Product.dao.getReference(productId);
-		Optional<models.dynamicforms.Form> form = models.dynamicforms.Form.dao
+		Result result = onCancel(filledForm);
+		if (result != null)
+			return result;
+		Product product = Product.dao.getReference(productId);
+		models.dynamicforms.Form form = models.dynamicforms.Form.dao
 				.getReference(formId);
-		if (!product.isPresent() || !form.isPresent())
+		if (product == null || form == null)
 			return Helper.getNotFound();
 		if (!filledForm.hasErrors()) {
 			models.dynamicforms.Results t = filledForm.get();
@@ -116,7 +114,7 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			}
 		}
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(step3.render(filledForm, product.get(), form));
+		return badRequest(step3.render(filledForm, product, form));
 	}
 
 	@Override
@@ -132,9 +130,9 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			return Helper.getInternalServerError();
 		String value = request().getQueryString("tuote");
 		if (value != null && !value.isEmpty()) {
-			Optional<Long> product = Converter.stringToLong(value);
-			if (product.isPresent())
-				return redirect(controllers.routes.Results.step2(product.get()));
+			Long product = Converter.stringToLong(value);
+			if (product != null)
+				return redirect(controllers.routes.Results.step2(product));
 		}
 		return ok(step1.render(FORM.get()));
 	}
@@ -191,19 +189,19 @@ public class Results extends Crud<models.dynamicforms.Results> {
 
 	@Transactional(readOnly = true)
 	public Result step3(Long productId) {
-		Optional<Product> product = Product.dao.getReference(productId);
-		if (!product.isPresent())
+		Product product = Product.dao.getReference(productId);
+		if (product == null)
 			return Helper.getNotFound();
 		Form<models.dynamicforms.Results> filledForm = form(
 				models.dynamicforms.Results.class,
 				models.dynamicforms.Results.Step2.class).bindFromRequest();
 		if (!filledForm.hasErrors()) {
 			models.dynamicforms.Results t = filledForm.get();
-			Optional<models.dynamicforms.Form> form = models.dynamicforms.Form.dao
+			models.dynamicforms.Form form = models.dynamicforms.Form.dao
 					.getReference(t.form);
-			if (!form.isPresent())
+			if (form == null)
 				return Helper.getNotFound();
-			return ok(step3.render(filledForm, product, form.get()));
+			return ok(step3.render(filledForm, product, form));
 		}
 		return badRequest(step2.render(filledForm, product));
 	}
@@ -225,8 +223,8 @@ public class Results extends Crud<models.dynamicforms.Results> {
 			Field subField = field.sub("[" + index + "]." + subFieldName);
 			String value = subField.valueOr("");
 			if (!value.isEmpty()) {
-				Optional<Double> _value = Converter.stringToDouble(value);
-				if (!_value.isPresent())
+				Double _value = Converter.stringToDouble(value);
+				if (_value == null)
 					filledForm.reject(subField.name(), "error.invalid");
 			}
 		}

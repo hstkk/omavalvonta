@@ -30,9 +30,8 @@ import org.hibernate.envers.Audited;
 import org.springframework.beans.BeanUtils;
 import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 
-import com.google.common.base.Optional;
-
 import controllers.shib.Session;
+
 import play.Logger;
 import play.data.validation.Validation;
 import play.data.validation.ValidationError;
@@ -199,14 +198,14 @@ public class Results extends Model {
 	}
 
 	public Field getOldField(String id) {
-		Optional<Long> _id = Converter.stringToLong(id);
-		if (!_id.isPresent())
+		Long _id = Converter.stringToLong(id);
+		if (_id == null)
 			return null;
 		setOldFields();
-		Field oldField = oldFields.get(_id.get());
+		Field oldField = oldFields.get(_id);
 		if (oldField != null)
 			return oldField;
-		return Field.dao.findById(_id.get());
+		return Field.dao.findById(_id);
 	}
 
 	public Product getProduct() {

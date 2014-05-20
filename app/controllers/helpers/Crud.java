@@ -15,7 +15,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.With;
 import utils.Helper;
-import com.google.common.base.Optional;
 import controllers.shib.Session;
 
 @With(Session.class)
@@ -74,16 +73,16 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 			return Helper.getNotFound();
 		Form<T> filledForm = bindForm();
 		
-		Optional<Result> result = onCancel(filledForm);
+		Result result = onCancel(filledForm);
 
-		if (result.isPresent())
-			return result.get();
+		if (result != null)
+			return result;
 		filledForm = validateForm(filledForm);
 		if (!filledForm.hasErrors()) {
 			T t = filledForm.get();
 			result = onCreateOrUpdate(t);
-			if (result.isPresent())
-				return result.get();
+			if (result != null)
+				return result;
 		}
 		flash("error", Messages.get("crud.fail"));
 		return badRequest(CREATE.get().render(filledForm));
@@ -94,12 +93,12 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	public Result edit(Long id) {
 		if (UPDATE.isEmpty() || DAO.isEmpty() || FORM.isEmpty())
 			return Helper.getNotFound();
-		Optional<T> t = DAO.get().findById(id);
-		Optional<Result> result = isUpdatable(t);
-		if (result.isPresent())
-			return result.get();
-		Form<T> filledForm = FORM.get().fill(t.get());
-		return ok(UPDATE.get().render(t.get(), filledForm));
+		T t = DAO.get().findById(id);
+		Result result = isUpdatable(t);
+		if (result != null)
+			return result;
+		Form<T> filledForm = FORM.get().fill(t);
+		return ok(UPDATE.get().render(t, filledForm));
 	}
 
 	@Override
@@ -110,55 +109,47 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		return ok(CREATE.get().render(FORM.get()));
 	}
 
-	public Optional<Result> isUpdatable(Optional<T> t) {
-		if (t.isPresent())
-			return Optional.fromNullable(Helper.getNotFound());
-		return Optional.absent();
+	public Result isUpdatable(T t) {
+		if (t == null)
+			return Helper.getNotFound();
+		return null;
 	}
 
-	protected Optional<Result> onCancel(Form<T> filledForm) {
-		return onCancel(filledForm, Optional.<Long>absent());
+	protected Result onCancel(Form<T> filledForm) {
+		return onCancel(filledForm, null);
 	}
 
-	protected Optional<Result> onCancel(Form<T> filledForm, Long id) {
-		return onCancel(filledForm, Optional.fromNullable(id));
-	}
-
-	protected Optional<Result> onCancel(Form<T> filledForm, Optional<Long> id) {
+	protected Result onCancel(Form<T> filledForm, Long id) {
 		if (filledForm.field("action").value()
 				.equals(Messages.get("crud.action.cancel"))) {
 			flash("warning", Messages.get("crud.cancel"));
-			Call call = (id.isPresent()) ? callShow(id.get()) : callPage();
-			return Optional.fromNullable((Result) redirect(call));
+			Call call = (id != null) ? callShow(id) : callPage();
+			return redirect(call);
 		}
-		return Optional.absent();
+		return null;
 	}
 
-	protected Optional<Result> onCreateOrUpdate(T t) {
-		return onCreateOrUpdate(t, Optional.<Long>absent());
+	protected Result onCreateOrUpdate(T t) {
+		return onCreateOrUpdate(t, null);
 	}
 
-	protected Optional<Result> onCreateOrUpdate(T t, Long id) {
-		return onCreateOrUpdate(t, Optional.fromNullable(id));
-	}
-
-	protected Optional<Result> onCreateOrUpdate(T t, Optional<Long> id) {
+	protected Result onCreateOrUpdate(T t, Long id) {
 		if (DAO.isDefined()) {
 			boolean success = false;
-			if(id.isPresent()) {
-				t.id = id.get();
-				success = DAO.get().update(t);
-			} else {
+			if (id == null)
 				success = DAO.get().create(t);
+			else {
+				t.id = id;
+				success = DAO.get().update(t);
 			}
 			if (success) {
 				flash().remove("error");
 				flash("success", Messages.get("crud.success"));
 				Call call = callShow(t.id);
-				return Optional.fromNullable((Result) redirect(call));
+				return redirect(call);
 			}
 		}
-		return Optional.absent();
+		return null;
 	}
 
 	@Override
@@ -174,10 +165,10 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 	public Result show(Long id) {
 		if (SHOW.isEmpty() || DAO.isEmpty())
 			return Helper.getNotFound();
-		Optional<T> t = DAO.get().findById(id);
-		if (!t.isPresent())
+		T t = DAO.get().findById(id);
+		if (t == null)
 			return Helper.getNotFound();
-		return ok(SHOW.get().render(t.get()));
+		return ok(SHOW.get().render(t));
 	}
 
 	@Override
@@ -186,30 +177,26 @@ public class Crud<T extends Model> extends Controller implements CrudInterface {
 		if (UPDATE.isEmpty() || DAO.isEmpty() || DAO.get().doesNotExist(id) || FORM.isEmpty())
 			return Helper.getNotFound();
 		Form<T> filledForm = bindForm();
-		Optional<Result> result = onCancel(filledForm, id);
-		if (result.isPresent())
-			return result.get();
+		Result result = onCancel(filledForm, id);
+		if (result != null)
+			return result;
 		filledForm = validateForm(filledForm, id);
 		if (!filledForm.hasErrors()) {
 			T fresh = filledForm.get();
 			result = onCreateOrUpdate(fresh, id);
-			if (result.isPresent())
-				return result.get();
+			if (result != null)
+				return result;
 		}
-		Optional<T> t = DAO.get().findById(id);
+		T t = DAO.get().findById(id);
 		flash("error", Messages.get("crud.fail"));
-		return badRequest(UPDATE.get().render(t.get(), filledForm));
+		return badRequest(UPDATE.get().render(t, filledForm));
 	}
 
 	protected Form<T> validateForm(Form<T> filledForm) {
-		return validateForm(filledForm, Optional.<Long>absent());
+		return validateForm(filledForm, null);
 	}
 
 	protected Form<T> validateForm(Form<T> filledForm, Long id) {
-		return validateForm(filledForm, Optional.fromNullable(id));
-	}
-
-	protected Form<T> validateForm(Form<T> filledForm, Optional<Long> id) {
 		return filledForm;
 	}
 }
