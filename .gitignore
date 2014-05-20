@@ -12,3 +12,4 @@ dist
 bin
 metamodel
 documentation/api
+*.log
