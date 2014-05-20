@@ -87,8 +87,6 @@ public class ShibbolethHelper {
 				routes.Application.index(1).absoluteURL(ctx.request(), secure)
 						.toString(), ShibbolethDefaults.URL_ENCODING));
 
-Logger.info(url.toString());
-
 		return url.toString();
 	}
 
