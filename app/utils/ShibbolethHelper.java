@@ -122,6 +122,7 @@ Logger.info(url.toString());
 			return Long.parseLong(ctx.session().get(
 					ShibbolethDefaults.SESSION_TIMESTAMP));
 		} catch (Exception e) {
+			Logger.debug(e.getMessage(), e.getCause());
 		}
 		return null;
 	}

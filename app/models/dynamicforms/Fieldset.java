@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,10 +13,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import models.helpers.Dao;
 import models.helpers.UserModel;
+
 import org.hibernate.envers.AuditMappedBy;
 import org.hibernate.envers.Audited;
+
+import play.Logger;
 import play.data.validation.Constraints.*;
 
 @Entity
@@ -57,6 +62,7 @@ public class Fieldset extends UserModel {
 				return map;
 			}
 		} catch (Exception e) {
+			Logger.debug(e.getMessage(), e.getCause());
 		}
 		return options;
 	}

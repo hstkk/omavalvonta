@@ -3,6 +3,7 @@ package utils;
 import java.util.Arrays;
 import java.util.List;
 
+import play.Logger;
 import play.Play;
 import play.i18n.Lang;
 import play.i18n.Messages;
@@ -49,6 +50,7 @@ public class Helper {
 		try {
 			return Messages.get(key, scalaArgs);
 		} catch (Exception e) {
+			Logger.debug(e.getMessage(), e.getCause());
 		}
 		return Messages.get(getLang(), key, scalaArgs);
 	}

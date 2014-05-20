@@ -1,7 +1,9 @@
 package controllers.shib;
 
 import java.io.UnsupportedEncodingException;
+
 import models.User;
+import play.Logger;
 import play.i18n.Messages;
 import play.mvc.*;
 import play.db.jpa.*;
@@ -33,6 +35,7 @@ public class Shibboleth extends Controller {
 			String loginUrl = ShibbolethHelper.getLoginUrl(ctx(), returnUrl);
 			return temporaryRedirect(loginUrl);
 		} catch (UnsupportedEncodingException e) {
+			Logger.debug(e.getMessage(), e.getCause());
 		}
 		return Helper.getInternalServerError();
 	}
@@ -45,6 +48,7 @@ public class Shibboleth extends Controller {
 			flash().put("success", Messages.get("shib.flash.logout"));
 			return temporaryRedirect(logoutUrl);
 		} catch (UnsupportedEncodingException e) {
+			Logger.debug(e.getMessage(), e.getCause());
 		}
 		return Helper.getInternalServerError();
 	}
