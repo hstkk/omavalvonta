@@ -34,6 +34,7 @@ echo "###################################################################"
 echo "Register provider to Testshib http://www.testshib.org/register.html"
 echo "###################################################################"
 cp configuration/testshib/etc/shibboleth/shibboleth2.xml /etc/shibboleth/shibboleth2.xml
+cp configuration/testshib/etc/shibboleth/attribute-map.xml /etc/shibboleth/attribute-map.xml
 service shibd restart
 service apache2 restart
 
