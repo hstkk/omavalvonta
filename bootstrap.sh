@@ -19,7 +19,8 @@ service mysql restart
 aptitude install apache2 openssl
 a2enmod rewrite ssl proxy proxy_http
 rm /etc/apache2/sites-enabled/000-default.conf
-cp configuration/testshib/etc/apache2/sites-enabled/omavalvonta.conf /etc/apache2/sites-enabled/omavalvonta.conf
+cp configuration/etc/apache2/sites-enabled/omavalvonta.conf /etc/apache2/sites-enabled/omavalvonta.conf
+cp configuration/testshib/etc/apache2/conf-enabled/fqdn.con /etc/apache2/conf-enabled/fqdn.con
 mkdir /etc/apache2/ssl
 openssl req -new -x509 -days 365 -nodes -out /etc/apache2/ssl/apache.pem -keyout /etc/apache2/ssl/apache.key -subj "/C=FI/ST=Kanta-Hame/L=Hameenlinna/O=HAMK Hameen ammattikorkeakoulu/OU=Tietohallinto/CN=omavalvonta.dy.fi"
 service apache2 restart
