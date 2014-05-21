@@ -9,7 +9,7 @@ playJavaSettings
 libraryDependencies ++= Seq(
 	javaCore,
 	javaJdbc,
-	javaJpa,
+	javaJpa.exclude("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api"),
 	filters,
 	"org.hibernate" % "hibernate-core" % "4.3.5.Final",
 	"org.hibernate" % "hibernate-envers" % "4.3.5.Final",
