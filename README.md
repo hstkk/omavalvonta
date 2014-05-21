@@ -38,3 +38,7 @@
    - `docker run -v $(pwd):/src -i -t play`
    - `docker run -v $(pwd):/src -i -t play dist`
    - `docker run -p 9000:9000 -v $(pwd):/src -i -t play run`
+
+## Bootstrap production environment
+
+`sudo sh bootstrap.sh`
