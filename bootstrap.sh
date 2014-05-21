@@ -6,13 +6,13 @@ apt-get update
 apt-get upgrade -y
 
 # Install dependencies
-aptitude install expect unzip openjdk-7-jdk
+aptitude install unzip openjdk-7-jdk
 
 # MYSQL
 aptitude install mysql-server
 cp configuration/etc/mysql/my.cnf /etc/mysql/my.cnf
 mysql_secure_installation
-mysql -uroot -psalasana < bootstrap/db.sql
+mysql -uroot -p < sql/bootstrap.sql
 service mysql restart
 
 # Apache
