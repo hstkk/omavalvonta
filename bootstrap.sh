@@ -45,5 +45,5 @@ unzip -d /home/omavalvonta target/universal/omavalvonta-1.0.zip
 cp configuration/testshib/home/omavalvonta/omavalvonta-1.0/conf/production.conf /home/omavalvonta/omavalvonta-1.0/conf/production.conf
 chown -R omavalvonta:omavalvonta /home/omavalvonta/omavalvonta-1.0
 chmod +x /home/omavalvonta/omavalvonta-1.0/bin/omavalvonta
-mysql -uroot -p < sql/db.sql
+mysql -uroot -p omavalvonta < sql/db.sql
 service omavalvonta start
