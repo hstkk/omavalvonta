@@ -13,3 +13,4 @@ bin
 metamodel
 documentation/api
 *.log
+.cache
