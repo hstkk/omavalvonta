@@ -17,6 +17,7 @@
 
 ## Create a standalone version
 
+`play clean-all`
 `play dist`
 
 ## Generate javadoc and scaladoc
