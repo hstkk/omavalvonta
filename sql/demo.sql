@@ -33,7 +33,7 @@ CREATE TABLE `Batch` (
   KEY `FK_l4pkpv3em77xb6taa9q0e0880` (`product_id`),
   CONSTRAINT `FK_2gf13rk8qe43a8trobm98bb46` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`),
   CONSTRAINT `FK_l4pkpv3em77xb6taa9q0e0880` FOREIGN KEY (`product_id`) REFERENCES `Product` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `Batch` (
 
 LOCK TABLES `Batch` WRITE;
 /*!40000 ALTER TABLE `Batch` DISABLE KEYS */;
+INSERT INTO `Batch` VALUES (1,'2014-05-28 08:30:21','2014-05-28 00:00:00',1,1);
 /*!40000 ALTER TABLE `Batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,6 +73,7 @@ CREATE TABLE `Batch_AUD` (
 
 LOCK TABLES `Batch_AUD` WRITE;
 /*!40000 ALTER TABLE `Batch_AUD` DISABLE KEYS */;
+INSERT INTO `Batch_AUD` VALUES (1,78,0,'2014-05-28 08:30:21','2014-05-28 00:00:00',1,1),(1,81,1,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `Batch_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +109,7 @@ CREATE TABLE `Field` (
 
 LOCK TABLES `Field` WRITE;
 /*!40000 ALTER TABLE `Field` DISABLE KEYS */;
-INSERT INTO `Field` VALUES (1,'2014-05-28 00:34:25',4,'Pinnoilla ei silminnähtäviä jäämiä','\0','',NULL,NULL,'Visuaalinen puhtaustarkastus','',1,0),(2,'2014-05-28 00:34:25',2,'RLU > 250','\0','\0',NULL,250,'Puhtaustason määritys pikamenetelmällä',NULL,1,1),(3,'2014-05-28 00:37:29',2,'Gerber','\0','',NULL,NULL,'Rasvapitoisuus',NULL,2,0),(4,'2014-05-28 00:40:57',0,'','\0','',NULL,NULL,'Lämpötila/aika- tarkkailu',NULL,3,0),(5,'2014-05-28 00:42:58',2,'Vähintään -35°C','\0','',-35,NULL,'lämpötilamittaus',NULL,4,0),(6,'2014-05-28 00:53:59',2,'Vähintään -18°C','\0','',-18,NULL,'lämpötilamittaus',NULL,5,0),(7,'2014-05-28 00:46:27',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monoc.',NULL,6,0),(8,'2014-05-28 00:46:27',2,'< 100 pmy/g','\0','',100,NULL,'Enterobakteerit',NULL,6,1),(9,'2014-05-28 00:48:55',1,'','\0','',5,3,'Ulkonäkö',NULL,7,0),(10,'2014-05-28 00:48:55',1,'','\0','',5,3,'Rakenne',NULL,7,1),(11,'2014-05-28 00:48:55',1,'','\0','',5,3,'Maku ja haju',NULL,7,2),(12,'2014-05-28 00:56:47',4,'','\0','',NULL,NULL,'Kirnu',NULL,8,0),(13,'2014-05-28 00:56:47',4,'','\0','',NULL,NULL,'Voipistooli',NULL,8,1),(14,'2014-05-28 01:01:43',3,'','\0','',NULL,NULL,'Valmistuspäivämäärä',NULL,9,0),(15,'2014-05-28 01:01:43',0,'','\0','',NULL,NULL,'Hapatteen nimi',NULL,9,1),(16,'2014-05-28 01:01:43',2,'%','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9,2),(17,'2014-05-28 01:01:43',2,'g','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9,3),(18,'2014-05-28 01:05:34',2,'%. 30-43 %','\0','',43,30,'Rasvapitoisuus',NULL,10,0),(19,'2014-05-28 01:05:34',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,10,1),(20,'2014-05-28 01:05:34',4,'','\0','',NULL,NULL,'Peroksidaasikoe','\0',10,2),(21,'2014-05-28 01:10:57',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,11,0),(22,'2014-05-28 01:10:57',2,'pmy/g. < 10 pmy/g','\0','',10,NULL,'Hiivat ja homeet',NULL,11,1),(23,'2014-05-28 01:10:57',2,'4,4 - 5,0','\0','',5,4.4,'pH-luku',NULL,11,2),(24,'2014-05-28 01:10:57',2,'> 25','\0','',NULL,25,'oSH-aste /r.o',NULL,11,3),(25,'2014-05-28 01:13:11',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,12,0),(26,'2014-05-28 01:18:55',2,'pmy/g. < 10 pmy/g','\0','',10,NULL,'Enterobakteerit',NULL,13,0),(27,'2014-05-28 01:18:55',2,'pmy/g. < 1000 pmy/g','\0','',1000,NULL,'Hiivat',NULL,13,1),(28,'2014-05-28 01:18:55',2,'pmy/g. < 100 pmy/g','\0','',100,NULL,'Homeet ',NULL,13,2),(29,'2014-05-28 01:18:55',2,'< 100 pmy/g. Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',100,NULL,'Staphylococcus aureus',NULL,13,3),(30,'2014-05-28 01:18:55',2,'n = 5 , ei todettavissa / 1 g. Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monogytogenes',NULL,13,4),(31,'2014-05-28 01:23:50',2,'°C. +4- +6°C','\0','',6,4,'lämpötilamittaus',NULL,14,0),(32,'2014-05-28 07:43:40',0,'','\0','',NULL,NULL,'Valmiste',NULL,15,0),(33,'2014-05-28 08:00:29',2,'%','\0','',NULL,NULL,'Rasva',NULL,16,0),(34,'2014-05-28 07:46:52',2,'< 10 000 pmy/ml','\0','',10000,NULL,'Maitokontin enterobakteerit',NULL,17,0),(35,'2014-05-28 07:46:52',2,'< 1 pmy/ml','\0','',1,NULL,'Juustokattilan enterobakteerit',NULL,17,1),(36,'2014-05-28 07:48:11',2,'10 - 12 °C','\0','',12,10,'Kypsytyskaapin lämpötila',NULL,18,0),(37,'2014-05-28 07:49:50',2,'4 - 8 °C','\0','',8,4,'Lämpötila',NULL,19,0),(38,'2014-05-28 07:55:19',2,'< 100pmy/g','\0','',100,NULL,'Enterobakteerit',NULL,20,0),(39,'2014-05-28 07:55:19',2,'< 100 pmy/g','\0','',100,NULL,'Staphylococcus aureus',NULL,20,1),(40,'2014-05-28 07:55:19',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monoc.',NULL,20,2),(41,'2014-05-28 07:55:19',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Koagulaasi positiiviset stafylokokit',NULL,20,3),(42,'2014-05-28 07:55:19',2,'< 1 pmy/g','\0','',1,NULL,'E.coli',NULL,20,4),(43,'2014-05-28 07:58:13',4,'posit/neg. Suoritetaan 2 kertaa lukukaudessa','\0','\0',NULL,NULL,'Fosfataasikoe','\0',21,0),(44,'2014-05-28 08:00:29',2,'%','\0','',NULL,NULL,'Kaseiini',NULL,16,1),(45,'2014-05-28 08:11:52',2,'VRBG','\0','\0',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,22,0),(46,'2014-05-28 08:11:52',2,'pmy / ml','\0','\0',NULL,NULL,'Enterobakteerit',NULL,22,1),(47,'2014-05-28 08:11:52',2,'°C','\0','\0',NULL,NULL,'Lämpötila',NULL,22,2),(48,'2014-05-28 08:13:32',2,'VRBG','\0','',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,23,0),(49,'2014-05-28 08:13:32',2,'pmy / ml','\0','',NULL,NULL,'Enterobakteerit',NULL,23,1),(50,'2014-05-28 08:13:32',2,'°C','\0','',NULL,NULL,'Lämpötila',NULL,23,2),(51,'2014-05-28 08:14:59',2,'VRBG','\0','',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,24,0),(52,'2014-05-28 08:14:59',2,'pmy / ml','\0','',NULL,NULL,'Enterobakteerit',NULL,24,1),(53,'2014-05-28 08:14:59',2,'°C','\0','',NULL,NULL,'Lämpötila',NULL,24,2);
+INSERT INTO `Field` VALUES (1,'2014-05-28 08:31:16',4,'Pinnoilla ei silminnähtäviä jäämiä','','',NULL,NULL,'Visuaalinen puhtaustarkastus','',1,0),(2,'2014-05-28 08:31:16',2,'RLU > 250','','\0',NULL,250,'Puhtaustason määritys pikamenetelmällä',NULL,1,1),(3,'2014-05-28 00:37:29',2,'Gerber','\0','',NULL,NULL,'Rasvapitoisuus',NULL,2,0),(4,'2014-05-28 00:40:57',0,'','\0','',NULL,NULL,'Lämpötila/aika- tarkkailu',NULL,3,0),(5,'2014-05-28 00:42:58',2,'Vähintään -35°C','\0','',-35,NULL,'lämpötilamittaus',NULL,4,0),(6,'2014-05-28 00:53:59',2,'Vähintään -18°C','\0','',-18,NULL,'lämpötilamittaus',NULL,5,0),(7,'2014-05-28 00:46:27',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monoc.',NULL,6,0),(8,'2014-05-28 00:46:27',2,'< 100 pmy/g','\0','',100,NULL,'Enterobakteerit',NULL,6,1),(9,'2014-05-28 08:31:34',1,'','','',5,3,'Ulkonäkö',NULL,7,0),(10,'2014-05-28 08:31:34',1,'','','',5,3,'Rakenne',NULL,7,1),(11,'2014-05-28 08:31:34',1,'','','',5,3,'Maku ja haju',NULL,7,2),(12,'2014-05-28 00:56:47',4,'','\0','',NULL,NULL,'Kirnu',NULL,8,0),(13,'2014-05-28 00:56:47',4,'','\0','',NULL,NULL,'Voipistooli',NULL,8,1),(14,'2014-05-28 01:01:43',3,'','\0','',NULL,NULL,'Valmistuspäivämäärä',NULL,9,0),(15,'2014-05-28 01:01:43',0,'','\0','',NULL,NULL,'Hapatteen nimi',NULL,9,1),(16,'2014-05-28 01:01:43',2,'%','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9,2),(17,'2014-05-28 01:01:43',2,'g','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9,3),(18,'2014-05-28 01:05:34',2,'%. 30-43 %','\0','',43,30,'Rasvapitoisuus',NULL,10,0),(19,'2014-05-28 01:05:34',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,10,1),(20,'2014-05-28 01:05:34',4,'','\0','',NULL,NULL,'Peroksidaasikoe','\0',10,2),(21,'2014-05-28 01:10:57',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,11,0),(22,'2014-05-28 01:10:57',2,'pmy/g. < 10 pmy/g','\0','',10,NULL,'Hiivat ja homeet',NULL,11,1),(23,'2014-05-28 01:10:57',2,'4,4 - 5,0','\0','',5,4.4,'pH-luku',NULL,11,2),(24,'2014-05-28 01:10:57',2,'> 25','\0','',NULL,25,'oSH-aste /r.o',NULL,11,3),(25,'2014-05-28 01:13:11',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,12,0),(26,'2014-05-28 01:18:55',2,'pmy/g. < 10 pmy/g','\0','',10,NULL,'Enterobakteerit',NULL,13,0),(27,'2014-05-28 01:18:55',2,'pmy/g. < 1000 pmy/g','\0','',1000,NULL,'Hiivat',NULL,13,1),(28,'2014-05-28 01:18:55',2,'pmy/g. < 100 pmy/g','\0','',100,NULL,'Homeet ',NULL,13,2),(29,'2014-05-28 01:18:55',2,'< 100 pmy/g. Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',100,NULL,'Staphylococcus aureus',NULL,13,3),(30,'2014-05-28 01:18:55',2,'n = 5 , ei todettavissa / 1 g. Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monogytogenes',NULL,13,4),(31,'2014-05-28 01:23:50',2,'°C. +4- +6°C','\0','',6,4,'lämpötilamittaus',NULL,14,0),(32,'2014-05-28 07:43:40',0,'','\0','',NULL,NULL,'Valmiste',NULL,15,0),(33,'2014-05-28 08:00:29',2,'%','\0','',NULL,NULL,'Rasva',NULL,16,0),(34,'2014-05-28 07:46:52',2,'< 10 000 pmy/ml','\0','',10000,NULL,'Maitokontin enterobakteerit',NULL,17,0),(35,'2014-05-28 07:46:52',2,'< 1 pmy/ml','\0','',1,NULL,'Juustokattilan enterobakteerit',NULL,17,1),(36,'2014-05-28 07:48:11',2,'10 - 12 °C','\0','',12,10,'Kypsytyskaapin lämpötila',NULL,18,0),(37,'2014-05-28 07:49:50',2,'4 - 8 °C','\0','',8,4,'Lämpötila',NULL,19,0),(38,'2014-05-28 07:55:19',2,'< 100pmy/g','\0','',100,NULL,'Enterobakteerit',NULL,20,0),(39,'2014-05-28 07:55:19',2,'< 100 pmy/g','\0','',100,NULL,'Staphylococcus aureus',NULL,20,1),(40,'2014-05-28 07:55:19',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monoc.',NULL,20,2),(41,'2014-05-28 07:55:19',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Koagulaasi positiiviset stafylokokit',NULL,20,3),(42,'2014-05-28 07:55:19',2,'< 1 pmy/g','\0','',1,NULL,'E.coli',NULL,20,4),(43,'2014-05-28 07:58:13',4,'posit/neg. Suoritetaan 2 kertaa lukukaudessa','\0','\0',NULL,NULL,'Fosfataasikoe','\0',21,0),(44,'2014-05-28 08:00:29',2,'%','\0','',NULL,NULL,'Kaseiini',NULL,16,1),(45,'2014-05-28 08:11:52',2,'VRBG','\0','\0',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,22,0),(46,'2014-05-28 08:11:52',2,'pmy / ml','\0','\0',NULL,NULL,'Enterobakteerit',NULL,22,1),(47,'2014-05-28 08:11:52',2,'°C','\0','\0',NULL,NULL,'Lämpötila',NULL,22,2),(48,'2014-05-28 08:13:32',2,'VRBG','\0','',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,23,0),(49,'2014-05-28 08:13:32',2,'pmy / ml','\0','',NULL,NULL,'Enterobakteerit',NULL,23,1),(50,'2014-05-28 08:13:32',2,'°C','\0','',NULL,NULL,'Lämpötila',NULL,23,2),(51,'2014-05-28 08:14:59',2,'VRBG','\0','',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,24,0),(52,'2014-05-28 08:14:59',2,'pmy / ml','\0','',NULL,NULL,'Enterobakteerit',NULL,24,1),(53,'2014-05-28 08:14:59',2,'°C','\0','',NULL,NULL,'Lämpötila',NULL,24,2);
 /*!40000 ALTER TABLE `Field` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +146,7 @@ CREATE TABLE `Field_AUD` (
 
 LOCK TABLES `Field_AUD` WRITE;
 /*!40000 ALTER TABLE `Field_AUD` DISABLE KEYS */;
-INSERT INTO `Field_AUD` VALUES (1,2,0,'2014-05-28 00:34:25',4,'Pinnoilla ei silminnähtäviä jäämiä','\0','',NULL,NULL,'Visuaalinen puhtaustarkastus','',1),(2,2,0,'2014-05-28 00:34:25',2,'RLU > 250','\0','\0',NULL,250,'Puhtaustason määritys pikamenetelmällä',NULL,1),(3,3,0,'2014-05-28 00:37:29',2,'Gerber','\0','',NULL,NULL,'Rasvapitoisuus',NULL,2),(4,4,0,'2014-05-28 00:40:57',0,'','\0','',NULL,NULL,'Lämpötila/aika- tarkkailu',NULL,3),(5,5,0,'2014-05-28 00:42:58',2,'Vähintään -35°C','\0','',-35,NULL,'lämpötilamittaus',NULL,4),(6,6,0,'2014-05-28 00:44:14',2,'Vähintään -18°C','\0','',-18,NULL,'lämpötilamittaus',NULL,5),(6,10,1,'2014-05-28 00:53:59',2,'Vähintään -18°C','\0','',-18,NULL,'lämpötilamittaus',NULL,5),(7,7,0,'2014-05-28 00:46:27',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monoc.',NULL,6),(8,7,0,'2014-05-28 00:46:27',2,'< 100 pmy/g','\0','',100,NULL,'Enterobakteerit',NULL,6),(9,8,0,'2014-05-28 00:48:55',1,'','\0','',5,3,'Ulkonäkö',NULL,7),(10,8,0,'2014-05-28 00:48:55',1,'','\0','',5,3,'Rakenne',NULL,7),(11,8,0,'2014-05-28 00:48:55',1,'','\0','',5,3,'Maku ja haju',NULL,7),(12,11,0,'2014-05-28 00:56:47',4,'','\0','',NULL,NULL,'Kirnu',NULL,8),(13,11,0,'2014-05-28 00:56:47',4,'','\0','',NULL,NULL,'Voipistooli',NULL,8),(14,13,0,'2014-05-28 01:00:05',3,'','\0','',NULL,NULL,'Valmistuspäivämäärä',NULL,9),(14,14,1,'2014-05-28 01:01:43',3,'','\0','',NULL,NULL,'Valmistuspäivämäärä',NULL,9),(15,13,0,'2014-05-28 01:00:05',0,'','\0','',NULL,NULL,'Hapatteen nimi',NULL,9),(15,14,1,'2014-05-28 01:01:43',0,'','\0','',NULL,NULL,'Hapatteen nimi',NULL,9),(16,13,0,'2014-05-28 01:00:05',2,'','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9),(16,14,1,'2014-05-28 01:01:43',2,'%','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9),(17,14,0,'2014-05-28 01:01:43',2,'g','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9),(18,16,0,'2014-05-28 01:05:34',2,'%. 30-43 %','\0','',43,30,'Rasvapitoisuus',NULL,10),(19,16,0,'2014-05-28 01:05:34',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,10),(20,16,0,'2014-05-28 01:05:34',4,'','\0','',NULL,NULL,'Peroksidaasikoe','\0',10),(21,18,0,'2014-05-28 01:10:57',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,11),(22,18,0,'2014-05-28 01:10:57',2,'pmy/g. < 10 pmy/g','\0','',10,NULL,'Hiivat ja homeet',NULL,11),(23,18,0,'2014-05-28 01:10:57',2,'4,4 - 5,0','\0','',5,4.4,'pH-luku',NULL,11),(24,18,0,'2014-05-28 01:10:57',2,'> 25','\0','',NULL,25,'oSH-aste /r.o',NULL,11),(25,20,0,'2014-05-28 01:13:11',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,12),(26,22,0,'2014-05-28 01:18:55',2,'pmy/g. < 10 pmy/g','\0','',10,NULL,'Enterobakteerit',NULL,13),(27,22,0,'2014-05-28 01:18:55',2,'pmy/g. < 1000 pmy/g','\0','',1000,NULL,'Hiivat',NULL,13),(28,22,0,'2014-05-28 01:18:55',2,'pmy/g. < 100 pmy/g','\0','',100,NULL,'Homeet ',NULL,13),(29,22,0,'2014-05-28 01:18:55',2,'< 100 pmy/g. Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',100,NULL,'Staphylococcus aureus',NULL,13),(30,22,0,'2014-05-28 01:18:55',2,'n = 5 , ei todettavissa / 1 g. Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monogytogenes',NULL,13),(31,25,0,'2014-05-28 01:23:50',2,'°C. +4- +6°C','\0','',6,4,'lämpötilamittaus',NULL,14),(32,30,0,'2014-05-28 07:43:40',0,'','\0','',NULL,NULL,'Valmiste',NULL,15),(33,32,0,'2014-05-28 07:44:28',2,'%','\0','',NULL,NULL,'Rasva',NULL,16),(33,45,1,'2014-05-28 08:00:29',2,'%','\0','',NULL,NULL,'Rasva',NULL,16),(34,34,0,'2014-05-28 07:46:52',2,'< 10 000 pmy/ml','\0','',10000,NULL,'Maitokontin enterobakteerit',NULL,17),(35,34,0,'2014-05-28 07:46:52',2,'< 1 pmy/ml','\0','',1,NULL,'Juustokattilan enterobakteerit',NULL,17),(36,36,0,'2014-05-28 07:48:11',2,'10 - 12 °C','\0','',12,10,'Kypsytyskaapin lämpötila',NULL,18),(37,38,0,'2014-05-28 07:49:50',2,'4 - 8 °C','\0','',8,4,'Lämpötila',NULL,19),(38,40,0,'2014-05-28 07:55:19',2,'< 100pmy/g','\0','',100,NULL,'Enterobakteerit',NULL,20),(39,40,0,'2014-05-28 07:55:19',2,'< 100 pmy/g','\0','',100,NULL,'Staphylococcus aureus',NULL,20),(40,40,0,'2014-05-28 07:55:19',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monoc.',NULL,20),(41,40,0,'2014-05-28 07:55:19',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Koagulaasi positiiviset stafylokokit',NULL,20),(42,40,0,'2014-05-28 07:55:19',2,'< 1 pmy/g','\0','',1,NULL,'E.coli',NULL,20),(43,42,0,'2014-05-28 07:58:13',4,'posit/neg. Suoritetaan 2 kertaa lukukaudessa','\0','\0',NULL,NULL,'Fosfataasikoe','\0',21),(44,45,0,'2014-05-28 08:00:29',2,'%','\0','',NULL,NULL,'Kaseiini',NULL,16),(45,48,0,'2014-05-28 08:11:52',2,'VRBG','\0','\0',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,22),(46,48,0,'2014-05-28 08:11:52',2,'pmy / ml','\0','\0',NULL,NULL,'Enterobakteerit',NULL,22),(47,48,0,'2014-05-28 08:11:52',2,'°C','\0','\0',NULL,NULL,'Lämpötila',NULL,22),(48,50,0,'2014-05-28 08:13:32',2,'VRBG','\0','',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,23),(49,50,0,'2014-05-28 08:13:32',2,'pmy / ml','\0','',NULL,NULL,'Enterobakteerit',NULL,23),(50,50,0,'2014-05-28 08:13:32',2,'°C','\0','',NULL,NULL,'Lämpötila',NULL,23),(51,52,0,'2014-05-28 08:14:59',2,'VRBG','\0','',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,24),(52,52,0,'2014-05-28 08:14:59',2,'pmy / ml','\0','',NULL,NULL,'Enterobakteerit',NULL,24),(53,52,0,'2014-05-28 08:14:59',2,'°C','\0','',NULL,NULL,'Lämpötila',NULL,24);
+INSERT INTO `Field_AUD` VALUES (1,2,0,'2014-05-28 00:34:25',4,'Pinnoilla ei silminnähtäviä jäämiä','\0','',NULL,NULL,'Visuaalinen puhtaustarkastus','',1),(1,79,1,'2014-05-28 08:31:16',4,'Pinnoilla ei silminnähtäviä jäämiä','','',NULL,NULL,'Visuaalinen puhtaustarkastus','',1),(2,2,0,'2014-05-28 00:34:25',2,'RLU > 250','\0','\0',NULL,250,'Puhtaustason määritys pikamenetelmällä',NULL,1),(2,79,1,'2014-05-28 08:31:16',2,'RLU > 250','','\0',NULL,250,'Puhtaustason määritys pikamenetelmällä',NULL,1),(3,3,0,'2014-05-28 00:37:29',2,'Gerber','\0','',NULL,NULL,'Rasvapitoisuus',NULL,2),(4,4,0,'2014-05-28 00:40:57',0,'','\0','',NULL,NULL,'Lämpötila/aika- tarkkailu',NULL,3),(5,5,0,'2014-05-28 00:42:58',2,'Vähintään -35°C','\0','',-35,NULL,'lämpötilamittaus',NULL,4),(6,6,0,'2014-05-28 00:44:14',2,'Vähintään -18°C','\0','',-18,NULL,'lämpötilamittaus',NULL,5),(6,10,1,'2014-05-28 00:53:59',2,'Vähintään -18°C','\0','',-18,NULL,'lämpötilamittaus',NULL,5),(7,7,0,'2014-05-28 00:46:27',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monoc.',NULL,6),(8,7,0,'2014-05-28 00:46:27',2,'< 100 pmy/g','\0','',100,NULL,'Enterobakteerit',NULL,6),(9,8,0,'2014-05-28 00:48:55',1,'','\0','',5,3,'Ulkonäkö',NULL,7),(9,80,1,'2014-05-28 08:31:34',1,'','','',5,3,'Ulkonäkö',NULL,7),(10,8,0,'2014-05-28 00:48:55',1,'','\0','',5,3,'Rakenne',NULL,7),(10,80,1,'2014-05-28 08:31:34',1,'','','',5,3,'Rakenne',NULL,7),(11,8,0,'2014-05-28 00:48:55',1,'','\0','',5,3,'Maku ja haju',NULL,7),(11,80,1,'2014-05-28 08:31:34',1,'','','',5,3,'Maku ja haju',NULL,7),(12,11,0,'2014-05-28 00:56:47',4,'','\0','',NULL,NULL,'Kirnu',NULL,8),(13,11,0,'2014-05-28 00:56:47',4,'','\0','',NULL,NULL,'Voipistooli',NULL,8),(14,13,0,'2014-05-28 01:00:05',3,'','\0','',NULL,NULL,'Valmistuspäivämäärä',NULL,9),(14,14,1,'2014-05-28 01:01:43',3,'','\0','',NULL,NULL,'Valmistuspäivämäärä',NULL,9),(15,13,0,'2014-05-28 01:00:05',0,'','\0','',NULL,NULL,'Hapatteen nimi',NULL,9),(15,14,1,'2014-05-28 01:01:43',0,'','\0','',NULL,NULL,'Hapatteen nimi',NULL,9),(16,13,0,'2014-05-28 01:00:05',2,'','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9),(16,14,1,'2014-05-28 01:01:43',2,'%','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9),(17,14,0,'2014-05-28 01:01:43',2,'g','\0','',NULL,NULL,'Siirrostusmäärä',NULL,9),(18,16,0,'2014-05-28 01:05:34',2,'%. 30-43 %','\0','',43,30,'Rasvapitoisuus',NULL,10),(19,16,0,'2014-05-28 01:05:34',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,10),(20,16,0,'2014-05-28 01:05:34',4,'','\0','',NULL,NULL,'Peroksidaasikoe','\0',10),(21,18,0,'2014-05-28 01:10:57',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,11),(22,18,0,'2014-05-28 01:10:57',2,'pmy/g. < 10 pmy/g','\0','',10,NULL,'Hiivat ja homeet',NULL,11),(23,18,0,'2014-05-28 01:10:57',2,'4,4 - 5,0','\0','',5,4.4,'pH-luku',NULL,11),(24,18,0,'2014-05-28 01:10:57',2,'> 25','\0','',NULL,25,'oSH-aste /r.o',NULL,11),(25,20,0,'2014-05-28 01:13:11',2,'pmy/g. < 1 pmy/g','\0','',1,NULL,'Enterobakteerit',NULL,12),(26,22,0,'2014-05-28 01:18:55',2,'pmy/g. < 10 pmy/g','\0','',10,NULL,'Enterobakteerit',NULL,13),(27,22,0,'2014-05-28 01:18:55',2,'pmy/g. < 1000 pmy/g','\0','',1000,NULL,'Hiivat',NULL,13),(28,22,0,'2014-05-28 01:18:55',2,'pmy/g. < 100 pmy/g','\0','',100,NULL,'Homeet ',NULL,13),(29,22,0,'2014-05-28 01:18:55',2,'< 100 pmy/g. Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',100,NULL,'Staphylococcus aureus',NULL,13),(30,22,0,'2014-05-28 01:18:55',2,'n = 5 , ei todettavissa / 1 g. Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monogytogenes',NULL,13),(31,25,0,'2014-05-28 01:23:50',2,'°C. +4- +6°C','\0','',6,4,'lämpötilamittaus',NULL,14),(32,30,0,'2014-05-28 07:43:40',0,'','\0','',NULL,NULL,'Valmiste',NULL,15),(33,32,0,'2014-05-28 07:44:28',2,'%','\0','',NULL,NULL,'Rasva',NULL,16),(33,45,1,'2014-05-28 08:00:29',2,'%','\0','',NULL,NULL,'Rasva',NULL,16),(34,34,0,'2014-05-28 07:46:52',2,'< 10 000 pmy/ml','\0','',10000,NULL,'Maitokontin enterobakteerit',NULL,17),(35,34,0,'2014-05-28 07:46:52',2,'< 1 pmy/ml','\0','',1,NULL,'Juustokattilan enterobakteerit',NULL,17),(36,36,0,'2014-05-28 07:48:11',2,'10 - 12 °C','\0','',12,10,'Kypsytyskaapin lämpötila',NULL,18),(37,38,0,'2014-05-28 07:49:50',2,'4 - 8 °C','\0','',8,4,'Lämpötila',NULL,19),(38,40,0,'2014-05-28 07:55:19',2,'< 100pmy/g','\0','',100,NULL,'Enterobakteerit',NULL,20),(39,40,0,'2014-05-28 07:55:19',2,'< 100 pmy/g','\0','',100,NULL,'Staphylococcus aureus',NULL,20),(40,40,0,'2014-05-28 07:55:19',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Listeria monoc.',NULL,20),(41,40,0,'2014-05-28 07:55:19',2,'Tutkimus suoritetaan\r\nakkreditoidussa laboratoriossa kerran lukukaudessa','\0','\0',NULL,NULL,'Koagulaasi positiiviset stafylokokit',NULL,20),(42,40,0,'2014-05-28 07:55:19',2,'< 1 pmy/g','\0','',1,NULL,'E.coli',NULL,20),(43,42,0,'2014-05-28 07:58:13',4,'posit/neg. Suoritetaan 2 kertaa lukukaudessa','\0','\0',NULL,NULL,'Fosfataasikoe','\0',21),(44,45,0,'2014-05-28 08:00:29',2,'%','\0','',NULL,NULL,'Kaseiini',NULL,16),(45,48,0,'2014-05-28 08:11:52',2,'VRBG','\0','\0',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,22),(46,48,0,'2014-05-28 08:11:52',2,'pmy / ml','\0','\0',NULL,NULL,'Enterobakteerit',NULL,22),(47,48,0,'2014-05-28 08:11:52',2,'°C','\0','\0',NULL,NULL,'Lämpötila',NULL,22),(48,50,0,'2014-05-28 08:13:32',2,'VRBG','\0','',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,23),(49,50,0,'2014-05-28 08:13:32',2,'pmy / ml','\0','',NULL,NULL,'Enterobakteerit',NULL,23),(50,50,0,'2014-05-28 08:13:32',2,'°C','\0','',NULL,NULL,'Lämpötila',NULL,23),(51,52,0,'2014-05-28 08:14:59',2,'VRBG','\0','',NULL,NULL,'Kasvusto maljalla (pesäkkeiden määrä)',NULL,24),(52,52,0,'2014-05-28 08:14:59',2,'pmy / ml','\0','',NULL,NULL,'Enterobakteerit',NULL,24),(53,52,0,'2014-05-28 08:14:59',2,'°C','\0','',NULL,NULL,'Lämpötila',NULL,24);
 /*!40000 ALTER TABLE `Field_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +175,7 @@ CREATE TABLE `Fieldset` (
 
 LOCK TABLES `Fieldset` WRITE;
 /*!40000 ALTER TABLE `Fieldset` DISABLE KEYS */;
-INSERT INTO `Fieldset` VALUES (1,'2014-05-28 00:34:25','','Ennen töiden aloittamista / laitteisto',1),(2,'2014-05-28 00:37:29','','Jäätelömassan valmistus',1),(3,'2014-05-28 00:40:57','','Pastörointi',1),(4,'2014-05-28 00:42:58','Merkintä myös pakastimen lt-seuranta-kaavakkeeseen','Karkaisu',1),(5,'2014-05-28 00:53:59','Merkintä myös pakastimen /kylmiön lt-seuranta-kaavakkeeseen','Jäätelön varastointi',1),(6,'2014-05-28 00:46:27','','Valmis tuote',1),(7,'2014-05-28 00:48:55','Pistein 1-5','Aistinvarainen arviointi',1),(8,'2014-05-28 00:56:47','','Valmistuslaitteisto',1),(9,'2014-05-28 01:01:43','Hapatetiedot hapatelaboratorion kansiossa!','Käyttöhapate',1),(10,'2014-05-28 01:05:34','','Pastöroitu kerma hapatelisäyksen jälkeen',1),(11,'2014-05-28 01:10:57','','Hapatettu kerma tankissa',1),(12,'2014-05-28 01:13:11','','Hapatettu kerma kirnussa',1),(13,'2014-05-28 01:18:55','','Valmis tuote',1),(14,'2014-05-28 01:23:50','','Voin varastointi',1),(15,'2014-05-28 07:43:40','','Valmiste',1),(16,'2014-05-28 08:00:29','','Maidon vakiointi',1),(17,'2014-05-28 07:46:52','','Maidon siirto Juustokattilaan',1),(18,'2014-05-28 07:48:11','','Kypsytys',1),(19,'2014-05-28 07:49:50','','Juuston varastointi',1),(20,'2014-05-28 07:55:19','','Valmis juusto',1),(21,'2014-05-28 07:58:13','Juustokattila','Maidon pastörointi',1),(22,'2014-05-28 08:11:52','Näytteenottotiheys 1 kerta /kk\r\n','Työskentelytason pinnat',1),(23,'2014-05-28 08:13:32','Ennen vispausta työpäivän alussa','Vispari',1),(24,'2014-05-28 08:14:59','','Valmis tuote',1);
+INSERT INTO `Fieldset` VALUES (1,'2014-05-28 08:31:16','','Ennen töiden aloittamista / laitteisto',1),(2,'2014-05-28 00:37:29','','Jäätelömassan valmistus',1),(3,'2014-05-28 00:40:57','','Pastörointi',1),(4,'2014-05-28 00:42:58','Merkintä myös pakastimen lt-seuranta-kaavakkeeseen','Karkaisu',1),(5,'2014-05-28 00:53:59','Merkintä myös pakastimen /kylmiön lt-seuranta-kaavakkeeseen','Jäätelön varastointi',1),(6,'2014-05-28 00:46:27','','Valmis tuote',1),(7,'2014-05-28 08:31:34','Pistein 1-5','Aistinvarainen arviointi',1),(8,'2014-05-28 00:56:47','','Valmistuslaitteisto',1),(9,'2014-05-28 01:01:43','Hapatetiedot hapatelaboratorion kansiossa!','Käyttöhapate',1),(10,'2014-05-28 01:05:34','','Pastöroitu kerma hapatelisäyksen jälkeen',1),(11,'2014-05-28 01:10:57','','Hapatettu kerma tankissa',1),(12,'2014-05-28 01:13:11','','Hapatettu kerma kirnussa',1),(13,'2014-05-28 01:18:55','','Valmis tuote',1),(14,'2014-05-28 01:23:50','','Voin varastointi',1),(15,'2014-05-28 07:43:40','','Valmiste',1),(16,'2014-05-28 08:00:29','','Maidon vakiointi',1),(17,'2014-05-28 07:46:52','','Maidon siirto Juustokattilaan',1),(18,'2014-05-28 07:48:11','','Kypsytys',1),(19,'2014-05-28 07:49:50','','Juuston varastointi',1),(20,'2014-05-28 07:55:19','','Valmis juusto',1),(21,'2014-05-28 07:58:13','Juustokattila','Maidon pastörointi',1),(22,'2014-05-28 08:11:52','Näytteenottotiheys 1 kerta /kk\r\n','Työskentelytason pinnat',1),(23,'2014-05-28 08:13:32','Ennen vispausta työpäivän alussa','Vispari',1),(24,'2014-05-28 08:14:59','','Valmis tuote',1);
 /*!40000 ALTER TABLE `Fieldset` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +206,7 @@ CREATE TABLE `Fieldset_AUD` (
 
 LOCK TABLES `Fieldset_AUD` WRITE;
 /*!40000 ALTER TABLE `Fieldset_AUD` DISABLE KEYS */;
-INSERT INTO `Fieldset_AUD` VALUES (1,2,0,'2014-05-28 00:34:25','','Ennen töiden aloittamista / laitteisto',1),(2,3,0,'2014-05-28 00:37:29','','Jäätelömassan valmistus',1),(3,4,0,'2014-05-28 00:40:57','','Pastörointi',1),(4,5,0,'2014-05-28 00:42:58','Merkintä myös pakastimen lt-seuranta-kaavakkeeseen','Karkaisu',1),(5,6,0,'2014-05-28 00:44:14','Merkintä myös pakastimen /kylmiön lt-seuranta-kaavakkeeseen','Varastointi',1),(5,10,1,'2014-05-28 00:53:59','Merkintä myös pakastimen /kylmiön lt-seuranta-kaavakkeeseen','Jäätelön varastointi',1),(6,7,0,'2014-05-28 00:46:27','','Valmis tuote',1),(7,8,0,'2014-05-28 00:48:55','Pistein 1-5','Aistinvarainen arviointi',1),(8,11,0,'2014-05-28 00:56:47','','Valmistuslaitteisto',1),(9,13,0,'2014-05-28 01:00:05','Hapatetiedot hapatelaboratorion kansiossa!','Käyttöhapate',1),(9,14,1,'2014-05-28 01:01:43','Hapatetiedot hapatelaboratorion kansiossa!','Käyttöhapate',1),(10,16,0,'2014-05-28 01:05:34','','Pastöroitu kerma hapatelisäyksen jälkeen',1),(11,18,0,'2014-05-28 01:10:57','','Hapatettu kerma tankissa',1),(12,20,0,'2014-05-28 01:13:11','','Hapatettu kerma kirnussa',1),(13,22,0,'2014-05-28 01:18:55','','Valmis tuote',1),(14,25,0,'2014-05-28 01:23:50','','Voin varastointi',1),(15,30,0,'2014-05-28 07:43:40','','Valmiste',1),(16,32,0,'2014-05-28 07:44:28','','Maidon vakiointi',1),(16,45,1,'2014-05-28 08:00:29','','Maidon vakiointi',1),(17,34,0,'2014-05-28 07:46:52','','Maidon siirto Juustokattilaan',1),(18,36,0,'2014-05-28 07:48:11','','Kypsytys',1),(19,38,0,'2014-05-28 07:49:50','','Juuston varastointi',1),(20,40,0,'2014-05-28 07:55:19','','Valmis juusto',1),(21,42,0,'2014-05-28 07:58:13','Juustokattila','Maidon pastörointi',1),(22,48,0,'2014-05-28 08:11:52','Näytteenottotiheys 1 kerta /kk\r\n','Työskentelytason pinnat',1),(23,50,0,'2014-05-28 08:13:32','Ennen vispausta työpäivän alussa','Vispari',1),(24,52,0,'2014-05-28 08:14:59','','Valmis tuote',1);
+INSERT INTO `Fieldset_AUD` VALUES (1,2,0,'2014-05-28 00:34:25','','Ennen töiden aloittamista / laitteisto',1),(1,79,1,'2014-05-28 08:31:16','','Ennen töiden aloittamista / laitteisto',1),(2,3,0,'2014-05-28 00:37:29','','Jäätelömassan valmistus',1),(3,4,0,'2014-05-28 00:40:57','','Pastörointi',1),(4,5,0,'2014-05-28 00:42:58','Merkintä myös pakastimen lt-seuranta-kaavakkeeseen','Karkaisu',1),(5,6,0,'2014-05-28 00:44:14','Merkintä myös pakastimen /kylmiön lt-seuranta-kaavakkeeseen','Varastointi',1),(5,10,1,'2014-05-28 00:53:59','Merkintä myös pakastimen /kylmiön lt-seuranta-kaavakkeeseen','Jäätelön varastointi',1),(6,7,0,'2014-05-28 00:46:27','','Valmis tuote',1),(7,8,0,'2014-05-28 00:48:55','Pistein 1-5','Aistinvarainen arviointi',1),(7,80,1,'2014-05-28 08:31:34','Pistein 1-5','Aistinvarainen arviointi',1),(8,11,0,'2014-05-28 00:56:47','','Valmistuslaitteisto',1),(9,13,0,'2014-05-28 01:00:05','Hapatetiedot hapatelaboratorion kansiossa!','Käyttöhapate',1),(9,14,1,'2014-05-28 01:01:43','Hapatetiedot hapatelaboratorion kansiossa!','Käyttöhapate',1),(10,16,0,'2014-05-28 01:05:34','','Pastöroitu kerma hapatelisäyksen jälkeen',1),(11,18,0,'2014-05-28 01:10:57','','Hapatettu kerma tankissa',1),(12,20,0,'2014-05-28 01:13:11','','Hapatettu kerma kirnussa',1),(13,22,0,'2014-05-28 01:18:55','','Valmis tuote',1),(14,25,0,'2014-05-28 01:23:50','','Voin varastointi',1),(15,30,0,'2014-05-28 07:43:40','','Valmiste',1),(16,32,0,'2014-05-28 07:44:28','','Maidon vakiointi',1),(16,45,1,'2014-05-28 08:00:29','','Maidon vakiointi',1),(17,34,0,'2014-05-28 07:46:52','','Maidon siirto Juustokattilaan',1),(18,36,0,'2014-05-28 07:48:11','','Kypsytys',1),(19,38,0,'2014-05-28 07:49:50','','Juuston varastointi',1),(20,40,0,'2014-05-28 07:55:19','','Valmis juusto',1),(21,42,0,'2014-05-28 07:58:13','Juustokattila','Maidon pastörointi',1),(22,48,0,'2014-05-28 08:11:52','Näytteenottotiheys 1 kerta /kk\r\n','Työskentelytason pinnat',1),(23,50,0,'2014-05-28 08:13:32','Ennen vispausta työpäivän alussa','Vispari',1),(24,52,0,'2014-05-28 08:14:59','','Valmis tuote',1);
 /*!40000 ALTER TABLE `Fieldset_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -426,7 +428,7 @@ CREATE TABLE `Ingredient` (
 
 LOCK TABLES `Ingredient` WRITE;
 /*!40000 ALTER TABLE `Ingredient` DISABLE KEYS */;
-INSERT INTO `Ingredient` VALUES (1,'2014-05-28 08:19:02',7,'','Kerma',1,NULL),(2,'2014-05-28 08:19:08',7,'','Maito',1,NULL);
+INSERT INTO `Ingredient` VALUES (1,'2014-05-28 08:19:02',7,'','Kerma',1,NULL),(2,'2014-05-28 08:30:03',7,'','Täysmaito',1,NULL);
 /*!40000 ALTER TABLE `Ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -456,7 +458,7 @@ CREATE TABLE `IngredientSupply` (
   CONSTRAINT `FK_8ai55h869dxbbxmtpwp8w7a33` FOREIGN KEY (`unit_id`) REFERENCES `Term` (`id`),
   CONSTRAINT `FK_ctfbbbq9shdx4h7wcgi4j2d9c` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`),
   CONSTRAINT `FK_kvris9x1jnae051nwngudmw8s` FOREIGN KEY (`producer_id`) REFERENCES `Term` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -465,6 +467,7 @@ CREATE TABLE `IngredientSupply` (
 
 LOCK TABLES `IngredientSupply` WRITE;
 /*!40000 ALTER TABLE `IngredientSupply` DISABLE KEYS */;
+INSERT INTO `IngredientSupply` VALUES (1,'2014-05-28 08:30:21',123,'2014-05-28 00:00:00',5,1,1,1,3),(2,'2014-05-28 08:30:21',123,'2014-05-28 00:00:00',7,1,2,1,2);
 /*!40000 ALTER TABLE `IngredientSupply` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -499,6 +502,7 @@ CREATE TABLE `IngredientSupply_AUD` (
 
 LOCK TABLES `IngredientSupply_AUD` WRITE;
 /*!40000 ALTER TABLE `IngredientSupply_AUD` DISABLE KEYS */;
+INSERT INTO `IngredientSupply_AUD` VALUES (1,71,0,'2014-05-28 08:26:59',123,'2014-05-28 00:00:00',0,1,1,1,3),(1,78,1,'2014-05-28 08:30:21',123,'2014-05-28 00:00:00',5,1,1,1,3),(2,72,0,'2014-05-28 08:27:11',123,'2014-05-28 00:00:00',0,1,2,1,2),(2,78,1,'2014-05-28 08:30:21',123,'2014-05-28 00:00:00',7,1,2,1,2);
 /*!40000 ALTER TABLE `IngredientSupply_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -519,7 +523,7 @@ CREATE TABLE `IngredientSupply_Batch` (
   KEY `FK_4incuilbbhwykn3dew8rhdf3l` (`ingredientSupply_id`),
   CONSTRAINT `FK_4incuilbbhwykn3dew8rhdf3l` FOREIGN KEY (`ingredientSupply_id`) REFERENCES `IngredientSupply` (`id`),
   CONSTRAINT `FK_eo6tw7oc7tybkpewb5ffgkxa2` FOREIGN KEY (`batch_id`) REFERENCES `Batch` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -528,6 +532,7 @@ CREATE TABLE `IngredientSupply_Batch` (
 
 LOCK TABLES `IngredientSupply_Batch` WRITE;
 /*!40000 ALTER TABLE `IngredientSupply_Batch` DISABLE KEYS */;
+INSERT INTO `IngredientSupply_Batch` VALUES (1,5,1,1),(2,7,1,2);
 /*!40000 ALTER TABLE `IngredientSupply_Batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -557,6 +562,7 @@ CREATE TABLE `IngredientSupply_Batch_AUD` (
 
 LOCK TABLES `IngredientSupply_Batch_AUD` WRITE;
 /*!40000 ALTER TABLE `IngredientSupply_Batch_AUD` DISABLE KEYS */;
+INSERT INTO `IngredientSupply_Batch_AUD` VALUES (1,78,0,5,1,1),(2,78,0,7,1,2);
 /*!40000 ALTER TABLE `IngredientSupply_Batch_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -589,7 +595,7 @@ CREATE TABLE `Ingredient_AUD` (
 
 LOCK TABLES `Ingredient_AUD` WRITE;
 /*!40000 ALTER TABLE `Ingredient_AUD` DISABLE KEYS */;
-INSERT INTO `Ingredient_AUD` VALUES (1,58,0,'2014-05-28 08:19:02',7,'','Kerma',1,NULL),(2,59,0,'2014-05-28 08:19:08',7,'','Maito',1,NULL);
+INSERT INTO `Ingredient_AUD` VALUES (1,58,0,'2014-05-28 08:19:02',7,'','Kerma',1,NULL),(1,71,1,'2014-05-28 08:19:02',7,'','Kerma',1,NULL),(2,59,0,'2014-05-28 08:19:08',7,'','Maito',1,NULL),(2,72,1,'2014-05-28 08:19:08',7,'','Maito',1,NULL),(2,76,1,'2014-05-28 08:29:31',7,'','TäysMaito',1,NULL),(2,77,1,'2014-05-28 08:30:03',7,'','Täysmaito',1,NULL);
 /*!40000 ALTER TABLE `Ingredient_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -680,7 +686,7 @@ CREATE TABLE `Product` (
 
 LOCK TABLES `Product` WRITE;
 /*!40000 ALTER TABLE `Product` DISABLE KEYS */;
-INSERT INTO `Product` VALUES (1,'2014-05-28 08:17:48','','Jäätelö',123,1),(2,'2014-05-28 08:18:37','','Ravintorasvat',234,1),(3,'2014-05-28 08:18:30','','Juusto',345,1);
+INSERT INTO `Product` VALUES (1,'2014-05-28 08:29:11','','Jäätelö',123,1),(2,'2014-05-28 08:28:58','','Ravintorasvat',234,1),(3,'2014-05-28 08:28:33','','Juusto',345,1);
 /*!40000 ALTER TABLE `Product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -712,7 +718,7 @@ CREATE TABLE `Product_AUD` (
 
 LOCK TABLES `Product_AUD` WRITE;
 /*!40000 ALTER TABLE `Product_AUD` DISABLE KEYS */;
-INSERT INTO `Product_AUD` VALUES (1,54,0,'2014-05-28 08:17:48','','Jäätelö',123,1),(2,55,0,'2014-05-28 08:18:06','','Ravintorasvat',124,1),(2,57,1,'2014-05-28 08:18:37','','Ravintorasvat',234,1),(3,56,0,'2014-05-28 08:18:30','','Juusto',345,1);
+INSERT INTO `Product_AUD` VALUES (1,54,0,'2014-05-28 08:17:48','','Jäätelö',123,1),(1,75,1,'2014-05-28 08:29:11','','Jäätelö',123,1),(2,55,0,'2014-05-28 08:18:06','','Ravintorasvat',124,1),(2,57,1,'2014-05-28 08:18:37','','Ravintorasvat',234,1),(2,74,1,'2014-05-28 08:28:58','','Ravintorasvat',234,1),(3,56,0,'2014-05-28 08:18:30','','Juusto',345,1),(3,73,1,'2014-05-28 08:28:33','','Juusto',345,1);
 /*!40000 ALTER TABLE `Product_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -739,7 +745,7 @@ CREATE TABLE `Product_Form` (
 
 LOCK TABLES `Product_Form` WRITE;
 /*!40000 ALTER TABLE `Product_Form` DISABLE KEYS */;
-INSERT INTO `Product_Form` VALUES (1,1),(1,4),(3,3),(2,2);
+INSERT INTO `Product_Form` VALUES (3,3),(2,2),(1,1),(1,4);
 /*!40000 ALTER TABLE `Product_Form` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -793,6 +799,7 @@ CREATE TABLE `Product_Ingredient` (
 
 LOCK TABLES `Product_Ingredient` WRITE;
 /*!40000 ALTER TABLE `Product_Ingredient` DISABLE KEYS */;
+INSERT INTO `Product_Ingredient` VALUES (3,2),(2,1),(1,1),(1,2);
 /*!40000 ALTER TABLE `Product_Ingredient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -819,6 +826,7 @@ CREATE TABLE `Product_Ingredient_AUD` (
 
 LOCK TABLES `Product_Ingredient_AUD` WRITE;
 /*!40000 ALTER TABLE `Product_Ingredient_AUD` DISABLE KEYS */;
+INSERT INTO `Product_Ingredient_AUD` VALUES (73,3,2,0),(74,2,1,0),(75,1,1,0),(75,1,2,0);
 /*!40000 ALTER TABLE `Product_Ingredient_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -833,7 +841,7 @@ CREATE TABLE `REVINFO` (
   `REV` int(11) NOT NULL AUTO_INCREMENT,
   `REVTSTMP` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`REV`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -842,7 +850,7 @@ CREATE TABLE `REVINFO` (
 
 LOCK TABLES `REVINFO` WRITE;
 /*!40000 ALTER TABLE `REVINFO` DISABLE KEYS */;
-INSERT INTO `REVINFO` VALUES (1,1401226292130),(2,1401226465923),(3,1401226649644),(4,1401226857467),(5,1401226978386),(6,1401227054469),(7,1401227187707),(8,1401227335167),(9,1401227438068),(10,1401227639229),(11,1401227807489),(12,1401227884634),(13,1401228005695),(14,1401228103706),(15,1401228123025),(16,1401228334431),(17,1401228358609),(18,1401228657579),(19,1401228701201),(20,1401228791834),(21,1401228804423),(22,1401229135275),(23,1401229149899),(24,1401229170173),(25,1401229430847),(26,1401229448568),(27,1401229987876),(28,1401252102384),(29,1401252123023),(30,1401252220171),(31,1401252237681),(32,1401252268994),(33,1401252322386),(34,1401252412185),(35,1401252423576),(36,1401252491702),(37,1401252502223),(38,1401252590181),(39,1401252599840),(40,1401252919644),(41,1401252943540),(42,1401253093917),(43,1401253131411),(44,1401253197313),(45,1401253229762),(46,1401253635559),(47,1401253653539),(48,1401253913002),(49,1401253940615),(50,1401254012065),(51,1401254021827),(52,1401254099391),(53,1401254109965),(54,1401254268116),(55,1401254286439),(56,1401254310940),(57,1401254317134),(58,1401254342246),(59,1401254348906),(60,1401254378354),(61,1401254386975),(62,1401254395689),(63,1401254413551),(64,1401254431761),(65,1401254442201),(66,1401254477026),(67,1401254581437),(68,1401254622169),(69,1401254671816),(70,1401254707156);
+INSERT INTO `REVINFO` VALUES (1,1401226292130),(2,1401226465923),(3,1401226649644),(4,1401226857467),(5,1401226978386),(6,1401227054469),(7,1401227187707),(8,1401227335167),(9,1401227438068),(10,1401227639229),(11,1401227807489),(12,1401227884634),(13,1401228005695),(14,1401228103706),(15,1401228123025),(16,1401228334431),(17,1401228358609),(18,1401228657579),(19,1401228701201),(20,1401228791834),(21,1401228804423),(22,1401229135275),(23,1401229149899),(24,1401229170173),(25,1401229430847),(26,1401229448568),(27,1401229987876),(28,1401252102384),(29,1401252123023),(30,1401252220171),(31,1401252237681),(32,1401252268994),(33,1401252322386),(34,1401252412185),(35,1401252423576),(36,1401252491702),(37,1401252502223),(38,1401252590181),(39,1401252599840),(40,1401252919644),(41,1401252943540),(42,1401253093917),(43,1401253131411),(44,1401253197313),(45,1401253229762),(46,1401253635559),(47,1401253653539),(48,1401253913002),(49,1401253940615),(50,1401254012065),(51,1401254021827),(52,1401254099391),(53,1401254109965),(54,1401254268116),(55,1401254286439),(56,1401254310940),(57,1401254317134),(58,1401254342246),(59,1401254348906),(60,1401254378354),(61,1401254386975),(62,1401254395689),(63,1401254413551),(64,1401254431761),(65,1401254442201),(66,1401254477026),(67,1401254581437),(68,1401254622169),(69,1401254671816),(70,1401254707156),(71,1401254819872),(72,1401254831300),(73,1401254913767),(74,1401254938831),(75,1401254951254),(76,1401254971418),(77,1401255003594),(78,1401255021653),(79,1401255076659),(80,1401255094566),(81,1401255116027),(82,1401255158344),(83,1401255205915);
 /*!40000 ALTER TABLE `REVINFO` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -875,7 +883,7 @@ CREATE TABLE `Result` (
   CONSTRAINT `FK_g6frdujf2n10t8budepuxnaqv` FOREIGN KEY (`reason_id`) REFERENCES `Term` (`id`),
   CONSTRAINT `FK_nsj6avfmh039xlgof62dsntsm` FOREIGN KEY (`user_id`) REFERENCES `User` (`id`),
   CONSTRAINT `FK_r19io8if0w3gqgno4qi0kakpd` FOREIGN KEY (`results_id`) REFERENCES `Results` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -884,6 +892,7 @@ CREATE TABLE `Result` (
 
 LOCK TABLES `Result` WRITE;
 /*!40000 ALTER TABLE `Result` DISABLE KEYS */;
+INSERT INTO `Result` VALUES (1,'2014-05-28 08:33:25','','',NULL,NULL,NULL,NULL,NULL,1,NULL,1),(2,'2014-05-28 08:33:25','',NULL,NULL,249,NULL,NULL,NULL,2,4,1),(3,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,3,NULL,1),(4,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,'',NULL,4,NULL,1),(5,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,5,NULL,1),(6,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,6,NULL,1),(7,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,1),(8,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,8,NULL,1),(9,'2014-05-28 08:33:25','',NULL,NULL,NULL,5,NULL,NULL,9,NULL,1),(10,'2014-05-28 08:33:25','',NULL,NULL,NULL,3,NULL,NULL,10,NULL,1),(11,'2014-05-28 08:33:25','',NULL,NULL,NULL,1,NULL,NULL,11,NULL,1);
 /*!40000 ALTER TABLE `Result` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -921,6 +930,7 @@ CREATE TABLE `Result_AUD` (
 
 LOCK TABLES `Result_AUD` WRITE;
 /*!40000 ALTER TABLE `Result_AUD` DISABLE KEYS */;
+INSERT INTO `Result_AUD` VALUES (1,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,1),(1,82,1,'2014-05-28 08:32:38','','',NULL,NULL,NULL,NULL,1,1,NULL,1),(1,83,1,'2014-05-28 08:33:25','','',NULL,NULL,NULL,NULL,NULL,1,NULL,1),(2,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,1),(2,82,1,'2014-05-28 08:32:38','',NULL,NULL,251,NULL,NULL,NULL,2,NULL,1),(2,83,1,'2014-05-28 08:33:25','',NULL,NULL,249,NULL,NULL,NULL,2,4,1),(3,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,3,NULL,1),(3,82,1,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,3,NULL,1),(4,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,1),(4,82,1,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,'',NULL,4,NULL,1),(5,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,5,NULL,1),(5,82,1,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,5,NULL,1),(6,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,6,NULL,1),(6,82,1,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,6,NULL,1),(7,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,1),(7,82,1,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,7,NULL,1),(8,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,8,NULL,1),(8,82,1,'2014-05-28 08:32:38','',NULL,NULL,NULL,NULL,NULL,NULL,8,NULL,1),(9,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,9,NULL,1),(9,82,1,'2014-05-28 08:32:38','',NULL,NULL,NULL,5,NULL,1,9,NULL,1),(9,83,1,'2014-05-28 08:33:25','',NULL,NULL,NULL,5,NULL,NULL,9,NULL,1),(10,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,10,NULL,1),(10,82,1,'2014-05-28 08:32:38','',NULL,NULL,NULL,3,NULL,1,10,NULL,1),(10,83,1,'2014-05-28 08:33:25','',NULL,NULL,NULL,3,NULL,NULL,10,NULL,1),(11,81,0,'2014-05-28 08:31:56',NULL,NULL,NULL,NULL,NULL,NULL,NULL,11,NULL,1),(11,82,1,'2014-05-28 08:32:38','',NULL,NULL,NULL,1,NULL,1,11,NULL,1),(11,83,1,'2014-05-28 08:33:25','',NULL,NULL,NULL,1,NULL,NULL,11,NULL,1);
 /*!40000 ALTER TABLE `Result_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -938,7 +948,7 @@ CREATE TABLE `Results` (
   PRIMARY KEY (`id`),
   KEY `FK_7kbaf22j02tv5ldskpr4f49me` (`form_id`),
   CONSTRAINT `FK_7kbaf22j02tv5ldskpr4f49me` FOREIGN KEY (`form_id`) REFERENCES `Form` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -947,6 +957,7 @@ CREATE TABLE `Results` (
 
 LOCK TABLES `Results` WRITE;
 /*!40000 ALTER TABLE `Results` DISABLE KEYS */;
+INSERT INTO `Results` VALUES (1,'2014-05-28 08:31:55',1);
 /*!40000 ALTER TABLE `Results` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -975,6 +986,7 @@ CREATE TABLE `Results_AUD` (
 
 LOCK TABLES `Results_AUD` WRITE;
 /*!40000 ALTER TABLE `Results_AUD` DISABLE KEYS */;
+INSERT INTO `Results_AUD` VALUES (1,81,0,'2014-05-28 08:31:55',1),(1,82,1,'2014-05-28 08:31:55',1),(1,83,1,'2014-05-28 08:31:55',1);
 /*!40000 ALTER TABLE `Results_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1001,6 +1013,7 @@ CREATE TABLE `Results_Batch` (
 
 LOCK TABLES `Results_Batch` WRITE;
 /*!40000 ALTER TABLE `Results_Batch` DISABLE KEYS */;
+INSERT INTO `Results_Batch` VALUES (1,1);
 /*!40000 ALTER TABLE `Results_Batch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1027,6 +1040,7 @@ CREATE TABLE `Results_Batch_AUD` (
 
 LOCK TABLES `Results_Batch_AUD` WRITE;
 /*!40000 ALTER TABLE `Results_Batch_AUD` DISABLE KEYS */;
+INSERT INTO `Results_Batch_AUD` VALUES (81,1,1,0);
 /*!40000 ALTER TABLE `Results_Batch_AUD` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1160,4 +1174,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-28  1:25:59
+-- Dump completed on 2014-05-28  1:34:45
