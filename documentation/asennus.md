@@ -1,6 +1,6 @@
-% Omavalvonta, asennus Ubuntu Server 12.04
+% Omavalvonta, asennus Ubuntu Server 14.04
 % Sami Hostikka
-% 21.05.2013
+% 30.05.2014
 
 \renewcommand{\contentsname}{Sisällys}
 \tableofcontents
@@ -198,7 +198,7 @@
 
 ## Konfigurointi
 
-- Lisätään omavalvonnalle vhost, ```/etc/apache2/sites-enabled/omavalvonta```
+- Lisätään omavalvonnalle vhost, ```/etc/apache2/sites-enabled/omavalvonta.conf```
 
 > *Huomaa, esimerkkikonfiguraatio löytyy **configuration/etc/apache/sites-enabled** kansiosta*
 
@@ -207,15 +207,12 @@ LoadModule rewrite_module modules/mod_rewrite.so
 LoadModule proxy_module modules/mod_proxy.so
 
 <VirtualHost *:80>
-  ServerName example.com
   RewriteEngine On
   RewriteCond %{HTTPS} off
   RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
 </VirtualHost>
 
 <VirtualHost *:443>
-  ServerName example.com
-
   # SSL
   SSLEngine On
   SSLCertificateFile /etc/apache2/ssl/apache.pem
@@ -234,6 +231,14 @@ LoadModule proxy_module modules/mod_proxy.so
                 Require shibboleth
         </Location>
 </VirtualHost>
+```
+
+- Määritetään palvelimen nimi, ```/etc/apache2/conf-enabled/fqdn.conf```
+
+> *Huomaa, esimerkkikonfiguraatio löytyy **configuration/etc/apache/conf-enabled** kansiosta*
+
+```
+ServerName example.com
 ```
 
 # Shibboleth
@@ -277,12 +282,12 @@ LoadModule proxy_module modules/mod_proxy.so
     service  apache2 restart
 ```
 
-# Java
+# Riippuvuudet
 
-- Asennetaan JDK
+- Asennetaan JDK ja unzip
 
 ```
-    aptitude install openjdk-7-jdk openjdk-7-jre
+    aptitude install openjdk-7-jdk openjdk-7-jre unzip
 ```
 
 # Omavalvonta
@@ -290,35 +295,33 @@ LoadModule proxy_module modules/mod_proxy.so
 - Lisää omavalvonnalle käyttäjätunnus
 
 ```
-    adduser omavalvonta
+    useradd -m -s /bin/false omavalvonta
 ```
 
 - Siirrä tietokanta palvelimelle
 - Palauta tietokanta
 
 ```
-    mysql -u root -p omavalvonta < db.sql
+    mysql -u root -p omavalvonta < sql/db.sql
 ```
 
 - Siirrä omavalvonta-1.0.zip palvelimelle
 - Pura siirretty zip-tiedosto
 
 ```
-    unzip omavalvonta-1.0.zip
-```
-
-- Siirrä omavalvonta ```/home/omavalvonta``` hakemistoon
-
-```
-    mkdir -p /home/omavalvonta
-    cd omavalvonta-1.0
-    mv * /home/omavalvonta/.
+    unzip -d /home/omavalvonta omavalvonta-1.0.zip
 ```
 
 - Anna omavalvonnalle suoritusoikeudet
 
 ```
-    chmod +x /home/omavalvonta/start
+    chmod +x /home/omavalvonta/omavalvonta-1.0/bin/omavalvonta
+```
+
+- Aseta omavalvonta käyttäjä omavalvonnan tiedostojen omistajaksi
+
+```
+chown -R omavalvonta:omavalvonta /home/omavalvonta/omavalvonta-1.0
 ```
 
 - Lisätään omavalvonnalle Upstart käynnistyskripti, ```/etc/init/omavalvonta.conf```
@@ -339,6 +342,7 @@ description "Omavalvonta"
 author "Leon Radley <leon@radley.se>"
 version "1.0"
 
+env PROJECT=omavalvonta
 env USER=omavalvonta
 env GROUP=omavalvonta
 env HOME=/home/omavalvonta
@@ -355,9 +359,7 @@ respawn limit 10 5
 umask 022
 expect daemon
 
-exec start-stop-daemon --pidfile ${HOME}/RUNNING_PID --chuid $USER:$GROUP --exec 
- ${HOME}/start --start -- -Dconfig.file=${HOME}/$CONFIG -Dhttp.port=$PORT
- -Dhttp.address=$ADDRESS $EXTRA
+exec start-stop-daemon --pidfile ${HOME}/RUNNING_PID --chuid $USER:$GROUP --exec ${HOME}/bin/${PROJECT} --start -- -Dconfig.file=${HOME}/$CONFIG -Dhttp.port=$PORT -Dhttp.address=$ADDRESS $EXTRA
 ```
 
 - Lisätään konfigurointitiedosto ```/home/omavalvonta/production.conf```, katso [konfigurointi](#konfigurointi)
