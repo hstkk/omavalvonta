@@ -6,6 +6,8 @@
 \tableofcontents
 \newpage
 
+*Omavalvonnan tuotantoympäristön asennus on pyritty automatisoimaan. ```bootstrap.sh``` skripti automatisoi Testshib testiversion asennuksen.*
+
 # Ubuntun päivittäminen
 
 ```
